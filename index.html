@@ -1030,6 +1030,47 @@
       border-radius: 4px;
     }
 
+    /* Favorites Section */
+    .help-section.favorites {
+      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(244, 114, 182, 0.1));
+      border: 1px solid rgba(251, 191, 36, 0.3);
+      border-radius: 12px;
+      padding: 12px;
+      margin-bottom: 16px;
+    }
+
+    .help-section.favorites .help-section-title {
+      color: #fbbf24;
+      border-bottom-color: rgba(251, 191, 36, 0.3);
+    }
+
+    .help-favorites {
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 8px;
+    }
+
+    .fav-item {
+      background: rgba(15, 23, 42, 0.6);
+      padding: 10px 12px;
+      border-radius: 8px;
+      font-size: 0.75rem;
+      cursor: pointer;
+      transition: all 0.2s;
+      border: 1px solid transparent;
+      text-align: center;
+    }
+
+    .fav-item:hover {
+      background: rgba(59, 130, 246, 0.2);
+      border-color: var(--primary);
+      transform: scale(1.02);
+    }
+
+    .fav-item:active {
+      transform: scale(0.98);
+    }
+
     .logs-actions {
       display: flex;
       gap: 8px;
@@ -1564,6 +1605,36 @@
           <button class="help-close" onclick="toggleHelp()">✕</button>
         </div>
         <div class="help-body">
+          <div class="help-section favorites">
+            <div class="help-section-title">⭐ Kids' Favorites - Try These!</div>
+            <div class="help-favorites">
+              <div class="fav-item" onclick="speakFavorite('do a fart')">💨 "Do a fart!"</div>
+              <div class="fav-item" onclick="speakFavorite('show me a cat')">🐱 "Show me a cat!"</div>
+              <div class="fav-item" onclick="speakFavorite('do a poop')">💩 "Do a poop!"</div>
+              <div class="fav-item" onclick="speakFavorite('lets party')">🎉 "Let's party!"</div>
+              <div class="fav-item" onclick="speakFavorite('rocket launch')">🚀 "Rocket launch!"</div>
+              <div class="fav-item" onclick="speakFavorite('do something crazy')">🤪 "Do something crazy!"</div>
+              <div class="fav-item" onclick="speakFavorite('make me laugh')">😂 "Make me laugh!"</div>
+              <div class="fav-item" onclick="speakFavorite('show me a ghost')">👻 "Show me a ghost!"</div>
+              <div class="fav-item" onclick="speakFavorite('do a burp')">🫧 "Do a burp!"</div>
+              <div class="fav-item" onclick="speakFavorite('dance for me')">💃 "Dance for me!"</div>
+              <div class="fav-item" onclick="speakFavorite('explode')">💥 "Explode!"</div>
+              <div class="fav-item" onclick="speakFavorite('disco time')">🕺 "Disco time!"</div>
+              <div class="fav-item" onclick="speakFavorite('be a dog')">🐶 "Be a dog!"</div>
+              <div class="fav-item" onclick="speakFavorite('be a monkey')">🐵 "Be a monkey!"</div>
+              <div class="fav-item" onclick="speakFavorite('show fireworks')">🎆 "Show fireworks!"</div>
+              <div class="fav-item" onclick="speakFavorite('do magic')">✨ "Do magic!"</div>
+              <div class="fav-item" onclick="speakFavorite('be an alien')">👽 "Be an alien!"</div>
+              <div class="fav-item" onclick="speakFavorite('tickle me')">🤭 "Tickle me!"</div>
+              <div class="fav-item" onclick="speakFavorite('roll the dice')">🎲 "Roll the dice!"</div>
+              <div class="fav-item" onclick="speakFavorite('thunder and lightning')">⛈️ "Thunder!"</div>
+              <div class="fav-item" onclick="speakFavorite('be a pig')">🐷 "Be a pig!"</div>
+              <div class="fav-item" onclick="speakFavorite('freeze')">🥶 "Freeze!"</div>
+              <div class="fav-item" onclick="speakFavorite('shoot laser')">⚡ "Shoot laser!"</div>
+              <div class="fav-item" onclick="speakFavorite('make a silly face')">😜 "Silly face!"</div>
+            </div>
+          </div>
+
           <div class="help-section">
             <div class="help-section-title">😊 Emotions & Faces</div>
             <div class="help-commands-grid">
@@ -2561,6 +2632,14 @@ NEVER USE * asterisk character in responses!`;
 
     function toggleHelp() {
       document.getElementById('helpModal').classList.toggle('open');
+    }
+
+    function speakFavorite(text) {
+      // Close help modal
+      document.getElementById('helpModal').classList.remove('open');
+      // Add to chat and process
+      addChatLine(text, 'user');
+      processUserInput(text);
     }
 
     // ==================== LOGGING ====================
