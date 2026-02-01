@@ -173,7 +173,82 @@
       font-style: italic;
     }
 
-    /* AI Badge */
+    
+
+/* ==================== HEADER: LOGO FAR-LEFT + TEXT CENTERED ==================== */
+/* Logo pinned far-left, titles centered + discreet (calm) animations */
+
+.header {
+  justify-content: center;
+}
+
+.logo-block {
+  position: relative;
+  width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center; /* center the titles */
+  gap: 16px;
+}
+
+.logo {
+  position: absolute;
+  left: 20px;
+  width: 78px; /* a little bigger */
+  height: auto;
+  flex-shrink: 0;
+
+  /* discreet animation */
+  animation: logoFloat 4.8s ease-in-out infinite;
+  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.45));
+  will-change: transform, filter;
+}
+
+.header-titles {
+  align-items: center;
+  text-align: center;
+}
+
+.app-title {
+  /* soft animated gradient */
+  background: linear-gradient(90deg, #22c55e, #60a5fa, #22c55e);
+  background-size: 220%;
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  color: transparent;
+
+  animation: titleShimmer 7.5s linear infinite;
+  will-change: background-position;
+}
+
+.app-subtitle {
+  animation: subtitleBreathe 6s ease-in-out infinite;
+  will-change: opacity;
+}
+
+@keyframes logoFloat {
+  0%, 100% { transform: translateY(0); }
+  50%      { transform: translateY(-4px); }
+}
+
+@keyframes titleShimmer {
+  0%   { background-position: 0% 50%; }
+  100% { background-position: 220% 50%; }
+}
+
+@keyframes subtitleBreathe {
+  0%, 100% { opacity: 0.82; }
+  50%      { opacity: 1; }
+}
+
+@media (max-width: 768px) {
+  .logo { left: 16px; width: 70px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .logo, .app-title, .app-subtitle { animation: none !important; }
+}
+/* AI Badge */
     .ai-badge {
       display: flex;
       align-items: center;
