@@ -1,0 +1,821 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>🤖 Talking Robot - Guide for Kids</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --primary: #3b82f6;
+      --secondary: #22c55e;
+      --accent: #f59e0b;
+      --danger: #ef4444;
+      --bg: #0f172a;
+      --card: #1e293b;
+      --text: #f1f5f9;
+      --muted: #94a3b8;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      font-family: 'Nunito', system-ui, sans-serif;
+      background: linear-gradient(135deg, #0f172a 0%, #1e293b 100%);
+      color: var(--text);
+      line-height: 1.6;
+      min-height: 100vh;
+    }
+
+    .container {
+      max-width: 900px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    /* Header */
+    .hero {
+      text-align: center;
+      padding: 60px 20px;
+      background: linear-gradient(135deg, rgba(59, 130, 246, 0.2), rgba(34, 197, 94, 0.2));
+      border-radius: 30px;
+      margin-bottom: 40px;
+    }
+
+    .hero-emoji {
+      font-size: 100px;
+      display: block;
+      margin-bottom: 20px;
+      animation: bounce 2s infinite;
+    }
+
+    @keyframes bounce {
+      0%, 100% { transform: translateY(0); }
+      50% { transform: translateY(-20px); }
+    }
+
+    .hero h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+      background-clip: text;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 1.3rem;
+      color: var(--muted);
+    }
+
+    /* Sections */
+    .section {
+      background: var(--card);
+      border-radius: 24px;
+      padding: 30px;
+      margin-bottom: 30px;
+      border: 2px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      font-weight: 800;
+      margin-bottom: 20px;
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .section-title .icon {
+      font-size: 2rem;
+    }
+
+    /* Steps */
+    .steps {
+      display: flex;
+      flex-direction: column;
+      gap: 20px;
+    }
+
+    .step {
+      display: flex;
+      gap: 20px;
+      align-items: flex-start;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 20px;
+      border-radius: 16px;
+    }
+
+    .step-number {
+      width: 50px;
+      height: 50px;
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      font-weight: 800;
+      flex-shrink: 0;
+    }
+
+    .step-content h3 {
+      font-size: 1.2rem;
+      margin-bottom: 8px;
+    }
+
+    .step-content p {
+      color: var(--muted);
+    }
+
+    /* Cards Grid */
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 20px;
+    }
+
+    .card {
+      background: rgba(0, 0, 0, 0.2);
+      padding: 24px;
+      border-radius: 16px;
+      text-align: center;
+      transition: transform 0.2s;
+    }
+
+    .card:hover {
+      transform: translateY(-5px);
+    }
+
+    .card-icon {
+      font-size: 3rem;
+      margin-bottom: 12px;
+    }
+
+    .card h3 {
+      font-size: 1.1rem;
+      margin-bottom: 8px;
+    }
+
+    .card p {
+      color: var(--muted);
+      font-size: 0.9rem;
+    }
+
+    /* Language Flags */
+    .language-cards {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+      flex-wrap: wrap;
+    }
+
+    .language-card {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 30px 40px;
+      border-radius: 20px;
+      text-align: center;
+      transition: all 0.2s;
+      cursor: default;
+    }
+
+    .language-card:hover {
+      transform: scale(1.05);
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .language-card .flag {
+      font-size: 4rem;
+      display: block;
+      margin-bottom: 10px;
+    }
+
+    .language-card .name {
+      font-size: 1.1rem;
+      font-weight: 700;
+    }
+
+    .language-card .example {
+      color: var(--muted);
+      font-size: 0.85rem;
+      margin-top: 5px;
+    }
+
+    /* Table */
+    .info-table {
+      width: 100%;
+      border-collapse: collapse;
+    }
+
+    .info-table th,
+    .info-table td {
+      padding: 15px;
+      text-align: left;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+    }
+
+    .info-table th {
+      background: rgba(0, 0, 0, 0.2);
+      font-weight: 700;
+    }
+
+    .info-table tr:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .info-table .emoji {
+      font-size: 1.5rem;
+    }
+
+    /* Tips Box */
+    .tip-box {
+      background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));
+      border: 2px solid var(--accent);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .tip-box .tip-title {
+      font-weight: 800;
+      color: var(--accent);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Warning Box */
+    .warning-box {
+      background: linear-gradient(135deg, rgba(239, 68, 68, 0.2), rgba(239, 68, 68, 0.1));
+      border: 2px solid var(--danger);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .warning-box .warning-title {
+      font-weight: 800;
+      color: var(--danger);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Success Box */
+    .success-box {
+      background: linear-gradient(135deg, rgba(34, 197, 94, 0.2), rgba(34, 197, 94, 0.1));
+      border: 2px solid var(--secondary);
+      border-radius: 16px;
+      padding: 20px;
+      margin: 20px 0;
+    }
+
+    .success-box .success-title {
+      font-weight: 800;
+      color: var(--secondary);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      margin-bottom: 10px;
+    }
+
+    /* Try It List */
+    .try-list {
+      display: grid;
+      gap: 12px;
+    }
+
+    .try-item {
+      display: flex;
+      align-items: center;
+      gap: 15px;
+      background: rgba(0, 0, 0, 0.2);
+      padding: 15px 20px;
+      border-radius: 12px;
+    }
+
+    .try-item .say {
+      background: var(--primary);
+      padding: 8px 16px;
+      border-radius: 20px;
+      font-weight: 600;
+    }
+
+    .try-item .result {
+      color: var(--muted);
+    }
+
+    .try-item .arrow {
+      color: var(--secondary);
+      font-size: 1.3rem;
+    }
+
+    /* Faces Grid */
+    .faces-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(150px, 1fr));
+      gap: 15px;
+    }
+
+    .face-card {
+      background: rgba(0, 0, 0, 0.3);
+      padding: 20px;
+      border-radius: 16px;
+      text-align: center;
+    }
+
+    .face-card .led-grid {
+      width: 80px;
+      height: 80px;
+      margin: 0 auto 15px;
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 3px;
+      background: #000;
+      padding: 8px;
+      border-radius: 8px;
+    }
+
+    .face-card .led-grid .led {
+      background: #1a1a2e;
+      border-radius: 2px;
+    }
+
+    .face-card .led-grid .led.on {
+      background: #ef4444;
+      box-shadow: 0 0 8px #ef4444;
+    }
+
+    .face-card .label {
+      font-weight: 700;
+      font-size: 0.9rem;
+    }
+
+    /* Buttons Grid */
+    .buttons-demo {
+      display: flex;
+      justify-content: center;
+      gap: 40px;
+      margin: 30px 0;
+    }
+
+    .button-demo {
+      text-align: center;
+    }
+
+    .button-demo .btn-circle {
+      width: 80px;
+      height: 80px;
+      border-radius: 50%;
+      background: linear-gradient(145deg, #374151, #1f2937);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 2rem;
+      font-weight: 800;
+      color: var(--text);
+      margin-bottom: 10px;
+      border: 3px solid #4b5563;
+    }
+
+    .button-demo .btn-label {
+      font-weight: 700;
+    }
+
+    .button-demo .btn-desc {
+      color: var(--muted);
+      font-size: 0.85rem;
+    }
+
+    /* Safety Section */
+    .safety-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 15px;
+    }
+
+    .safety-item {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      background: rgba(34, 197, 94, 0.1);
+      padding: 15px;
+      border-radius: 12px;
+      border-left: 4px solid var(--secondary);
+    }
+
+    .safety-item .check {
+      font-size: 1.5rem;
+    }
+
+    /* Footer */
+    .footer {
+      text-align: center;
+      padding: 40px 20px;
+      color: var(--muted);
+    }
+
+    .footer .heart {
+      color: var(--danger);
+      animation: pulse 1s infinite;
+    }
+
+    @keyframes pulse {
+      0%, 100% { transform: scale(1); }
+      50% { transform: scale(1.2); }
+    }
+
+    /* Mobile */
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 2rem;
+      }
+
+      .hero-emoji {
+        font-size: 70px;
+      }
+
+      .section {
+        padding: 20px;
+      }
+
+      .step {
+        flex-direction: column;
+        text-align: center;
+      }
+
+      .language-cards {
+        gap: 15px;
+      }
+
+      .language-card {
+        padding: 20px;
+      }
+
+      .language-card .flag {
+        font-size: 3rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    
+    <!-- Hero -->
+    <div class="hero">
+      <span class="hero-emoji">🤖</span>
+      <h1>Talking Robot</h1>
+      <p>Make Your Own AI Robot Friend!</p>
+    </div>
+
+    <!-- What Is This -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">🌟</span>
+        What Is This?
+      </h2>
+      <p style="font-size: 1.1rem; margin-bottom: 25px;">
+        <strong>Talking Robot</strong> is a fun app that turns your BBC micro:bit into a talking robot friend!
+      </p>
+      <div class="cards-grid">
+        <div class="card">
+          <div class="card-icon">🎤</div>
+          <h3>Talk To It</h3>
+          <p>Use your voice!</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">⌨️</div>
+          <h3>Type To It</h3>
+          <p>Or use the keyboard!</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧠</div>
+          <h3>It Thinks</h3>
+          <p>Uses AI to understand!</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🔊</div>
+          <h3>It Talks Back</h3>
+          <p>Hear the robot's voice!</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- How To Use -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">🎮</span>
+        How To Use
+      </h2>
+      
+      <div class="steps">
+        <div class="step">
+          <div class="step-number">1</div>
+          <div class="step-content">
+            <h3>Open the App</h3>
+            <p>Open <code>index.html</code> in <strong>Google Chrome</strong> or <strong>Microsoft Edge</strong>.</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">2</div>
+          <div class="step-content">
+            <h3>Connect Your Micro:bit</h3>
+            <p>Click the <strong>⚙️ Settings</strong> button, then click the big green <strong>🔗 Connect</strong> button. Pick your micro:bit from the list!</p>
+          </div>
+        </div>
+        
+        <div class="step">
+          <div class="step-number">3</div>
+          <div class="step-content">
+            <h3>Start Talking!</h3>
+            <p>Click the <strong>🎤 Microphone</strong> button and say something, or type a message and press Enter!</p>
+          </div>
+        </div>
+      </div>
+
+      <div class="warning-box">
+        <div class="warning-title">⚠️ Important!</div>
+        <p>Use <strong>Chrome</strong> or <strong>Edge</strong> browser. Other browsers may not work!</p>
+      </div>
+    </div>
+
+    <!-- Languages -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">🌍</span>
+        Languages
+      </h2>
+      <p style="text-align: center; margin-bottom: 25px;">The robot speaks 3 languages! Pick your favorite:</p>
+      
+      <div class="language-cards">
+        <div class="language-card">
+          <span class="flag">🇬🇧</span>
+          <div class="name">English</div>
+          <div class="example">"Hello! How are you?"</div>
+        </div>
+        <div class="language-card">
+          <span class="flag">🇫🇷</span>
+          <div class="name">Français</div>
+          <div class="example">"Bonjour! Comment ça va?"</div>
+        </div>
+        <div class="language-card">
+          <span class="flag">🇸🇦</span>
+          <div class="name">العربية</div>
+          <div class="example">"مرحباً! كيف حالك؟"</div>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">💡 How to change language:</div>
+        <p>Open <strong>⚙️ Settings</strong> and click on a flag!</p>
+      </div>
+    </div>
+
+    <!-- AI Modes -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">🧠</span>
+        AI Modes
+      </h2>
+      
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+        <div class="card" style="border: 2px solid var(--secondary);">
+          <div class="card-icon">🎮</div>
+          <h3>Demo Mode</h3>
+          <p>Works <strong>without internet!</strong><br>Fun preset responses.<br>Great for practice!</p>
+        </div>
+        <div class="card" style="border: 2px solid var(--primary);">
+          <div class="card-icon">🤖</div>
+          <h3>Google Gemini</h3>
+          <p>Real AI brain!<br>Needs internet.<br>Needs a free API key.</p>
+        </div>
+      </div>
+
+      <div class="success-box">
+        <div class="success-title">🔑 Get a FREE Gemini API Key:</div>
+        <ol style="margin-left: 20px; color: var(--muted);">
+          <li>Go to <a href="https://aistudio.google.com/app/apikey" target="_blank" style="color: var(--primary);">aistudio.google.com</a></li>
+          <li>Sign in with Google</li>
+          <li>Click "Create API Key"</li>
+          <li>Copy the key and paste it in app settings!</li>
+        </ol>
+      </div>
+    </div>
+
+    <!-- Micro:bit Faces -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">📟</span>
+        Micro:bit Faces
+      </h2>
+      <p style="margin-bottom: 25px;">Your micro:bit shows different faces!</p>
+      
+      <div class="faces-grid">
+        <div class="face-card">
+          <div class="led-grid">
+            <!-- Row 1 --><div class="led"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 2 --><div class="led"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 3 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+            <!-- Row 4 --><div class="led on"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led on"></div>
+            <!-- Row 5 --><div class="led"></div><div class="led on"></div><div class="led on"></div><div class="led on"></div><div class="led"></div>
+          </div>
+          <div class="label">😊 Ready!</div>
+        </div>
+        
+        <div class="face-card">
+          <div class="led-grid">
+            <!-- Row 1 --><div class="led on"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led on"></div>
+            <!-- Row 2 --><div class="led on"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led on"></div>
+            <!-- Row 3 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+            <!-- Row 4 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+            <!-- Row 5 --><div class="led"></div><div class="led on"></div><div class="led on"></div><div class="led on"></div><div class="led"></div>
+          </div>
+          <div class="label">👂 Listening...</div>
+        </div>
+        
+        <div class="face-card">
+          <div class="led-grid">
+            <!-- Row 1 --><div class="led"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 2 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+            <!-- Row 3 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+            <!-- Row 4 --><div class="led"></div><div class="led on"></div><div class="led on"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 5 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+          </div>
+          <div class="label">🤔 Thinking...</div>
+        </div>
+        
+        <div class="face-card">
+          <div class="led-grid">
+            <!-- Row 1 --><div class="led"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 2 --><div class="led"></div><div class="led on"></div><div class="led"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 3 --><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div><div class="led"></div>
+            <!-- Row 4 --><div class="led"></div><div class="led on"></div><div class="led on"></div><div class="led on"></div><div class="led"></div>
+            <!-- Row 5 --><div class="led"></div><div class="led on"></div><div class="led on"></div><div class="led on"></div><div class="led"></div>
+          </div>
+          <div class="label">🔊 Talking!</div>
+        </div>
+      </div>
+
+      <h3 style="margin-top: 30px; margin-bottom: 15px;">⏺️ Micro:bit Buttons</h3>
+      <div class="buttons-demo">
+        <div class="button-demo">
+          <div class="btn-circle">A</div>
+          <div class="btn-label">Button A</div>
+          <div class="btn-desc">Start listening</div>
+        </div>
+        <div class="button-demo">
+          <div class="btn-circle">B</div>
+          <div class="btn-label">Button B</div>
+          <div class="btn-desc">Stop talking</div>
+        </div>
+        <div class="button-demo">
+          <div class="btn-circle" style="font-size: 1rem;">A+B</div>
+          <div class="btn-label">Both Buttons</div>
+          <div class="btn-desc">Happy face!</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Fun Things To Try -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">🎨</span>
+        Fun Things To Try!
+      </h2>
+      
+      <div class="try-list">
+        <div class="try-item">
+          <span class="say">"Hello!"</span>
+          <span class="arrow">→</span>
+          <span class="result">Says hi back! 👋</span>
+        </div>
+        <div class="try-item">
+          <span class="say">"What's your name?"</span>
+          <span class="arrow">→</span>
+          <span class="result">Tells you its name!</span>
+        </div>
+        <div class="try-item">
+          <span class="say">"Tell me a joke"</span>
+          <span class="arrow">→</span>
+          <span class="result">Tells a funny joke! 😂</span>
+        </div>
+        <div class="try-item">
+          <span class="say">"Make a happy face"</span>
+          <span class="arrow">→</span>
+          <span class="result">Shows 😊 on micro:bit!</span>
+        </div>
+        <div class="try-item">
+          <span class="say">"Blink your eyes"</span>
+          <span class="arrow">→</span>
+          <span class="result">Blinks the LED eyes!</span>
+        </div>
+        <div class="try-item">
+          <span class="say">"Goodbye!"</span>
+          <span class="arrow">→</span>
+          <span class="result">Waves goodbye! 👋</span>
+        </div>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">💡 With Gemini AI, try:</div>
+        <ul style="margin-left: 20px; color: var(--muted);">
+          <li>"Pretend you're a pirate!"</li>
+          <li>"Speak like a dinosaur!"</li>
+          <li>"Tell me about space!"</li>
+        </ul>
+      </div>
+    </div>
+
+    <!-- Troubleshooting -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">❓</span>
+        Help! Something's Wrong!
+      </h2>
+      
+      <table class="info-table">
+        <tr>
+          <th>Problem</th>
+          <th>Solution</th>
+        </tr>
+        <tr>
+          <td><strong>"I can't connect!"</strong></td>
+          <td>
+            ✅ Use Chrome or Edge<br>
+            ✅ Turn on Bluetooth<br>
+            ✅ Upload micro:bit code first
+          </td>
+        </tr>
+        <tr>
+          <td><strong>"Robot doesn't hear me!"</strong></td>
+          <td>
+            ✅ Click "Allow" for microphone<br>
+            ✅ Speak clearly<br>
+            ✅ Check you're not muted
+          </td>
+        </tr>
+        <tr>
+          <td><strong>"Oops! Something went wrong!"</strong></td>
+          <td>
+            ✅ Check internet connection<br>
+            ✅ Try Demo Mode<br>
+            ✅ Wait 30 seconds, try again
+          </td>
+        </tr>
+        <tr>
+          <td><strong>"Voice sounds weird!"</strong></td>
+          <td>
+            ✅ Change voice speed (🐢/🐇)<br>
+            ✅ Try a different language
+          </td>
+        </tr>
+      </table>
+    </div>
+
+    <!-- Safety -->
+    <div class="section">
+      <h2 class="section-title">
+        <span class="icon">🛡️</span>
+        Stay Safe!
+      </h2>
+      
+      <div class="safety-grid">
+        <div class="safety-item">
+          <span class="check">✅</span>
+          <span><strong>Don't share</strong> personal info with the robot</span>
+        </div>
+        <div class="safety-item">
+          <span class="check">✅</span>
+          <span><strong>Don't share</strong> your API key with anyone</span>
+        </div>
+        <div class="safety-item">
+          <span class="check">✅</span>
+          <span><strong>Ask an adult</strong> if something seems wrong</span>
+        </div>
+        <div class="safety-item">
+          <span class="check">✅</span>
+          <span><strong>Have fun</strong> and be creative!</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Footer -->
+    <div class="footer">
+      <p style="font-size: 1.3rem; margin-bottom: 10px;">
+        Made with <span class="heart">❤️</span> for kids who love robots!
+      </p>
+      <p>🤖💬 Have fun with your Talking Robot! 💬🤖</p>
+    </div>
+
+  </div>
+</body>
+</html>

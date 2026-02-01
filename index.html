@@ -1,0 +1,1560 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Talking Robot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --bg-color: #0a1628;
+      --panel-bg: #0f172a;
+      --accent: #22c55e;
+      --accent-soft: rgba(34, 197, 94, 0.15);
+      --accent-strong: rgba(34, 197, 94, 0.7);
+      --primary: #3b82f6;
+      --primary-soft: rgba(59, 130, 246, 0.2);
+      --danger: #ef4444;
+      --warning: #f59e0b;
+      --muted: #94a3b8;
+      --border: #1e293b;
+      --text: #f1f5f9;
+      --radius: 16px;
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      -webkit-tap-highlight-color: transparent;
+    }
+
+    body {
+      min-height: 100vh;
+      min-height: 100dvh;
+      background: 
+        radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 50%),
+        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.15), transparent 55%),
+        var(--bg-color);
+      color: var(--text);
+      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
+      overflow: hidden;
+    }
+
+    .app {
+      display: flex;
+      height: 100vh;
+      height: 100dvh;
+    }
+
+    /* ==================== MAIN AREA ==================== */
+    .main-area {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      min-width: 0;
+      position: relative;
+    }
+
+    /* Bismillah */
+    .bismillah {
+      position: absolute;
+      top: 8px;
+      left: 0;
+      right: 0;
+      text-align: center;
+      font-family: "Amiri", serif;
+      font-size: 14px;
+      color: rgba(200, 230, 255, 0.25);
+      pointer-events: none;
+      user-select: none;
+      z-index: 10;
+    }
+
+    /* Header */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px 20px;
+      padding-top: 32px;
+      gap: 12px;
+    }
+
+    .logo-block {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .logo {
+      width: 48px;
+      height: auto;
+    }
+
+    .app-title {
+      font-size: 1.1rem;
+      font-weight: 700;
+      letter-spacing: 0.05em;
+      color: var(--accent);
+      text-transform: uppercase;
+    }
+
+    .app-subtitle {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 2px;
+    }
+
+    /* Status Pill */
+    .status-pill {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      font-size: 0.75rem;
+      font-weight: 600;
+      letter-spacing: 0.05em;
+      text-transform: uppercase;
+      background: rgba(15, 23, 42, 0.9);
+      border: 2px solid var(--border);
+      cursor: pointer;
+      transition: all 0.2s;
+    }
+
+    .status-pill:hover {
+      border-color: var(--muted);
+    }
+
+    .status-dot {
+      width: 10px;
+      height: 10px;
+      border-radius: 50%;
+      background: var(--danger);
+      box-shadow: 0 0 8px var(--danger);
+      animation: pulse 2s infinite;
+    }
+
+    .status-pill.connected .status-dot {
+      background: var(--accent);
+      box-shadow: 0 0 12px var(--accent);
+    }
+
+    @keyframes pulse {
+      0%, 100% { opacity: 1; }
+      50% { opacity: 0.5; }
+    }
+
+    /* Robot Container */
+    .robot-container {
+      flex: 1;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+      min-height: 0;
+    }
+
+    /* Robot Face */
+    .robot-face {
+      width: min(280px, 60vw);
+      height: min(280px, 60vw);
+      background: linear-gradient(145deg, #1e293b, #0f172a);
+      border-radius: 32px;
+      border: 4px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        inset 0 2px 0 rgba(255, 255, 255, 0.05);
+      transition: all 0.3s;
+      position: relative;
+    }
+
+    .robot-face.listening {
+      border-color: var(--primary);
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(59, 130, 246, 0.3);
+    }
+
+    .robot-face.thinking {
+      border-color: var(--warning);
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(245, 158, 11, 0.3);
+    }
+
+    .robot-face.speaking {
+      border-color: var(--accent);
+      box-shadow: 
+        0 20px 50px rgba(0, 0, 0, 0.5),
+        0 0 40px rgba(34, 197, 94, 0.3);
+    }
+
+    /* Robot Eyes */
+    .robot-eyes {
+      display: flex;
+      gap: 40px;
+    }
+
+    .robot-eye {
+      width: 50px;
+      height: 50px;
+      background: var(--primary);
+      border-radius: 12px;
+      box-shadow: 
+        0 0 20px var(--primary),
+        inset 0 -4px 8px rgba(0, 0, 0, 0.3);
+      transition: all 0.2s;
+    }
+
+    .robot-face.listening .robot-eye {
+      animation: blink 0.3s infinite alternate;
+    }
+
+    .robot-face.thinking .robot-eye {
+      background: var(--warning);
+      box-shadow: 0 0 20px var(--warning);
+      animation: think 0.5s infinite alternate;
+    }
+
+    .robot-face.speaking .robot-eye {
+      background: var(--accent);
+      box-shadow: 0 0 20px var(--accent);
+    }
+
+    @keyframes blink {
+      0% { transform: scaleY(1); }
+      100% { transform: scaleY(0.3); }
+    }
+
+    @keyframes think {
+      0% { transform: translateY(0); }
+      100% { transform: translateY(-5px); }
+    }
+
+    /* Robot Mouth */
+    .robot-mouth {
+      width: 80px;
+      height: 20px;
+      background: #334155;
+      border-radius: 10px;
+      overflow: hidden;
+      position: relative;
+    }
+
+    .robot-mouth-inner {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 0%;
+      background: var(--accent);
+      transition: height 0.1s;
+      border-radius: 10px;
+    }
+
+    .robot-face.speaking .robot-mouth-inner {
+      animation: speak 0.15s infinite alternate;
+    }
+
+    @keyframes speak {
+      0% { height: 20%; }
+      100% { height: 100%; }
+    }
+
+    /* Status Text */
+    .robot-status {
+      position: absolute;
+      bottom: -40px;
+      font-size: 0.9rem;
+      font-weight: 600;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+    }
+
+    .robot-face.listening .robot-status { color: var(--primary); }
+    .robot-face.thinking .robot-status { color: var(--warning); }
+    .robot-face.speaking .robot-status { color: var(--accent); }
+
+    /* Chat Area */
+    .chat-area {
+      padding: 0 20px;
+      max-height: 120px;
+      overflow-y: auto;
+      margin-bottom: 10px;
+    }
+
+    .chat-bubble {
+      max-width: 85%;
+      padding: 12px 16px;
+      border-radius: 20px;
+      margin-bottom: 8px;
+      font-size: 0.95rem;
+      line-height: 1.4;
+      animation: fadeIn 0.3s;
+    }
+
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(10px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+
+    .chat-bubble.user {
+      background: var(--primary);
+      color: white;
+      margin-left: auto;
+      border-bottom-right-radius: 6px;
+    }
+
+    .chat-bubble.robot {
+      background: var(--panel-bg);
+      border: 2px solid var(--border);
+      border-bottom-left-radius: 6px;
+    }
+
+    /* Input Area */
+    .input-area {
+      padding: 16px 20px;
+      padding-bottom: max(16px, env(safe-area-inset-bottom));
+      background: rgba(15, 23, 42, 0.8);
+      border-top: 1px solid var(--border);
+    }
+
+    .input-row {
+      display: flex;
+      gap: 12px;
+      align-items: center;
+    }
+
+    .text-input {
+      flex: 1;
+      padding: 14px 18px;
+      border-radius: 999px;
+      border: 2px solid var(--border);
+      background: var(--panel-bg);
+      color: var(--text);
+      font-size: 1rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .text-input:focus {
+      border-color: var(--primary);
+    }
+
+    .text-input::placeholder {
+      color: var(--muted);
+    }
+
+    /* Big Buttons */
+    .btn-mic, .btn-send {
+      width: 56px;
+      height: 56px;
+      border-radius: 50%;
+      border: none;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.5rem;
+      transition: all 0.2s;
+      flex-shrink: 0;
+    }
+
+    .btn-mic {
+      background: linear-gradient(145deg, var(--primary), #2563eb);
+      color: white;
+      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
+    }
+
+    .btn-mic:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-mic:active, .btn-mic.active {
+      transform: scale(0.95);
+      background: linear-gradient(145deg, #ef4444, #dc2626);
+      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
+    }
+
+    .btn-send {
+      background: linear-gradient(145deg, var(--accent), #16a34a);
+      color: white;
+      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
+    }
+
+    .btn-send:hover {
+      transform: scale(1.05);
+    }
+
+    .btn-send:active {
+      transform: scale(0.95);
+    }
+
+    /* ==================== SIDEBAR ==================== */
+    .sidebar {
+      width: 320px;
+      background: var(--panel-bg);
+      border-left: 1px solid var(--border);
+      display: flex;
+      flex-direction: column;
+      transition: transform 0.3s ease;
+      position: relative;
+      z-index: 100;
+    }
+
+    .sidebar.collapsed {
+      transform: translateX(100%);
+      position: absolute;
+      right: 0;
+      top: 0;
+      bottom: 0;
+    }
+
+    .sidebar-toggle {
+      position: absolute;
+      left: -48px;
+      top: 50%;
+      transform: translateY(-50%);
+      width: 40px;
+      height: 80px;
+      background: var(--panel-bg);
+      border: 1px solid var(--border);
+      border-right: none;
+      border-radius: 12px 0 0 12px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.2rem;
+      color: var(--muted);
+      transition: all 0.2s;
+    }
+
+    .sidebar-toggle:hover {
+      background: var(--border);
+      color: var(--text);
+    }
+
+    .sidebar-header {
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 0.9rem;
+      text-transform: uppercase;
+      letter-spacing: 0.1em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .sidebar-content {
+      flex: 1;
+      overflow-y: auto;
+      padding: 16px;
+    }
+
+    /* Settings Sections */
+    .settings-section {
+      margin-bottom: 20px;
+    }
+
+    .settings-label {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      color: var(--muted);
+      margin-bottom: 8px;
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    /* Connect Button */
+    .btn-connect {
+      width: 100%;
+      padding: 14px;
+      border-radius: 12px;
+      border: 2px solid var(--accent);
+      background: linear-gradient(145deg, rgba(34, 197, 94, 0.2), transparent);
+      color: var(--accent);
+      font-size: 1rem;
+      font-weight: 700;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      transition: all 0.2s;
+    }
+
+    .btn-connect:hover {
+      background: var(--accent);
+      color: var(--bg-color);
+    }
+
+    .btn-connect.connected {
+      border-color: var(--danger);
+      background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), transparent);
+      color: var(--danger);
+    }
+
+    .btn-connect.connected:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    /* Select & Inputs */
+    .select-wrap {
+      position: relative;
+    }
+
+    .select-wrap select {
+      width: 100%;
+      padding: 12px 14px;
+      border-radius: 10px;
+      border: 2px solid var(--border);
+      background: var(--bg-color);
+      color: var(--text);
+      font-size: 0.9rem;
+      cursor: pointer;
+      appearance: none;
+      outline: none;
+    }
+
+    .select-wrap::after {
+      content: "▼";
+      position: absolute;
+      right: 14px;
+      top: 50%;
+      transform: translateY(-50%);
+      font-size: 0.7rem;
+      color: var(--muted);
+      pointer-events: none;
+    }
+
+    /* Language Flags */
+    .language-flags {
+      display: flex;
+      gap: 8px;
+    }
+
+    .flag-btn {
+      flex: 1;
+      padding: 12px;
+      border-radius: 12px;
+      border: 2px solid var(--border);
+      background: var(--bg-color);
+      cursor: pointer;
+      text-align: center;
+      transition: all 0.2s;
+    }
+
+    .flag-btn:hover {
+      border-color: var(--muted);
+    }
+
+    .flag-btn.active {
+      border-color: var(--accent);
+      background: rgba(34, 197, 94, 0.1);
+    }
+
+    .flag-btn .flag {
+      font-size: 1.8rem;
+      display: block;
+      margin-bottom: 4px;
+    }
+
+    .flag-btn .flag-label {
+      font-size: 0.65rem;
+      color: var(--muted);
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+    }
+
+    /* Voice Speed Slider */
+    .slider-container {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+    }
+
+    .slider {
+      flex: 1;
+      height: 8px;
+      border-radius: 4px;
+      background: var(--border);
+      appearance: none;
+      cursor: pointer;
+    }
+
+    .slider::-webkit-slider-thumb {
+      appearance: none;
+      width: 20px;
+      height: 20px;
+      border-radius: 50%;
+      background: var(--accent);
+      cursor: pointer;
+      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
+    }
+
+    .slider-value {
+      min-width: 40px;
+      text-align: center;
+      font-weight: 600;
+      color: var(--accent);
+    }
+
+    /* Logs Section */
+    .logs-section {
+      border-top: 1px solid var(--border);
+      margin-top: auto;
+    }
+
+    .logs-header {
+      padding: 12px 16px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      cursor: pointer;
+      transition: background 0.2s;
+    }
+
+    .logs-header:hover {
+      background: rgba(255, 255, 255, 0.03);
+    }
+
+    .logs-title {
+      font-size: 0.75rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.08em;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .logs-toggle {
+      font-size: 0.8rem;
+      color: var(--muted);
+      transition: transform 0.2s;
+    }
+
+    .logs-section.open .logs-toggle {
+      transform: rotate(180deg);
+    }
+
+    .logs-container {
+      max-height: 0;
+      overflow: hidden;
+      transition: max-height 0.3s;
+    }
+
+    .logs-section.open .logs-container {
+      max-height: 300px;
+    }
+
+    .logs-content {
+      height: 200px;
+      overflow-y: auto;
+      padding: 12px;
+      background: var(--bg-color);
+      font-family: "SF Mono", monospace;
+      font-size: 0.75rem;
+      line-height: 1.4;
+    }
+
+    .log-line {
+      margin-bottom: 4px;
+      white-space: pre-wrap;
+      word-break: break-word;
+    }
+
+    .log-line.info { color: var(--muted); }
+    .log-line.success { color: var(--accent); }
+    .log-line.error { color: var(--danger); }
+    .log-line.tx { color: #a5b4fc; }
+    .log-line.rx { color: #7dd3fc; }
+
+    .logs-actions {
+      display: flex;
+      gap: 8px;
+      padding: 12px;
+      border-top: 1px solid var(--border);
+    }
+
+    .btn-small {
+      flex: 1;
+      padding: 8px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-color);
+      color: var(--text);
+      font-size: 0.75rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 4px;
+      transition: all 0.2s;
+    }
+
+    .btn-small:hover {
+      background: var(--border);
+    }
+
+    .btn-small.danger {
+      border-color: var(--danger);
+      color: var(--danger);
+    }
+
+    .btn-small.danger:hover {
+      background: var(--danger);
+      color: white;
+    }
+
+    /* API Key Input */
+    .api-key-input {
+      width: 100%;
+      padding: 10px 12px;
+      border-radius: 8px;
+      border: 2px solid var(--border);
+      background: var(--bg-color);
+      color: var(--text);
+      font-size: 0.85rem;
+      outline: none;
+      transition: border-color 0.2s;
+    }
+
+    .api-key-input:focus {
+      border-color: var(--primary);
+    }
+
+    .api-hint {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    .api-hint a {
+      color: var(--primary);
+      text-decoration: none;
+    }
+
+    .api-hint a:hover {
+      text-decoration: underline;
+    }
+
+    /* ==================== MOBILE ==================== */
+    @media (max-width: 768px) {
+      .sidebar {
+        position: fixed;
+        right: 0;
+        top: 0;
+        bottom: 0;
+        width: 85%;
+        max-width: 320px;
+        transform: translateX(100%);
+        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
+      }
+
+      .sidebar.open {
+        transform: translateX(0);
+      }
+
+      .sidebar-toggle {
+        left: -44px;
+      }
+
+      .header {
+        padding: 12px 16px;
+        padding-top: 28px;
+      }
+
+      .app-title {
+        font-size: 0.95rem;
+      }
+
+      .robot-face {
+        width: min(220px, 55vw);
+        height: min(220px, 55vw);
+      }
+
+      .robot-eyes {
+        gap: 30px;
+      }
+
+      .robot-eye {
+        width: 40px;
+        height: 40px;
+      }
+
+      .robot-mouth {
+        width: 60px;
+        height: 16px;
+      }
+
+      .chat-area {
+        max-height: 100px;
+      }
+
+      .input-area {
+        padding: 12px 16px;
+      }
+
+      .btn-mic, .btn-send {
+        width: 50px;
+        height: 50px;
+        font-size: 1.3rem;
+      }
+
+      .text-input {
+        padding: 12px 16px;
+        font-size: 0.95rem;
+      }
+    }
+
+    /* RTL Support for Arabic */
+    [dir="rtl"] .chat-bubble.user {
+      margin-left: 0;
+      margin-right: auto;
+    }
+
+    [dir="rtl"] .sidebar {
+      border-left: none;
+      border-right: 1px solid var(--border);
+      left: 0;
+      right: auto;
+      transform: translateX(-100%);
+    }
+
+    [dir="rtl"] .sidebar.open,
+    [dir="rtl"] .sidebar:not(.collapsed) {
+      transform: translateX(0);
+    }
+
+    [dir="rtl"] .sidebar-toggle {
+      left: auto;
+      right: -48px;
+      border-radius: 0 12px 12px 0;
+      border-left: none;
+      border-right: 1px solid var(--border);
+    }
+
+    /* Overlay for mobile */
+    .overlay {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.5);
+      z-index: 90;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+  </style>
+</head>
+<body>
+  <div class="app">
+    <!-- Main Area -->
+    <div class="main-area">
+      <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
+
+      <!-- Header -->
+      <header class="header">
+        <div class="logo-block">
+          <svg class="logo" viewBox="-92.820084 179.975632 6.000000 3.214096" xmlns="http://www.w3.org/2000/svg">
+            <path fill="#22c55e" d="M-90.26918,180.70665C-90.270096,180.703674,-90.280693,180.55484,-90.292725,180.3759C-90.304756,180.19696,-90.315605,180.042282,-90.316826,180.032166L-90.319046,180.013763L-90.29628,180.013763C-90.283752,180.013748,-90.25869,180.012115,-90.240585,180.010117C-90.222481,180.008118,-90.191841,180.005646,-90.172501,180.004608L-90.137344,180.002731L-90.128738,180.131226C-90.124008,180.201889,-90.119133,180.269699,-90.117897,180.281921L-90.115662,180.304123L-90.05497,180.20639C-90.021591,180.152634,-89.977379,180.08139,-89.956726,180.048065L-89.919182,179.987488L-89.883324,179.985062C-89.863602,179.983734,-89.824806,179.980759,-89.797112,179.978455C-89.769424,179.976166,-89.739342,179.974884,-89.73027,179.975632L-89.713783,179.976974L-89.825653,180.145996L-89.937531,180.315033L-89.796638,180.490601C-89.719147,180.587158,-89.655746,180.667526,-89.655746,180.669174C-89.655746,180.670837,-89.657356,180.672195,-89.659317,180.672195C-89.676155,180.672195,-89.856628,180.684464,-89.861404,180.685928C-89.865883,180.687317,-89.896164,180.651016,-89.971275,180.554199C-90.028305,180.480698,-90.076393,180.421448,-90.07814,180.422516C-90.079887,180.423599,-90.086746,180.433975,-90.093384,180.445587L-90.105461,180.466675L-90.097374,180.581726C-90.091408,180.66658,-90.090439,180.697479,-90.093674,180.699478C-90.099167,180.702866,-90.137032,180.7061,-90.21048,180.709442C-90.257515,180.711578,-90.267807,180.71109,-90.26918,180.70665z"/>
+            <path fill="#22c55e" d="M-89.190971,180.7686C-89.267868,180.753281,-89.31105,180.739975,-89.360039,180.716522C-89.393906,180.700302,-89.471527,180.651245,-89.480576,180.640335C-89.484718,180.635345,-89.482971,180.627808,-89.446373,180.493073C-89.44014,180.470108,-89.428429,180.473007,-89.40416,180.50351C-89.35006,180.571503,-89.267303,180.622406,-89.189331,180.635666C-89.152946,180.641846,-89.149734,180.641846,-89.129295,180.635406C-89.09346,180.624115,-89.075447,180.597748,-89.081604,180.565582C-89.085762,180.543793,-89.121902,180.514221,-89.183189,180.482422C-89.254944,180.44519,-89.27681,180.430908,-89.309555,180.399933C-89.365524,180.347,-89.382957,180.291809,-89.367203,180.217453C-89.349838,180.135468,-89.298691,180.084976,-89.207352,180.059616C-89.16906,180.048981,-89.099213,180.048294,-89.053474,180.058105C-88.98037,180.073776,-88.906212,180.104935,-88.843803,180.14621C-88.810745,180.16806,-88.807495,180.171295,-88.809486,180.180176C-88.810699,180.185577,-88.820007,180.220505,-88.830177,180.257782C-88.847977,180.323044,-88.849014,180.325516,-88.858116,180.324509C-88.863312,180.323944,-88.870895,180.31871,-88.874962,180.312897C-88.886063,180.297012,-88.932678,180.252243,-88.951851,180.239044C-89.003326,180.203629,-89.07032,180.181305,-89.113388,180.185211C-89.166359,180.190018,-89.195839,180.22757,-89.177078,180.266357C-89.168106,180.284912,-89.14418,180.302139,-89.078835,180.337082C-88.97522,180.392517,-88.924667,180.434921,-88.900993,180.486298C-88.888092,180.514282,-88.885109,180.566086,-88.894295,180.602661C-88.921547,180.711212,-89.010704,180.773865,-89.135971,180.772491C-89.156639,180.772263,-89.181389,180.770508,-89.190971,180.7686z"/>
+            <path fill="#22c55e" d="M-91.104111,180.90361C-91.134857,180.834915,-91.198944,180.691757,-91.246529,180.585495C-91.294121,180.479233,-91.332542,180.391785,-91.331917,180.391159C-91.330269,180.389511,-91.248558,180.352615,-91.135277,180.302368C-91.080956,180.278275,-91.021782,180.253952,-91.003784,180.248306C-90.923584,180.22316,-90.848717,180.234344,-90.799507,180.278824C-90.775833,180.300217,-90.757965,180.329971,-90.742996,180.372955C-90.732986,180.401703,-90.731194,180.412506,-90.731262,180.44368C-90.731339,180.474075,-90.733147,180.485123,-90.741638,180.507187C-90.753166,180.53714,-90.772163,180.572006,-90.780914,180.579269C-90.784096,180.581909,-90.786697,180.585449,-90.786697,180.587128C-90.786697,180.590454,-90.750763,180.609756,-90.581421,180.697388C-90.520706,180.72879,-90.466957,180.757034,-90.461975,180.760147C-90.4533,180.765549,-90.456924,180.767578,-90.547188,180.807983C-90.599037,180.831192,-90.645187,180.85022,-90.64975,180.850266C-90.654312,180.850327,-90.720131,180.816483,-90.796013,180.775055L-90.933975,180.699768L-90.960068,180.711792C-90.974419,180.718399,-90.986549,180.72406,-90.987015,180.72435C-90.987488,180.724655,-90.965302,180.775085,-90.937721,180.836411C-90.910133,180.897751,-90.887093,180.950424,-90.886513,180.953476C-90.885788,180.957291,-90.909706,180.96991,-90.96286,180.993774C-91.005432,181.012878,-91.042053,181.028519,-91.044235,181.028519C-91.046425,181.028519,-91.073364,180.972321,-91.104111,180.90361zM-90.99427,180.585632C-90.928116,180.554184,-90.903168,180.526901,-90.902977,180.485809C-90.902802,180.449066,-90.926598,180.406387,-90.953178,180.395752C-90.982254,180.384109,-91.00518,180.388504,-91.073784,180.418884C-91.095886,180.428665,-91.114441,180.437119,-91.115021,180.437668C-91.116417,180.439011,-91.04142,180.606354,-91.039421,180.606354C-91.038567,180.606354,-91.018242,180.597031,-90.99427,180.585632z"/>
+            <path fill="#22c55e" d="M-88.328873,181.18129C-88.367035,181.1548,-88.399017,181.132355,-88.399948,181.131424C-88.400887,181.130493,-88.36216,181.072723,-88.313889,181.003052C-88.265625,180.933365,-88.227539,180.875137,-88.229256,180.873642C-88.232262,180.871017,-88.36467,180.779251,-88.401207,180.754456L-88.418991,180.742401L-88.505783,180.867996C-88.55352,180.937073,-88.594093,180.993607,-88.59594,180.993622C-88.59967,180.993668,-88.741692,180.896652,-88.741692,180.894058C-88.741692,180.892731,-88.562958,180.634018,-88.382385,180.373978C-88.362411,180.345215,-88.344566,180.321136,-88.342712,180.320465C-88.340332,180.319611,-88.229614,180.393921,-88.196304,180.418747C-88.195633,180.41925,-88.226578,180.465042,-88.265076,180.520508C-88.303574,180.575974,-88.335899,180.623642,-88.336906,180.62645C-88.338058,180.629654,-88.30468,180.655014,-88.246178,180.695328C-88.195274,180.730423,-88.152,180.759674,-88.150009,180.76033C-88.148026,180.761002,-88.11441,180.715302,-88.075317,180.658768C-88.036224,180.602249,-88.002808,180.556,-88.00106,180.556C-87.996506,180.556,-87.856689,180.652924,-87.856689,180.656067C-87.856689,180.66153,-88.251923,181.229736,-88.255615,181.229599C-88.257751,181.229523,-88.29071,181.207779,-88.328873,181.18129z"/>
+            <path fill="#22c55e" d="M-91.754158,181.531448C-91.888771,181.512161,-92.043076,181.366882,-92.082649,181.222183C-92.093285,181.183273,-92.092499,181.109177,-92.081032,181.069366C-92.049042,180.958313,-91.935387,180.846329,-91.824692,180.816788C-91.785378,180.806305,-91.704155,180.807419,-91.663956,180.818985C-91.603546,180.836395,-91.54142,180.875549,-91.484215,180.932281C-91.430611,180.985458,-91.394707,181.040161,-91.374954,181.098755C-91.364899,181.128601,-91.362389,181.143066,-91.360794,181.18042C-91.358604,181.231888,-91.362877,181.260315,-91.379135,181.302338C-91.403221,181.364624,-91.466469,181.439941,-91.530434,181.482498C-91.598885,181.528046,-91.669739,181.543549,-91.754158,181.531448zM-91.605019,181.363525C-91.545914,181.336853,-91.511971,181.268951,-91.52636,181.206177C-91.548233,181.110733,-91.662498,180.996597,-91.760284,180.972504C-91.805176,180.961456,-91.846542,180.972488,-91.884094,181.005539C-91.904282,181.023315,-91.923706,181.059692,-91.92746,181.086777C-91.935303,181.143326,-91.900101,181.216187,-91.832245,181.283859C-91.751648,181.364258,-91.670021,181.392868,-91.605019,181.363525z"/>
+            <path fill="#22c55e" d="M-90.370827,181.625046C-90.382538,181.620316,-90.390862,181.606598,-90.416695,181.549454C-90.474388,181.421844,-90.474808,181.421082,-90.488495,181.41835C-90.495407,181.416962,-90.549316,181.415833,-90.608307,181.415833L-90.715553,181.415833L-90.723869,181.430634C-90.735786,181.451828,-90.771561,181.484283,-90.794991,181.495132C-90.860039,181.525269,-90.93119,181.512695,-90.977165,181.462952C-90.988503,181.450684,-91.003014,181.430267,-91.009399,181.417587C-91.019745,181.397064,-91.021019,181.390701,-91.021019,181.35968C-91.021019,181.328476,-91.019714,181.322067,-91.008591,181.298569C-90.99292,181.265488,-90.965279,181.238113,-90.930862,181.221588C-90.907669,181.210464,-90.901016,181.209076,-90.869965,181.208862C-90.80793,181.208435,-90.764534,181.22995,-90.732475,181.277023L-90.715042,181.302612L-90.575615,181.304077C-90.436188,181.305527,-90.43618,181.305542,-90.416817,181.31517C-90.398369,181.324356,-90.3964,181.32692,-90.375305,181.369354C-90.363121,181.39386,-90.334541,181.455734,-90.31179,181.506851C-90.28904,181.557983,-90.267876,181.603714,-90.264763,181.60849C-90.253143,181.626328,-90.259285,181.628876,-90.313087,181.628616C-90.340317,181.628479,-90.366295,181.626862,-90.370827,181.625046z"/>
+            <path fill="#22c55e" d="M-92.15197,182.548569C-92.177536,182.545853,-92.224594,182.540802,-92.256546,182.537354C-92.288498,182.53392,-92.338173,182.52858,-92.366928,182.525513C-92.395683,182.522461,-92.434898,182.518082,-92.454071,182.515793C-92.473244,182.513504,-92.512894,182.509094,-92.542183,182.505966C-92.57148,182.502853,-92.620277,182.497635,-92.650635,182.494385C-92.680992,182.491135,-92.728966,182.486145,-92.757248,182.483307C-92.785538,182.480469,-92.809792,182.47702,-92.811157,182.475662C-92.812523,182.474289,-92.799805,182.436142,-92.782898,182.390884C-92.754135,182.313873,-92.751503,182.308502,-92.74189,182.307388C-92.736244,182.306732,-92.704903,182.310547,-92.672249,182.315887C-92.639587,182.321213,-92.58847,182.329208,-92.558647,182.333633C-92.528824,182.338074,-92.494835,182.343353,-92.483124,182.345383C-92.471405,182.347397,-92.437416,182.352676,-92.407593,182.357101C-92.377769,182.361511,-92.338562,182.367523,-92.320465,182.370438C-92.302368,182.373352,-92.287102,182.37529,-92.286552,182.374741C-92.285995,182.374191,-92.372719,182.313995,-92.479263,182.240982C-92.585815,182.167969,-92.673676,182.107132,-92.674507,182.105774C-92.675339,182.104416,-92.662621,182.067581,-92.64624,182.023911L-92.616463,181.944504L-92.597237,181.944794C-92.586662,181.944946,-92.555351,181.947952,-92.527664,181.951462C-92.499969,181.954971,-92.454651,181.960617,-92.426956,181.964005C-92.399269,181.967392,-92.36528,181.971695,-92.351433,181.973557C-92.328728,181.976624,-92.30175,181.979965,-92.19651,181.992737C-92.178406,181.994934,-92.159386,181.99675,-92.154243,181.996765C-92.148262,181.99678,-92.215065,181.952087,-92.340157,181.87236C-92.44754,181.803909,-92.536781,181.746689,-92.53846,181.745178C-92.542084,181.741913,-92.481216,181.576385,-92.476608,181.576981C-92.47123,181.577667,-91.883232,181.983047,-91.883003,181.986237C-91.882706,181.990311,-91.945244,182.160767,-91.948204,182.16394C-91.950806,182.166733,-91.989197,182.1633,-92.237175,182.138077C-92.266998,182.13504,-92.3097,182.130722,-92.332069,182.128479C-92.354439,182.126236,-92.376221,182.123383,-92.380486,182.122147C-92.38739,182.120148,-92.387596,182.120544,-92.382416,182.125809C-92.379227,182.129059,-92.299919,182.184326,-92.206192,182.248627C-92.112465,182.312927,-92.033577,182.367615,-92.030884,182.370163C-92.023773,182.376907,-92.089813,182.554764,-92.099144,182.554016C-92.102638,182.553726,-92.126411,182.551285,-92.15197,182.548569z"/>
+            <path fill="#22c55e" d="M-87.128403,182.564102C-87.143234,182.558975,-87.167259,182.546646,-87.181786,182.536728C-87.243195,182.494766,-87.274879,182.442429,-87.301308,182.33931C-87.310005,182.305374,-87.317406,182.277313,-87.317749,182.276932C-87.318092,182.276566,-87.334915,182.280426,-87.355141,182.285492C-87.475342,182.315628,-87.534744,182.329453,-87.537277,182.327881C-87.540825,182.325684,-87.582123,182.160416,-87.579628,182.158386C-87.578636,182.157593,-87.527283,182.144516,-87.465508,182.129364C-87.403732,182.114197,-87.299156,182.088531,-87.233116,182.072311C-87.167084,182.056107,-87.067268,182.031494,-87.011299,182.017624C-86.955338,182.003754,-86.90667,181.99295,-86.903137,181.993637C-86.89814,181.994598,-86.890068,182.02179,-86.866554,182.116867C-86.824165,182.288239,-86.820068,182.309433,-86.820084,182.35701C-86.820129,182.467148,-86.873154,182.536438,-86.980072,182.566071C-87.022186,182.577744,-87.091675,182.576828,-87.128403,182.564102zM-87.029533,182.389496C-86.989899,182.377716,-86.96804,182.346741,-86.967896,182.302109C-86.967819,182.279099,-86.980309,182.210999,-86.986679,182.199707C-86.988358,182.196732,-87.018852,182.202759,-87.084679,182.219101C-87.137245,182.232147,-87.181396,182.243958,-87.182785,182.245346C-87.186104,182.248672,-87.166954,182.318787,-87.156876,182.34024C-87.145279,182.364914,-87.122299,182.386688,-87.100632,182.393509C-87.080498,182.399857,-87.060677,182.398743,-87.029533,182.389496z"/>
+            <path fill="#22c55e" d="M-90.936707,182.606812C-90.969139,182.590576,-90.996002,182.563431,-91.010574,182.532135C-91.01944,182.513092,-91.020889,182.504822,-91.02095,182.473129C-91.021019,182.439178,-91.020012,182.434204,-91.008255,182.410309C-90.991882,182.377029,-90.965805,182.351044,-90.933876,182.336182C-90.910561,182.325317,-90.905411,182.324448,-90.864159,182.324265C-90.822647,182.324097,-90.81813,182.324844,-90.797768,182.335159C-90.769356,182.349548,-90.740501,182.375031,-90.72467,182.399689L-90.712036,182.419388L-90.596565,182.418213C-90.518204,182.417404,-90.479713,182.415649,-90.476784,182.412704C-90.474403,182.410324,-90.451157,182.361526,-90.42511,182.30426L-90.377762,182.200134L-90.329086,182.199066C-90.302315,182.198471,-90.275864,182.199707,-90.270309,182.201828C-90.260429,182.205582,-90.260323,182.206009,-90.265526,182.220337C-90.268456,182.228394,-90.285095,182.266373,-90.302498,182.304718C-90.319901,182.343063,-90.345772,182.400543,-90.359985,182.432449C-90.388527,182.496521,-90.406647,182.520279,-90.43071,182.525162C-90.437981,182.526642,-90.50544,182.528824,-90.580612,182.529999L-90.7173,182.532166L-90.730164,182.552261C-90.745949,182.576935,-90.770706,182.598938,-90.796379,182.611115C-90.813423,182.619186,-90.821381,182.6203,-90.862671,182.620331C-90.908592,182.620377,-90.910179,182.620087,-90.936707,182.606812z"/>
+            <path fill="#22c55e" d="M-89.823586,182.830811C-89.825005,182.829391,-89.826164,182.809341,-89.826164,182.78627L-89.826164,182.744308L-88.327271,182.744308L-86.828384,182.744324L-86.828384,182.788864L-86.828384,182.833405L-88.324692,182.833389C-89.147659,182.833389,-89.822166,182.83223,-89.823586,182.830811z"/>
+            <path fill="#22c55e" d="M-90.825432,182.968948L-90.825432,182.926346L-88.826904,182.926346L-86.828384,182.926346L-86.828384,182.968964L-86.828384,183.011566L-88.826904,183.011551L-90.825432,183.011551L-90.825432,182.968948z"/>
+            <path fill="#22c55e" d="M-92.820084,183.14711L-92.820084,183.104507L-89.824234,183.104507L-86.828384,183.104523L-86.828384,183.147125L-86.828384,183.189728L-89.824234,183.189713L-92.820084,183.189713L-92.820084,183.14711z"/>
+          </svg>
+          <div>
+            <div class="app-title">Talking Robot</div>
+            <div class="app-subtitle">AI-Powered Micro:bit Friend</div>
+          </div>
+        </div>
+        <div class="status-pill" id="statusPill" onclick="toggleSidebar()">
+          <span class="status-dot" id="statusDot"></span>
+          <span id="statusText">Tap to Connect</span>
+        </div>
+      </header>
+
+      <!-- Robot Container -->
+      <div class="robot-container">
+        <div class="robot-face" id="robotFace">
+          <div class="robot-eyes">
+            <div class="robot-eye"></div>
+            <div class="robot-eye"></div>
+          </div>
+          <div class="robot-mouth">
+            <div class="robot-mouth-inner"></div>
+          </div>
+          <div class="robot-status" id="robotStatus">Ready to chat!</div>
+        </div>
+      </div>
+
+      <!-- Chat Area -->
+      <div class="chat-area" id="chatArea"></div>
+
+      <!-- Input Area -->
+      <div class="input-area">
+        <div class="input-row">
+          <button class="btn-mic" id="btnMic" onclick="toggleListening()">🎤</button>
+          <input type="text" class="text-input" id="textInput" placeholder="Type your message...">
+          <button class="btn-send" id="btnSend" onclick="sendMessage()">➤</button>
+        </div>
+      </div>
+    </div>
+
+    <!-- Overlay for mobile -->
+    <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
+
+    <!-- Sidebar -->
+    <div class="sidebar collapsed" id="sidebar">
+      <button class="sidebar-toggle" onclick="toggleSidebar()">⚙️</button>
+      
+      <div class="sidebar-header">
+        ⚙️ Settings
+      </div>
+
+      <div class="sidebar-content">
+        <!-- Connection -->
+        <div class="settings-section">
+          <div class="settings-label">🔌 Micro:bit Connection</div>
+          <button class="btn-connect" id="btnConnect" onclick="toggleConnection()">
+            <span>🔗</span>
+            <span id="connectText">Connect</span>
+          </button>
+        </div>
+
+        <!-- AI Provider -->
+        <div class="settings-section">
+          <div class="settings-label">🤖 AI Brain</div>
+          <div class="select-wrap">
+            <select id="aiProvider" onchange="onProviderChange()">
+              <option value="demo">Demo Mode (No API)</option>
+              <option value="gemini">Google Gemini</option>
+            </select>
+          </div>
+          <div id="apiKeySection" style="display: none; margin-top: 10px;">
+            <input type="password" class="api-key-input" id="apiKeyInput" placeholder="Enter Gemini API Key...">
+            <div class="api-hint">Get free key at <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a></div>
+          </div>
+        </div>
+
+        <!-- Language -->
+        <div class="settings-section">
+          <div class="settings-label">🌍 Language</div>
+          <div class="language-flags">
+            <button class="flag-btn active" data-lang="en" onclick="setLanguage('en')">
+              <span class="flag">🇬🇧</span>
+              <span class="flag-label">English</span>
+            </button>
+            <button class="flag-btn" data-lang="fr" onclick="setLanguage('fr')">
+              <span class="flag">🇫🇷</span>
+              <span class="flag-label">Français</span>
+            </button>
+            <button class="flag-btn" data-lang="ar" onclick="setLanguage('ar')">
+              <span class="flag">🇸🇦</span>
+              <span class="flag-label">العربية</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Voice Speed -->
+        <div class="settings-section">
+          <div class="settings-label">🔊 Voice Speed</div>
+          <div class="slider-container">
+            <span>🐢</span>
+            <input type="range" class="slider" id="voiceSpeed" min="0.5" max="1.5" step="0.1" value="1">
+            <span>🐇</span>
+            <span class="slider-value" id="speedValue">1.0x</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- Logs Section -->
+      <div class="logs-section" id="logsSection">
+        <div class="logs-header" onclick="toggleLogs()">
+          <div class="logs-title">📜 Communication Log</div>
+          <span class="logs-toggle">▼</span>
+        </div>
+        <div class="logs-container">
+          <div class="logs-content" id="logContainer"></div>
+          <div class="logs-actions">
+            <button class="btn-small" onclick="clearLog()">🧹 Clear</button>
+            <button class="btn-small" onclick="copyLog()">📋 Copy</button>
+            <button class="btn-small danger" onclick="clearCache()">🗑️ Reset All</button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // ==================== STATE ====================
+    let isConnected = false;
+    let isListening = false;
+    let isSpeaking = false;
+    let currentLanguage = 'en';
+    let currentProvider = 'demo';
+    let geminiApiKey = '';
+    let device, server, service, notifyChar, writeChar;
+    let recognition;
+    let synth = window.speechSynthesis;
+    let rxBuffer = '';
+
+    // Language configs
+    const langConfig = {
+      en: { code: 'en-US', voice: 'en', placeholder: 'Type your message...', ready: 'Ready to chat!' },
+      fr: { code: 'fr-FR', voice: 'fr', placeholder: 'Tapez votre message...', ready: 'Prêt à discuter!' },
+      ar: { code: 'ar-SA', voice: 'ar', placeholder: 'اكتب رسالتك...', ready: '!جاهز للدردشة' }
+    };
+
+    // BLE UUIDs
+    const UART_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
+    const TX_CHAR_UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
+    const RX_CHAR_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+
+    // DOM Elements
+    const robotFace = document.getElementById('robotFace');
+    const robotStatus = document.getElementById('robotStatus');
+    const chatArea = document.getElementById('chatArea');
+    const textInput = document.getElementById('textInput');
+    const btnMic = document.getElementById('btnMic');
+    const statusPill = document.getElementById('statusPill');
+    const statusText = document.getElementById('statusText');
+    const btnConnect = document.getElementById('btnConnect');
+    const connectText = document.getElementById('connectText');
+    const logContainer = document.getElementById('logContainer');
+    const sidebar = document.getElementById('sidebar');
+    const overlay = document.getElementById('overlay');
+    const voiceSpeed = document.getElementById('voiceSpeed');
+    const speedValue = document.getElementById('speedValue');
+
+    // ==================== INITIALIZATION ====================
+    function init() {
+      loadSettings();
+      setupSpeechRecognition();
+      setupEventListeners();
+      log('App initialized', 'success');
+    }
+
+    function loadSettings() {
+      const saved = localStorage.getItem('talkingRobotSettings');
+      if (saved) {
+        const settings = JSON.parse(saved);
+        if (settings.language) setLanguage(settings.language, false);
+        if (settings.voiceSpeed) {
+          voiceSpeed.value = settings.voiceSpeed;
+          speedValue.textContent = settings.voiceSpeed + 'x';
+        }
+        if (settings.provider) {
+          currentProvider = settings.provider;
+          document.getElementById('aiProvider').value = settings.provider;
+          onProviderChange(false);
+        }
+        if (settings.geminiApiKey) {
+          geminiApiKey = settings.geminiApiKey;
+          document.getElementById('apiKeyInput').value = geminiApiKey;
+        }
+      }
+    }
+
+    function saveSettings() {
+      const settings = {
+        language: currentLanguage,
+        voiceSpeed: voiceSpeed.value,
+        provider: currentProvider,
+        geminiApiKey: geminiApiKey
+      };
+      localStorage.setItem('talkingRobotSettings', JSON.stringify(settings));
+    }
+
+    function onProviderChange(save = true) {
+      currentProvider = document.getElementById('aiProvider').value;
+      const apiSection = document.getElementById('apiKeySection');
+      
+      if (currentProvider === 'gemini') {
+        apiSection.style.display = 'block';
+      } else {
+        apiSection.style.display = 'none';
+      }
+      
+      if (save) saveSettings();
+      log('AI provider: ' + currentProvider, 'info');
+    }
+
+    function setupEventListeners() {
+      textInput.addEventListener('keypress', (e) => {
+        if (e.key === 'Enter') sendMessage();
+      });
+
+      voiceSpeed.addEventListener('input', () => {
+        speedValue.textContent = voiceSpeed.value + 'x';
+        saveSettings();
+      });
+
+      document.getElementById('apiKeyInput').addEventListener('change', () => {
+        geminiApiKey = document.getElementById('apiKeyInput').value.trim();
+        saveSettings();
+        log('API key updated', 'info');
+      });
+    }
+
+    // ==================== SPEECH RECOGNITION ====================
+    function setupSpeechRecognition() {
+      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+        log('Speech recognition not supported', 'error');
+        btnMic.disabled = true;
+        return;
+      }
+
+      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+      recognition = new SpeechRecognition();
+      recognition.continuous = false;
+      recognition.interimResults = false;
+
+      recognition.onstart = () => {
+        isListening = true;
+        btnMic.classList.add('active');
+        setRobotState('listening');
+        log('Listening...', 'info');
+      };
+
+      recognition.onresult = (event) => {
+        const transcript = event.results[0][0].transcript;
+        log('Heard: ' + transcript, 'rx');
+        addChatBubble(transcript, 'user');
+        processUserInput(transcript);
+      };
+
+      recognition.onerror = (event) => {
+        log('Speech error: ' + event.error, 'error');
+        stopListening();
+      };
+
+      recognition.onend = () => {
+        stopListening();
+      };
+    }
+
+    function toggleListening() {
+      if (isListening) {
+        recognition.stop();
+      } else {
+        recognition.lang = langConfig[currentLanguage].code;
+        recognition.start();
+      }
+    }
+
+    function stopListening() {
+      isListening = false;
+      btnMic.classList.remove('active');
+      if (!isSpeaking) setRobotState('idle');
+    }
+
+    // ==================== LANGUAGE ====================
+    function setLanguage(lang, save = true) {
+      currentLanguage = lang;
+      
+      // Update UI
+      document.querySelectorAll('.flag-btn').forEach(btn => {
+        btn.classList.toggle('active', btn.dataset.lang === lang);
+      });
+
+      textInput.placeholder = langConfig[lang].placeholder;
+      robotStatus.textContent = langConfig[lang].ready;
+
+      // RTL support
+      document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+      if (save) saveSettings();
+      log('Language set to: ' + lang, 'info');
+    }
+
+    // ==================== CHAT & AI ====================
+    function sendMessage() {
+      const text = textInput.value.trim();
+      if (!text) return;
+
+      textInput.value = '';
+      addChatBubble(text, 'user');
+      processUserInput(text);
+    }
+
+    function addChatBubble(text, type) {
+      const bubble = document.createElement('div');
+      bubble.className = `chat-bubble ${type}`;
+      bubble.textContent = text;
+      chatArea.appendChild(bubble);
+      chatArea.scrollTop = chatArea.scrollHeight;
+
+      // Keep only last 10 messages
+      while (chatArea.children.length > 10) {
+        chatArea.removeChild(chatArea.firstChild);
+      }
+    }
+
+    async function processUserInput(text) {
+      setRobotState('thinking');
+      log('Processing: ' + text, 'info');
+
+      try {
+        const response = await callAI(text);
+        log('AI response: ' + response, 'success');
+        
+        // Extract commands and clean text
+        const { cleanText, commands } = extractCommands(response);
+        
+        // Send commands to Micro:bit
+        commands.forEach(cmd => sendToMicrobit(cmd));
+        
+        // Add response to chat and speak
+        addChatBubble(cleanText, 'robot');
+        speak(cleanText);
+      } catch (error) {
+        log('AI error: ' + error.message, 'error');
+        setRobotState('idle');
+        addChatBubble('Oops! Something went wrong.', 'robot');
+      }
+    }
+
+    async function callAI(userMessage) {
+      // Demo mode - use preset responses
+      if (currentProvider === 'demo') {
+        return getDemoResponse(userMessage);
+      }
+
+      // Gemini API
+      if (currentProvider === 'gemini') {
+        if (!geminiApiKey) {
+          log('No Gemini API key set!', 'error');
+          return getDemoResponse(userMessage);
+        }
+        return await callGemini(userMessage);
+      }
+
+      // Fallback to demo
+      return getDemoResponse(userMessage);
+    }
+
+    async function callGemini(userMessage) {
+      const systemPrompt = `You are a friendly robot assistant for kids. Keep responses short (1-2 sentences), fun, and age-appropriate. 
+You can use commands in brackets to control the robot:
+- [happy] - show happy face
+- [sad] - show sad face  
+- [blink] - blink eyes
+- [wave] - wave animation
+Respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'fr' ? 'French' : 'Arabic'}.
+NEVER USE * asterisk character in responses!`;
+
+      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
+
+      try {
+        const response = await fetch(url, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            contents: [{
+              parts: [{ text: userMessage }]
+            }],
+            systemInstruction: {
+              parts: [{ text: systemPrompt }]
+            },
+            generationConfig: {
+              maxOutputTokens: 150,
+              temperature: 0.7
+            }
+          })
+        });
+
+        if (!response.ok) {
+          const errorData = await response.json();
+          const status = response.status;
+          
+          if (status === 429) {
+            log('Rate limit hit - using demo mode', 'error');
+            return getDemoResponse(userMessage) + " (API busy, demo mode)";
+          } else if (status === 400) {
+            log('Invalid API key', 'error');
+            return "Oops! Check your API key in settings. [sad]";
+          } else {
+            throw new Error(errorData.error?.message || 'Gemini API error');
+          }
+        }
+
+        const data = await response.json();
+        
+        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
+          return data.candidates[0].content.parts[0].text;
+        } else {
+          throw new Error('Unexpected response format');
+        }
+      } catch (error) {
+        log('Gemini error: ' + error.message, 'error');
+        // Fallback to demo mode on any error
+        return getDemoResponse(userMessage);
+      }
+    }
+
+    function getDemoResponse(userMessage) {
+      const msg = userMessage.toLowerCase();
+      
+      // Language-specific responses
+      const responses = {
+        en: {
+          greeting: ["Hello friend! [happy] How are you today?", "Hi there! [wave] Nice to meet you!", "Hey! [blink] What's up?"],
+          howAreYou: ["I'm doing great! [happy] Thanks for asking!", "Feeling awesome! [wave] How about you?"],
+          name: ["I'm your Talking Robot friend! [happy] You can call me Robo!", "My name is Robo! [blink] What's yours?"],
+          joke: ["Why did the robot go on vacation? [blink] To recharge its batteries! [happy]", "What do you call a robot that takes the long way? [blink] R2-Detour! [happy]"],
+          bye: ["Goodbye friend! [wave] See you soon!", "Bye bye! [happy] Come back anytime!"],
+          default: ["That's cool! [blink] Tell me more!", "Interesting! [happy] I like talking with you!", "Wow! [wave] You're fun to chat with!"]
+        },
+        fr: {
+          greeting: ["Bonjour ami! [happy] Comment vas-tu?", "Salut! [wave] Ravi de te rencontrer!"],
+          howAreYou: ["Je vais très bien! [happy] Merci de demander!", "Super bien! [wave] Et toi?"],
+          name: ["Je suis ton ami robot! [happy] Tu peux m'appeler Robo!", "Mon nom est Robo! [blink] Et toi?"],
+          default: ["C'est super! [blink] Dis-moi en plus!", "Intéressant! [happy] J'aime parler avec toi!"]
+        },
+        ar: {
+          greeting: ["[happy] !مرحباً صديقي! كيف حالك", "[wave] !أهلاً! سعيد بلقائك"],
+          howAreYou: ["[happy] !أنا بخير! شكراً لسؤالك", "[wave] !ممتاز! وأنت"],
+          name: ["[happy] !أنا صديقك الروبوت! يمكنك مناداتي روبو", "[blink] !اسمي روبو! ما اسمك"],
+          default: ["[blink] !هذا رائع! أخبرني المزيد", "[happy] !مثير للاهتمام! أحب التحدث معك"]
+        }
+      };
+
+      const lang = responses[currentLanguage] || responses.en;
+
+      // Match patterns
+      if (msg.match(/^(hi|hello|hey|salut|bonjour|مرحبا|اهلا)/)) {
+        return lang.greeting[Math.floor(Math.random() * lang.greeting.length)];
+      }
+      if (msg.match(/(how are you|comment vas|كيف حالك)/)) {
+        return lang.howAreYou[Math.floor(Math.random() * lang.howAreYou.length)];
+      }
+      if (msg.match(/(your name|ton nom|اسمك|ما اسمك)/)) {
+        return lang.name[Math.floor(Math.random() * lang.name.length)];
+      }
+      if (msg.match(/(joke|blague|نكتة)/) && lang.joke) {
+        return lang.joke[Math.floor(Math.random() * lang.joke.length)];
+      }
+      if (msg.match(/(bye|goodbye|au revoir|مع السلامة|وداعا)/)) {
+        return (lang.bye || lang.default)[Math.floor(Math.random() * (lang.bye || lang.default).length)];
+      }
+
+      return lang.default[Math.floor(Math.random() * lang.default.length)];
+    }
+
+    function extractCommands(text) {
+      const commands = [];
+      const cleanText = text.replace(/\[(\w+)\]/g, (match, cmd) => {
+        commands.push(cmd);
+        return '';
+      }).trim();
+      return { cleanText, commands };
+    }
+
+    // ==================== SPEECH SYNTHESIS ====================
+    function speak(text) {
+      if (!text) return;
+      
+      synth.cancel();
+      const utterance = new SpeechSynthesisUtterance(text);
+      utterance.lang = langConfig[currentLanguage].code;
+      utterance.rate = parseFloat(voiceSpeed.value);
+
+      utterance.onstart = () => {
+        isSpeaking = true;
+        setRobotState('speaking');
+        sendToMicrobit('speak_start');
+      };
+
+      utterance.onend = () => {
+        isSpeaking = false;
+        setRobotState('idle');
+        sendToMicrobit('speak_end');
+      };
+
+      synth.speak(utterance);
+    }
+
+    // ==================== ROBOT FACE ====================
+    function setRobotState(state) {
+      robotFace.className = 'robot-face';
+      if (state !== 'idle') robotFace.classList.add(state);
+
+      const statusMap = {
+        idle: langConfig[currentLanguage].ready,
+        listening: '🎤 Listening...',
+        thinking: '🤔 Thinking...',
+        speaking: '🔊 Speaking...'
+      };
+      robotStatus.textContent = statusMap[state] || statusMap.idle;
+    }
+
+    // ==================== BLUETOOTH ====================
+    async function toggleConnection() {
+      if (isConnected) {
+        disconnect();
+      } else {
+        await connect();
+      }
+    }
+
+    async function connect() {
+      try {
+        log('Scanning for Micro:bit...', 'info');
+        
+        device = await navigator.bluetooth.requestDevice({
+          filters: [{ namePrefix: 'BBC micro:bit' }],
+          optionalServices: [UART_SERVICE_UUID]
+        });
+
+        device.addEventListener('gattserverdisconnected', disconnect);
+
+        server = await device.gatt.connect();
+        service = await server.getPrimaryService(UART_SERVICE_UUID);
+        notifyChar = await service.getCharacteristic(TX_CHAR_UUID);
+        writeChar = await service.getCharacteristic(RX_CHAR_UUID);
+
+        await notifyChar.startNotifications();
+        notifyChar.addEventListener('characteristicvaluechanged', onNotify);
+
+        setConnected(true);
+        log('Connected to: ' + device.name, 'success');
+      } catch (error) {
+        log('Connection failed: ' + error.message, 'error');
+      }
+    }
+
+    function disconnect() {
+      if (device && device.gatt.connected) {
+        device.gatt.disconnect();
+      }
+      setConnected(false);
+      log('Disconnected', 'info');
+    }
+
+    function setConnected(connected) {
+      isConnected = connected;
+      statusPill.classList.toggle('connected', connected);
+      statusText.textContent = connected ? 'Connected' : 'Tap to Connect';
+      btnConnect.classList.toggle('connected', connected);
+      connectText.textContent = connected ? 'Disconnect' : 'Connect';
+    }
+
+    function onNotify(event) {
+      let s = '';
+      const v = event.target.value;
+      for (let i = 0; i < v.byteLength; i++) {
+        const b = v.getUint8(i);
+        if (b !== 13) s += String.fromCharCode(b);
+      }
+
+      rxBuffer += s;
+      let nl;
+      while ((nl = rxBuffer.indexOf('\n')) !== -1) {
+        const line = rxBuffer.slice(0, nl).trim();
+        rxBuffer = rxBuffer.slice(nl + 1);
+        if (line) {
+          log('← ' + line, 'rx');
+          handleMicrobitMessage(line);
+        }
+      }
+    }
+
+    function handleMicrobitMessage(msg) {
+      // Handle button presses from Micro:bit
+      if (msg === 'BTN_A') {
+        toggleListening();
+      } else if (msg === 'BTN_B') {
+        synth.cancel();
+        setRobotState('idle');
+      }
+    }
+
+    function sendToMicrobit(msg) {
+      if (!isConnected || !writeChar) return;
+      
+      const encoder = new TextEncoder();
+      writeChar.writeValue(encoder.encode(msg + '\n'));
+      log('→ ' + msg, 'tx');
+    }
+
+    // ==================== SIDEBAR ====================
+    function toggleSidebar() {
+      const isOpen = !sidebar.classList.contains('collapsed');
+      sidebar.classList.toggle('collapsed', isOpen);
+      sidebar.classList.toggle('open', !isOpen);
+      overlay.classList.toggle('show', !isOpen);
+    }
+
+    function toggleLogs() {
+      document.getElementById('logsSection').classList.toggle('open');
+    }
+
+    // ==================== LOGGING ====================
+    function log(msg, type = 'info') {
+      const ts = new Date().toLocaleTimeString();
+      const div = document.createElement('div');
+      div.className = `log-line ${type}`;
+      div.textContent = `[${ts}] ${msg}`;
+      logContainer.appendChild(div);
+      logContainer.scrollTop = logContainer.scrollHeight;
+
+      // Keep only last 100 lines
+      while (logContainer.children.length > 100) {
+        logContainer.removeChild(logContainer.firstChild);
+      }
+    }
+
+    function clearLog() {
+      logContainer.innerHTML = '';
+      log('Log cleared', 'info');
+    }
+
+    function copyLog() {
+      const text = Array.from(logContainer.children).map(d => d.textContent).join('\n');
+      navigator.clipboard.writeText(text);
+      log('Log copied to clipboard', 'success');
+    }
+
+    function clearCache() {
+      if (confirm('This will reset all settings and clear chat history. Continue?')) {
+        localStorage.removeItem('talkingRobotSettings');
+        chatArea.innerHTML = '';
+        logContainer.innerHTML = '';
+        setLanguage('en');
+        voiceSpeed.value = 1;
+        speedValue.textContent = '1.0x';
+        log('All data cleared', 'success');
+      }
+    }
+
+    // Initialize
+    init();
+  </script>
+</body>
+</html>
