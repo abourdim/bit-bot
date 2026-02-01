@@ -72,14 +72,71 @@
       z-index: 10;
     }
 
-    /* Header */
+    /* Header - Logo and Title only */
     .header {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
       display: flex;
       align-items: center;
-      justify-content: space-between;
-      padding: 16px 20px;
-      padding-top: 32px;
-      gap: 12px;
+      justify-content: center;
+      padding: 10px 20px;
+      background: rgba(15, 23, 42, 0.95);
+      border-bottom: 1px solid var(--border);
+      z-index: 50;
+      backdrop-filter: blur(10px);
+    }
+
+    .main-area {
+      padding-top: 120px; /* Space for fixed header + toolbar */
+    }
+
+    /* Toolbar - Buttons below header */
+    .toolbar {
+      position: fixed;
+      top: 60px;
+      left: 0;
+      right: 0;
+      display: flex;
+      align-items: center;
+      justify-content: flex-start;
+      padding: 8px 20px;
+      background: rgba(30, 41, 59, 0.95);
+      border-bottom: 1px solid var(--border);
+      z-index: 49;
+      backdrop-filter: blur(10px);
+    }
+
+    .toolbar-left {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+    }
+
+    .btn-toolbar {
+      width: 36px;
+      height: 36px;
+      border-radius: 8px;
+      border: 1px solid var(--border);
+      background: var(--bg-color);
+      color: var(--text);
+      font-size: 1rem;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.2s;
+    }
+
+    .btn-toolbar:hover {
+      border-color: var(--primary);
+      background: rgba(59, 130, 246, 0.2);
+    }
+
+    .btn-toolbar.active {
+      border-color: var(--primary);
+      background: var(--primary);
     }
 
     .logo-block {
@@ -111,12 +168,6 @@
       font-size: 0.6rem;
       color: var(--muted);
       opacity: 0.6;
-    }
-
-    .header-right {
-      display: flex;
-      align-items: center;
-      gap: 10px;
     }
 
     /* AI Badge */
@@ -152,34 +203,6 @@
 
     .ai-icon {
       font-size: 0.9rem;
-    }
-
-    /* Logs Toggle Button in Header */
-    .btn-logs-toggle,
-    .btn-settings-toggle {
-      width: 40px;
-      height: 40px;
-      border-radius: 10px;
-      border: 2px solid var(--border);
-      background: rgba(15, 23, 42, 0.9);
-      color: var(--text);
-      font-size: 1.1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-
-    .btn-logs-toggle:hover,
-    .btn-settings-toggle:hover {
-      border-color: var(--primary);
-      background: rgba(59, 130, 246, 0.2);
-    }
-
-    .btn-logs-toggle.active {
-      border-color: var(--primary);
-      background: var(--primary);
     }
 
     /* Connect Button in Header */
@@ -805,13 +828,207 @@
       margin-bottom: 4px;
       white-space: pre-wrap;
       word-break: break-word;
+      padding: 2px 0;
     }
 
     .log-line.info { color: var(--muted); }
     .log-line.success { color: var(--accent); }
     .log-line.error { color: var(--danger); }
-    .log-line.tx { color: #a5b4fc; }
-    .log-line.rx { color: #7dd3fc; }
+    .log-line.tx { 
+      color: #f472b6;
+      background: rgba(244, 114, 182, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border-left: 3px solid #f472b6;
+    }
+    .log-line.rx { 
+      color: #22d3ee;
+      background: rgba(34, 211, 238, 0.1);
+      padding: 2px 6px;
+      border-radius: 4px;
+      border-left: 3px solid #22d3ee;
+    }
+
+    .log-time {
+      color: var(--muted);
+      opacity: 0.7;
+    }
+
+    .log-tag {
+      display: inline-block;
+      padding: 1px 6px;
+      border-radius: 4px;
+      font-size: 0.6rem;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      margin-right: 6px;
+    }
+
+    .tag-ble {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+      border: 1px solid rgba(139, 92, 246, 0.3);
+    }
+
+    .tag-speech {
+      background: rgba(251, 191, 36, 0.2);
+      color: #fbbf24;
+      border: 1px solid rgba(251, 191, 36, 0.3);
+    }
+
+    .tag-ai {
+      background: rgba(34, 197, 94, 0.2);
+      color: #22c55e;
+      border: 1px solid rgba(34, 197, 94, 0.3);
+    }
+
+    /* Help Modal */
+    .help-modal {
+      display: none;
+      position: fixed;
+      inset: 0;
+      background: rgba(0, 0, 0, 0.7);
+      z-index: 300;
+      align-items: center;
+      justify-content: center;
+      padding: 20px;
+    }
+
+    .help-modal.open {
+      display: flex;
+    }
+
+    .help-content {
+      background: var(--panel-bg);
+      border-radius: 16px;
+      border: 1px solid var(--border);
+      max-width: 400px;
+      width: 100%;
+      max-height: 80vh;
+      overflow: hidden;
+      animation: modalIn 0.2s ease;
+    }
+
+    @keyframes modalIn {
+      from { opacity: 0; transform: scale(0.95); }
+      to { opacity: 1; transform: scale(1); }
+    }
+
+    .help-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 16px;
+      border-bottom: 1px solid var(--border);
+      font-weight: 700;
+      font-size: 1rem;
+    }
+
+    .help-close {
+      width: 32px;
+      height: 32px;
+      border-radius: 8px;
+      border: none;
+      background: var(--border);
+      color: var(--text);
+      cursor: pointer;
+      font-size: 1.1rem;
+      transition: all 0.2s;
+    }
+
+    .help-close:hover {
+      background: var(--danger);
+    }
+
+    .help-body {
+      padding: 16px;
+      overflow-y: auto;
+      max-height: calc(80vh - 60px);
+    }
+
+    .help-section {
+      margin-bottom: 16px;
+    }
+
+    .help-section-title {
+      font-size: 0.8rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 10px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .help-commands {
+      display: flex;
+      flex-direction: column;
+      gap: 6px;
+    }
+
+    .help-commands-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 6px;
+    }
+
+    .help-cmd-small {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 6px 8px;
+      background: var(--bg-color);
+      border-radius: 6px;
+      font-size: 0.7rem;
+    }
+
+    .help-cmd-small code {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+      padding: 2px 5px;
+      border-radius: 3px;
+      font-family: monospace;
+      font-size: 0.6rem;
+    }
+
+    .help-cmd {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding: 8px 10px;
+      background: var(--bg-color);
+      border-radius: 8px;
+      font-size: 0.8rem;
+    }
+
+    .help-cmd code {
+      background: rgba(139, 92, 246, 0.2);
+      color: #a78bfa;
+      padding: 3px 8px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.75rem;
+    }
+
+    .help-cmd span {
+      color: var(--muted);
+      font-size: 0.75rem;
+    }
+
+    .help-note {
+      background: rgba(34, 197, 94, 0.1);
+      border: 1px solid rgba(34, 197, 94, 0.2);
+      border-radius: 8px;
+      padding: 10px 12px;
+      font-size: 0.75rem;
+      color: var(--accent);
+    }
+
+    .help-note code {
+      background: rgba(34, 197, 94, 0.2);
+      padding: 2px 6px;
+      border-radius: 4px;
+    }
 
     .logs-actions {
       display: flex;
@@ -938,6 +1155,105 @@
     .api-example code:hover {
       border-color: var(--primary);
       color: var(--primary);
+    }
+
+    /* Toggle Switch */
+    .toggle-switch {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      cursor: pointer;
+    }
+
+    .toggle-switch input {
+      display: none;
+    }
+
+    .toggle-slider {
+      width: 44px;
+      height: 24px;
+      background: var(--border);
+      border-radius: 12px;
+      position: relative;
+      transition: all 0.3s;
+    }
+
+    .toggle-slider::after {
+      content: '';
+      position: absolute;
+      width: 18px;
+      height: 18px;
+      background: var(--text);
+      border-radius: 50%;
+      top: 3px;
+      left: 3px;
+      transition: all 0.3s;
+    }
+
+    .toggle-switch input:checked + .toggle-slider {
+      background: var(--accent);
+    }
+
+    .toggle-switch input:checked + .toggle-slider::after {
+      left: 23px;
+    }
+
+    .toggle-label {
+      font-size: 0.85rem;
+      color: var(--text);
+    }
+
+    .setting-hint {
+      font-size: 0.7rem;
+      color: var(--muted);
+      margin-top: 6px;
+    }
+
+    /* Commands Reference */
+    .commands-ref {
+      display: flex;
+      flex-direction: column;
+      gap: 12px;
+      margin-top: 8px;
+    }
+
+    .commands-group {
+      background: var(--bg-color);
+      border-radius: 8px;
+      padding: 10px;
+      border: 1px solid var(--border);
+    }
+
+    .commands-title {
+      font-size: 0.7rem;
+      font-weight: 600;
+      color: var(--text);
+      margin-bottom: 8px;
+      padding-bottom: 6px;
+      border-bottom: 1px solid var(--border);
+    }
+
+    .command-item {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.7rem;
+      color: var(--muted);
+      padding: 3px 0;
+    }
+
+    .command-item code {
+      background: rgba(244, 114, 182, 0.15);
+      color: #f472b6;
+      padding: 2px 6px;
+      border-radius: 4px;
+      font-family: monospace;
+      font-size: 0.65rem;
+    }
+
+    .commands-group:last-child .command-item code {
+      background: rgba(34, 211, 238, 0.15);
+      color: #22d3ee;
     }
 
     /* ==================== MOBILE ==================== */
@@ -1069,7 +1385,7 @@
     <div class="main-area">
       <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
 
-      <!-- Header -->
+      <!-- Header - Logo and Title only -->
       <header class="header">
         <div class="logo-block">
           <svg class="logo" viewBox="-93 179.5 7 4" xmlns="http://www.w3.org/2000/svg">
@@ -1091,23 +1407,24 @@
             <div class="app-subtitle">AI-Powered Micro:bit Friend <span class="version">v1.0</span></div>
           </div>
         </div>
-        <div class="header-right">
-          <div class="ai-badge" id="aiBadge">
-            <span class="ai-icon">⚡</span>
-            <span class="ai-name" id="aiName">Groq</span>
-          </div>
-          <button class="btn-logs-toggle" id="btnLogs" onclick="toggleLogsPanel()" title="Communication Logs">
-            📜
-          </button>
-          <button class="btn-settings-toggle" onclick="toggleSidebar()" title="Settings">
-            ⚙️
-          </button>
+      </header>
+
+      <!-- Toolbar - Buttons and Controls -->
+      <div class="toolbar">
+        <div class="toolbar-left">
+          <button class="btn-toolbar" onclick="toggleSidebar()" title="Settings">⚙️</button>
+          <button class="btn-toolbar" id="btnLogs" onclick="toggleLogsPanel()" title="Logs">📜</button>
+          <button class="btn-toolbar" onclick="toggleHelp()" title="Help">❓</button>
           <button class="btn-connect-header" id="btnConnectHeader" onclick="toggleConnection()">
             <span class="connect-dot" id="connectDot"></span>
             <span id="connectHeaderText">Connect</span>
           </button>
+          <div class="ai-badge" id="aiBadge">
+            <span class="ai-icon">⚡</span>
+            <span class="ai-name" id="aiName">Groq</span>
+          </div>
         </div>
-      </header>
+      </div>
 
       <!-- Robot Container -->
       <div class="robot-container">
@@ -1206,6 +1523,17 @@
           </div>
         </div>
 
+        <!-- Continuous Listen -->
+        <div class="settings-section">
+          <div class="settings-label">🎤 Microphone</div>
+          <label class="toggle-switch">
+            <input type="checkbox" id="continuousListen" onchange="onContinuousChange()">
+            <span class="toggle-slider"></span>
+            <span class="toggle-label">Continuous Listen</span>
+          </label>
+          <div class="setting-hint">Keep listening after each response</div>
+        </div>
+
         <!-- Clear Cache Button -->
         <div class="settings-section">
           <button class="btn-danger-full" onclick="clearCache()">
@@ -1227,6 +1555,155 @@
         <button class="btn-small" onclick="copyLog()">📋 Copy</button>
       </div>
     </div>
+
+    <!-- Help Modal -->
+    <div class="help-modal" id="helpModal">
+      <div class="help-content">
+        <div class="help-header">
+          <span>📡 Micro:bit Commands</span>
+          <button class="help-close" onclick="toggleHelp()">✕</button>
+        </div>
+        <div class="help-body">
+          <div class="help-section">
+            <div class="help-section-title">😊 Emotions & Faces</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>happy</code>😊</div>
+              <div class="help-cmd-small"><code>sad</code>😢</div>
+              <div class="help-cmd-small"><code>angry</code>😠</div>
+              <div class="help-cmd-small"><code>surprised</code>😮</div>
+              <div class="help-cmd-small"><code>love</code>😍</div>
+              <div class="help-cmd-small"><code>sleepy</code>😴</div>
+              <div class="help-cmd-small"><code>silly</code>😜</div>
+              <div class="help-cmd-small"><code>crazy</code>🤪</div>
+              <div class="help-cmd-small"><code>dizzy</code>😵</div>
+              <div class="help-cmd-small"><code>wink</code>😉</div>
+              <div class="help-cmd-small"><code>cool</code>😎</div>
+              <div class="help-cmd-small"><code>wow</code>🤩</div>
+              <div class="help-cmd-small"><code>oops</code>😬</div>
+              <div class="help-cmd-small"><code>haha</code>😂</div>
+              <div class="help-cmd-small"><code>cry</code>😭</div>
+              <div class="help-cmd-small"><code>scream</code>😱</div>
+              <div class="help-cmd-small"><code>shh</code>🤫</div>
+              <div class="help-cmd-small"><code>ghost</code>👻</div>
+              <div class="help-cmd-small"><code>alien</code>👽</div>
+              <div class="help-cmd-small"><code>skull</code>💀</div>
+              <div class="help-cmd-small"><code>vampire</code>🧛</div>
+              <div class="help-cmd-small"><code>poop</code>💩</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">🐾 Animals</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>cat</code>🐱</div>
+              <div class="help-cmd-small"><code>dog</code>🐶</div>
+              <div class="help-cmd-small"><code>duck</code>🦆</div>
+              <div class="help-cmd-small"><code>cow</code>🐮</div>
+              <div class="help-cmd-small"><code>pig</code>🐷</div>
+              <div class="help-cmd-small"><code>frog</code>🐸</div>
+              <div class="help-cmd-small"><code>snake</code>🐍</div>
+              <div class="help-cmd-small"><code>monkey</code>🐵</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">🎬 Actions & Animations</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>wave</code>👋</div>
+              <div class="help-cmd-small"><code>dance</code>💃</div>
+              <div class="help-cmd-small"><code>spin</code>🔄</div>
+              <div class="help-cmd-small"><code>jump</code>⬆️</div>
+              <div class="help-cmd-small"><code>shake</code>📳</div>
+              <div class="help-cmd-small"><code>nod</code>✅</div>
+              <div class="help-cmd-small"><code>no</code>❌</div>
+              <div class="help-cmd-small"><code>blink</code>👀</div>
+              <div class="help-cmd-small"><code>wiggle</code>〰️</div>
+              <div class="help-cmd-small"><code>bounce</code>⬆️</div>
+              <div class="help-cmd-small"><code>yawn</code>🥱</div>
+              <div class="help-cmd-small"><code>sneeze</code>🤧</div>
+              <div class="help-cmd-small"><code>hiccup</code>🫢</div>
+              <div class="help-cmd-small"><code>tickle</code>🤭</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">💨 Silly Sounds</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>fart</code>💨</div>
+              <div class="help-cmd-small"><code>burp</code>🫧</div>
+              <div class="help-cmd-small"><code>beep</code>🔔</div>
+              <div class="help-cmd-small"><code>laugh</code>😆</div>
+              <div class="help-cmd-small"><code>horn</code>📯</div>
+              <div class="help-cmd-small"><code>siren</code>🚨</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">🎉 Party Mode</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>party</code>🎉</div>
+              <div class="help-cmd-small"><code>disco</code>🕺</div>
+              <div class="help-cmd-small"><code>rainbow</code>🌈</div>
+              <div class="help-cmd-small"><code>fireworks</code>🎆</div>
+              <div class="help-cmd-small"><code>confetti</code>🎊</div>
+              <div class="help-cmd-small"><code>birthday</code>🎂</div>
+              <div class="help-cmd-small"><code>applause</code>👏</div>
+              <div class="help-cmd-small"><code>yay</code>🙌</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">⚡ Superpowers</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>laser</code>⚡</div>
+              <div class="help-cmd-small"><code>freeze</code>🥶</div>
+              <div class="help-cmd-small"><code>fire</code>🔥</div>
+              <div class="help-cmd-small"><code>magic</code>✨</div>
+              <div class="help-cmd-small"><code>invisible</code>👻</div>
+              <div class="help-cmd-small"><code>transform</code>🦸</div>
+              <div class="help-cmd-small"><code>shield</code>🛡️</div>
+              <div class="help-cmd-small"><code>thunder</code>⛈️</div>
+              <div class="help-cmd-small"><code>explode</code>💥</div>
+              <div class="help-cmd-small"><code>rocket</code>🚀</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">🎲 Games & Learning</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>count</code>🔢</div>
+              <div class="help-cmd-small"><code>random</code>🎲</div>
+              <div class="help-cmd-small"><code>dice</code>🎯</div>
+              <div class="help-cmd-small"><code>timer</code>⏱️</div>
+              <div class="help-cmd-small"><code>quiz</code>❓</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">🤖 Robot Control</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>forward</code>⬆️</div>
+              <div class="help-cmd-small"><code>backward</code>⬇️</div>
+              <div class="help-cmd-small"><code>left</code>⬅️</div>
+              <div class="help-cmd-small"><code>right</code>➡️</div>
+              <div class="help-cmd-small"><code>stop</code>🛑</div>
+            </div>
+          </div>
+
+          <div class="help-section">
+            <div class="help-section-title">📥 Micro:bit → App</div>
+            <div class="help-commands-grid">
+              <div class="help-cmd-small"><code>BTN_A</code>🎤</div>
+              <div class="help-cmd-small"><code>BTN_B</code>🔇</div>
+            </div>
+          </div>
+
+          <div class="help-note">
+            💡 Say things like "do a fart" or "show me a cat" and the AI will send the command!
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 
   <script>
@@ -1234,6 +1711,7 @@
     let isConnected = false;
     let isListening = false;
     let isSpeaking = false;
+    let continuousListen = false;
     let currentLanguage = 'en';
     let currentProvider = 'groq';
     let geminiApiKey = '';
@@ -1306,6 +1784,10 @@
         if (settings.selectedVoice) {
           selectedVoice = settings.selectedVoice;
         }
+        if (settings.continuousListen !== undefined) {
+          continuousListen = settings.continuousListen;
+          document.getElementById('continuousListen').checked = continuousListen;
+        }
         // Load the right key into input
         updateApiKeyInput();
         updateAiBadge();
@@ -1319,9 +1801,16 @@
         provider: currentProvider,
         geminiApiKey: geminiApiKey,
         groqApiKey: groqApiKey,
-        selectedVoice: selectedVoice
+        selectedVoice: selectedVoice,
+        continuousListen: continuousListen
       };
       localStorage.setItem('talkingRobotSettings', JSON.stringify(settings));
+    }
+
+    function onContinuousChange() {
+      continuousListen = document.getElementById('continuousListen').checked;
+      saveSettings();
+      log('Continuous listen: ' + (continuousListen ? 'ON' : 'OFF'), 'info');
     }
 
     // ==================== VOICE MANAGEMENT ====================
@@ -1481,22 +1970,60 @@
       };
 
       recognition.onerror = (event) => {
+        // Ignore no-speech and aborted errors in continuous mode
+        if (event.error === 'no-speech') {
+          if (continuousListen) {
+            restartListening();
+          }
+          return;
+        }
+        if (event.error === 'aborted') {
+          return;
+        }
         log('Speech error: ' + event.error, 'error');
         stopListening();
       };
 
       recognition.onend = () => {
-        stopListening();
+        isListening = false;
+        btnMic.classList.remove('active');
+        if (!isSpeaking) {
+          setRobotState('idle');
+        }
+        // Don't auto-restart here - let speak() handle it after TTS ends
       };
     }
 
     function toggleListening() {
       if (isListening) {
+        // Turn off continuous mode when manually stopping
+        continuousListen = false;
+        document.getElementById('continuousListen').checked = false;
+        saveSettings();
         recognition.stop();
       } else {
+        startListening();
+      }
+    }
+
+    function startListening() {
+      if (!recognition || isListening) return;
+      try {
         recognition.lang = langConfig[currentLanguage].code;
         recognition.start();
+      } catch (e) {
+        // Already started or other error, ignore
+        log('Mic error: ' + e.message, 'error');
       }
+    }
+
+    function restartListening() {
+      if (!continuousListen || isSpeaking || isListening) return;
+      setTimeout(() => {
+        if (continuousListen && !isSpeaking && !isListening) {
+          startListening();
+        }
+      }, 500);
     }
 
     function stopListening() {
@@ -1644,12 +2171,33 @@
         return getDemoResponse(userMessage);
       }
 
-      const systemPrompt = `You are a friendly robot assistant for kids. Keep responses short (1-2 sentences), fun, and age-appropriate. 
-You can use commands in brackets to control the robot:
-- [happy] - show happy face
-- [sad] - show sad face  
-- [blink] - blink eyes
-- [wave] - wave animation
+      const systemPrompt = `You are a funny, playful robot assistant for kids! Keep responses short (1-2 sentences), silly, and age-appropriate.
+
+You can use commands in [brackets] to control the robot. Use them often to make responses fun!
+
+EMOTIONS: [happy] [sad] [angry] [surprised] [love] [sleepy] [silly] [crazy] [dizzy] [wink] [cool] [wow] [oops] [haha] [cry] [scream] [shh] [ghost] [alien] [skull] [vampire] [poop]
+
+ANIMALS: [cat] [dog] [duck] [cow] [pig] [frog] [snake] [monkey]
+
+ACTIONS: [wave] [dance] [spin] [jump] [shake] [nod] [no] [blink] [wiggle] [bounce] [yawn] [sneeze] [hiccup] [tickle]
+
+SOUNDS: [fart] [burp] [beep] [laugh] [horn] [siren]
+
+PARTY: [party] [disco] [rainbow] [fireworks] [confetti] [birthday] [applause] [yay]
+
+SUPERPOWERS: [laser] [freeze] [fire] [magic] [invisible] [transform] [shield] [thunder] [explode] [rocket]
+
+GAMES: [count] [random] [dice] [timer] [quiz]
+
+MOVEMENT: [forward] [backward] [left] [right] [stop]
+
+Example responses:
+- "Haha, that's so funny! [haha] [dance]"
+- "Here's a silly fart for you! [fart] [silly]"
+- "I'm a cool cat! [cat] [cool]"
+- "Let's party! [party] [disco] [dance]"
+- "Rocket time! 3, 2, 1... [rocket] [explode]"
+
 Respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'fr' ? 'French' : 'Arabic'}.
 NEVER USE * asterisk character in responses!`;
 
@@ -1692,12 +2240,32 @@ NEVER USE * asterisk character in responses!`;
     }
 
     async function callGemini(userMessage) {
-      const systemPrompt = `You are a friendly robot assistant for kids. Keep responses short (1-2 sentences), fun, and age-appropriate. 
-You can use commands in brackets to control the robot:
-- [happy] - show happy face
-- [sad] - show sad face  
-- [blink] - blink eyes
-- [wave] - wave animation
+      const systemPrompt = `You are a funny, playful robot assistant for kids! Keep responses short (1-2 sentences), silly, and age-appropriate.
+
+You can use commands in [brackets] to control the robot. Use them often to make responses fun!
+
+EMOTIONS: [happy] [sad] [angry] [surprised] [love] [sleepy] [silly] [crazy] [dizzy] [wink] [cool] [wow] [oops] [haha] [cry] [scream] [shh] [ghost] [alien] [skull] [vampire] [poop]
+
+ANIMALS: [cat] [dog] [duck] [cow] [pig] [frog] [snake] [monkey]
+
+ACTIONS: [wave] [dance] [spin] [jump] [shake] [nod] [no] [blink] [wiggle] [bounce] [yawn] [sneeze] [hiccup] [tickle]
+
+SOUNDS: [fart] [burp] [beep] [laugh] [horn] [siren]
+
+PARTY: [party] [disco] [rainbow] [fireworks] [confetti] [birthday] [applause] [yay]
+
+SUPERPOWERS: [laser] [freeze] [fire] [magic] [invisible] [transform] [shield] [thunder] [explode] [rocket]
+
+GAMES: [count] [random] [dice] [timer] [quiz]
+
+MOVEMENT: [forward] [backward] [left] [right] [stop]
+
+Example responses:
+- "Haha, that's so funny! [haha] [dance]"
+- "Here's a silly fart for you! [fart] [silly]"
+- "I'm a cool cat! [cat] [cool]"
+- "Let's party! [party] [disco] [dance]"
+
 Respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'fr' ? 'French' : 'Arabic'}.
 NEVER USE * asterisk character in responses!`;
 
@@ -1756,24 +2324,28 @@ NEVER USE * asterisk character in responses!`;
       // Language-specific responses
       const responses = {
         en: {
-          greeting: ["Hello friend! [happy] How are you today?", "Hi there! [wave] Nice to meet you!", "Hey! [blink] What's up?"],
-          howAreYou: ["I'm doing great! [happy] Thanks for asking!", "Feeling awesome! [wave] How about you?"],
-          name: ["I'm your Talking Robot friend! [happy] You can call me Robo!", "My name is Robo! [blink] What's yours?"],
-          joke: ["Why did the robot go on vacation? [blink] To recharge its batteries! [happy]", "What do you call a robot that takes the long way? [blink] R2-Detour! [happy]"],
-          bye: ["Goodbye friend! [wave] See you soon!", "Bye bye! [happy] Come back anytime!"],
-          default: ["That's cool! [blink] Tell me more!", "Interesting! [happy] I like talking with you!", "Wow! [wave] You're fun to chat with!"]
+          greeting: ["Hello friend! [happy] [wave] How are you today?", "Hi there! [wave] [dance] Nice to meet you!", "Hey! [cool] [wink] What's up?"],
+          howAreYou: ["I'm doing AWESOME! [happy] [dance] Thanks for asking!", "Feeling super silly! [silly] [wiggle] How about you?", "I'm fantastic! [party] [confetti]"],
+          name: ["I'm your Talking Robot friend! [happy] [wave] You can call me Robo!", "My name is Robo! [cool] [wink] What's yours?"],
+          joke: ["Why did the robot go on vacation? [blink] To recharge its batteries! [haha] [dance]", "What do you call a robot that takes the long way? [blink] R2-Detour! [haha] [silly]", "Want to hear something funny? [fart] Oops! [oops] [haha]"],
+          fart: ["PFFFFFT! [fart] [haha] That was a big one!", "Here comes a stinky one! [fart] [silly] [wiggle]", "Fart attack! [fart] [fart] [haha] [dance]"],
+          animal: ["Meow meow! [cat] [silly] I'm a kitty cat!", "Woof woof! [dog] [happy] [jump]", "Moooo! [cow] [silly] I'm a cow now!"],
+          party: ["PARTY TIME! [party] [disco] [dance] [confetti]", "Let's celebrate! [fireworks] [rainbow] [yay]", "Woohoo! [party] [dance] [applause]"],
+          bye: ["Goodbye friend! [wave] [happy] See you soon!", "Bye bye! [love] [wave] Come back anytime!", "See ya later alligator! [silly] [wave]"],
+          default: ["That's so cool! [wow] [dance] Tell me more!", "Haha! [haha] [silly] You're fun!", "Awesome! [party] [happy] I like you!", "Wheee! [spin] [dizzy] [haha]"]
         },
         fr: {
-          greeting: ["Bonjour ami! [happy] Comment vas-tu?", "Salut! [wave] Ravi de te rencontrer!"],
-          howAreYou: ["Je vais très bien! [happy] Merci de demander!", "Super bien! [wave] Et toi?"],
-          name: ["Je suis ton ami robot! [happy] Tu peux m'appeler Robo!", "Mon nom est Robo! [blink] Et toi?"],
-          default: ["C'est super! [blink] Dis-moi en plus!", "Intéressant! [happy] J'aime parler avec toi!"]
+          greeting: ["Bonjour ami! [happy] [wave] Comment vas-tu?", "Salut! [wave] [dance] Ravi de te rencontrer!"],
+          howAreYou: ["Je vais super bien! [happy] [dance] Merci!", "Trop bien! [party] [confetti] Et toi?"],
+          name: ["Je suis Robo ton ami robot! [happy] [wave]", "Mon nom est Robo! [cool] [wink] Et toi?"],
+          fart: ["PROUT! [fart] [haha] Oups!", "Un gros prout! [fart] [silly] [dance]"],
+          default: ["C'est super! [wow] [dance]", "Haha! [haha] [silly] Tu es marrant!", "Génial! [party] [happy]"]
         },
         ar: {
-          greeting: ["[happy] !مرحباً صديقي! كيف حالك", "[wave] !أهلاً! سعيد بلقائك"],
-          howAreYou: ["[happy] !أنا بخير! شكراً لسؤالك", "[wave] !ممتاز! وأنت"],
-          name: ["[happy] !أنا صديقك الروبوت! يمكنك مناداتي روبو", "[blink] !اسمي روبو! ما اسمك"],
-          default: ["[blink] !هذا رائع! أخبرني المزيد", "[happy] !مثير للاهتمام! أحب التحدث معك"]
+          greeting: ["[happy] [wave] !مرحباً صديقي! كيف حالك", "[dance] [wave] !أهلاً! سعيد بلقائك"],
+          howAreYou: ["[happy] [dance] !أنا بخير جداً! شكراً", "[party] [confetti] !ممتاز! وأنت"],
+          name: ["[happy] [wave] !أنا صديقك الروبوت روبو", "[cool] [wink] !اسمي روبو! ما اسمك"],
+          default: ["[wow] [dance] !هذا رائع", "[haha] [silly] !أنت مضحك", "[party] [happy] !رائع"]
         }
       };
 
@@ -1789,8 +2361,17 @@ NEVER USE * asterisk character in responses!`;
       if (msg.match(/(your name|ton nom|اسمك|ما اسمك)/)) {
         return lang.name[Math.floor(Math.random() * lang.name.length)];
       }
-      if (msg.match(/(joke|blague|نكتة)/) && lang.joke) {
-        return lang.joke[Math.floor(Math.random() * lang.joke.length)];
+      if (msg.match(/(joke|blague|نكتة|funny)/)) {
+        return lang.joke ? lang.joke[Math.floor(Math.random() * lang.joke.length)] : lang.default[0];
+      }
+      if (msg.match(/(fart|prout|ضراط)/)) {
+        return lang.fart ? lang.fart[Math.floor(Math.random() * lang.fart.length)] : "PFFFT! [fart] [haha]";
+      }
+      if (msg.match(/(cat|dog|animal|cow|duck|chat|chien|قط|كلب)/)) {
+        return lang.animal ? lang.animal[Math.floor(Math.random() * lang.animal.length)] : "[cat] [happy] Meow!";
+      }
+      if (msg.match(/(party|dance|disco|fête|حفلة)/)) {
+        return lang.party ? lang.party[Math.floor(Math.random() * lang.party.length)] : "[party] [dance] Woohoo!";
       }
       if (msg.match(/(bye|goodbye|au revoir|مع السلامة|وداعا)/)) {
         return (lang.bye || lang.default)[Math.floor(Math.random() * (lang.bye || lang.default).length)];
@@ -1835,6 +2416,14 @@ NEVER USE * asterisk character in responses!`;
         isSpeaking = false;
         setRobotState('idle');
         sendToMicrobit('speak_end');
+        
+        // Restart listening if continuous mode is on
+        if (continuousListen && recognition) {
+          setTimeout(() => {
+            recognition.lang = langConfig[currentLanguage].code;
+            recognition.start();
+          }, 500);
+        }
       };
 
       synth.speak(utterance);
@@ -1970,12 +2559,25 @@ NEVER USE * asterisk character in responses!`;
       overlay.classList.remove('show');
     }
 
+    function toggleHelp() {
+      document.getElementById('helpModal').classList.toggle('open');
+    }
+
     // ==================== LOGGING ====================
     function log(msg, type = 'info') {
       const ts = new Date().toLocaleTimeString();
       const div = document.createElement('div');
       div.className = `log-line ${type}`;
-      div.textContent = `[${ts}] ${msg}`;
+      
+      // Add tag based on type
+      let tag = '';
+      if (type === 'tx') tag = '<span class="log-tag tag-ble">BLE TX</span>';
+      else if (type === 'rx') tag = '<span class="log-tag tag-ble">BLE RX</span>';
+      else if (msg.includes('Listening') || msg.includes('Heard') || msg.includes('Speech')) tag = '<span class="log-tag tag-speech">SPEECH</span>';
+      else if (msg.includes('AI response') || msg.includes('Processing')) tag = '<span class="log-tag tag-ai">AI</span>';
+      else if (msg.includes('Connected') || msg.includes('Disconnected') || msg.includes('Scanning')) tag = '<span class="log-tag tag-ble">BLE</span>';
+      
+      div.innerHTML = `<span class="log-time">[${ts}]</span> ${tag} ${msg}`;
       logContainer.appendChild(div);
       logContainer.scrollTop = logContainer.scrollHeight;
 
@@ -2020,8 +2622,10 @@ NEVER USE * asterisk character in responses!`;
         geminiApiKey = '';
         groqApiKey = '';
         selectedVoice = '';
+        continuousListen = false;
         document.getElementById('apiKeyInput').value = '';
         document.getElementById('voiceSelect').value = '';
+        document.getElementById('continuousListen').checked = false;
         
         updateAiBadge();
         populateVoiceSelector();
