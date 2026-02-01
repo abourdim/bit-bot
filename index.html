@@ -335,23 +335,75 @@ body {
 
 /* Logs Panel */
 .logs-panel {
-  position: fixed; top: 0; right: 0; bottom: 0; width: 360px; max-width: 100vw;
+  position: fixed; top: 0; right: 0; bottom: 0; width: 400px; min-width: 280px; max-width: 90vw;
   background: var(--panel); border-left: 1px solid var(--border);
   z-index: 180; transform: translateX(100%); transition: transform 0.3s ease;
   display: flex; flex-direction: column;
 }
 .logs-panel.open { transform: translateX(0); }
-.logs-header { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.logs-panel.resizing { transition: none; user-select: none; }
+.logs-resize-handle {
+  position: absolute; left: -5px; top: 0; bottom: 0; width: 10px;
+  cursor: ew-resize; z-index: 10;
+}
+.logs-resize-handle::before {
+  content: ''; position: absolute; left: 4px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 40px; background: var(--border); border-radius: 2px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.logs-resize-handle:hover::before, .logs-panel.resizing .logs-resize-handle::before { opacity: 1; }
+.logs-header { 
+  display: flex; align-items: center; justify-content: space-between; 
+  padding: 12px 16px; border-bottom: 1px solid var(--border); 
+  font-weight: 600; font-size: 0.9rem;
+}
+.logs-title { display: flex; align-items: center; gap: 8px; }
+.logs-toolbar { display: flex; gap: 6px; }
+.logs-toolbar button {
+  padding: 6px 10px; border-radius: 6px; border: 1px solid var(--border);
+  background: var(--card); color: var(--text); font-size: 0.7rem;
+  cursor: pointer; transition: all 0.2s; display: flex; align-items: center; gap: 4px;
+}
+.logs-toolbar button:hover { border-color: var(--primary); background: var(--primary-soft); }
+.logs-toolbar button.danger:hover { border-color: var(--danger); background: rgba(239,68,68,0.1); color: var(--danger); }
+.logs-stats {
+  display: flex; gap: 12px; padding: 8px 16px; border-bottom: 1px solid var(--border);
+  font-size: 0.7rem; color: var(--muted); background: var(--bg);
+}
+.logs-stat { display: flex; align-items: center; gap: 4px; }
+.logs-stat-value { font-weight: 600; color: var(--text); }
+.logs-filter {
+  display: flex; gap: 6px; padding: 8px 16px; border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+.logs-filter-btn {
+  padding: 4px 10px; border-radius: 12px; border: 1px solid var(--border);
+  background: var(--card); color: var(--muted); font-size: 0.65rem;
+  cursor: pointer; transition: all 0.2s; text-transform: uppercase; font-weight: 600;
+}
+.logs-filter-btn:hover { border-color: var(--primary); }
+.logs-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
 .logs-content { flex: 1; overflow-y: auto; padding: 12px; background: var(--bg); font-family: var(--mono); font-size: 0.75rem; line-height: 1.6; }
+.logs-content.filtered-tx .log-entry:not(.tx) { display: none; }
+.logs-content.filtered-rx .log-entry:not(.rx) { display: none; }
+.logs-content.filtered-error .log-entry:not(.error) { display: none; }
+.logs-content.filtered-ai .log-entry:not(.ai) { display: none; }
+.logs-content.filtered-ble .log-entry:not(.tx):not(.rx):not(.ble) { display: none; }
+.logs-content.filtered-speech .log-entry:not(.speech) { display: none; }
 .log-entry { padding: 4px 8px; margin-bottom: 4px; border-radius: 4px; word-break: break-word; }
 .log-entry.tx { background: rgba(244,114,182,0.1); border-left: 3px solid var(--secondary); }
 .log-entry.rx { background: rgba(34,211,238,0.1); border-left: 3px solid #22d3ee; }
+.log-entry.ble { background: rgba(139,92,246,0.1); border-left: 3px solid #a78bfa; }
+.log-entry.speech { background: rgba(245,158,11,0.1); border-left: 3px solid var(--warning); }
+.log-entry.ai { background: rgba(34,197,94,0.1); border-left: 3px solid var(--accent); }
 .log-entry.success { color: var(--accent); }
-.log-entry.error { color: var(--danger); }
+.log-entry.error { background: rgba(239,68,68,0.1); border-left: 3px solid var(--danger); color: var(--danger); }
 .log-tag { padding: 2px 6px; border-radius: 3px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-right: 6px; }
 .log-tag.ble { background: rgba(139,92,246,0.2); color: #a78bfa; }
 .log-tag.speech { background: rgba(245,158,11,0.2); color: var(--warning); }
 .log-tag.ai { background: var(--accent-soft); color: var(--accent); }
+.log-tag.error { background: rgba(239,68,68,0.2); color: var(--danger); }
+.logs-empty { text-align: center; color: var(--muted); padding: 40px 20px; font-family: var(--font); }
 
 /* Modal */
 .modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
@@ -593,11 +645,33 @@ body {
 
     <!-- Logs Panel -->
     <aside class="logs-panel" id="logsPanel" aria-label="Debug logs">
+      <div class="logs-resize-handle" id="logsResizeHandle"></div>
       <div class="logs-header">
-        <span>📊 Debug Logs</span>
-        <button class="btn-close" onclick="toggleLogs()" aria-label="Close logs">×</button>
+        <span class="logs-title">📊 Debug Logs</span>
+        <div class="logs-toolbar">
+          <button onclick="clearLogs()" class="danger" title="Clear all logs">🗑️ Clear</button>
+          <button onclick="exportLogs()" title="Export logs to file">📥 Export</button>
+          <button class="btn-close" onclick="toggleLogs()" aria-label="Close logs">×</button>
+        </div>
       </div>
-      <div class="logs-content" id="logsContent" role="log"></div>
+      <div class="logs-stats">
+        <div class="logs-stat">Total: <span class="logs-stat-value" id="logCount">0</span></div>
+        <div class="logs-stat">TX: <span class="logs-stat-value" id="logCountTx">0</span></div>
+        <div class="logs-stat">RX: <span class="logs-stat-value" id="logCountRx">0</span></div>
+        <div class="logs-stat">Errors: <span class="logs-stat-value" id="logCountErr">0</span></div>
+      </div>
+      <div class="logs-filter">
+        <button class="logs-filter-btn active" data-filter="all" onclick="filterLogs('all')">All</button>
+        <button class="logs-filter-btn" data-filter="tx" onclick="filterLogs('tx')">TX</button>
+        <button class="logs-filter-btn" data-filter="rx" onclick="filterLogs('rx')">RX</button>
+        <button class="logs-filter-btn" data-filter="ble" onclick="filterLogs('ble')">BLE</button>
+        <button class="logs-filter-btn" data-filter="ai" onclick="filterLogs('ai')">AI</button>
+        <button class="logs-filter-btn" data-filter="speech" onclick="filterLogs('speech')">Speech</button>
+        <button class="logs-filter-btn" data-filter="error" onclick="filterLogs('error')">Errors</button>
+      </div>
+      <div class="logs-content" id="logsContent" role="log">
+        <div class="logs-empty">No logs yet. Start chatting!</div>
+      </div>
     </aside>
 
     <!-- Commands Modal -->
@@ -1158,21 +1232,158 @@ function tryCmd(cmd) {
 }
 
 // ==================== LOGGING ====================
+let logCounts = { total: 0, tx: 0, rx: 0, error: 0 };
+
 function log(msg, type = 'info') {
+  // Remove empty message if exists
+  const empty = logsContent.querySelector('.logs-empty');
+  if (empty) empty.remove();
+  
   const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
   const entry = document.createElement('div');
   entry.className = 'log-entry ' + type;
+  entry.dataset.time = new Date().toISOString();
+  entry.dataset.type = type;
+  
   let tag = '';
   if (type === 'tx') tag = '<span class="log-tag ble">TX</span>';
   else if (type === 'rx') tag = '<span class="log-tag ble">RX</span>';
   else if (type === 'ble') tag = '<span class="log-tag ble">BLE</span>';
   else if (type === 'speech') tag = '<span class="log-tag speech">SPEECH</span>';
   else if (type === 'ai') tag = '<span class="log-tag ai">AI</span>';
+  else if (type === 'error') tag = '<span class="log-tag error">ERROR</span>';
+  
   entry.innerHTML = `<span style="opacity:0.6">[${ts}]</span> ${tag} ${escapeHtml(msg)}`;
   logsContent.appendChild(entry);
   logsContent.scrollTop = logsContent.scrollHeight;
-  while (logsContent.children.length > 150) logsContent.removeChild(logsContent.firstChild);
+  
+  // Update counts
+  logCounts.total++;
+  if (type === 'tx') logCounts.tx++;
+  if (type === 'rx') logCounts.rx++;
+  if (type === 'error') logCounts.error++;
+  updateLogStats();
+  
+  // Keep max 500 entries
+  while (logsContent.querySelectorAll('.log-entry').length > 500) {
+    const first = logsContent.querySelector('.log-entry');
+    if (first) first.remove();
+  }
+  
   console.log(`[${type}] ${msg}`);
+}
+
+function updateLogStats() {
+  $('logCount').textContent = logCounts.total;
+  $('logCountTx').textContent = logCounts.tx;
+  $('logCountRx').textContent = logCounts.rx;
+  $('logCountErr').textContent = logCounts.error;
+}
+
+function clearLogs() {
+  logsContent.innerHTML = '<div class="logs-empty">Logs cleared. Start chatting!</div>';
+  logCounts = { total: 0, tx: 0, rx: 0, error: 0 };
+  updateLogStats();
+}
+
+function filterLogs(filter) {
+  // Update button states
+  document.querySelectorAll('.logs-filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === filter);
+  });
+  
+  // Remove all filter classes
+  logsContent.classList.remove('filtered-tx', 'filtered-rx', 'filtered-error', 'filtered-ai', 'filtered-ble', 'filtered-speech');
+  
+  // Apply filter
+  if (filter !== 'all') {
+    logsContent.classList.add('filtered-' + filter);
+  }
+}
+
+function exportLogs() {
+  const entries = logsContent.querySelectorAll('.log-entry');
+  if (entries.length === 0) {
+    alert('No logs to export');
+    return;
+  }
+  
+  let text = '# Talking Robot V2 - Debug Logs\n';
+  text += '# Exported: ' + new Date().toISOString() + '\n';
+  text += '# Total entries: ' + entries.length + '\n\n';
+  
+  entries.forEach(entry => {
+    const time = entry.dataset.time || '';
+    const type = entry.dataset.type || 'info';
+    const msg = entry.textContent.replace(/^\[[\d:]+\]\s*/, '').replace(/^(TX|RX|BLE|SPEECH|AI|ERROR)\s*/, '');
+    text += `[${time}] [${type.toUpperCase()}] ${msg}\n`;
+  });
+  
+  // Download file
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'talking-robot-logs-' + new Date().toISOString().slice(0,19).replace(/[:.]/g, '-') + '.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  log('Logs exported (' + entries.length + ' entries)', 'success');
+}
+
+// Resize functionality
+function setupLogsResize() {
+  const handle = $('logsResizeHandle');
+  let isResizing = false;
+  let startX, startWidth;
+  
+  handle.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    startX = e.clientX;
+    startWidth = logsPanel.offsetWidth;
+    logsPanel.classList.add('resizing');
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    e.preventDefault();
+  });
+  
+  function handleMouseMove(e) {
+    if (!isResizing) return;
+    const diff = startX - e.clientX;
+    const newWidth = Math.min(Math.max(startWidth + diff, 280), window.innerWidth * 0.9);
+    logsPanel.style.width = newWidth + 'px';
+  }
+  
+  function handleMouseUp() {
+    isResizing = false;
+    logsPanel.classList.remove('resizing');
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  }
+  
+  // Touch support
+  handle.addEventListener('touchstart', (e) => {
+    isResizing = true;
+    startX = e.touches[0].clientX;
+    startWidth = logsPanel.offsetWidth;
+    logsPanel.classList.add('resizing');
+  });
+  
+  document.addEventListener('touchmove', (e) => {
+    if (!isResizing) return;
+    const diff = startX - e.touches[0].clientX;
+    const newWidth = Math.min(Math.max(startWidth + diff, 280), window.innerWidth * 0.9);
+    logsPanel.style.width = newWidth + 'px';
+  });
+  
+  document.addEventListener('touchend', () => {
+    if (isResizing) {
+      isResizing = false;
+      logsPanel.classList.remove('resizing');
+    }
+  });
 }
 
 // ==================== UTILS ====================
@@ -1182,6 +1393,7 @@ function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function clearAllData() { if (confirm('Reset all settings and clear data?')) { localStorage.removeItem('talkingRobotV2'); location.reload(); } }
 
 // ==================== START ====================
+setupLogsResize();
 init();
 </script>
 </body>
