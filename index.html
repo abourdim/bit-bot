@@ -754,7 +754,8 @@ let state = {
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
   speed: 1, voice: '', continuous: false, theme: 'light',
   groqKey: '', geminiKey: '', rateLimitUntil: 0,
-  chatMemory: { playful: [], helpful: [], pirate: [], space: [] }
+  chatMemory: { playful: [], helpful: [], pirate: [], space: [] },
+  ledFromMicrobitOnly: false
 };
 
 // Initialize synth - same as original working version
@@ -905,6 +906,12 @@ function updateConnection() {
   connBadge.classList.toggle('connected', state.connected);
   connText.textContent = state.connected ? 'Connected' : 'Disconnected';
   microbitDot.classList.toggle('on', state.connected);
+
+  // 🔒 When connected: micro:bit is authoritative for LED display
+  state.ledFromMicrobitOnly = !!state.connected;
+
+  if (state.ledFromMicrobitOnly) stopPersonalityLEDAnimation();
+  else startPersonalityLEDAnimation(true);
 }
 
 // ==================== THEME ====================
@@ -1083,7 +1090,11 @@ async function processInput(text) {
     typing.classList.add('hidden');
     const { clean, cmds } = extractCmds(response);
     addChat(clean || response, 'robot');
-    for (const c of cmds) { sendToMicrobit(c); updateLED(c); await sleep(300); }
+    for (const c of cmds) {
+    sendToMicrobit(c);
+    if (!state.ledFromMicrobitOnly) updateLED(c);
+    await sleep(300);
+  }
     speak(clean || response);
     log('AI: ' + response.substring(0, 80), 'ai');
   } catch(e) {
@@ -1181,6 +1192,26 @@ async function toggleConnection() {
   if (state.connected) disconnect();
   else await connect();
 }
+
+async function connect() {
+  try {
+    log('Scanning for Micro:bit...', 'ble');
+    state.device = await navigator.bluetooth.requestDevice({ filters: [{ namePrefix: 'BBC micro:bit' }], optionalServices: [CONFIG.UART_SERVICE] });
+    state.device.addEventListener('gattserverdisconnected', () => { state.connected = false; updateConnection(); log('Disconnected', 'ble'); });
+    const server = await state.device.gatt.connect();
+    const service = await server.getPrimaryService(CONFIG.UART_SERVICE);
+    // TX characteristic is for notifications (receiving from micro:bit)
+    const notifyChar = await service.getCharacteristic(CONFIG.TX_CHAR);
+    // RX characteristic is for writing (sending to micro:bit)
+    state.writeChar = await service.getCharacteristic(CONFIG.RX_CHAR);
+    await notifyChar.startNotifications();
+    notifyChar.addEventListener('characteristicvaluechanged', onNotify);
+    state.connected = true; updateConnection();
+    sendToMicrobit('happy'); updateLED('happy');
+    log('Connected: ' + state.device.name, 'success');
+  } catch(e) { log('Connect failed: ' + e.message, 'error'); }
+}
+
 
 function disconnect() {
   try {
@@ -1347,6 +1378,9 @@ function stopPersonalityLEDAnimation() {
 }
 
 function updateLED(cmd) {
+  // ❌ Browser never draws LEDs when connected
+  if (state.ledFromMicrobitOnly) return;
+
   const key = cmd.toLowerCase().replace(/[^a-z]/g, '');
   const p = LED[key] || LED.happy;
   ledAnimPausedUntil = Date.now() + 2000;
@@ -1546,3 +1580,16 @@ init();
 </script>
 </body>
 </html>
+
+
+function handleUartLine(line) {
+  line = (line || '').trim();
+
+  // ✅ micro:bit LED sync frame
+  if (line.startsWith('LED:') && line.length >= 29) {
+    const bits = line.slice(4, 29);
+    const pattern = [...bits].map(b => b === '1' ? 1 : 0);
+    renderLEDPixels(pattern);
+    return;
+  }
+}
