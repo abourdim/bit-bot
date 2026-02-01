@@ -587,17 +587,32 @@
         AI Modes
       </h2>
       
-      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));">
+      <div class="cards-grid" style="grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));">
         <div class="card" style="border: 2px solid var(--secondary);">
           <div class="card-icon">🎮</div>
           <h3>Demo Mode</h3>
           <p>Works <strong>without internet!</strong><br>Fun preset responses.<br>Great for practice!</p>
         </div>
+        <div class="card" style="border: 2px solid var(--accent);">
+          <div class="card-icon">⚡</div>
+          <h3>Groq <span style="font-size: 0.7rem; color: var(--accent);">★ RECOMMENDED</span></h3>
+          <p>Super fast AI!<br>Generous free tier.<br>Best for classrooms!</p>
+        </div>
         <div class="card" style="border: 2px solid var(--primary);">
           <div class="card-icon">🤖</div>
           <h3>Google Gemini</h3>
-          <p>Real AI brain!<br>Needs internet.<br>Needs a free API key.</p>
+          <p>Google's AI brain.<br>Needs internet.<br>Lower free limits.</p>
         </div>
+      </div>
+
+      <div class="success-box" style="border-color: var(--accent); background: linear-gradient(135deg, rgba(245, 158, 11, 0.2), rgba(245, 158, 11, 0.1));">
+        <div class="success-title" style="color: var(--accent);">⚡ Get a FREE Groq API Key (Recommended!):</div>
+        <ol style="margin-left: 20px; color: var(--muted);">
+          <li>Go to <a href="https://console.groq.com" target="_blank" style="color: var(--accent);">console.groq.com</a></li>
+          <li>Sign up free (Google or GitHub)</li>
+          <li>Click "API Keys" → "Create API Key"</li>
+          <li>Copy the key and paste it in app settings!</li>
+        </ol>
       </div>
 
       <div class="success-box">
@@ -608,6 +623,24 @@
           <li>Click "Create API Key"</li>
           <li>Copy the key and paste it in app settings!</li>
         </ol>
+      </div>
+
+      <div class="tip-box">
+        <div class="tip-title">💡 Which one should I use?</div>
+        <table style="width: 100%; margin-top: 10px; color: var(--muted);">
+          <tr>
+            <td><strong>Demo Mode</strong></td>
+            <td>→ No internet, just practicing</td>
+          </tr>
+          <tr>
+            <td><strong>Groq</strong></td>
+            <td>→ Best for classroom use! Fast & generous limits</td>
+          </tr>
+          <tr>
+            <td><strong>Gemini</strong></td>
+            <td>→ If you already have a Google API key</td>
+          </tr>
+        </table>
       </div>
     </div>
 

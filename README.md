@@ -73,9 +73,23 @@ The robot speaks 3 languages! Pick your favorite:
 - Fun preset responses
 - Great for practice!
 
+### ⚡ Groq Mode (Recommended!)
+- Super fast AI brain!
+- Generous free tier (30 requests/minute)
+- Uses Llama 3.1 (smart & safe)
+- Needs a free API key
+
+**To get a free Groq API key:**
+1. Go to [console.groq.com](https://console.groq.com)
+2. Sign up (free with Google/GitHub)
+3. Click "API Keys" → "Create API Key"
+4. Copy the key
+5. Paste it in the app settings
+
 ### 🤖 Google Gemini Mode
-- Real AI brain!
+- Google's AI brain
 - Needs internet
+- Lower free tier limits
 - Needs a free API key
 
 **To get a free Gemini API key:**
