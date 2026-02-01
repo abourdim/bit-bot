@@ -716,6 +716,17 @@ const PERSONALITIES = {
   space: 'You are a space explorer robot! Talk about planets and cosmic adventures!'
 };
 
+// Voice style per personality (SpeechSynthesis)
+const VOICE_STYLE = {
+  playful: { rateMul: 1.20, pitch: 1.30, volume: 1.0 },
+  helpful: { rateMul: 1.00, pitch: 1.05, volume: 1.0 },
+  pirate:  { rateMul: 0.95, pitch: 0.85, volume: 1.0 },
+  space:   { rateMul: 1.05, pitch: 1.40, volume: 1.0 }
+};
+
+function clamp(n, min, max) { return Math.max(min, Math.min(max, n)); }
+
+
 const DEMO = {
   en: {
     greeting: ["Hello friend! [happy] [wave]", "Hi there! [wave] [dance]", "Hey! [cool] [wink]"],
@@ -742,7 +753,8 @@ let state = {
   recognition: null, listening: false, speaking: false, voices: [],
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
   speed: 1, voice: '', continuous: false, theme: 'light',
-  groqKey: '', geminiKey: '', rateLimitUntil: 0
+  groqKey: '', geminiKey: '', rateLimitUntil: 0,
+  chatMemory: { playful: [], helpful: [], pirate: [], space: [] }
 };
 
 // Initialize synth - same as original working version
@@ -761,6 +773,8 @@ const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotNam
 // ==================== INIT ====================
 function init() {
   loadSettings();
+  loadChatMemory();
+  renderChatFromMemory();
   setupLED();
   setupSpeech();
   setupEvents();
@@ -794,6 +808,48 @@ function saveSettings() {
   speedValue.textContent = state.speed + 'x';
 }
 
+// ==================== CHAT MEMORY (per personality) ====================
+const CHAT_KEY = 'talkingRobotV2Chats';
+
+function loadChatMemory() {
+  const raw = localStorage.getItem(CHAT_KEY);
+  if (!raw) return;
+  try {
+    const parsed = JSON.parse(raw);
+    for (const k of ['playful','helpful','pirate','space']) {
+      if (Array.isArray(parsed?.[k])) state.chatMemory[k] = parsed[k];
+    }
+  } catch(e) { log('Chat memory load error', 'error'); }
+}
+
+function saveChatMemory() {
+  try { localStorage.setItem(CHAT_KEY, JSON.stringify(state.chatMemory)); } catch(e) {}
+}
+
+function getActiveChat() {
+  return state.chatMemory[state.personality] || [];
+}
+
+function pushChatMessage(sender, text) {
+  const arr = getActiveChat();
+  arr.push({ sender, text, t: Date.now() });
+  while (arr.length > 40) arr.shift();
+  state.chatMemory[state.personality] = arr;
+  saveChatMemory();
+}
+
+function renderChatFromMemory() {
+  chatContainer.innerHTML = '';
+  for (const m of getActiveChat()) addChat(m.text, m.sender, true);
+}
+
+function clearChatMemoryForCurrent() {
+  state.chatMemory[state.personality] = [];
+  saveChatMemory();
+  chatContainer.innerHTML = '';
+}
+
+
 function setupLED() {
   ledGrid.innerHTML = '';
   for (let i = 0; i < 25; i++) {
@@ -802,6 +858,7 @@ function setupLED() {
     ledGrid.appendChild(p);
   }
   updateLED('happy');
+  startPersonalityLEDAnimation();
 }
 
 function setupEvents() {
@@ -871,7 +928,23 @@ function setProvider(provider) {
 }
 
 function setPersonality(p) {
-  state.personality = p; updateUI(); saveSettings();
+  state.personality = p;
+  updateUI();
+  saveSettings();
+  renderChatFromMemory();
+  startPersonalityLEDAnimation(true);
+
+  const say = {
+    playful: { t: "Playful mode! 🎪 Let's have fun!", led: "party" },
+    helpful: { t: "Helpful mode! 🎓 I will explain things clearly.", led: "happy" },
+    pirate:  { t: "Pirate mode! 🏴‍☠️ Arrr, matey!", led: "horn" },
+    space:   { t: "Space mode! 🚀 Ready for a cosmic adventure!", led: "rocket" }
+  }[p] || { t: "Mode changed!", led: "happy" };
+
+  addChat(say.t, 'robot');
+  updateLED(say.led);
+  speak(say.t);
+
   log('Personality: ' + p, 'info');
 }
 
@@ -908,18 +981,27 @@ function testVoice() {
 function speak(text) {
   if (!text) return;
   synth.cancel();
+
   const u = new SpeechSynthesisUtterance(text);
   u.lang = LANG[state.lang].code;
-  u.rate = parseFloat(voiceSpeed.value);
+
+  const baseRate = parseFloat(voiceSpeed.value);
+  const style = VOICE_STYLE[state.personality] || VOICE_STYLE.helpful;
+  u.rate = clamp(baseRate * style.rateMul, 0.5, 2.0);
+  u.pitch = clamp(style.pitch, 0.0, 2.0);
+  u.volume = clamp(style.volume ?? 1.0, 0.0, 1.0);
+
   if (state.voice) {
     const v = state.voices.find(x => x.name === state.voice);
     if (v) u.voice = v;
   }
+
   u.onstart = () => { state.speaking = true; setRobotState('speaking'); sendToMicrobit('speak_start'); };
   u.onend = () => {
     state.speaking = false; setRobotState('idle'); sendToMicrobit('speak_end');
     if (state.continuous && state.recognition) setTimeout(() => { if (!state.speaking) startListening(); }, 500);
   };
+
   synth.speak(u);
 }
 
@@ -972,7 +1054,7 @@ function sendMessage() {
   processInput(t);
 }
 
-function addChat(text, sender) {
+function addChat(text, sender, skipMemory = false) {
   const d = document.createElement('div');
   d.className = 'chat-bubble ' + sender;
   const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
@@ -980,9 +1062,11 @@ function addChat(text, sender) {
   chatContainer.appendChild(d);
   chatContainer.scrollTop = chatContainer.scrollHeight;
   while (chatContainer.children.length > 20) chatContainer.removeChild(chatContainer.firstChild);
+
+  if (!skipMemory) pushChatMessage(sender, text);
 }
 
-function clearChat() { chatContainer.innerHTML = ''; }
+function clearChat() { clearChatMemoryForCurrent(); }
 
 async function processInput(text) {
   setRobotState('thinking');
@@ -1039,15 +1123,34 @@ async function callGemini(msg) {
 
 function buildPrompt() {
   const langName = { en: 'English', fr: 'French', ar: 'Arabic' }[state.lang];
+  const mem = (getActiveChat() || []).slice(-8).map(m => `${m.sender === 'user' ? 'User' : state.robotName}: ${m.text}`).join('\n');
+
+  const styleRules = {
+    playful: "Style rules: Be silly and playful. Use at least one emoji. Use one [command] in every reply.",
+    helpful: "Style rules: Be kind and educational. Give one simple tip when possible. Use one [command] in every reply.",
+    pirate:  "Style rules: Talk like a pirate. Start every reply with 'Arrr!' and use pirate words. Use one [command] in every reply.",
+    space:   "Style rules: Talk like a space explorer. Mention space/cosmos sometimes. Use one [command] in every reply."
+  }[state.personality] || "";
+
   return `${PERSONALITIES[state.personality]}
+${styleRules}
 Your name is ${state.robotName}. Keep responses short (1-2 sentences).
 Use [commands] often: [happy] [sad] [wave] [dance] [party] [fart] [cat] [rocket] etc.
-Respond in ${langName}. Never use asterisks.`;
+Respond in ${langName}. Never use asterisks.
+${mem ? ('\nConversation so far:\n' + mem) : ''}`;
 }
 
 function getDemo(msg) {
   const m = msg.toLowerCase();
   const r = DEMO[state.lang] || DEMO.en;
+
+  const sig = {
+    playful: '',
+    helpful: '📘 ',
+    pirate: 'Arrr! 🏴‍☠️ ',
+    space: '🚀 '
+  }[state.personality] || '';
+
   let resp;
   if (m.match(/^(hi|hello|hey|bonjour|salut|مرحب)/)) resp = pick(r.greeting);
   else if (m.match(/(your name|ton nom|اسمك)/)) resp = pick(r.name || r.default);
@@ -1056,34 +1159,44 @@ function getDemo(msg) {
   else if (m.match(/(party|fête)/)) resp = pick(r.party || r.default);
   else if (m.match(/(bye|au revoir|وداع)/)) resp = pick(r.bye || r.default);
   else resp = pick(r.default);
-  return resp.replace(/{name}/g, state.robotName);
+
+  const flavor = {
+    playful: "",
+    helpful: (state.lang === 'fr' ? "Petit conseil: avance étape par étape. " : "Quick tip: go step by step. "),
+    pirate: (state.lang === 'fr' ? "Cap sur l'aventure! " : "Set sail for adventure! "),
+    space: (state.lang === 'fr' ? "Journal de bord: mission en cours. " : "Captain's log: mission in progress. ")
+  }[state.personality] || "";
+
+  return (sig + flavor + resp).replace(/{name}/g, state.robotName);
 }
 
 // ==================== BLUETOOTH ====================
-async function toggleConnection() { state.connected ? disconnect() : await connect(); }
+async function toggleConnection() {
+  // Recover from inconsistent UI state (e.g., after a failed connect)
+  if (state.connected && !state.device?.gatt?.connected) {
+    state.connected = false;
+    updateConnection();
+  }
 
-async function connect() {
-  try {
-    log('Scanning for Micro:bit...', 'ble');
-    state.device = await navigator.bluetooth.requestDevice({ filters: [{ namePrefix: 'BBC micro:bit' }], optionalServices: [CONFIG.UART_SERVICE] });
-    state.device.addEventListener('gattserverdisconnected', () => { state.connected = false; updateConnection(); log('Disconnected', 'ble'); });
-    const server = await state.device.gatt.connect();
-    const service = await server.getPrimaryService(CONFIG.UART_SERVICE);
-    // TX characteristic is for notifications (receiving from micro:bit)
-    const notifyChar = await service.getCharacteristic(CONFIG.TX_CHAR);
-    // RX characteristic is for writing (sending to micro:bit)
-    state.writeChar = await service.getCharacteristic(CONFIG.RX_CHAR);
-    await notifyChar.startNotifications();
-    notifyChar.addEventListener('characteristicvaluechanged', onNotify);
-    state.connected = true; updateConnection();
-    sendToMicrobit('happy'); updateLED('happy');
-    log('Connected: ' + state.device.name, 'success');
-  } catch(e) { log('Connect failed: ' + e.message, 'error'); }
+  if (state.connected) disconnect();
+  else await connect();
 }
 
 function disconnect() {
-  if (state.device?.gatt.connected) state.device.gatt.disconnect();
-  state.connected = false; updateConnection();
+  try {
+    if (state.device?.gatt?.connected) {
+      state.device.gatt.disconnect();
+    }
+  } catch (e) {
+    log('Disconnect error: ' + (e?.message || e), 'error');
+  }
+
+  state.connected = false;
+  state.device = null;
+  state.writeChar = null;
+
+  updateConnection();
+  log('Disconnected', 'ble');
 }
 
 function onNotify(e) {
@@ -1199,10 +1312,45 @@ const LED = {
   listening: [0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
 };
 
+// Personality LED animations (UI only). Commands override briefly.
+let ledAnimTimer = null;
+let ledAnimPausedUntil = 0;
+let ledAnimFrame = 0;
+
+const LED_ANIM = {
+  playful: ['happy','wink','party','dance','wow'],
+  helpful: ['happy','listening','speaking','thinking','cool'],
+  pirate:  ['wink','angry','horn','laugh','cool'],
+  space:   ['rocket','wow','thunder','speaking','happy']
+};
+
+function renderLEDPixels(pattern) {
+  ledGrid.querySelectorAll('.led-pixel').forEach((px, i) => px.classList.toggle('on', pattern[i] === 1));
+}
+
+function startPersonalityLEDAnimation(force = false) {
+  if (ledAnimTimer && !force) return;
+  stopPersonalityLEDAnimation();
+  ledAnimFrame = 0;
+  ledAnimTimer = setInterval(() => {
+    if (Date.now() < ledAnimPausedUntil) return;
+    const seq = LED_ANIM[state.personality] || LED_ANIM.helpful;
+    const key = seq[ledAnimFrame % seq.length] || 'happy';
+    renderLEDPixels(LED[key] || LED.happy);
+    ledAnimFrame++;
+  }, 450);
+}
+
+function stopPersonalityLEDAnimation() {
+  if (ledAnimTimer) clearInterval(ledAnimTimer);
+  ledAnimTimer = null;
+}
+
 function updateLED(cmd) {
   const key = cmd.toLowerCase().replace(/[^a-z]/g, '');
   const p = LED[key] || LED.happy;
-  ledGrid.querySelectorAll('.led-pixel').forEach((px, i) => px.classList.toggle('on', p[i] === 1));
+  ledAnimPausedUntil = Date.now() + 2000;
+  renderLEDPixels(p);
 }
 
 // ==================== MODALS & PANELS ====================
