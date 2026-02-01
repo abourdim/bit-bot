@@ -1054,10 +1054,15 @@
           </div>
         </div>
 
-        <!-- Voice Speed -->
+        <!-- Voice Settings -->
         <div class="settings-section">
-          <div class="settings-label">🔊 Voice Speed</div>
-          <div class="slider-container">
+          <div class="settings-label">🔊 Voice</div>
+          <div class="select-wrap">
+            <select id="voiceSelect" onchange="onVoiceChange()">
+              <option value="">Default Voice</option>
+            </select>
+          </div>
+          <div class="slider-container" style="margin-top: 10px;">
             <span>🐢</span>
             <input type="range" class="slider" id="voiceSpeed" min="0.5" max="1.5" step="0.1" value="1">
             <span>🐇</span>
@@ -1090,12 +1095,14 @@
     let isListening = false;
     let isSpeaking = false;
     let currentLanguage = 'en';
-    let currentProvider = 'demo';
+    let currentProvider = 'groq';
     let geminiApiKey = '';
     let groqApiKey = '';
+    let selectedVoice = '';
     let device, server, service, notifyChar, writeChar;
     let recognition;
     let synth = window.speechSynthesis;
+    let availableVoices = [];
     let rxBuffer = '';
 
     // Language configs
@@ -1131,6 +1138,7 @@
       loadSettings();
       setupSpeechRecognition();
       setupEventListeners();
+      loadVoices();
       updateAiBadge();
       log('App initialized v1.0', 'success');
     }
@@ -1154,6 +1162,9 @@
         if (settings.groqApiKey) {
           groqApiKey = settings.groqApiKey;
         }
+        if (settings.selectedVoice) {
+          selectedVoice = settings.selectedVoice;
+        }
         // Load the right key into input
         updateApiKeyInput();
         updateAiBadge();
@@ -1166,9 +1177,67 @@
         voiceSpeed: voiceSpeed.value,
         provider: currentProvider,
         geminiApiKey: geminiApiKey,
-        groqApiKey: groqApiKey
+        groqApiKey: groqApiKey,
+        selectedVoice: selectedVoice
       };
       localStorage.setItem('talkingRobotSettings', JSON.stringify(settings));
+    }
+
+    // ==================== VOICE MANAGEMENT ====================
+    function loadVoices() {
+      const loadVoiceList = () => {
+        availableVoices = synth.getVoices();
+        populateVoiceSelector();
+      };
+      
+      // Load voices (may be async in some browsers)
+      loadVoiceList();
+      if (synth.onvoiceschanged !== undefined) {
+        synth.onvoiceschanged = loadVoiceList;
+      }
+    }
+
+    function populateVoiceSelector() {
+      const select = document.getElementById('voiceSelect');
+      const langCode = langConfig[currentLanguage].code.split('-')[0];
+      
+      // Clear existing options
+      select.innerHTML = '<option value="">Default Voice</option>';
+      
+      // Filter voices by current language
+      const langVoices = availableVoices.filter(voice => 
+        voice.lang.toLowerCase().startsWith(langCode.toLowerCase())
+      );
+      
+      // Add voices to selector
+      langVoices.forEach(voice => {
+        const option = document.createElement('option');
+        option.value = voice.name;
+        option.textContent = `${voice.name} (${voice.lang})`;
+        if (voice.name === selectedVoice) {
+          option.selected = true;
+        }
+        select.appendChild(option);
+      });
+      
+      // If no voices for this language, show all voices
+      if (langVoices.length === 0) {
+        availableVoices.forEach(voice => {
+          const option = document.createElement('option');
+          option.value = voice.name;
+          option.textContent = `${voice.name} (${voice.lang})`;
+          if (voice.name === selectedVoice) {
+            option.selected = true;
+          }
+          select.appendChild(option);
+        });
+      }
+    }
+
+    function onVoiceChange() {
+      selectedVoice = document.getElementById('voiceSelect').value;
+      saveSettings();
+      log('Voice changed: ' + (selectedVoice || 'Default'), 'info');
     }
 
     function updateApiKeyInput() {
@@ -1309,6 +1378,12 @@
 
       // RTL support
       document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+
+      // Reload voice selector for new language
+      if (availableVoices.length > 0) {
+        selectedVoice = ''; // Reset voice selection for new language
+        populateVoiceSelector();
+      }
 
       if (save) saveSettings();
       log('Language set to: ' + lang, 'info');
@@ -1558,6 +1633,14 @@ NEVER USE * asterisk character in responses!`;
       utterance.lang = langConfig[currentLanguage].code;
       utterance.rate = parseFloat(voiceSpeed.value);
 
+      // Use selected voice if available
+      if (selectedVoice) {
+        const voice = availableVoices.find(v => v.name === selectedVoice);
+        if (voice) {
+          utterance.voice = voice;
+        }
+      }
+
       utterance.onstart = () => {
         isSpeaking = true;
         setRobotState('speaking');
@@ -1719,9 +1802,23 @@ NEVER USE * asterisk character in responses!`;
         localStorage.removeItem('talkingRobotSettings');
         chatArea.innerHTML = '';
         logContainer.innerHTML = '';
+        
+        // Reset all settings
         setLanguage('en');
         voiceSpeed.value = 1;
         speedValue.textContent = '1.0x';
+        currentProvider = 'groq';
+        document.getElementById('aiProvider').value = 'groq';
+        geminiApiKey = '';
+        groqApiKey = '';
+        selectedVoice = '';
+        document.getElementById('apiKeyInput').value = '';
+        document.getElementById('voiceSelect').value = '';
+        
+        updateAiBadge();
+        populateVoiceSelector();
+        onProviderChange(false);
+        
         log('All data cleared', 'success');
       }
     }
