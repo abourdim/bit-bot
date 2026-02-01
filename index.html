@@ -107,6 +107,53 @@
       margin-top: 2px;
     }
 
+    .version {
+      font-size: 0.6rem;
+      color: var(--muted);
+      opacity: 0.6;
+    }
+
+    .header-right {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    /* AI Badge */
+    .ai-badge {
+      display: flex;
+      align-items: center;
+      gap: 6px;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 0.7rem;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.05em;
+      background: rgba(15, 23, 42, 0.9);
+      border: 2px solid var(--border);
+      transition: all 0.2s;
+    }
+
+    .ai-badge.demo {
+      border-color: var(--muted);
+      color: var(--muted);
+    }
+
+    .ai-badge.groq {
+      border-color: var(--warning);
+      color: var(--warning);
+    }
+
+    .ai-badge.gemini {
+      border-color: var(--primary);
+      color: var(--primary);
+    }
+
+    .ai-icon {
+      font-size: 0.9rem;
+    }
+
     /* Status Pill */
     .status-pill {
       display: flex;
@@ -755,6 +802,23 @@
       text-decoration: underline;
     }
 
+    .demo-notice {
+      margin-top: 10px;
+      padding: 8px 12px;
+      border-radius: 8px;
+      background: rgba(148, 163, 184, 0.1);
+      border: 1px dashed var(--muted);
+      font-size: 0.7rem;
+      color: var(--muted);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+
+    .demo-notice strong {
+      color: var(--text);
+    }
+
     /* ==================== MOBILE ==================== */
     @media (max-width: 768px) {
       .sidebar {
@@ -874,7 +938,7 @@
       <!-- Header -->
       <header class="header">
         <div class="logo-block">
-          <svg class="logo" viewBox="-92.820084 179.975632 6.000000 3.214096" xmlns="http://www.w3.org/2000/svg">
+          <svg class="logo" viewBox="-93 179.5 7 4" xmlns="http://www.w3.org/2000/svg">
             <path fill="#22c55e" d="M-90.26918,180.70665C-90.270096,180.703674,-90.280693,180.55484,-90.292725,180.3759C-90.304756,180.19696,-90.315605,180.042282,-90.316826,180.032166L-90.319046,180.013763L-90.29628,180.013763C-90.283752,180.013748,-90.25869,180.012115,-90.240585,180.010117C-90.222481,180.008118,-90.191841,180.005646,-90.172501,180.004608L-90.137344,180.002731L-90.128738,180.131226C-90.124008,180.201889,-90.119133,180.269699,-90.117897,180.281921L-90.115662,180.304123L-90.05497,180.20639C-90.021591,180.152634,-89.977379,180.08139,-89.956726,180.048065L-89.919182,179.987488L-89.883324,179.985062C-89.863602,179.983734,-89.824806,179.980759,-89.797112,179.978455C-89.769424,179.976166,-89.739342,179.974884,-89.73027,179.975632L-89.713783,179.976974L-89.825653,180.145996L-89.937531,180.315033L-89.796638,180.490601C-89.719147,180.587158,-89.655746,180.667526,-89.655746,180.669174C-89.655746,180.670837,-89.657356,180.672195,-89.659317,180.672195C-89.676155,180.672195,-89.856628,180.684464,-89.861404,180.685928C-89.865883,180.687317,-89.896164,180.651016,-89.971275,180.554199C-90.028305,180.480698,-90.076393,180.421448,-90.07814,180.422516C-90.079887,180.423599,-90.086746,180.433975,-90.093384,180.445587L-90.105461,180.466675L-90.097374,180.581726C-90.091408,180.66658,-90.090439,180.697479,-90.093674,180.699478C-90.099167,180.702866,-90.137032,180.7061,-90.21048,180.709442C-90.257515,180.711578,-90.267807,180.71109,-90.26918,180.70665z"/>
             <path fill="#22c55e" d="M-89.190971,180.7686C-89.267868,180.753281,-89.31105,180.739975,-89.360039,180.716522C-89.393906,180.700302,-89.471527,180.651245,-89.480576,180.640335C-89.484718,180.635345,-89.482971,180.627808,-89.446373,180.493073C-89.44014,180.470108,-89.428429,180.473007,-89.40416,180.50351C-89.35006,180.571503,-89.267303,180.622406,-89.189331,180.635666C-89.152946,180.641846,-89.149734,180.641846,-89.129295,180.635406C-89.09346,180.624115,-89.075447,180.597748,-89.081604,180.565582C-89.085762,180.543793,-89.121902,180.514221,-89.183189,180.482422C-89.254944,180.44519,-89.27681,180.430908,-89.309555,180.399933C-89.365524,180.347,-89.382957,180.291809,-89.367203,180.217453C-89.349838,180.135468,-89.298691,180.084976,-89.207352,180.059616C-89.16906,180.048981,-89.099213,180.048294,-89.053474,180.058105C-88.98037,180.073776,-88.906212,180.104935,-88.843803,180.14621C-88.810745,180.16806,-88.807495,180.171295,-88.809486,180.180176C-88.810699,180.185577,-88.820007,180.220505,-88.830177,180.257782C-88.847977,180.323044,-88.849014,180.325516,-88.858116,180.324509C-88.863312,180.323944,-88.870895,180.31871,-88.874962,180.312897C-88.886063,180.297012,-88.932678,180.252243,-88.951851,180.239044C-89.003326,180.203629,-89.07032,180.181305,-89.113388,180.185211C-89.166359,180.190018,-89.195839,180.22757,-89.177078,180.266357C-89.168106,180.284912,-89.14418,180.302139,-89.078835,180.337082C-88.97522,180.392517,-88.924667,180.434921,-88.900993,180.486298C-88.888092,180.514282,-88.885109,180.566086,-88.894295,180.602661C-88.921547,180.711212,-89.010704,180.773865,-89.135971,180.772491C-89.156639,180.772263,-89.181389,180.770508,-89.190971,180.7686z"/>
             <path fill="#22c55e" d="M-91.104111,180.90361C-91.134857,180.834915,-91.198944,180.691757,-91.246529,180.585495C-91.294121,180.479233,-91.332542,180.391785,-91.331917,180.391159C-91.330269,180.389511,-91.248558,180.352615,-91.135277,180.302368C-91.080956,180.278275,-91.021782,180.253952,-91.003784,180.248306C-90.923584,180.22316,-90.848717,180.234344,-90.799507,180.278824C-90.775833,180.300217,-90.757965,180.329971,-90.742996,180.372955C-90.732986,180.401703,-90.731194,180.412506,-90.731262,180.44368C-90.731339,180.474075,-90.733147,180.485123,-90.741638,180.507187C-90.753166,180.53714,-90.772163,180.572006,-90.780914,180.579269C-90.784096,180.581909,-90.786697,180.585449,-90.786697,180.587128C-90.786697,180.590454,-90.750763,180.609756,-90.581421,180.697388C-90.520706,180.72879,-90.466957,180.757034,-90.461975,180.760147C-90.4533,180.765549,-90.456924,180.767578,-90.547188,180.807983C-90.599037,180.831192,-90.645187,180.85022,-90.64975,180.850266C-90.654312,180.850327,-90.720131,180.816483,-90.796013,180.775055L-90.933975,180.699768L-90.960068,180.711792C-90.974419,180.718399,-90.986549,180.72406,-90.987015,180.72435C-90.987488,180.724655,-90.965302,180.775085,-90.937721,180.836411C-90.910133,180.897751,-90.887093,180.950424,-90.886513,180.953476C-90.885788,180.957291,-90.909706,180.96991,-90.96286,180.993774C-91.005432,181.012878,-91.042053,181.028519,-91.044235,181.028519C-91.046425,181.028519,-91.073364,180.972321,-91.104111,180.90361zM-90.99427,180.585632C-90.928116,180.554184,-90.903168,180.526901,-90.902977,180.485809C-90.902802,180.449066,-90.926598,180.406387,-90.953178,180.395752C-90.982254,180.384109,-91.00518,180.388504,-91.073784,180.418884C-91.095886,180.428665,-91.114441,180.437119,-91.115021,180.437668C-91.116417,180.439011,-91.04142,180.606354,-91.039421,180.606354C-91.038567,180.606354,-91.018242,180.597031,-90.99427,180.585632z"/>
@@ -890,12 +954,18 @@
           </svg>
           <div>
             <div class="app-title">Talking Robot</div>
-            <div class="app-subtitle">AI-Powered Micro:bit Friend</div>
+            <div class="app-subtitle">AI-Powered Micro:bit Friend <span class="version">v1.0</span></div>
           </div>
         </div>
-        <div class="status-pill" id="statusPill" onclick="toggleSidebar()">
-          <span class="status-dot" id="statusDot"></span>
-          <span id="statusText">Tap to Connect</span>
+        <div class="header-right">
+          <div class="ai-badge" id="aiBadge">
+            <span class="ai-icon">🎮</span>
+            <span class="ai-name" id="aiName">Demo</span>
+          </div>
+          <div class="status-pill" id="statusPill" onclick="toggleSidebar()">
+            <span class="status-dot" id="statusDot"></span>
+            <span id="statusText">Tap to Connect</span>
+          </div>
         </div>
       </header>
 
@@ -952,14 +1022,16 @@
           <div class="settings-label">🤖 AI Brain</div>
           <div class="select-wrap">
             <select id="aiProvider" onchange="onProviderChange()">
-              <option value="demo">Demo Mode (No API)</option>
-              <option value="groq">Groq (Fast & Free)</option>
-              <option value="gemini">Google Gemini</option>
+              <option value="groq">⚡ Groq (Fast & Free)</option>
+              <option value="gemini">🤖 Google Gemini</option>
             </select>
           </div>
-          <div id="apiKeySection" style="display: none; margin-top: 10px;">
+          <div id="apiKeySection" style="margin-top: 10px;">
             <input type="password" class="api-key-input" id="apiKeyInput" placeholder="Enter API Key...">
             <div class="api-hint" id="apiHint">Get free key at <a href="https://console.groq.com" target="_blank" id="apiLink">console.groq.com</a></div>
+          </div>
+          <div class="demo-notice">
+            <span>💡</span> No API key? App uses <strong>Demo Mode</strong> as fallback
           </div>
         </div>
 
@@ -1059,7 +1131,8 @@
       loadSettings();
       setupSpeechRecognition();
       setupEventListeners();
-      log('App initialized', 'success');
+      updateAiBadge();
+      log('App initialized v1.0', 'success');
     }
 
     function loadSettings() {
@@ -1071,10 +1144,9 @@
           voiceSpeed.value = settings.voiceSpeed;
           speedValue.textContent = settings.voiceSpeed + 'x';
         }
-        if (settings.provider) {
+        if (settings.provider && settings.provider !== 'demo') {
           currentProvider = settings.provider;
           document.getElementById('aiProvider').value = settings.provider;
-          onProviderChange(false);
         }
         if (settings.geminiApiKey) {
           geminiApiKey = settings.geminiApiKey;
@@ -1084,6 +1156,7 @@
         }
         // Load the right key into input
         updateApiKeyInput();
+        updateAiBadge();
       }
     }
 
@@ -1107,27 +1180,42 @@
       }
     }
 
+    function updateAiBadge() {
+      const badge = document.getElementById('aiBadge');
+      const icon = document.querySelector('.ai-icon');
+      const name = document.getElementById('aiName');
+      
+      // Check if we have a valid API key for the selected provider
+      const hasValidKey = (currentProvider === 'groq' && groqApiKey) || 
+                          (currentProvider === 'gemini' && geminiApiKey);
+      
+      if (!hasValidKey) {
+        badge.className = 'ai-badge demo';
+        icon.textContent = '🎮';
+        name.textContent = 'Demo';
+      } else if (currentProvider === 'groq') {
+        badge.className = 'ai-badge groq';
+        icon.textContent = '⚡';
+        name.textContent = 'Groq';
+      } else if (currentProvider === 'gemini') {
+        badge.className = 'ai-badge gemini';
+        icon.textContent = '🤖';
+        name.textContent = 'Gemini';
+      }
+    }
+
     function onProviderChange(save = true) {
       currentProvider = document.getElementById('aiProvider').value;
-      const apiSection = document.getElementById('apiKeySection');
-      const apiLink = document.getElementById('apiLink');
       const apiHint = document.getElementById('apiHint');
       
       if (currentProvider === 'gemini') {
-        apiSection.style.display = 'block';
-        apiLink.href = 'https://aistudio.google.com/app/apikey';
-        apiLink.textContent = 'aistudio.google.com';
         apiHint.innerHTML = 'Get free key at <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a>';
       } else if (currentProvider === 'groq') {
-        apiSection.style.display = 'block';
-        apiLink.href = 'https://console.groq.com';
-        apiLink.textContent = 'console.groq.com';
         apiHint.innerHTML = 'Get free key at <a href="https://console.groq.com" target="_blank">console.groq.com</a>';
-      } else {
-        apiSection.style.display = 'none';
       }
       
       updateApiKeyInput();
+      updateAiBadge();
       if (save) saveSettings();
       log('AI provider: ' + currentProvider, 'info');
     }
@@ -1150,6 +1238,7 @@
           geminiApiKey = key;
         }
         saveSettings();
+        updateAiBadge();
         log('API key updated', 'info');
       });
     }
@@ -1273,15 +1362,10 @@
     }
 
     async function callAI(userMessage) {
-      // Demo mode - use preset responses
-      if (currentProvider === 'demo') {
-        return getDemoResponse(userMessage);
-      }
-
       // Groq API
       if (currentProvider === 'groq') {
         if (!groqApiKey) {
-          log('No Groq API key set!', 'error');
+          log('No Groq API key - using Demo mode', 'info');
           return getDemoResponse(userMessage);
         }
         return await callGroq(userMessage);
@@ -1290,7 +1374,7 @@
       // Gemini API
       if (currentProvider === 'gemini') {
         if (!geminiApiKey) {
-          log('No Gemini API key set!', 'error');
+          log('No Gemini API key - using Demo mode', 'info');
           return getDemoResponse(userMessage);
         }
         return await callGemini(userMessage);
