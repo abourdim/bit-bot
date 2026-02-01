@@ -1027,7 +1027,9 @@ function onNotify(e) {
         const ledState = line.substring(4); // Remove "LED:" prefix
         if (ledState.length === 25) {
           syncLEDFromMicrobit(ledState);
-          log('← LED sync', 'rx');
+          // Show visual representation in log
+          const visual = ledState.replace(/1/g, '█').replace(/0/g, '·');
+          log('← LED: ' + visual.match(/.{5}/g).join(' '), 'rx');
         }
       } else {
         log('← ' + line, 'rx'); 
