@@ -88,83 +88,7 @@
       backdrop-filter: blur(10px);
     }
 
-    
-
-/* ==================== HEADER: LOGO FAR-LEFT + TEXT CENTERED ==================== */
-/* Keeps the logo pinned on the far-left while centering the title/subtitle. */
-.header {
-  justify-content: center; /* center the titles */
-  position: fixed; /* already fixed in your file, but keep explicit */
-}
-
-.logo-block {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* center the titles container */
-}
-
-.logo {
-  position: absolute;
-  left: 20px;           /* far-left inside header padding */
-  width: 78px;          /* slightly bigger */
-  height: auto;
-  flex-shrink: 0;
-}
-
-.header-titles {
-  align-items: center;
-  text-align: center;
-}
-
-/* ==================== DISCREET ANIMATIONS (LOGO + TEXT) ==================== */
-.logo {
-  animation: logoFloat 4.8s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.45));
-  will-change: transform, filter;
-}
-
-.app-title {
-  background: linear-gradient(90deg, #22c55e, #60a5fa, #22c55e);
-  background-size: 220%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-  animation: titleShimmer 7.5s linear infinite;
-  will-change: background-position;
-}
-
-.app-subtitle {
-  animation: subtitleBreathe 6s ease-in-out infinite;
-  will-change: opacity;
-}
-
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
-}
-
-@keyframes titleShimmer {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 220% 50%; }
-}
-
-@keyframes subtitleBreathe {
-  0%, 100% { opacity: 0.82; }
-  50%      { opacity: 1; }
-}
-
-/* Mobile tweak: keep logo nicely aligned */
-@media (max-width: 768px) {
-  .logo { left: 16px; width: 70px; }
-}
-
-/* Respect users who prefer reduced motion */
-@media (prefers-reduced-motion: reduce) {
-  .logo, .app-title, .app-subtitle { animation: none !important; }
-}
-.main-area {
+    .main-area {
       padding-top: 120px; /* Space for fixed header + toolbar */
     }
 
@@ -1859,6 +1783,17 @@
     let synth = window.speechSynthesis;
     let availableVoices = [];
     let rxBuffer = '';
+
+    // ==================== KIDS MODE ====================
+    const KIDS_MODE = {
+      enabled: true,
+      maxSentences: 1,
+      maxWords: 10,
+      emoji: true,
+      simpleWords: true,
+      personality: 'friendly playful robot'
+    };
+
 
     // Default Groq API key - set your own key in settings
     const DEFAULT_GROQ_KEY = '';
