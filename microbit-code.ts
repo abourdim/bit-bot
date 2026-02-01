@@ -1,86 +1,78 @@
 /**
- * Talking Robot - Micro:bit BLE Controller
+ * Talking Robot - Micro:bit BLE Controller (V2)
  * For use with the Talking Robot web app
- * 
- * Features:
- * - BLE UART communication
- * - LED face animations (idle, listening, thinking, speaking)
- * - Button controls (A = start listening, B = stop)
+ *
+ * Works around MakeCode limitation:
+ * - basic.showLeds() requires a literal
+ * - images.createImage() also requires a literal in some targets
+ * So we store faces as Image objects created from literals.
  */
 
-// ============ FACE PATTERNS ============
+// ============ FACE IMAGES ============
 
-// Idle face - happy
-const FACE_IDLE = `
-    . # . # .
-    . # . # .
-    . . . . .
-    # . . . #
-    . # # # .
-`
+const FACE_IDLE = images.createImage(`
+. # . # .
+. # . # .
+. . . . .
+# . . . #
+. # # # .
+`)
 
-// Listening face - alert eyes
-const FACE_LISTENING = `
-    # # . # #
-    # # . # #
-    . . . . .
-    . . . . .
-    . # # # .
-`
+const FACE_LISTENING = images.createImage(`
+# # . # #
+# # . # #
+. . . . .
+. . . . .
+. # # # .
+`)
 
-// Thinking face - looking up
-const FACE_THINKING = `
-    . # . # .
-    . . . . .
-    . . . . .
-    . # # # .
-    . . . . .
-`
+const FACE_THINKING = images.createImage(`
+. # . # .
+. . . . .
+. . . . .
+. # # # .
+. . . . .
+`)
 
-// Speaking frame 1 - mouth open
-const FACE_SPEAK_1 = `
-    . # . # .
-    . # . # .
-    . . . . .
-    . # # # .
-    . # # # .
-`
+const FACE_SPEAK_1 = images.createImage(`
+. # . # .
+. # . # .
+. . . . .
+. # # # .
+. # # # .
+`)
 
-// Speaking frame 2 - mouth closed
-const FACE_SPEAK_2 = `
-    . # . # .
-    . # . # .
-    . . . . .
-    . . . . .
-    . # # # .
-`
+const FACE_SPEAK_2 = images.createImage(`
+. # . # .
+. # . # .
+. . . . .
+. . . . .
+. # # # .
+`)
 
-// Happy face
-const FACE_HAPPY = `
-    . . . . .
-    . # . # .
-    . . . . .
-    # . . . #
-    . # # # .
-`
+const FACE_HAPPY = images.createImage(`
+. . . . .
+. # . # .
+. . . . .
+# . . . #
+. # # # .
+`)
 
-// Sad face
-const FACE_SAD = `
-    . . . . .
-    . # . # .
-    . . . . .
-    . # # # .
-    # . . . #
-`
+const FACE_SAD = images.createImage(`
+. . . . .
+. # . # .
+. . . . .
+. # # # .
+# . . . #
+`)
 
-// Blink frame
-const FACE_BLINK = `
-    . . . . .
-    . . . . .
-    . # . # .
-    . . . . .
-    . # # # .
-`
+const FACE_BLINK = images.createImage(`
+. . . . .
+. . . . .
+. # . # .
+. . . . .
+. # # # .
+`)
 
 // ============ STATE ============
 
@@ -88,14 +80,18 @@ let currentState = "idle"
 let isSpeaking = false
 let speakFrame = 0
 
-// ============ FUNCTIONS ============
+// V2 mic threshold (optional)
+let micThreshold = 120
+let lastMicBlink = 0
 
-function dbg(tag: string, msg: string) {
-    serial.writeLine("" + ts() + " " + tag + " " + msg)
-}
+// ============ FUNCTIONS ============
 
 function ts(): string {
     return "[" + input.runningTime() + "ms]"
+}
+
+function dbg(tag: string, msg: string) {
+    serial.writeLine("" + ts() + " " + tag + " " + msg)
 }
 
 function uartTx(line: string) {
@@ -103,35 +99,58 @@ function uartTx(line: string) {
     dbg("TX", line)
 }
 
-function showFace(pattern: string) {
-    basic.showLeds(pattern)
+// ✅ Now we pass an Image (not a string)
+function showFace(img: Image) {
+    img.showImage(0)
+}
+
+// V2 sound helpers
+function beepOk() {
+    music.playTone(988, music.beat(BeatFraction.Eighth))
+}
+
+function beepStart() {
+    music.playTone(784, music.beat(BeatFraction.Eighth))
+    music.playTone(988, music.beat(BeatFraction.Eighth))
+}
+
+function beepStop() {
+    music.playTone(988, music.beat(BeatFraction.Eighth))
+    music.playTone(784, music.beat(BeatFraction.Eighth))
 }
 
 function setState(state: string) {
     currentState = state
     dbg("STATE", state)
-    
+
     if (state === "idle") {
         isSpeaking = false
         showFace(FACE_IDLE)
+
     } else if (state === "listening") {
         isSpeaking = false
         showFace(FACE_LISTENING)
+
     } else if (state === "thinking") {
         isSpeaking = false
         showFace(FACE_THINKING)
+
     } else if (state === "speaking") {
         isSpeaking = true
+        speakFrame = 0
+
     } else if (state === "happy") {
         isSpeaking = false
         showFace(FACE_HAPPY)
         basic.pause(1500)
         showFace(FACE_IDLE)
+
     } else if (state === "sad") {
         isSpeaking = false
         showFace(FACE_SAD)
         basic.pause(1500)
         showFace(FACE_IDLE)
+
     } else if (state === "blink") {
         showFace(FACE_BLINK)
         basic.pause(150)
@@ -142,44 +161,51 @@ function setState(state: string) {
 function handleCommand(cmd: string) {
     let clean = cmd.trim().toLowerCase()
     dbg("CMD", clean)
-    
+
     if (clean === "speak_start") {
         setState("speaking")
+
     } else if (clean === "speak_end") {
         setState("idle")
+
     } else if (clean === "listening") {
         setState("listening")
+
     } else if (clean === "thinking") {
         setState("thinking")
+
     } else if (clean === "happy") {
         setState("happy")
+
     } else if (clean === "sad") {
         setState("sad")
+
     } else if (clean === "blink") {
         setState("blink")
+
     } else if (clean === "wave") {
-        // Wave animation
+        // Wave animation (literals are fine here)
         for (let i = 0; i < 3; i++) {
             basic.showLeds(`
-                . . . . #
-                . . . # .
-                . . # . .
-                . # . . .
-                # . . . .
-            `)
+. . . . #
+. . . # .
+. . # . .
+. # . . .
+# . . . .
+`)
             basic.pause(150)
             basic.showLeds(`
-                # . . . .
-                . # . . .
-                . . # . .
-                . . . # .
-                . . . . #
-            `)
+# . . . .
+. # . . .
+. . # . .
+. . . # .
+. . . . #
+`)
             basic.pause(150)
         }
         showFace(FACE_IDLE)
+
     } else {
-        // Echo back for debugging
         uartTx("ECHO: " + cmd)
     }
 }
@@ -188,6 +214,7 @@ function handleCommand(cmd: string) {
 
 bluetooth.onBluetoothConnected(function () {
     showFace(FACE_HAPPY)
+    beepOk()
     basic.pause(500)
     showFace(FACE_IDLE)
     dbg("BLE", "connected")
@@ -195,6 +222,7 @@ bluetooth.onBluetoothConnected(function () {
 
 bluetooth.onBluetoothDisconnected(function () {
     basic.showIcon(IconNames.No)
+    beepStop()
     basic.pause(500)
     showFace(FACE_IDLE)
     dbg("BLE", "disconnected")
@@ -206,39 +234,50 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function () 
     handleCommand(message)
 })
 
-// ============ BUTTON EVENTS ============
+// ============ BUTTON + LOGO EVENTS (V2) ============
 
 input.onButtonPressed(Button.A, function () {
     dbg("BTN", "A pressed - start listening")
     uartTx("BTN_A")
+    beepStart()
     setState("listening")
 })
 
 input.onButtonPressed(Button.B, function () {
     dbg("BTN", "B pressed - stop")
     uartTx("BTN_B")
+    beepStop()
     setState("idle")
 })
 
 input.onButtonPressed(Button.AB, function () {
     dbg("BTN", "A+B pressed - happy")
+    beepOk()
     setState("happy")
+})
+
+// V2: touch logo = blink
+input.onLogoEvent(TouchButtonEvent.Pressed, function () {
+    dbg("LOGO", "pressed - blink")
+    uartTx("LOGO")
+    setState("blink")
 })
 
 // ============ MAIN LOOP ============
 
-// Initialize
+// Init
 serial.redirectToUSB()
 serial.setBaudRate(BaudRate.BaudRate115200)
 bluetooth.startUartService()
 
-dbg("BOOT", "Talking Robot started")
+dbg("BOOT", "Talking Robot started (V2)")
 showFace(FACE_IDLE)
 
-// Animation loop
+// Loop
 basic.forever(function () {
+
+    // Speaking animation
     if (isSpeaking) {
-        // Animate mouth while speaking
         if (speakFrame === 0) {
             showFace(FACE_SPEAK_1)
             speakFrame = 1
@@ -247,7 +286,21 @@ basic.forever(function () {
             speakFrame = 0
         }
         basic.pause(150)
-    } else {
-        basic.pause(100)
+        return
     }
+
+    // Optional V2 mic-reactive blink while listening
+    if (currentState === "listening") {
+        let lvl = input.soundLevel()
+        let now = input.runningTime()
+        if (lvl > micThreshold && now - lastMicBlink > 400) {
+            lastMicBlink = now
+            showFace(FACE_BLINK)
+            basic.pause(120)
+            showFace(FACE_LISTENING)
+        }
+    }
+
+    basic.pause(80)
 })
+
