@@ -1021,7 +1021,28 @@ function onNotify(e) {
   while ((nl = state.rxBuffer.indexOf('\n')) !== -1) {
     const line = state.rxBuffer.slice(0, nl).trim();
     state.rxBuffer = state.rxBuffer.slice(nl + 1);
-    if (line) { log('← ' + line, 'rx'); if (line === 'BTN_A') toggleListening(); else if (line === 'BTN_B') synth.cancel(); }
+    if (line) { 
+      // Check if it's an LED state update
+      if (line.startsWith('LED:')) {
+        const ledState = line.substring(4); // Remove "LED:" prefix
+        if (ledState.length === 25) {
+          syncLEDFromMicrobit(ledState);
+          log('← LED sync', 'rx');
+        }
+      } else {
+        log('← ' + line, 'rx'); 
+        if (line === 'BTN_A') toggleListening(); 
+        else if (line === 'BTN_B') synth.cancel(); 
+      }
+    }
+  }
+}
+
+// Sync LED display from micro:bit state string (25 chars of 0/1)
+function syncLEDFromMicrobit(ledState) {
+  const pixels = ledGrid.querySelectorAll('.led-pixel');
+  for (let i = 0; i < 25 && i < ledState.length; i++) {
+    pixels[i].classList.toggle('on', ledState[i] === '1');
   }
 }
 
