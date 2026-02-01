@@ -1,5 +1,7 @@
 /**
  * Talking Robot - Micro:bit MakeCode JavaScript
+ * VERSION: BLE-SAFE (No Sounds - Better Bluetooth Stability)
+ * 
  * Flash this to your Micro:bit using MakeCode
  * Works with the Talking Robot web app via BLE UART
  * 
@@ -9,7 +11,8 @@
  * 3. Click "JavaScript" tab
  * 4. Paste this code
  * 5. Add "Bluetooth" extension (click Extensions > bluetooth)
- * 6. Download and flash to Micro:bit
+ * 6. In Project Settings: Set "No Pairing Required"
+ * 7. Download and flash to Micro:bit
  */
 
 // ==================== LED PATTERNS ====================
@@ -460,11 +463,9 @@ function discoAnim() {
 
 function fireworksAnim() {
     for (let i = 0; i < 2; i++) {
-        // Center dot
         basic.clearScreen()
         led.plot(2, 2)
         basic.pause(200)
-        // Small explosion
         basic.showLeds(`
             # . . . #
             . # . # .
@@ -473,7 +474,6 @@ function fireworksAnim() {
             # . . . #
             `)
         basic.pause(200)
-        // Big explosion
         basic.showLeds(`
             # . # . #
             . # # # .
@@ -618,14 +618,12 @@ function explodeAnim() {
 }
 
 function rocketAnim() {
-    // Countdown
     basic.showString("3")
     basic.pause(300)
     basic.showString("2")
     basic.pause(300)
     basic.showString("1")
     basic.pause(300)
-    // Liftoff
     for (let y = 4; y >= -1; y--) {
         basic.clearScreen()
         if (y >= 0 && y < 5) {
@@ -638,7 +636,6 @@ function rocketAnim() {
         basic.pause(150)
     }
     basic.showIcon(IconNames.Diamond)
-    music.playTone(988, 500)
 }
 
 function thunderAnim() {
@@ -654,85 +651,74 @@ function thunderAnim() {
         basic.clearScreen()
         basic.pause(50)
     }
-    music.playTone(100, 300)
 }
 
-// ==================== SOUND EFFECTS ====================
-
-function beepSound() {
-    music.playTone(262, 100)
-    music.playTone(330, 100)
+// Fart animation (visual only - no sound)
+function fartAnim() {
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . . .
+        . . . # .
+        . . # # #
+        `)
+    basic.pause(100)
+    basic.showLeds(`
+        . . . . .
+        . . . . .
+        . . . # .
+        . . # # .
+        . # # # #
+        `)
+    basic.pause(100)
+    basic.showLeds(`
+        . . . . .
+        . . . # .
+        . . # # .
+        . # # # .
+        # # # # #
+        `)
+    basic.pause(100)
+    basic.showLeds(`
+        . . . # .
+        . . # # .
+        . # # # .
+        # # # # .
+        # # # # #
+        `)
+    basic.pause(200)
+    SILLY.showImage(0)
 }
 
-function laughSound() {
-    music.playTone(523, 100)
-    music.playTone(659, 100)
-    music.playTone(784, 100)
-    music.playTone(1047, 200)
-}
-
-function hornSound() {
-    music.playTone(262, 400)
-    music.playTone(262, 400)
-}
-
-function sirenSound() {
-    for (let i = 0; i < 2; i++) {
-        music.playTone(880, 200)
-        music.playTone(660, 200)
+// Burp animation (visual only)
+function burpAnim() {
+    for (let i = 0; i < 3; i++) {
+        basic.showLeds(`
+            . . . . .
+            . . . . .
+            . . # . .
+            . . . . .
+            . . . . .
+            `)
+        basic.pause(80)
+        basic.showLeds(`
+            . . . . .
+            . . # . .
+            . # # # .
+            . . # . .
+            . . . . .
+            `)
+        basic.pause(80)
+        basic.showLeds(`
+            . . # . .
+            . # # # .
+            # # # # #
+            . # # # .
+            . . # . .
+            `)
+        basic.pause(80)
     }
-}
-
-function fartSound() {
-    for (let freq = 200; freq >= 100; freq -= 10) {
-        music.playTone(freq, 50)
-    }
-}
-
-function burpSound() {
-    for (let freq = 150; freq <= 250; freq += 20) {
-        music.playTone(freq, 30)
-    }
-}
-
-function catSound() {
-    music.playTone(880, 200)
-    music.playTone(784, 400)
-}
-
-function dogSound() {
-    music.playTone(392, 100)
-    music.playTone(392, 100)
-}
-
-function duckSound() {
-    music.playTone(523, 100)
-    music.playTone(523, 100)
-    music.playTone(523, 100)
-}
-
-function cowSound() {
-    music.playTone(200, 500)
-}
-
-function pigSound() {
-    music.playTone(392, 100)
-    music.playTone(330, 200)
-}
-
-function frogSound() {
-    music.playTone(262, 100)
-    music.playTone(392, 100)
-}
-
-function snakeSound() {
-    music.playTone(100, 300)
-}
-
-function monkeySound() {
-    music.playTone(523, 100)
-    music.playTone(659, 100)
-    music.playTone(523, 100)
+    OOPS.showImage(0)
 }
 
 // ==================== COMMAND HANDLER ====================
@@ -741,20 +727,8 @@ function handleCommand(cmd: string) {
     cmd = cmd.trim().toLowerCase()
 
     // Emotions
-    if (cmd == "happy") { basic.showLeds(`
-        . . . . .
-        . # . # .
-        . . . . .
-        # . . . #
-        . # # # .
-        `) }
-    else if (cmd == "sad") { basic.showLeds(`
-        . . . . .
-        . # . # .
-        . . . . .
-        . # # # .
-        # . . . #
-        `) }
+    if (cmd == "happy") { HAPPY.showImage(0) }
+    else if (cmd == "sad") { SAD.showImage(0) }
     else if (cmd == "angry") { ANGRY.showImage(0) }
     else if (cmd == "surprised") { SURPRISED.showImage(0) }
     else if (cmd == "love") { LOVE.showImage(0) }
@@ -776,15 +750,15 @@ function handleCommand(cmd: string) {
     else if (cmd == "vampire") { VAMPIRE.showImage(0) }
     else if (cmd == "poop") { POOP.showImage(0) }
 
-    // Animals
-    else if (cmd == "cat") { CAT.showImage(0); catSound() }
-    else if (cmd == "dog") { DOG.showImage(0); dogSound() }
-    else if (cmd == "duck") { DUCK.showImage(0); duckSound() }
-    else if (cmd == "cow") { COW.showImage(0); cowSound() }
-    else if (cmd == "pig") { PIG.showImage(0); pigSound() }
-    else if (cmd == "frog") { FROG.showImage(0); frogSound() }
-    else if (cmd == "snake") { SNAKE.showImage(0); snakeSound() }
-    else if (cmd == "monkey") { MONKEY.showImage(0); monkeySound() }
+    // Animals (no sounds - just faces)
+    else if (cmd == "cat") { CAT.showImage(0) }
+    else if (cmd == "dog") { DOG.showImage(0) }
+    else if (cmd == "duck") { DUCK.showImage(0) }
+    else if (cmd == "cow") { COW.showImage(0) }
+    else if (cmd == "pig") { PIG.showImage(0) }
+    else if (cmd == "frog") { FROG.showImage(0) }
+    else if (cmd == "snake") { SNAKE.showImage(0) }
+    else if (cmd == "monkey") { MONKEY.showImage(0) }
 
     // Actions
     else if (cmd == "wave") { waveAnim() }
@@ -823,13 +797,48 @@ function handleCommand(cmd: string) {
         wiggleAnim()
     }
 
-    // Sounds
-    else if (cmd == "fart") { fartSound() }
-    else if (cmd == "burp") { burpSound() }
-    else if (cmd == "beep") { beepSound() }
-    else if (cmd == "laugh") { laughSound() }
-    else if (cmd == "horn") { hornSound() }
-    else if (cmd == "siren") { sirenSound() }
+    // Sounds (visual animations only - no audio)
+    else if (cmd == "fart") { fartAnim() }
+    else if (cmd == "burp") { burpAnim() }
+    else if (cmd == "beep") { 
+        for (let i = 0; i < 3; i++) {
+            basic.showIcon(IconNames.SmallSquare)
+            basic.pause(100)
+            basic.showIcon(IconNames.Square)
+            basic.pause(100)
+        }
+    }
+    else if (cmd == "laugh") { HAHA.showImage(0); wiggleAnim() }
+    else if (cmd == "horn") {
+        basic.showLeds(`
+            # # # # .
+            # # # # #
+            # # # # #
+            # # # # #
+            # # # # .
+            `)
+        basic.pause(400)
+    }
+    else if (cmd == "siren") {
+        for (let i = 0; i < 4; i++) {
+            basic.showLeds(`
+                # # # # #
+                . . . . .
+                . . . . .
+                . . . . .
+                . . . . .
+                `)
+            basic.pause(150)
+            basic.showLeds(`
+                . . . . .
+                . . . . .
+                . . . . .
+                . . . . .
+                # # # # #
+                `)
+            basic.pause(150)
+        }
+    }
 
     // Party
     else if (cmd == "party") { partyAnim() }
@@ -837,7 +846,11 @@ function handleCommand(cmd: string) {
     else if (cmd == "rainbow") { rainbowAnim() }
     else if (cmd == "fireworks") { fireworksAnim() }
     else if (cmd == "confetti") { partyAnim() }
-    else if (cmd == "birthday") { music.startMelody(music.builtInMelody(Melodies.Birthday), MelodyOptions.Once) }
+    else if (cmd == "birthday") { 
+        basic.showIcon(IconNames.Heart)
+        basic.pause(500)
+        partyAnim()
+    }
     else if (cmd == "applause") {
         for (let i = 0; i < 5; i++) {
             basic.showIcon(IconNames.Happy)
@@ -926,7 +939,7 @@ function handleCommand(cmd: string) {
             basic.showNumber(i)
             basic.pause(1000)
         }
-        beepSound()
+        basic.showIcon(IconNames.Yes)
     }
     else if (cmd == "quiz") {
         basic.showLeds(`
@@ -938,7 +951,7 @@ function handleCommand(cmd: string) {
             `)
     }
 
-    // Robot movement (placeholder)
+    // Robot movement
     else if (cmd == "forward") { basic.showArrow(ArrowNames.North) }
     else if (cmd == "backward") { basic.showArrow(ArrowNames.South) }
     else if (cmd == "left") { basic.showArrow(ArrowNames.West) }
@@ -971,8 +984,6 @@ function handleCommand(cmd: string) {
 
 // ==================== BLUETOOTH SETUP ====================
 
-let rxBuffer = ""
-
 // Enable Bluetooth UART service
 bluetooth.startUartService()
 
@@ -982,6 +993,19 @@ bluetooth.onUartDataReceived(serial.delimiters(Delimiters.NewLine), function () 
     if (data.length > 0) {
         handleCommand(data)
     }
+})
+
+// Connection events
+bluetooth.onBluetoothConnected(function () {
+    basic.showIcon(IconNames.Yes)
+    basic.pause(500)
+    HAPPY.showImage(0)
+})
+
+bluetooth.onBluetoothDisconnected(function () {
+    basic.showIcon(IconNames.No)
+    basic.pause(500)
+    SAD.showImage(0)
 })
 
 // ==================== BUTTON HANDLERS ====================
@@ -1010,15 +1034,4 @@ input.onButtonPressed(Button.AB, function () {
 // ==================== STARTUP ====================
 
 // Show ready face
-basic.showLeds(`
-    . . . . .
-    . # . # .
-    . . . . .
-    # . . . #
-    . # # # .
-    `)
-
-// Play startup sound
-music.playTone(523, 100)
-music.playTone(659, 100)
-music.playTone(784, 200)
+HAPPY.showImage(0)
