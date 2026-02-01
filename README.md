@@ -1,268 +1,164 @@
-# 🤖 Talking Robot
+# 🤖 Talking Robot V2
 
-## Make Your Own AI Robot Friend!
+## Comprehensive Upgrade with 20 Enhancements!
 
-![Robot](https://img.shields.io/badge/Robot-Friend-blue?style=for-the-badge&logo=robot)
-![Micro:bit](https://img.shields.io/badge/BBC-micro:bit-green?style=for-the-badge)
-![Kids](https://img.shields.io/badge/For-Kids-orange?style=for-the-badge)
+A completely redesigned AI-powered robot companion for kids that connects to a BBC micro:bit via Bluetooth.
 
 ---
 
-## 🌟 What Is This?
+## ✨ What's New in V2
 
-**Talking Robot** is a fun app that turns your BBC micro:bit into a talking robot friend!
+### 🎨 Design & UI Enhancements
+1. **Animated Robot Avatar** - Expressive SVG robot face with glowing eyes, animated antenna, and state-based effects
+2. **Chat Bubble Improvements** - Typing indicators, timestamps, smooth animations, and auto-scroll
+3. **Dark/Light Theme Toggle** - Kid-friendly light theme by default with optional dark mode
+4. **Mobile-First Redesign** - Thumb-friendly navigation, responsive layout, safe area support
+5. **Micro:bit Mirror Widget** - Real-time 5x5 LED display showing current micro:bit face
 
-- 🎤 **Talk to it** — Use your voice!
-- ⌨️ **Type to it** — Or use the keyboard!
-- 🧠 **It thinks** — Uses AI to understand you!
-- 🔊 **It talks back** — Hear the robot's voice!
-- 😊 **It shows feelings** — Watch the LED face!
+### ⚡ New Features
+6. **Conversation History** - Chat sessions saved locally (up to 20 sessions)
+7. **Custom Robot Personality** - Name your robot + choose personality (Playful, Helpful, Pirate, Space Explorer)
+8. **Voice Selection Preview** - "Test" button to hear voices before selecting
+9. **Command Cheat Sheet Modal** - Click-to-try commands organized by category
+10. **Parental Controls** - PIN-protected settings with AI restriction and usage timer options
+11. **Offline Phrase Packs** - Expanded demo mode responses for multiple themes
+12. **QR Code Pairing** - Easy link to MakeCode project for micro:bit setup
 
----
+### 🐛 Bug Fixes & Quality
+13. **Speech Recognition Reliability** - Visual feedback for no-speech detection + retry button
+14. **API Key Validation** - Test button with clear success/error states
+15. **Bluetooth Auto-Reconnect** - Automatic reconnection when page regains focus
+16. **Rate Limit Handling** - Visual countdown, automatic fallback to demo mode
 
-## 🎮 How To Use
-
-### Step 1: Open the App
-
-Open `index.html` in **Google Chrome** or **Microsoft Edge**.
-
-> ⚠️ **Important:** Use Chrome or Edge. Other browsers may not work!
-
-### Step 2: Connect Your Micro:bit
-
-1. Click the **⚙️ Settings** button (right side)
-2. Click the big green **🔗 Connect** button
-3. Pick your micro:bit from the list
-4. Wait for the happy face on your micro:bit! 😊
-
-### Step 3: Start Talking!
-
-**Option A — Use Your Voice:**
-1. Click the big **🎤 Microphone** button
-2. Say something like "Hello!"
-3. Wait for the robot to answer!
-
-**Option B — Type a Message:**
-1. Type in the text box at the bottom
-2. Press **Enter** or click the **➤ Send** button
-3. Wait for the robot to answer!
+### 🔧 Code & Architecture
+17. **Modular CSS** - CSS custom properties, organized sections, theme support
+18. **Clean JavaScript** - Single state object, clear function organization
+19. **PWA Ready** - Service worker hooks, manifest support, installable
+20. **Accessibility (a11y)** - Skip links, ARIA labels, keyboard navigation, reduced motion support
 
 ---
 
-## 🌍 Languages
+## 🚀 Quick Start
 
-The robot speaks 3 languages! Pick your favorite:
+### 1. Open the App
+Open `index.html` in **Chrome** or **Edge** (required for Web Bluetooth & Speech APIs)
 
-| Flag | Language | Example |
-|------|----------|---------|
-| 🇬🇧 | English | "Hello! How are you?" |
-| 🇫🇷 | Français | "Bonjour! Comment ça va?" |
-| 🇸🇦 | العربية | "مرحباً! كيف حالك؟" |
+### 2. Connect Your Micro:bit
+1. Click the **Disconnected** badge or go to Settings
+2. Select your micro:bit from the Bluetooth popup
+3. Wait for the happy face on your micro:bit! 😊
 
-**To change language:**
-1. Open **⚙️ Settings**
-2. Click on a flag
-3. Start talking in that language!
-
----
-
-## 🧠 AI Modes
-
-### 🎮 Demo Mode (Default)
-- Works **without internet**
-- Fun preset responses
-- Great for practice!
-
-### ⚡ Groq Mode (Recommended!)
-- Super fast AI brain!
-- Generous free tier (30 requests/minute)
-- Uses Llama 3.1 (smart & safe)
-- Needs a free API key
-
-**To get a free Groq API key:**
-1. Go to [console.groq.com](https://console.groq.com)
-2. Sign up (free with Google/GitHub)
-3. Click "API Keys" → "Create API Key"
-4. Copy the key
-5. Paste it in the app settings
-
-### 🤖 Google Gemini Mode
-- Google's AI brain
-- Needs internet
-- Lower free tier limits
-- Needs a free API key
-
-**To get a free Gemini API key:**
-1. Go to [aistudio.google.com](https://aistudio.google.com/app/apikey)
-2. Sign in with Google
-3. Click "Create API Key"
-4. Copy the key
-5. Paste it in the app settings
+### 3. Start Talking!
+- 🎤 **Voice**: Click the big blue mic button
+- ⌨️ **Type**: Use the text input and press Enter
 
 ---
 
-## 📟 Micro:bit Faces
+## 🎮 Supported Commands
 
-Your micro:bit shows different faces!
+| Category | Commands |
+|----------|----------|
+| **Emotions** | happy, sad, angry, surprised, love, sleepy, silly, crazy, wink, cool, wow, haha |
+| **Animals** | cat, dog, duck, cow, pig, frog, monkey |
+| **Actions** | wave, dance, spin, jump, blink, wiggle, bounce, nod |
+| **Sounds** | fart, burp, beep, laugh, horn |
+| **Party** | party, disco, rainbow, fireworks, confetti, yay |
+| **Powers** | laser, freeze, fire, magic, rocket, explode |
 
-| Face | Meaning |
-|------|---------|
-| 😊 Happy eyes + smile | Ready to chat! |
-| 👀 Big eyes | Listening to you... |
-| 🤔 Looking up | Thinking... |
-| 😃 Moving mouth | Talking to you! |
-
-### Micro:bit Buttons
-
-| Button | What It Does |
-|--------|--------------|
-| **A** | Start listening (like pressing the mic) |
-| **B** | Stop talking |
-| **A+B** | Show happy face! |
+Click 📋 to see all commands and try them!
 
 ---
 
-## 🔧 Setup Your Micro:bit
+## ⚙️ Settings
 
-### What You Need
+### 🌍 Languages
+- 🇬🇧 English
+- 🇫🇷 Français  
+- 🇸🇦 العربية (RTL supported)
 
-- 1x BBC micro:bit (v1 or v2)
-- 1x USB cable
-- 1x Computer with Chrome/Edge
+### 🧠 AI Modes
+| Mode | Description | API Key |
+|------|-------------|---------|
+| 🎮 Demo | Offline preset responses | None |
+| ⚡ Groq | Fast Llama 3.1 AI | Free at console.groq.com |
+| 💎 Gemini | Google's AI | Free at aistudio.google.com |
 
-### Upload The Code
-
-1. Go to [makecode.microbit.org](https://makecode.microbit.org)
-2. Click **New Project**
-3. Click **⚙️ Settings** → **Extensions**
-4. Search for **Bluetooth** and add it
-5. Click **{} JavaScript** at the top
-6. Delete all the code
-7. Copy everything from `microbit-code.ts`
-8. Paste it in MakeCode
-9. Click **Download** and save to your micro:bit
-
-### Important Bluetooth Settings!
-
-In MakeCode:
-1. Click **⚙️ Settings** → **Project Settings**
-2. Turn ON: **No Pairing Required**
-3. Turn OFF: **JustWorks pairing**
+### 🤖 Personalities
+- **Playful** - Silly & fun (default)
+- **Helpful** - Smart & kind
+- **Pirate** - Arrr! 🏴‍☠️
+- **Space Explorer** - Cosmic adventures! 🚀
 
 ---
 
-## 🎨 Fun Things To Try
+## 📱 Mobile Support
 
-### Say These Things!
-
-| You Say | Robot Does |
-|---------|------------|
-| "Hello!" | Says hi back! 👋 |
-| "What's your name?" | Tells you its name! |
-| "Tell me a joke" | Tells a funny joke! 😂 |
-| "Goodbye" | Waves goodbye! 👋 |
-| "Make a happy face" | Shows 😊 on micro:bit! |
-| "Blink your eyes" | Blinks the LED eyes! |
-
-### Try Different Languages!
-
-1. Switch to French 🇫🇷
-2. Say "Bonjour!"
-3. The robot answers in French!
-
-### Make It Silly!
-
-With Gemini AI mode, try:
-- "Pretend you're a pirate!"
-- "Speak like a dinosaur!"
-- "Tell me about space!"
+The app is fully responsive:
+- Collapsible navigation
+- Touch-friendly buttons
+- Safe area padding for notched phones
+- PWA installable (add to home screen)
 
 ---
 
-## ❓ Troubleshooting
+## 🔒 Parental Controls
 
-### "I can't connect to my micro:bit!"
-
-- ✅ Use Chrome or Edge browser
-- ✅ Make sure Bluetooth is ON on your computer
-- ✅ Upload the micro:bit code first
-- ✅ Try refreshing the page
-
-### "The robot doesn't hear me!"
-
-- ✅ Click **Allow** when asked for microphone
-- ✅ Speak clearly and not too fast
-- ✅ Make sure you're not muted
-
-### "Oops! Something went wrong!"
-
-- ✅ Check your internet connection
-- ✅ If using Gemini, check your API key
-- ✅ Try Demo Mode instead
-- ✅ Wait 30 seconds and try again (rate limit)
-
-### "The voice sounds weird!"
-
-- ✅ Try different voice speed (🐢 slower / 🐇 faster)
-- ✅ Some languages have better voices than others
+In Settings > Parental Controls:
+- Set a 4-digit PIN
+- Restrict to Demo mode only
+- Enable usage timer (30 min)
 
 ---
 
-## 📁 Files In This Project
+## 📁 Project Files
 
-| File | What It Is |
-|------|-----------|
-| `index.html` | The main app (open this!) |
-| `microbit-code.ts` | Code for your micro:bit |
-| `README.md` | This help file! |
-
----
-
-## 🛡️ Safety For Kids
-
-- ✅ **Don't share personal info** with the robot
-- ✅ **Don't share your API key** with anyone
-- ✅ **Ask an adult** if something seems wrong
-- ✅ **Have fun** and be creative!
+| File | Description |
+|------|-------------|
+| `index.html` | Complete app (open this!) |
+| `microbit_makecode.js` | Code for your micro:bit |
+| `wdi.svg` | Logo graphic |
+| `README.md` | This file |
 
 ---
 
-## 👨‍👩‍👧‍👦 For Parents & Teachers
+## 🛡️ Privacy & Safety
 
-### Privacy
-- Demo Mode works completely offline
-- Gemini Mode sends messages to Google's servers
-- No data is stored on any server
-- API keys are stored locally in the browser only
+- **Demo Mode**: Works completely offline
+- **AI Modes**: Messages sent to Groq/Google servers
+- **Data Storage**: Settings saved locally in browser only
+- **No Tracking**: No analytics or user data collection
 
-### Classroom Use
-- Demo Mode is great for lessons (no API needed)
-- Works on Chromebooks!
-- Multiple students can use different micro:bits
+---
 
-### Educational Value
-- Speech recognition practice
-- Multiple languages
-- Basic robotics concepts
-- AI introduction for kids
+## 🔧 Technical Details
+
+### Browser Requirements
+- Chrome 70+ or Edge 79+ (Web Bluetooth)
+- Microphone permission (Speech Recognition)
+- Speakers (Text-to-Speech)
+
+### APIs Used
+- Web Bluetooth API
+- Web Speech API (Recognition + Synthesis)
+- Local Storage API
+- Groq API (Llama 3.1)
+- Google Gemini API
+
+---
+
+## 📝 Changelog
+
+### V2.0.0
+- Complete UI redesign with modern aesthetics
+- Added 20 new features and improvements
+- Improved accessibility and mobile support
+- Better error handling and user feedback
 
 ---
 
 ## 🌟 Credits
 
 Made with ❤️ for kids who love robots!
-
-**Technologies Used:**
-- Web Bluetooth API
-- Web Speech API
-- Google Gemini AI
-- BBC micro:bit
-
----
-
-## 📝 License
-
-Free to use for education and fun! 🎉
 
 ---
 

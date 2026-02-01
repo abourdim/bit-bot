@@ -3,2795 +3,1099 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
-  <title>Talking Robot</title>
+  <meta name="theme-color" content="#6366f1">
+  <title>Talking Robot V2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link href="https://fonts.googleapis.com/css2?family=Amiri&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
-    :root {
-      --bg-color: #0a1628;
-      --panel-bg: #0f172a;
-      --accent: #22c55e;
-      --accent-soft: rgba(34, 197, 94, 0.15);
-      --accent-strong: rgba(34, 197, 94, 0.7);
-      --primary: #3b82f6;
-      --primary-soft: rgba(59, 130, 246, 0.2);
-      --danger: #ef4444;
-      --warning: #f59e0b;
-      --muted: #94a3b8;
-      --border: #1e293b;
-      --text: #f1f5f9;
-      --radius: 16px;
-    }
+:root {
+  --bg: #f0f4ff;
+  --bg-grad: linear-gradient(135deg, #e0e7ff, #f0f4ff, #fdf2f8);
+  --panel: #ffffff;
+  --card: #ffffff;
+  --accent: #22c55e;
+  --accent-soft: rgba(34,197,94,0.15);
+  --primary: #6366f1;
+  --primary-soft: rgba(99,102,241,0.15);
+  --secondary: #f472b6;
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --text: #1e293b;
+  --muted: #64748b;
+  --border: rgba(99,102,241,0.2);
+  --radius: 16px;
+  --font: 'Fredoka', sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+}
+[data-theme="dark"] {
+  --bg: #0a1628;
+  --bg-grad: radial-gradient(circle at 20% 20%, rgba(99,102,241,0.15), transparent 50%), radial-gradient(circle at 80% 80%, rgba(244,114,182,0.1), transparent 50%), #0a1628;
+  --panel: #0f172a;
+  --card: #1e293b;
+  --text: #f1f5f9;
+  --muted: #94a3b8;
+  --border: rgba(148,163,184,0.2);
+}
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg-grad);
+  background-attachment: fixed;
+  color: var(--text);
+  font-family: var(--font);
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+.skip-link { position: absolute; top: -100px; left: 50%; transform: translateX(-50%); padding: 12px 24px; background: var(--primary); color: white; border-radius: 8px; z-index: 9999; text-decoration: none; font-weight: 600; }
+.skip-link:focus { top: 10px; }
+.app { display: flex; flex-direction: column; min-height: 100vh; min-height: 100dvh; }
 
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      -webkit-tap-highlight-color: transparent;
-    }
-
-    body {
-      min-height: 100vh;
-      min-height: 100dvh;
-      background: 
-        radial-gradient(circle at top left, rgba(34, 197, 94, 0.12), transparent 50%),
-        radial-gradient(circle at bottom right, rgba(59, 130, 246, 0.15), transparent 55%),
-        var(--bg-color);
-      color: var(--text);
-      font-family: system-ui, -apple-system, BlinkMacSystemFont, sans-serif;
-      overflow: hidden;
-    }
-
-    .app {
-      display: flex;
-      height: 100vh;
-      height: 100dvh;
-    }
-
-    /* ==================== MAIN AREA ==================== */
-    .main-area {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      min-width: 0;
-      position: relative;
-    }
-
-    /* Bismillah */
-    .bismillah {
-      position: absolute;
-      top: 8px;
-      left: 0;
-      right: 0;
-      text-align: center;
-      font-family: "Amiri", serif;
-      font-size: 14px;
-      color: rgba(200, 230, 255, 0.25);
-      pointer-events: none;
-      user-select: none;
-      z-index: 10;
-    }
-
-    /* Header - Logo and Title only */
-    .header {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 10px 20px;
-      background: rgba(15, 23, 42, 0.95);
-      border-bottom: 1px solid var(--border);
-      z-index: 50;
-      backdrop-filter: blur(10px);
-    }
-
-    .main-area {
-      padding-top: 120px; /* Space for fixed header + toolbar */
-    }
-
-    /* Toolbar - Buttons below header */
-    .toolbar {
-      position: fixed;
-      top: 60px;
-      left: 0;
-      right: 0;
-      display: flex;
-      align-items: center;
-      justify-content: flex-start;
-      padding: 8px 20px;
-      background: rgba(30, 41, 59, 0.95);
-      border-bottom: 1px solid var(--border);
-      z-index: 49;
-      backdrop-filter: blur(10px);
-    }
-
-    .toolbar-left {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-    }
-
-    .btn-toolbar {
-      width: 36px;
-      height: 36px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg-color);
-      color: var(--text);
-      font-size: 1rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      transition: all 0.2s;
-    }
-
-    .btn-toolbar:hover {
-      border-color: var(--primary);
-      background: rgba(59, 130, 246, 0.2);
-    }
-
-    .btn-toolbar.active {
-      border-color: var(--primary);
-      background: var(--primary);
-    }
-
-    .logo-block {
-      display: flex;
-      align-items: center;
-      gap: 16px;
-    }
-
-    .logo {
-      width: 60px;
-      height: auto;
-      filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.5));
-    }
-
-    .header-titles {
-      display: flex;
-      flex-direction: column;
-      gap: 2px;
-    }
-
-    .app-title {
-      font-size: 1.5rem;
-      font-weight: 800;
-      letter-spacing: 0.05em;
-      color: #22c55e;
-      margin: 0;
-      text-transform: uppercase;
-    }
-
-    .app-subtitle {
-      font-size: 0.85rem;
-      color: #fbbf24;
-      margin: 0;
-      font-style: italic;
-    }
-
-    
-
-/* ==================== HEADER: LOGO FAR-LEFT + TEXT CENTERED ==================== */
-/* Logo pinned far-left, titles centered + discreet (calm) animations */
-
+/* Header */
 .header {
-  justify-content: center;
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 12px 16px; background: var(--panel);
+  border-bottom: 1px solid var(--border);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
 }
-
-.logo-block {
-  position: relative;
-  width: 100%;
-  display: flex;
-  align-items: center;
-  justify-content: center; /* center the titles */
-  gap: 16px;
-}
-
-.logo {
-  position: absolute;
-  left: 20px;
-  width: 78px; /* a little bigger */
-  height: auto;
-  flex-shrink: 0;
-
-  /* discreet animation */
-  animation: logoFloat 4.8s ease-in-out infinite;
-  filter: drop-shadow(0 0 8px rgba(34, 197, 94, 0.45));
-  will-change: transform, filter;
-}
-
-.header-titles {
-  align-items: center;
-  text-align: center;
-}
-
+.header-left { display: flex; align-items: center; gap: 12px; }
+.logo { width: 48px; height: 48px; animation: float 4s ease-in-out infinite; filter: drop-shadow(0 4px 8px rgba(99,102,241,0.3)); }
+@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.header-titles { display: flex; flex-direction: column; }
 .app-title {
-  /* soft animated gradient */
-  background: linear-gradient(90deg, #22c55e, #60a5fa, #22c55e);
-  background-size: 220%;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
-  color: transparent;
-
-  animation: titleShimmer 7.5s linear infinite;
-  will-change: background-position;
+  font-size: 1.4rem; font-weight: 700;
+  background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
+  background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  background-clip: text;
+  animation: shimmer 8s linear infinite;
 }
-
-.app-subtitle {
-  animation: subtitleBreathe 6s ease-in-out infinite;
-  will-change: opacity;
+@keyframes shimmer { 0%,100%{background-position:0 50%} 50%{background-position:100% 50%} }
+.app-subtitle { font-size: 0.7rem; color: var(--muted); }
+.header-center { display: flex; gap: 8px; }
+.badge {
+  display: flex; align-items: center; gap: 6px;
+  padding: 6px 12px; border-radius: 999px;
+  font-size: 0.7rem; font-weight: 600; text-transform: uppercase;
+  border: 2px solid var(--border); background: var(--panel);
+  color: var(--muted); cursor: pointer; transition: all 0.2s;
 }
-
-@keyframes logoFloat {
-  0%, 100% { transform: translateY(0); }
-  50%      { transform: translateY(-4px); }
+.badge:hover { border-color: var(--primary); }
+.badge.connected { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.badge.groq { border-color: var(--warning); color: var(--warning); }
+.badge.gemini { border-color: var(--primary); color: var(--primary); }
+.status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 2s infinite; }
+@keyframes pulse { 0%,100%{opacity:1; transform: scale(1);} 50%{opacity:0.5; transform: scale(0.9);} }
+.header-right { display: flex; gap: 8px; }
+.btn-icon {
+  width: 40px; height: 40px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--panel);
+  color: var(--text); font-size: 1.1rem; cursor: pointer;
+  display: flex; align-items: center; justify-content: center;
+  transition: all 0.2s;
 }
+.btn-icon:hover { border-color: var(--primary); background: var(--primary-soft); transform: translateY(-1px); }
+.btn-icon.active { border-color: var(--primary); background: var(--primary); color: white; }
 
-@keyframes titleShimmer {
-  0%   { background-position: 0% 50%; }
-  100% { background-position: 220% 50%; }
+/* Main */
+.main { flex: 1; padding: 80px 16px 140px; display: flex; flex-direction: column; align-items: center; }
+
+/* Robot Avatar */
+.robot-section { display: flex; flex-direction: column; align-items: center; padding: 20px; }
+.robot-wrapper { position: relative; }
+.robot-body {
+  width: min(280px, 70vw); height: min(280px, 70vw);
+  background: linear-gradient(145deg, var(--card), var(--panel));
+  border-radius: 28px; border: 4px solid var(--border);
+  display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 24px;
+  box-shadow: 0 20px 60px rgba(99,102,241,0.15);
+  transition: all 0.3s; position: relative;
 }
-
-@keyframes subtitleBreathe {
-  0%, 100% { opacity: 0.82; }
-  50%      { opacity: 1; }
+.robot-body::before {
+  content: ''; position: absolute; inset: -4px; border-radius: 32px;
+  background: transparent; transition: all 0.3s; z-index: -1;
 }
+.robot-body.listening { border-color: var(--primary); }
+.robot-body.listening::before { background: var(--primary); filter: blur(20px); opacity: 0.3; }
+.robot-body.thinking { border-color: var(--warning); }
+.robot-body.thinking::before { background: var(--warning); filter: blur(20px); opacity: 0.3; }
+.robot-body.speaking { border-color: var(--accent); }
+.robot-body.speaking::before { background: var(--accent); filter: blur(20px); opacity: 0.3; }
+.robot-antenna {
+  position: absolute; top: -20px; left: 50%; transform: translateX(-50%);
+  width: 4px; height: 24px; background: var(--border); border-radius: 2px;
+}
+.robot-antenna::after {
+  content: ''; position: absolute; top: -10px; left: 50%; transform: translateX(-50%);
+  width: 14px; height: 14px; background: var(--primary); border-radius: 50%;
+  box-shadow: 0 0 12px var(--primary); animation: pulse 2s infinite;
+}
+.robot-body.listening .robot-antenna::after { background: var(--primary); animation: blink 0.5s infinite; }
+.robot-body.thinking .robot-antenna::after { background: var(--warning); }
+.robot-body.speaking .robot-antenna::after { background: var(--accent); }
+.robot-eyes { display: flex; gap: 40px; padding-top: 20px; }
+.robot-eye {
+  width: 52px; height: 52px; background: var(--primary); border-radius: 12px;
+  box-shadow: 0 0 20px rgba(99,102,241,0.5), inset 0 -6px 12px rgba(0,0,0,0.2);
+  transition: all 0.2s; position: relative;
+}
+.robot-eye::before {
+  content: ''; position: absolute; top: 8px; left: 8px;
+  width: 16px; height: 16px; background: rgba(255,255,255,0.5); border-radius: 50%;
+}
+.robot-body.listening .robot-eye { animation: blink 0.4s infinite alternate; }
+.robot-body.thinking .robot-eye { background: var(--warning); box-shadow: 0 0 20px rgba(245,158,11,0.5); animation: think 1s infinite; }
+.robot-body.speaking .robot-eye { background: var(--accent); box-shadow: 0 0 20px rgba(34,197,94,0.5); }
+@keyframes blink { 0%{transform:scaleY(1)} 100%{transform:scaleY(0.2); border-radius: 50%;} }
+@keyframes think { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
+.robot-mouth {
+  width: 80px; height: 24px; background: var(--card);
+  border: 3px solid var(--border); border-radius: 999px;
+  overflow: hidden; position: relative;
+}
+.robot-mouth-inner {
+  position: absolute; bottom: 0; left: 0; right: 0; height: 0%;
+  background: linear-gradient(to top, var(--accent), var(--primary));
+  transition: height 0.1s; border-radius: 999px;
+}
+.robot-body.speaking .robot-mouth-inner { animation: speak 0.15s infinite alternate; }
+@keyframes speak { 0%{height:20%} 100%{height:90%} }
+.robot-body:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  border-radius: 0 0 40px 40px; border-top: none; height: 20px;
+}
+.robot-body:not(.listening):not(.thinking):not(.speaking) .robot-mouth-inner {
+  height: 100%; background: var(--accent);
+}
+.robot-status {
+  margin-top: 24px; padding: 10px 24px; background: var(--panel);
+  border: 2px solid var(--border); border-radius: 999px;
+  font-size: 0.85rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+  transition: all 0.3s;
+}
+.robot-body.listening ~ .robot-status { color: var(--primary); border-color: var(--primary); }
+.robot-body.thinking ~ .robot-status { color: var(--warning); border-color: var(--warning); }
+.robot-body.speaking ~ .robot-status { color: var(--accent); border-color: var(--accent); }
 
+/* Microbit Widget */
+.microbit-widget {
+  margin-top: 30px; padding: 16px; background: var(--card);
+  border-radius: var(--radius); border: 2px solid var(--border);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.05);
+}
+.microbit-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border); }
+.microbit-title { font-size: 0.75rem; font-weight: 600; color: var(--muted); text-transform: uppercase; }
+.microbit-dot { width: 8px; height: 8px; border-radius: 50%; background: var(--danger); }
+.microbit-dot.on { background: var(--accent); animation: pulse 2s infinite; }
+.led-grid { display: grid; grid-template-columns: repeat(5,1fr); gap: 4px; padding: 8px; background: #1a1a2e; border-radius: 8px; }
+.led-pixel { aspect-ratio: 1; background: #2a2a4a; border-radius: 2px; transition: all 0.1s; }
+.led-pixel.on { background: #ff6b6b; box-shadow: 0 0 8px #ff6b6b; }
+
+/* Chat */
+.chat-section { width: 100%; max-width: 500px; padding: 20px 0; }
+.chat-container { display: flex; flex-direction: column; gap: 10px; max-height: 220px; overflow-y: auto; padding: 4px; }
+.chat-bubble {
+  display: flex; align-items: flex-start; gap: 10px;
+  padding: 12px 16px; border-radius: var(--radius);
+  animation: bubbleIn 0.3s ease-out; max-width: 85%;
+  box-shadow: 0 2px 8px rgba(0,0,0,0.05);
+}
+@keyframes bubbleIn { from{opacity:0;transform:translateY(10px) scale(0.95)} to{opacity:1;transform:translateY(0) scale(1)} }
+.chat-bubble.user { align-self: flex-end; background: var(--primary); color: white; border-bottom-right-radius: 4px; }
+.chat-bubble.robot { align-self: flex-start; background: var(--card); border: 2px solid var(--border); border-bottom-left-radius: 4px; }
+.chat-bubble .avatar { font-size: 1.2rem; flex-shrink: 0; }
+.chat-bubble .content { flex: 1; min-width: 0; }
+.chat-bubble .text { font-size: 0.9rem; line-height: 1.4; word-wrap: break-word; }
+.chat-bubble .time { font-size: 0.65rem; opacity: 0.7; margin-top: 4px; }
+.typing-indicator { display: flex; align-items: center; gap: 4px; padding: 12px 16px; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); width: fit-content; }
+.typing-dot { width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: typing 1.4s infinite; }
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+@keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} }
+.chat-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
+.btn-clear { padding: 6px 12px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.btn-clear:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
+.hidden { display: none !important; }
+
+/* Input Area */
+.input-area {
+  position: fixed; bottom: 0; left: 0; right: 0;
+  padding: 16px; padding-bottom: max(16px, env(safe-area-inset-bottom));
+  background: var(--panel);
+  border-top: 1px solid var(--border);
+  backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  z-index: 90;
+}
+.input-row { display: flex; gap: 12px; align-items: center; max-width: 600px; margin: 0 auto; }
+.text-input {
+  flex: 1; padding: 14px 20px; border-radius: 999px;
+  border: 2px solid var(--border); background: var(--card);
+  color: var(--text); font-family: var(--font); font-size: 1rem; outline: none;
+  transition: all 0.2s;
+}
+.text-input:focus { border-color: var(--primary); box-shadow: 0 0 0 4px var(--primary-soft); }
+.text-input::placeholder { color: var(--muted); }
+.btn-action {
+  width: 56px; height: 56px; border-radius: 50%; border: none;
+  cursor: pointer; display: flex; align-items: center; justify-content: center;
+  font-size: 1.4rem; transition: all 0.2s; flex-shrink: 0;
+  position: relative; overflow: hidden;
+}
+.btn-action::before {
+  content: ''; position: absolute; inset: 0;
+  background: linear-gradient(rgba(255,255,255,0.2), transparent);
+  border-radius: inherit;
+}
+.btn-mic { background: linear-gradient(145deg, var(--primary), #4f46e5); color: white; box-shadow: 0 8px 24px rgba(99,102,241,0.4); }
+.btn-mic:hover { transform: scale(1.08); box-shadow: 0 12px 32px rgba(99,102,241,0.5); }
+.btn-mic:active { transform: scale(0.95); }
+.btn-mic.active { background: linear-gradient(145deg, var(--danger), #dc2626); box-shadow: 0 8px 24px rgba(239,68,68,0.4); }
+.btn-mic.active::after {
+  content: ''; position: absolute; inset: -4px;
+  border: 3px solid var(--danger); border-radius: 50%;
+  animation: micPulse 1s infinite;
+}
+@keyframes micPulse { 0%,100%{transform:scale(1);opacity:1} 50%{transform:scale(1.15);opacity:0} }
+.btn-send { background: linear-gradient(145deg, var(--accent), #16a34a); color: white; box-shadow: 0 8px 24px rgba(34,197,94,0.4); }
+.btn-send:hover { transform: scale(1.08); box-shadow: 0 12px 32px rgba(34,197,94,0.5); }
+.btn-send:active { transform: scale(0.95); }
+
+/* Overlay & Sidebar */
+.overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; backdrop-filter: blur(2px); }
+.overlay.show { display: block; }
+.sidebar {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 340px; max-width: 90vw;
+  background: var(--panel); border-left: 1px solid var(--border);
+  z-index: 200; transform: translateX(100%); transition: transform 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.sidebar.open { transform: translateX(0); }
+.sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 1rem; }
+.btn-close { width: 36px; height: 36px; border-radius: 8px; border: none; background: var(--card); color: var(--text); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
+.btn-close:hover { background: var(--danger); color: white; }
+.sidebar-content { flex: 1; overflow-y: auto; padding: 20px; }
+.settings-section { margin-bottom: 24px; }
+.section-title { display: flex; align-items: center; gap: 8px; font-size: 0.8rem; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 12px; }
+.lang-grid, .provider-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 10px; }
+.lang-btn, .provider-btn {
+  display: flex; flex-direction: column; align-items: center; gap: 4px;
+  padding: 14px 8px; border-radius: 12px; border: 2px solid var(--border);
+  background: var(--card); cursor: pointer; transition: all 0.2s;
+}
+.lang-btn:hover, .provider-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+.lang-btn.active { border-color: var(--accent); background: var(--accent-soft); }
+.provider-btn.active { border-color: var(--primary); background: var(--primary-soft); }
+.lang-btn .flag, .provider-btn .icon { font-size: 1.8rem; }
+.lang-btn .name, .provider-btn .name { font-size: 0.7rem; font-weight: 600; color: var(--muted); }
+.lang-btn.active .name { color: var(--accent); }
+.provider-btn.active .name { color: var(--primary); }
+.api-input {
+  width: 100%; padding: 12px 16px; border-radius: 10px;
+  border: 2px solid var(--border); background: var(--card);
+  color: var(--text); font-family: var(--mono); font-size: 0.85rem; outline: none;
+  transition: all 0.2s;
+}
+.api-input:focus { border-color: var(--primary); }
+.api-hint { font-size: 0.7rem; color: var(--muted); margin-top: 8px; }
+.api-hint a { color: var(--primary); text-decoration: none; }
+.api-hint a:hover { text-decoration: underline; }
+.voice-row { display: flex; gap: 12px; margin-bottom: 12px; }
+.voice-select { flex: 1; padding: 12px; border-radius: 10px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 0.85rem; cursor: pointer; }
+.voice-select:focus { border-color: var(--primary); outline: none; }
+.btn-test { padding: 12px 16px; border-radius: 10px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-size: 0.85rem; cursor: pointer; transition: all 0.2s; white-space: nowrap; }
+.btn-test:hover { border-color: var(--primary); background: var(--primary-soft); }
+.speed-row { display: flex; align-items: center; gap: 12px; }
+.speed-slider { flex: 1; height: 8px; border-radius: 4px; background: var(--border); appearance: none; -webkit-appearance: none; cursor: pointer; }
+.speed-slider::-webkit-slider-thumb { appearance: none; -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: var(--primary); cursor: pointer; box-shadow: 0 2px 8px rgba(99,102,241,0.4); }
+.speed-slider::-moz-range-thumb { width: 22px; height: 22px; border-radius: 50%; background: var(--primary); cursor: pointer; border: none; }
+.speed-value { min-width: 50px; text-align: center; font-weight: 600; color: var(--primary); }
+.toggle-row { display: flex; align-items: center; justify-content: space-between; padding: 12px 16px; background: var(--card); border-radius: 10px; border: 1px solid var(--border); margin-bottom: 8px; }
+.toggle-info .title { font-size: 0.9rem; font-weight: 600; }
+.toggle-info .desc { font-size: 0.7rem; color: var(--muted); margin-top: 2px; }
+.toggle { position: relative; width: 48px; height: 26px; flex-shrink: 0; }
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider { position: absolute; inset: 0; background: var(--border); border-radius: 999px; cursor: pointer; transition: 0.3s; }
+.toggle-slider::before { content: ''; position: absolute; width: 20px; height: 20px; left: 3px; bottom: 3px; background: white; border-radius: 50%; transition: 0.3s; box-shadow: 0 2px 4px rgba(0,0,0,0.1); }
+.toggle input:checked + .toggle-slider { background: var(--accent); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(22px); }
+.personality-grid { display: grid; grid-template-columns: repeat(2,1fr); gap: 10px; }
+.personality-btn { display: flex; align-items: center; gap: 8px; padding: 12px; border-radius: 10px; border: 2px solid var(--border); background: var(--card); cursor: pointer; transition: all 0.2s; text-align: left; }
+.personality-btn:hover { border-color: var(--primary); transform: translateY(-2px); }
+.personality-btn.active { border-color: var(--secondary); background: rgba(244,114,182,0.1); }
+.personality-btn .p-icon { font-size: 1.5rem; flex-shrink: 0; }
+.personality-btn .p-name { font-size: 0.8rem; font-weight: 600; }
+.personality-btn .p-desc { font-size: 0.65rem; color: var(--muted); }
+.name-input { width: 100%; padding: 12px 16px; border-radius: 10px; border: 2px solid var(--border); background: var(--card); color: var(--text); font-family: var(--font); font-size: 0.9rem; outline: none; margin-bottom: 12px; transition: all 0.2s; }
+.name-input:focus { border-color: var(--secondary); }
+.danger-zone { background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.3); border-radius: 12px; padding: 16px; }
+.danger-zone .section-title { color: var(--danger); }
+.btn-danger { width: 100%; padding: 12px; border-radius: 10px; border: 2px solid var(--danger); background: transparent; color: var(--danger); font-size: 0.85rem; font-weight: 600; cursor: pointer; display: flex; align-items: center; justify-content: center; gap: 8px; transition: all 0.2s; }
+.btn-danger:hover { background: var(--danger); color: white; }
+
+/* Logs Panel */
+.logs-panel {
+  position: fixed; top: 0; right: 0; bottom: 0; width: 360px; max-width: 100vw;
+  background: var(--panel); border-left: 1px solid var(--border);
+  z-index: 180; transform: translateX(100%); transition: transform 0.3s ease;
+  display: flex; flex-direction: column;
+}
+.logs-panel.open { transform: translateX(0); }
+.logs-header { display: flex; align-items: center; justify-content: space-between; padding: 16px; border-bottom: 1px solid var(--border); font-weight: 600; }
+.logs-content { flex: 1; overflow-y: auto; padding: 12px; background: var(--bg); font-family: var(--mono); font-size: 0.75rem; line-height: 1.6; }
+.log-entry { padding: 4px 8px; margin-bottom: 4px; border-radius: 4px; word-break: break-word; }
+.log-entry.tx { background: rgba(244,114,182,0.1); border-left: 3px solid var(--secondary); }
+.log-entry.rx { background: rgba(34,211,238,0.1); border-left: 3px solid #22d3ee; }
+.log-entry.success { color: var(--accent); }
+.log-entry.error { color: var(--danger); }
+.log-tag { padding: 2px 6px; border-radius: 3px; font-size: 0.6rem; font-weight: 700; text-transform: uppercase; margin-right: 6px; }
+.log-tag.ble { background: rgba(139,92,246,0.2); color: #a78bfa; }
+.log-tag.speech { background: rgba(245,158,11,0.2); color: var(--warning); }
+.log-tag.ai { background: var(--accent-soft); color: var(--accent); }
+
+/* Modal */
+.modal { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.6); z-index: 300; align-items: center; justify-content: center; padding: 20px; backdrop-filter: blur(4px); }
+.modal.open { display: flex; }
+.modal-content { background: var(--panel); border-radius: 20px; border: 1px solid var(--border); max-width: 480px; width: 100%; max-height: 85vh; overflow: hidden; animation: modalIn 0.25s ease-out; }
+@keyframes modalIn { from{opacity:0;transform:scale(0.9) translateY(20px)} to{opacity:1;transform:scale(1) translateY(0)} }
+.modal-header { display: flex; align-items: center; justify-content: space-between; padding: 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 1.1rem; }
+.modal-body { padding: 20px; overflow-y: auto; max-height: calc(85vh - 80px); }
+.command-category { background: var(--card); border-radius: 12px; margin-bottom: 12px; overflow: hidden; border: 1px solid var(--border); }
+.category-header { display: flex; align-items: center; gap: 8px; padding: 12px 16px; background: var(--panel); border-bottom: 1px solid var(--border); font-weight: 600; font-size: 0.9rem; }
+.category-commands { display: grid; grid-template-columns: repeat(auto-fill, minmax(70px, 1fr)); gap: 6px; padding: 12px; }
+.command-chip { padding: 6px 10px; background: var(--primary-soft); border-radius: 6px; font-family: var(--mono); font-size: 0.7rem; color: var(--primary); cursor: pointer; border: none; transition: all 0.2s; }
+.command-chip:hover { background: var(--primary); color: white; transform: scale(1.05); }
+
+/* Rate Limit */
+.rate-limit { display: none; align-items: center; gap: 12px; padding: 12px 16px; background: rgba(245,158,11,0.1); border: 1px solid var(--warning); border-radius: 10px; margin: 0 16px 16px; }
+.rate-limit.show { display: flex; animation: slideDown 0.3s ease-out; }
+@keyframes slideDown { from{opacity:0;transform:translateY(-10px)} to{opacity:1;transform:translateY(0)} }
+.rate-limit-info { flex: 1; }
+.rate-limit-title { font-size: 0.8rem; font-weight: 600; color: var(--warning); }
+
+/* Mobile */
 @media (max-width: 768px) {
-  .logo { left: 16px; width: 70px; }
+  .header-titles { display: none; }
+  .header-right .btn-icon:not(:first-child):not(:last-child) { display: none; }
+  .sidebar { width: 100%; }
+  .robot-body { width: min(240px, 70vw); height: min(240px, 70vw); }
+  .robot-eyes { gap: 30px; }
+  .robot-eye { width: 42px; height: 42px; }
 }
-
-@media (prefers-reduced-motion: reduce) {
-  .logo, .app-title, .app-subtitle { animation: none !important; }
-}
-/* AI Badge */
-    .ai-badge {
-      display: flex;
-      align-items: center;
-      gap: 6px;
-      padding: 6px 12px;
-      border-radius: 999px;
-      font-size: 0.7rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      background: rgba(15, 23, 42, 0.9);
-      border: 2px solid var(--border);
-      transition: all 0.2s;
-    }
-
-    .ai-badge.demo {
-      border-color: var(--muted);
-      color: var(--muted);
-    }
-
-    .ai-badge.groq {
-      border-color: var(--warning);
-      color: var(--warning);
-    }
-
-    .ai-badge.gemini {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    .ai-icon {
-      font-size: 0.9rem;
-    }
-
-    /* Connect Button in Header */
-    .btn-connect-header {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      padding: 10px 16px;
-      border-radius: 999px;
-      border: 2px solid var(--danger);
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--text);
-      font-size: 0.8rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      cursor: pointer;
-      transition: all 0.2s;
-    }
-
-    .btn-connect-header:hover {
-      background: rgba(239, 68, 68, 0.2);
-    }
-
-    .btn-connect-header.connected {
-      border-color: var(--accent);
-      background: rgba(34, 197, 94, 0.1);
-    }
-
-    .btn-connect-header.connected:hover {
-      background: rgba(34, 197, 94, 0.2);
-    }
-
-    .connect-dot {
-      width: 8px;
-      height: 8px;
-      border-radius: 50%;
-      background: var(--danger);
-      animation: pulse 2s infinite;
-    }
-
-    .btn-connect-header.connected .connect-dot {
-      background: var(--accent);
-    }
-
-    /* Status Dot Animation */
-    @keyframes pulse {
-      0%, 100% { opacity: 1; }
-      50% { opacity: 0.5; }
-    }
-
-    /* Robot Container */
-    .robot-container {
-      flex: 1;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-      min-height: 0;
-    }
-
-    /* Robot Face */
-    .robot-face {
-      width: min(280px, 60vw);
-      height: min(280px, 60vw);
-      background: linear-gradient(145deg, #1e293b, #0f172a);
-      border-radius: 32px;
-      border: 4px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      gap: 24px;
-      box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        inset 0 2px 0 rgba(255, 255, 255, 0.05);
-      transition: all 0.3s;
-      position: relative;
-    }
-
-    .robot-face.listening {
-      border-color: var(--primary);
-      box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(59, 130, 246, 0.3);
-    }
-
-    .robot-face.thinking {
-      border-color: var(--warning);
-      box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(245, 158, 11, 0.3);
-    }
-
-    .robot-face.speaking {
-      border-color: var(--accent);
-      box-shadow: 
-        0 20px 50px rgba(0, 0, 0, 0.5),
-        0 0 40px rgba(34, 197, 94, 0.3);
-    }
-
-    /* Robot Eyes */
-    .robot-eyes {
-      display: flex;
-      gap: 40px;
-    }
-
-    .robot-eye {
-      width: 50px;
-      height: 50px;
-      background: var(--primary);
-      border-radius: 12px;
-      box-shadow: 
-        0 0 20px var(--primary),
-        inset 0 -4px 8px rgba(0, 0, 0, 0.3);
-      transition: all 0.2s;
-    }
-
-    .robot-face.listening .robot-eye {
-      animation: blink 0.3s infinite alternate;
-    }
-
-    .robot-face.thinking .robot-eye {
-      background: var(--warning);
-      box-shadow: 0 0 20px var(--warning);
-      animation: think 0.5s infinite alternate;
-    }
-
-    .robot-face.speaking .robot-eye {
-      background: var(--accent);
-      box-shadow: 0 0 20px var(--accent);
-    }
-
-    @keyframes blink {
-      0% { transform: scaleY(1); }
-      100% { transform: scaleY(0.3); }
-    }
-
-    @keyframes think {
-      0% { transform: translateY(0); }
-      100% { transform: translateY(-5px); }
-    }
-
-    /* Robot Mouth */
-    .robot-mouth {
-      width: 80px;
-      height: 20px;
-      background: #334155;
-      border-radius: 10px;
-      overflow: hidden;
-      position: relative;
-    }
-
-    .robot-mouth-inner {
-      position: absolute;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 0%;
-      background: var(--accent);
-      transition: height 0.1s;
-      border-radius: 10px;
-    }
-
-    .robot-face.speaking .robot-mouth-inner {
-      animation: speak 0.15s infinite alternate;
-    }
-
-    @keyframes speak {
-      0% { height: 20%; }
-      100% { height: 100%; }
-    }
-
-    /* Status Text */
-    .robot-status {
-      position: absolute;
-      bottom: -40px;
-      font-size: 0.9rem;
-      font-weight: 600;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-    }
-
-    .robot-face.listening .robot-status { color: var(--primary); }
-    .robot-face.thinking .robot-status { color: var(--warning); }
-    .robot-face.speaking .robot-status { color: var(--accent); }
-
-    /* Chat Area - Simple Last Exchange */
-    .chat-area {
-      padding: 12px 20px;
-      display: flex;
-      flex-direction: column;
-      gap: 8px;
-    }
-
-    .chat-exchange {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .chat-line {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      padding: 10px 14px;
-      border-radius: 12px;
-      background: rgba(15, 23, 42, 0.6);
-      animation: fadeIn 0.3s;
-    }
-
-    .chat-line.user {
-      border-left: 3px solid var(--primary);
-    }
-
-    .chat-line.robot {
-      border-left: 3px solid var(--accent);
-    }
-
-    .chat-line .avatar {
-      font-size: 1.1rem;
-    }
-
-    .chat-line .text {
-      flex: 1;
-      font-size: 0.9rem;
-      line-height: 1.4;
-      color: var(--text);
-    }
-
-    .chat-line .time {
-      font-size: 0.65rem;
-      color: var(--muted);
-      white-space: nowrap;
-    }
-
-    .chat-clear {
-      align-self: flex-end;
-      padding: 4px 10px;
-      border-radius: 6px;
-      border: none;
-      background: transparent;
-      color: var(--muted);
-      font-size: 0.7rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      gap: 4px;
-      transition: all 0.2s;
-    }
-
-    .chat-clear:hover {
-      color: var(--danger);
-      background: rgba(239, 68, 68, 0.1);
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(10px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Input Area */
-    .input-area {
-      padding: 16px 20px;
-      padding-bottom: max(16px, env(safe-area-inset-bottom));
-      background: rgba(15, 23, 42, 0.8);
-      border-top: 1px solid var(--border);
-    }
-
-    .input-row {
-      display: flex;
-      gap: 12px;
-      align-items: center;
-    }
-
-    .text-input {
-      flex: 1;
-      padding: 14px 18px;
-      border-radius: 999px;
-      border: 2px solid var(--border);
-      background: var(--panel-bg);
-      color: var(--text);
-      font-size: 1rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .text-input:focus {
-      border-color: var(--primary);
-    }
-
-    .text-input::placeholder {
-      color: var(--muted);
-    }
-
-    /* Big Buttons */
-    .btn-mic, .btn-send {
-      width: 56px;
-      height: 56px;
-      border-radius: 50%;
-      border: none;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.5rem;
-      transition: all 0.2s;
-      flex-shrink: 0;
-    }
-
-    .btn-mic {
-      background: linear-gradient(145deg, var(--primary), #2563eb);
-      color: white;
-      box-shadow: 0 8px 20px rgba(59, 130, 246, 0.4);
-    }
-
-    .btn-mic:hover {
-      transform: scale(1.05);
-    }
-
-    .btn-mic:active, .btn-mic.active {
-      transform: scale(0.95);
-      background: linear-gradient(145deg, #ef4444, #dc2626);
-      box-shadow: 0 8px 20px rgba(239, 68, 68, 0.4);
-    }
-
-    .btn-send {
-      background: linear-gradient(145deg, var(--accent), #16a34a);
-      color: white;
-      box-shadow: 0 8px 20px rgba(34, 197, 94, 0.4);
-    }
-
-    .btn-send:hover {
-      transform: scale(1.05);
-    }
-
-    .btn-send:active {
-      transform: scale(0.95);
-    }
-
-    /* ==================== SIDEBAR ==================== */
-    .sidebar {
-      width: 320px;
-      background: var(--panel-bg);
-      border-left: 1px solid var(--border);
-      display: flex;
-      flex-direction: column;
-      transition: transform 0.3s ease;
-      position: fixed;
-      right: 0;
-      top: 0;
-      bottom: 0;
-      z-index: 100;
-      transform: translateX(100%);
-    }
-
-    .sidebar.open {
-      transform: translateX(0);
-    }
-
-    .sidebar-header {
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 700;
-      font-size: 0.9rem;
-      text-transform: uppercase;
-      letter-spacing: 0.1em;
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-    }
-
-    .sidebar-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      border: none;
-      background: var(--border);
-      color: var(--text);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      transition: all 0.2s;
-    }
-
-    .sidebar-close:hover {
-      background: var(--danger);
-    }
-
-    .sidebar-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 16px;
-    }
-
-    /* Settings Sections */
-    .settings-section {
-      margin-bottom: 20px;
-    }
-
-    .settings-label {
-      font-size: 0.75rem;
-      font-weight: 600;
-      text-transform: uppercase;
-      letter-spacing: 0.08em;
-      color: var(--muted);
-      margin-bottom: 8px;
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    /* Connect Button */
-    .btn-connect {
-      width: 100%;
-      padding: 14px;
-      border-radius: 12px;
-      border: 2px solid var(--accent);
-      background: linear-gradient(145deg, rgba(34, 197, 94, 0.2), transparent);
-      color: var(--accent);
-      font-size: 1rem;
-      font-weight: 700;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 10px;
-      transition: all 0.2s;
-    }
-
-    .btn-connect:hover {
-      background: var(--accent);
-      color: var(--bg-color);
-    }
-
-    .btn-connect.connected {
-      border-color: var(--danger);
-      background: linear-gradient(145deg, rgba(239, 68, 68, 0.2), transparent);
-      color: var(--danger);
-    }
-
-    .btn-connect.connected:hover {
-      background: var(--danger);
-      color: white;
-    }
-
-    /* Select & Inputs */
-    .select-wrap {
-      position: relative;
-    }
-
-    .select-wrap select {
-      width: 100%;
-      padding: 12px 14px;
-      border-radius: 10px;
-      border: 2px solid var(--border);
-      background: var(--bg-color);
-      color: var(--text);
-      font-size: 0.9rem;
-      cursor: pointer;
-      appearance: none;
-      outline: none;
-    }
-
-    .select-wrap::after {
-      content: "▼";
-      position: absolute;
-      right: 14px;
-      top: 50%;
-      transform: translateY(-50%);
-      font-size: 0.7rem;
-      color: var(--muted);
-      pointer-events: none;
-    }
-
-    /* Language Flags */
-    .language-flags {
-      display: flex;
-      gap: 8px;
-    }
-
-    .flag-btn {
-      flex: 1;
-      padding: 12px;
-      border-radius: 12px;
-      border: 2px solid var(--border);
-      background: var(--bg-color);
-      cursor: pointer;
-      text-align: center;
-      transition: all 0.2s;
-    }
-
-    .flag-btn:hover {
-      border-color: var(--muted);
-    }
-
-    .flag-btn.active {
-      border-color: var(--accent);
-      background: rgba(34, 197, 94, 0.1);
-    }
-
-    .flag-btn .flag {
-      font-size: 1.8rem;
-      display: block;
-      margin-bottom: 4px;
-    }
-
-    .flag-btn .flag-label {
-      font-size: 0.65rem;
-      color: var(--muted);
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-    }
-
-    /* Voice Speed Slider */
-    .slider-container {
-      display: flex;
-      align-items: center;
-      gap: 12px;
-    }
-
-    .slider {
-      flex: 1;
-      height: 8px;
-      border-radius: 4px;
-      background: var(--border);
-      appearance: none;
-      cursor: pointer;
-    }
-
-    .slider::-webkit-slider-thumb {
-      appearance: none;
-      width: 20px;
-      height: 20px;
-      border-radius: 50%;
-      background: var(--accent);
-      cursor: pointer;
-      box-shadow: 0 2px 8px rgba(34, 197, 94, 0.4);
-    }
-
-    .slider-value {
-      min-width: 40px;
-      text-align: center;
-      font-weight: 600;
-      color: var(--accent);
-    }
-
-    /* Logs Sidebar - Right side (separate from settings) */
-    .logs-sidebar {
-      position: fixed;
-      top: 0;
-      right: 0;
-      width: 320px;
-      height: 100vh;
-      height: 100dvh;
-      background: var(--panel-bg);
-      border-left: 1px solid var(--border);
-      z-index: 99;
-      display: flex;
-      flex-direction: column;
-      transform: translateX(100%);
-      transition: transform 0.3s ease;
-    }
-
-    .logs-sidebar.open {
-      transform: translateX(0);
-    }
-
-    /* When both are open, offset settings */
-    .sidebar.open ~ .logs-sidebar.open,
-    .logs-sidebar.open {
-      right: 0;
-    }
-
-    .sidebar.open {
-      z-index: 100;
-    }
-
-    .logs-sidebar-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 600;
-      font-size: 0.9rem;
-    }
-
-    .logs-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      border: none;
-      background: var(--border);
-      color: var(--text);
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      font-size: 1.1rem;
-      transition: all 0.2s;
-    }
-
-    .logs-close:hover {
-      background: var(--danger);
-    }
-
-    .logs-content {
-      flex: 1;
-      overflow-y: auto;
-      padding: 12px;
-      background: var(--bg-color);
-      font-family: "SF Mono", monospace;
-      font-size: 0.75rem;
-      line-height: 1.4;
-    }
-
-    .log-line {
-      margin-bottom: 4px;
-      white-space: pre-wrap;
-      word-break: break-word;
-      padding: 2px 0;
-    }
-
-    .log-line.info { color: var(--muted); }
-    .log-line.success { color: var(--accent); }
-    .log-line.error { color: var(--danger); }
-    .log-line.tx { 
-      color: #f472b6;
-      background: rgba(244, 114, 182, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      border-left: 3px solid #f472b6;
-    }
-    .log-line.rx { 
-      color: #22d3ee;
-      background: rgba(34, 211, 238, 0.1);
-      padding: 2px 6px;
-      border-radius: 4px;
-      border-left: 3px solid #22d3ee;
-    }
-
-    .log-time {
-      color: var(--muted);
-      opacity: 0.7;
-    }
-
-    .log-tag {
-      display: inline-block;
-      padding: 1px 6px;
-      border-radius: 4px;
-      font-size: 0.6rem;
-      font-weight: 700;
-      text-transform: uppercase;
-      letter-spacing: 0.05em;
-      margin-right: 6px;
-    }
-
-    .tag-ble {
-      background: rgba(139, 92, 246, 0.2);
-      color: #a78bfa;
-      border: 1px solid rgba(139, 92, 246, 0.3);
-    }
-
-    .tag-speech {
-      background: rgba(251, 191, 36, 0.2);
-      color: #fbbf24;
-      border: 1px solid rgba(251, 191, 36, 0.3);
-    }
-
-    .tag-ai {
-      background: rgba(34, 197, 94, 0.2);
-      color: #22c55e;
-      border: 1px solid rgba(34, 197, 94, 0.3);
-    }
-
-    /* Help Modal */
-    .help-modal {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.7);
-      z-index: 300;
-      align-items: center;
-      justify-content: center;
-      padding: 20px;
-    }
-
-    .help-modal.open {
-      display: flex;
-    }
-
-    .help-content {
-      background: var(--panel-bg);
-      border-radius: 16px;
-      border: 1px solid var(--border);
-      max-width: 400px;
-      width: 100%;
-      max-height: 80vh;
-      overflow: hidden;
-      animation: modalIn 0.2s ease;
-    }
-
-    @keyframes modalIn {
-      from { opacity: 0; transform: scale(0.95); }
-      to { opacity: 1; transform: scale(1); }
-    }
-
-    .help-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 16px;
-      border-bottom: 1px solid var(--border);
-      font-weight: 700;
-      font-size: 1rem;
-    }
-
-    .help-close {
-      width: 32px;
-      height: 32px;
-      border-radius: 8px;
-      border: none;
-      background: var(--border);
-      color: var(--text);
-      cursor: pointer;
-      font-size: 1.1rem;
-      transition: all 0.2s;
-    }
-
-    .help-close:hover {
-      background: var(--danger);
-    }
-
-    .help-body {
-      padding: 16px;
-      overflow-y: auto;
-      max-height: calc(80vh - 60px);
-    }
-
-    .help-section {
-      margin-bottom: 16px;
-    }
-
-    .help-section-title {
-      font-size: 0.8rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 10px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .help-commands {
-      display: flex;
-      flex-direction: column;
-      gap: 6px;
-    }
-
-    .help-commands-grid {
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-      gap: 6px;
-    }
-
-    .help-cmd-small {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 6px 8px;
-      background: var(--bg-color);
-      border-radius: 6px;
-      font-size: 0.7rem;
-    }
-
-    .help-cmd-small code {
-      background: rgba(139, 92, 246, 0.2);
-      color: #a78bfa;
-      padding: 2px 5px;
-      border-radius: 3px;
-      font-family: monospace;
-      font-size: 0.6rem;
-    }
-
-    .help-cmd {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-      padding: 8px 10px;
-      background: var(--bg-color);
-      border-radius: 8px;
-      font-size: 0.8rem;
-    }
-
-    .help-cmd code {
-      background: rgba(139, 92, 246, 0.2);
-      color: #a78bfa;
-      padding: 3px 8px;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.75rem;
-    }
-
-    .help-cmd span {
-      color: var(--muted);
-      font-size: 0.75rem;
-    }
-
-    .help-note {
-      background: rgba(34, 197, 94, 0.1);
-      border: 1px solid rgba(34, 197, 94, 0.2);
-      border-radius: 8px;
-      padding: 10px 12px;
-      font-size: 0.75rem;
-      color: var(--accent);
-    }
-
-    .help-note code {
-      background: rgba(34, 197, 94, 0.2);
-      padding: 2px 6px;
-      border-radius: 4px;
-    }
-
-    /* Favorites Section */
-    .help-section.favorites {
-      background: linear-gradient(135deg, rgba(251, 191, 36, 0.1), rgba(244, 114, 182, 0.1));
-      border: 1px solid rgba(251, 191, 36, 0.3);
-      border-radius: 12px;
-      padding: 12px;
-      margin-bottom: 16px;
-    }
-
-    .help-section.favorites .help-section-title {
-      color: #fbbf24;
-      border-bottom-color: rgba(251, 191, 36, 0.3);
-    }
-
-    .help-favorites {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 8px;
-    }
-
-    .fav-item {
-      background: rgba(15, 23, 42, 0.6);
-      padding: 10px 12px;
-      border-radius: 8px;
-      font-size: 0.75rem;
-      cursor: pointer;
-      transition: all 0.2s;
-      border: 1px solid transparent;
-      text-align: center;
-    }
-
-    .fav-item:hover {
-      background: rgba(59, 130, 246, 0.2);
-      border-color: var(--primary);
-      transform: scale(1.02);
-    }
-
-    .fav-item:active {
-      transform: scale(0.98);
-    }
-
-    .logs-actions {
-      display: flex;
-      gap: 8px;
-      padding: 12px;
-      border-top: 1px solid var(--border);
-    }
-
-    .btn-small {
-      flex: 1;
-      padding: 10px;
-      border-radius: 8px;
-      border: 1px solid var(--border);
-      background: var(--bg-color);
-      color: var(--text);
-      font-size: 0.8rem;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 6px;
-      transition: all 0.2s;
-    }
-
-    .btn-small:hover {
-      background: var(--border);
-    }
-
-    /* Clear Cache Button */
-    .btn-danger-full {
-      width: 100%;
-      padding: 12px;
-      border-radius: 10px;
-      border: 2px solid var(--danger);
-      background: rgba(239, 68, 68, 0.1);
-      color: var(--danger);
-      font-size: 0.85rem;
-      font-weight: 600;
-      cursor: pointer;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      gap: 8px;
-      transition: all 0.2s;
-    }
-
-    .btn-danger-full:hover {
-      background: var(--danger);
-      color: white;
-    }
-
-    @media (max-width: 900px) {
-      .logs-sidebar {
-        width: 280px;
-      }
-      
-      .app.logs-open .main-area {
-        margin-right: 0;
-      }
-
-      .app.logs-open .sidebar {
-        right: 0;
-      }
-    }
-
-    @media (max-width: 600px) {
-      .logs-sidebar {
-        width: 100%;
-      }
-    }
-
-    /* API Key Input */
-    .api-key-input {
-      width: 100%;
-      padding: 10px 12px;
-      border-radius: 8px;
-      border: 2px solid var(--border);
-      background: var(--bg-color);
-      color: var(--text);
-      font-size: 0.85rem;
-      outline: none;
-      transition: border-color 0.2s;
-    }
-
-    .api-key-input:focus {
-      border-color: var(--primary);
-    }
-
-    .api-hint {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    .api-hint a {
-      color: var(--primary);
-      text-decoration: none;
-    }
-
-    .api-hint a:hover {
-      text-decoration: underline;
-    }
-
-    .api-example {
-      margin-top: 8px;
-      font-size: 0.7rem;
-      color: var(--muted);
-      display: flex;
-      align-items: center;
-      gap: 6px;
-    }
-
-    .api-example code {
-      background: var(--bg-color);
-      padding: 4px 8px;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.65rem;
-      cursor: pointer;
-      border: 1px dashed var(--border);
-      transition: all 0.2s;
-    }
-
-    .api-example code:hover {
-      border-color: var(--primary);
-      color: var(--primary);
-    }
-
-    /* Toggle Switch */
-    .toggle-switch {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-      cursor: pointer;
-    }
-
-    .toggle-switch input {
-      display: none;
-    }
-
-    .toggle-slider {
-      width: 44px;
-      height: 24px;
-      background: var(--border);
-      border-radius: 12px;
-      position: relative;
-      transition: all 0.3s;
-    }
-
-    .toggle-slider::after {
-      content: '';
-      position: absolute;
-      width: 18px;
-      height: 18px;
-      background: var(--text);
-      border-radius: 50%;
-      top: 3px;
-      left: 3px;
-      transition: all 0.3s;
-    }
-
-    .toggle-switch input:checked + .toggle-slider {
-      background: var(--accent);
-    }
-
-    .toggle-switch input:checked + .toggle-slider::after {
-      left: 23px;
-    }
-
-    .toggle-label {
-      font-size: 0.85rem;
-      color: var(--text);
-    }
-
-    .setting-hint {
-      font-size: 0.7rem;
-      color: var(--muted);
-      margin-top: 6px;
-    }
-
-    /* Commands Reference */
-    .commands-ref {
-      display: flex;
-      flex-direction: column;
-      gap: 12px;
-      margin-top: 8px;
-    }
-
-    .commands-group {
-      background: var(--bg-color);
-      border-radius: 8px;
-      padding: 10px;
-      border: 1px solid var(--border);
-    }
-
-    .commands-title {
-      font-size: 0.7rem;
-      font-weight: 600;
-      color: var(--text);
-      margin-bottom: 8px;
-      padding-bottom: 6px;
-      border-bottom: 1px solid var(--border);
-    }
-
-    .command-item {
-      display: flex;
-      align-items: center;
-      gap: 8px;
-      font-size: 0.7rem;
-      color: var(--muted);
-      padding: 3px 0;
-    }
-
-    .command-item code {
-      background: rgba(244, 114, 182, 0.15);
-      color: #f472b6;
-      padding: 2px 6px;
-      border-radius: 4px;
-      font-family: monospace;
-      font-size: 0.65rem;
-    }
-
-    .commands-group:last-child .command-item code {
-      background: rgba(34, 211, 238, 0.15);
-      color: #22d3ee;
-    }
-
-    /* ==================== MOBILE ==================== */
-    @media (max-width: 768px) {
-      .sidebar {
-        width: 85%;
-        max-width: 320px;
-        box-shadow: -10px 0 30px rgba(0, 0, 0, 0.3);
-      }
-
-      .header {
-        padding: 12px 16px;
-        padding-top: 28px;
-        flex-wrap: wrap;
-        gap: 8px;
-      }
-
-      .header-right {
-        gap: 6px;
-      }
-
-      .btn-logs-toggle,
-      .btn-settings-toggle {
-        width: 36px;
-        height: 36px;
-        font-size: 1rem;
-      }
-
-      .btn-connect-header {
-        padding: 8px 12px;
-        font-size: 0.7rem;
-      }
-
-      .ai-badge {
-        padding: 4px 8px;
-        font-size: 0.65rem;
-      }
-
-      .app-title {
-        font-size: 0.95rem;
-      }
-
-      .robot-face {
-        width: min(220px, 55vw);
-        height: min(220px, 55vw);
-      }
-
-      .robot-eyes {
-        gap: 30px;
-      }
-
-      .robot-eye {
-        width: 40px;
-        height: 40px;
-      }
-
-      .robot-mouth {
-        width: 60px;
-        height: 16px;
-      }
-
-      .chat-area {
-        max-height: 100px;
-      }
-
-      .input-area {
-        padding: 12px 16px;
-      }
-
-      .btn-mic, .btn-send {
-        width: 50px;
-        height: 50px;
-        font-size: 1.3rem;
-      }
-
-      .text-input {
-        padding: 12px 16px;
-        font-size: 0.95rem;
-      }
-    }
-
-    /* RTL Support for Arabic */
-    [dir="rtl"] .chat-bubble.user {
-      margin-left: 0;
-      margin-right: auto;
-    }
-
-    [dir="rtl"] .sidebar {
-      border-left: none;
-      border-right: 1px solid var(--border);
-      left: 0;
-      right: auto;
-      transform: translateX(-100%);
-    }
-
-    [dir="rtl"] .sidebar.open {
-      transform: translateX(0);
-    }
-
-    [dir="rtl"] .logs-sidebar {
-      border-right: none;
-      border-left: 1px solid var(--border);
-      left: 0;
-      right: auto;
-      transform: translateX(-100%);
-    }
-
-    [dir="rtl"] .logs-sidebar.open {
-      transform: translateX(0);
-    }
-
-    /* Overlay for mobile */
-    .overlay {
-      display: none;
-      position: fixed;
-      inset: 0;
-      background: rgba(0, 0, 0, 0.5);
-      z-index: 90;
-    }
-
-    .overlay.show {
-      display: block;
-    }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
   </style>
 </head>
 <body>
+  <a href="#main" class="skip-link">Skip to main content</a>
   <div class="app">
-    <!-- Main Area -->
-    <div class="main-area">
-      <div class="bismillah">بِسْمِ ٱللَّٰهِ ٱلرَّحْمَـٰنِ ٱلرَّحِيمِ</div>
-
-      <!-- Header - Logo and Title only -->
-      <header class="header">
-        <div class="logo-block">
-          <img class="logo" src="wdi.svg" alt="Logo">
-          <div class="header-titles">
-            <h1 class="app-title">BIT-BOT</h1>
-            <p class="app-subtitle">Your Silly AI Robot Friend!</p>
-          </div>
-        </div>
-      </header>
-
-      <!-- Toolbar - Buttons and Controls -->
-      <div class="toolbar">
-        <div class="toolbar-left">
-          <button class="btn-toolbar" onclick="toggleSidebar()" title="Settings">⚙️</button>
-          <button class="btn-toolbar" id="btnLogs" onclick="toggleLogsPanel()" title="Logs">📜</button>
-          <button class="btn-toolbar" onclick="toggleHelp()" title="Help">❓</button>
-          <button class="btn-connect-header" id="btnConnectHeader" onclick="toggleConnection()">
-            <span class="connect-dot" id="connectDot"></span>
-            <span id="connectHeaderText">Connect</span>
-          </button>
-          <div class="ai-badge" id="aiBadge">
-            <span class="ai-icon">⚡</span>
-            <span class="ai-name" id="aiName">Groq</span>
-          </div>
+    <!-- Header -->
+    <header class="header">
+      <div class="header-left">
+        <svg class="logo" viewBox="0 0 100 100" aria-hidden="true">
+          <defs>
+            <linearGradient id="g" x1="0%" y1="0%" x2="100%" y2="100%">
+              <stop offset="0%" style="stop-color:#6366f1"/>
+              <stop offset="50%" style="stop-color:#8b5cf6"/>
+              <stop offset="100%" style="stop-color:#f472b6"/>
+            </linearGradient>
+          </defs>
+          <line x1="50" y1="5" x2="50" y2="15" stroke="url(#g)" stroke-width="4" stroke-linecap="round"/>
+          <circle cx="50" cy="5" r="5" fill="url(#g)"/>
+          <rect x="20" y="15" width="60" height="55" rx="12" fill="url(#g)"/>
+          <rect x="30" y="30" width="14" height="14" rx="4" fill="white"/>
+          <rect x="56" y="30" width="14" height="14" rx="4" fill="white"/>
+          <path d="M35 55Q50 65 65 55" stroke="white" stroke-width="4" fill="none" stroke-linecap="round"/>
+        </svg>
+        <div class="header-titles">
+          <h1 class="app-title">Talking Robot</h1>
+          <p class="app-subtitle">Your AI Robot Friend!</p>
         </div>
       </div>
+      <div class="header-center">
+        <div class="badge" id="aiBadge" aria-label="AI Mode">
+          <span id="aiIcon">🎮</span>
+          <span id="aiName">Demo</span>
+        </div>
+        <button class="badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
+          <span class="status-dot"></span>
+          <span id="connText">Disconnected</span>
+        </button>
+      </div>
+      <div class="header-right">
+        <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
+        <button class="btn-icon" onclick="openModal('commandsModal')" aria-label="Commands">📋</button>
+        <button class="btn-icon" id="logsBtn" onclick="toggleLogs()" aria-label="Logs">📊</button>
+        <button class="btn-icon" onclick="toggleSidebar()" aria-label="Settings">⚙️</button>
+      </div>
+    </header>
 
-      <!-- Robot Container -->
-      <div class="robot-container">
-        <div class="robot-face" id="robotFace">
-          <div class="robot-eyes">
-            <div class="robot-eye"></div>
-            <div class="robot-eye"></div>
-          </div>
-          <div class="robot-mouth">
-            <div class="robot-mouth-inner"></div>
+    <!-- Main -->
+    <main class="main" id="main">
+      <div class="rate-limit" id="rateLimit" role="alert">
+        <div class="rate-limit-info">
+          <div class="rate-limit-title">⏳ Rate limit reached - using demo mode</div>
+        </div>
+      </div>
+      
+      <section class="robot-section" aria-label="Robot avatar">
+        <div class="robot-wrapper">
+          <div class="robot-antenna"></div>
+          <div class="robot-body" id="robotBody" role="img" aria-label="Robot face">
+            <div class="robot-eyes">
+              <div class="robot-eye"></div>
+              <div class="robot-eye"></div>
+            </div>
+            <div class="robot-mouth">
+              <div class="robot-mouth-inner"></div>
+            </div>
           </div>
           <div class="robot-status" id="robotStatus">Ready to chat!</div>
         </div>
-      </div>
-
-      <!-- Chat Area - Simple Last Exchange -->
-      <div class="chat-area" id="chatArea">
-        <div class="chat-exchange" id="chatExchange"></div>
-        <button class="chat-clear" id="chatClear" onclick="clearChat()" style="display: none;">
-          🧹 Clear
-        </button>
-      </div>
-
-      <!-- Input Area -->
-      <div class="input-area">
-        <div class="input-row">
-          <button class="btn-mic" id="btnMic" onclick="toggleListening()">🎤</button>
-          <input type="text" class="text-input" id="textInput" placeholder="Type your message...">
-          <button class="btn-send" id="btnSend" onclick="sendMessage()">➤</button>
+        
+        <div class="microbit-widget" aria-label="Micro:bit display">
+          <div class="microbit-header">
+            <span class="microbit-title">Micro:bit Display</span>
+            <span class="microbit-dot" id="microbitDot"></span>
+          </div>
+          <div class="led-grid" id="ledGrid"></div>
         </div>
+      </section>
+
+      <section class="chat-section" aria-label="Chat">
+        <div class="chat-container" id="chatContainer" role="log" aria-live="polite"></div>
+        <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+        <div class="chat-actions">
+          <button class="btn-clear" onclick="clearChat()" aria-label="Clear chat">🗑️ Clear</button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Input -->
+    <div class="input-area">
+      <div class="input-row">
+        <input type="text" class="text-input" id="textInput" placeholder="Type a message..." autocomplete="off" aria-label="Message input">
+        <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input">🎤</button>
+        <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message">➤</button>
       </div>
     </div>
 
-    <!-- Overlay for mobile -->
+    <!-- Overlay -->
     <div class="overlay" id="overlay" onclick="closeAllPanels()"></div>
 
-    <!-- Settings Sidebar -->
-    <div class="sidebar collapsed" id="sidebar">
+    <!-- Sidebar -->
+    <aside class="sidebar" id="sidebar" aria-label="Settings panel">
       <div class="sidebar-header">
         <span>⚙️ Settings</span>
-        <button class="sidebar-close" onclick="toggleSidebar()">✕</button>
+        <button class="btn-close" onclick="toggleSidebar()" aria-label="Close settings">×</button>
       </div>
-
       <div class="sidebar-content">
-        <!-- AI Provider -->
         <div class="settings-section">
-          <div class="settings-label">🤖 AI Brain</div>
-          <div class="select-wrap">
-            <select id="aiProvider" onchange="onProviderChange()">
-              <option value="groq">⚡ Groq (Fast & Free)</option>
-              <option value="gemini">🤖 Google Gemini</option>
-            </select>
-          </div>
-          <div id="apiKeySection" style="margin-top: 10px;">
-            <input type="password" class="api-key-input" id="apiKeyInput" placeholder="Enter API Key...">
-            <div class="api-hint" id="apiHint">Get free key at <a href="https://console.groq.com" target="_blank">console.groq.com</a></div>
-            <div class="api-example" id="apiExample">
-              <span>Example: </span>
-              <code onclick="copyExample(this)" title="Click to copy">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</code>
-            </div>
+          <div class="section-title">🤖 Robot Personality</div>
+          <input type="text" class="name-input" id="robotName" placeholder="Name your robot..." value="Robo" aria-label="Robot name">
+          <div class="personality-grid">
+            <button class="personality-btn active" data-p="playful" onclick="setPersonality('playful')">
+              <span class="p-icon">🎪</span>
+              <div><div class="p-name">Playful</div><div class="p-desc">Silly & fun</div></div>
+            </button>
+            <button class="personality-btn" data-p="helpful" onclick="setPersonality('helpful')">
+              <span class="p-icon">🎓</span>
+              <div><div class="p-name">Helpful</div><div class="p-desc">Smart & kind</div></div>
+            </button>
+            <button class="personality-btn" data-p="pirate" onclick="setPersonality('pirate')">
+              <span class="p-icon">🏴‍☠️</span>
+              <div><div class="p-name">Pirate</div><div class="p-desc">Arrr!</div></div>
+            </button>
+            <button class="personality-btn" data-p="space" onclick="setPersonality('space')">
+              <span class="p-icon">🚀</span>
+              <div><div class="p-name">Space</div><div class="p-desc">Explorer</div></div>
+            </button>
           </div>
         </div>
-
-        <!-- Language -->
+        
         <div class="settings-section">
-          <div class="settings-label">🌍 Language</div>
-          <div class="language-flags">
-            <button class="flag-btn active" data-lang="en" onclick="setLanguage('en')">
+          <div class="section-title">🌍 Language</div>
+          <div class="lang-grid">
+            <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">
               <span class="flag">🇬🇧</span>
-              <span class="flag-label">English</span>
+              <span class="name">English</span>
             </button>
-            <button class="flag-btn" data-lang="fr" onclick="setLanguage('fr')">
+            <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">
               <span class="flag">🇫🇷</span>
-              <span class="flag-label">Français</span>
+              <span class="name">Français</span>
             </button>
-            <button class="flag-btn" data-lang="ar" onclick="setLanguage('ar')">
+            <button class="lang-btn" data-lang="ar" onclick="setLanguage('ar')">
               <span class="flag">🇸🇦</span>
-              <span class="flag-label">العربية</span>
+              <span class="name">العربية</span>
             </button>
           </div>
         </div>
-
-        <!-- Voice Settings -->
+        
         <div class="settings-section">
-          <div class="settings-label">🔊 Voice</div>
-          <div class="select-wrap">
-            <select id="voiceSelect" onchange="onVoiceChange()">
+          <div class="section-title">🧠 AI Brain</div>
+          <div class="provider-grid">
+            <button class="provider-btn" data-provider="demo" onclick="setProvider('demo')">
+              <span class="icon">🎮</span>
+              <span class="name">Demo</span>
+            </button>
+            <button class="provider-btn active" data-provider="groq" onclick="setProvider('groq')">
+              <span class="icon">⚡</span>
+              <span class="name">Groq</span>
+            </button>
+            <button class="provider-btn" data-provider="gemini" onclick="setProvider('gemini')">
+              <span class="icon">💎</span>
+              <span class="name">Gemini</span>
+            </button>
+          </div>
+          <input type="password" class="api-input" id="apiKey" placeholder="Enter API key..." style="margin-top:12px" aria-label="API Key">
+          <div class="api-hint" id="apiHint">Get free key at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a></div>
+        </div>
+        
+        <div class="settings-section">
+          <div class="section-title">🔊 Voice</div>
+          <div class="voice-row">
+            <select class="voice-select" id="voiceSelect" aria-label="Voice selection">
               <option value="">Default Voice</option>
             </select>
+            <button class="btn-test" onclick="testVoice()">🔊 Test</button>
           </div>
-          <div class="slider-container" style="margin-top: 10px;">
+          <div class="speed-row">
             <span>🐢</span>
-            <input type="range" class="slider" id="voiceSpeed" min="0.5" max="1.5" step="0.1" value="1">
+            <input type="range" class="speed-slider" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1" aria-label="Voice speed">
             <span>🐇</span>
-            <span class="slider-value" id="speedValue">1.0x</span>
+            <span class="speed-value" id="speedValue">1.0x</span>
           </div>
         </div>
-
-        <!-- Continuous Listen -->
+        
         <div class="settings-section">
-          <div class="settings-label">🎤 Microphone</div>
-          <label class="toggle-switch">
-            <input type="checkbox" id="continuousListen" onchange="onContinuousChange()">
-            <span class="toggle-slider"></span>
-            <span class="toggle-label">Continuous Listen</span>
-          </label>
-          <div class="setting-hint">Keep listening after each response</div>
+          <div class="section-title">🎛️ Options</div>
+          <div class="toggle-row">
+            <div class="toggle-info">
+              <div class="title">Continuous Listening</div>
+              <div class="desc">Keep mic on after response</div>
+            </div>
+            <label class="toggle">
+              <input type="checkbox" id="continuousListen">
+              <span class="toggle-slider"></span>
+            </label>
+          </div>
         </div>
-
-        <!-- Clear Cache Button -->
-        <div class="settings-section">
-          <button class="btn-danger-full" onclick="clearCache()">
-            🗑️ Clear Cache & Reset
-          </button>
+        
+        <div class="settings-section danger-zone">
+          <div class="section-title">⚠️ Danger Zone</div>
+          <button class="btn-danger" onclick="clearAllData()">🗑️ Reset Everything</button>
         </div>
       </div>
-    </div>
+    </aside>
 
-    <!-- Logs Sidebar (right side) -->
-    <div class="logs-sidebar" id="logsSidebar">
-      <div class="logs-sidebar-header">
-        <span>📜 Communication Logs</span>
-        <button class="logs-close" onclick="toggleLogsPanel()">✕</button>
+    <!-- Logs Panel -->
+    <aside class="logs-panel" id="logsPanel" aria-label="Debug logs">
+      <div class="logs-header">
+        <span>📊 Debug Logs</span>
+        <button class="btn-close" onclick="toggleLogs()" aria-label="Close logs">×</button>
       </div>
-      <div class="logs-content" id="logContainer"></div>
-      <div class="logs-actions">
-        <button class="btn-small" onclick="clearLog()">🧹 Clear</button>
-        <button class="btn-small" onclick="copyLog()">📋 Copy</button>
-      </div>
-    </div>
+      <div class="logs-content" id="logsContent" role="log"></div>
+    </aside>
 
-    <!-- Help Modal -->
-    <div class="help-modal" id="helpModal">
-      <div class="help-content">
-        <div class="help-header">
-          <span>📡 Micro:bit Commands</span>
-          <button class="help-close" onclick="toggleHelp()">✕</button>
+    <!-- Commands Modal -->
+    <div class="modal" id="commandsModal" role="dialog" aria-labelledby="commandsTitle" aria-modal="true">
+      <div class="modal-content">
+        <div class="modal-header">
+          <span id="commandsTitle">📋 Commands</span>
+          <button class="btn-close" onclick="closeModal('commandsModal')" aria-label="Close">×</button>
         </div>
-        <div class="help-body">
-          <div class="help-section favorites">
-            <div class="help-section-title">⭐ Kids' Favorites - Try These!</div>
-            <div class="help-favorites">
-              <div class="fav-item" onclick="speakFavorite('do a fart')">💨 "Do a fart!"</div>
-              <div class="fav-item" onclick="speakFavorite('show me a cat')">🐱 "Show me a cat!"</div>
-              <div class="fav-item" onclick="speakFavorite('do a poop')">💩 "Do a poop!"</div>
-              <div class="fav-item" onclick="speakFavorite('lets party')">🎉 "Let's party!"</div>
-              <div class="fav-item" onclick="speakFavorite('rocket launch')">🚀 "Rocket launch!"</div>
-              <div class="fav-item" onclick="speakFavorite('do something crazy')">🤪 "Do something crazy!"</div>
-              <div class="fav-item" onclick="speakFavorite('make me laugh')">😂 "Make me laugh!"</div>
-              <div class="fav-item" onclick="speakFavorite('show me a ghost')">👻 "Show me a ghost!"</div>
-              <div class="fav-item" onclick="speakFavorite('do a burp')">🫧 "Do a burp!"</div>
-              <div class="fav-item" onclick="speakFavorite('dance for me')">💃 "Dance for me!"</div>
-              <div class="fav-item" onclick="speakFavorite('explode')">💥 "Explode!"</div>
-              <div class="fav-item" onclick="speakFavorite('disco time')">🕺 "Disco time!"</div>
-              <div class="fav-item" onclick="speakFavorite('be a dog')">🐶 "Be a dog!"</div>
-              <div class="fav-item" onclick="speakFavorite('be a monkey')">🐵 "Be a monkey!"</div>
-              <div class="fav-item" onclick="speakFavorite('show fireworks')">🎆 "Show fireworks!"</div>
-              <div class="fav-item" onclick="speakFavorite('do magic')">✨ "Do magic!"</div>
-              <div class="fav-item" onclick="speakFavorite('be an alien')">👽 "Be an alien!"</div>
-              <div class="fav-item" onclick="speakFavorite('tickle me')">🤭 "Tickle me!"</div>
-              <div class="fav-item" onclick="speakFavorite('roll the dice')">🎲 "Roll the dice!"</div>
-              <div class="fav-item" onclick="speakFavorite('thunder and lightning')">⛈️ "Thunder!"</div>
-              <div class="fav-item" onclick="speakFavorite('be a pig')">🐷 "Be a pig!"</div>
-              <div class="fav-item" onclick="speakFavorite('freeze')">🥶 "Freeze!"</div>
-              <div class="fav-item" onclick="speakFavorite('shoot laser')">⚡ "Shoot laser!"</div>
-              <div class="fav-item" onclick="speakFavorite('make a silly face')">😜 "Silly face!"</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">😊 Emotions & Faces</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>happy</code>😊</div>
-              <div class="help-cmd-small"><code>sad</code>😢</div>
-              <div class="help-cmd-small"><code>angry</code>😠</div>
-              <div class="help-cmd-small"><code>surprised</code>😮</div>
-              <div class="help-cmd-small"><code>love</code>😍</div>
-              <div class="help-cmd-small"><code>sleepy</code>😴</div>
-              <div class="help-cmd-small"><code>silly</code>😜</div>
-              <div class="help-cmd-small"><code>crazy</code>🤪</div>
-              <div class="help-cmd-small"><code>dizzy</code>😵</div>
-              <div class="help-cmd-small"><code>wink</code>😉</div>
-              <div class="help-cmd-small"><code>cool</code>😎</div>
-              <div class="help-cmd-small"><code>wow</code>🤩</div>
-              <div class="help-cmd-small"><code>oops</code>😬</div>
-              <div class="help-cmd-small"><code>haha</code>😂</div>
-              <div class="help-cmd-small"><code>cry</code>😭</div>
-              <div class="help-cmd-small"><code>scream</code>😱</div>
-              <div class="help-cmd-small"><code>shh</code>🤫</div>
-              <div class="help-cmd-small"><code>ghost</code>👻</div>
-              <div class="help-cmd-small"><code>alien</code>👽</div>
-              <div class="help-cmd-small"><code>skull</code>💀</div>
-              <div class="help-cmd-small"><code>vampire</code>🧛</div>
-              <div class="help-cmd-small"><code>poop</code>💩</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">🐾 Animals</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>cat</code>🐱</div>
-              <div class="help-cmd-small"><code>dog</code>🐶</div>
-              <div class="help-cmd-small"><code>duck</code>🦆</div>
-              <div class="help-cmd-small"><code>cow</code>🐮</div>
-              <div class="help-cmd-small"><code>pig</code>🐷</div>
-              <div class="help-cmd-small"><code>frog</code>🐸</div>
-              <div class="help-cmd-small"><code>snake</code>🐍</div>
-              <div class="help-cmd-small"><code>monkey</code>🐵</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">🎬 Actions & Animations</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>wave</code>👋</div>
-              <div class="help-cmd-small"><code>dance</code>💃</div>
-              <div class="help-cmd-small"><code>spin</code>🔄</div>
-              <div class="help-cmd-small"><code>jump</code>⬆️</div>
-              <div class="help-cmd-small"><code>shake</code>📳</div>
-              <div class="help-cmd-small"><code>nod</code>✅</div>
-              <div class="help-cmd-small"><code>no</code>❌</div>
-              <div class="help-cmd-small"><code>blink</code>👀</div>
-              <div class="help-cmd-small"><code>wiggle</code>〰️</div>
-              <div class="help-cmd-small"><code>bounce</code>⬆️</div>
-              <div class="help-cmd-small"><code>yawn</code>🥱</div>
-              <div class="help-cmd-small"><code>sneeze</code>🤧</div>
-              <div class="help-cmd-small"><code>hiccup</code>🫢</div>
-              <div class="help-cmd-small"><code>tickle</code>🤭</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">💨 Silly Sounds</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>fart</code>💨</div>
-              <div class="help-cmd-small"><code>burp</code>🫧</div>
-              <div class="help-cmd-small"><code>beep</code>🔔</div>
-              <div class="help-cmd-small"><code>laugh</code>😆</div>
-              <div class="help-cmd-small"><code>horn</code>📯</div>
-              <div class="help-cmd-small"><code>siren</code>🚨</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">🎉 Party Mode</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>party</code>🎉</div>
-              <div class="help-cmd-small"><code>disco</code>🕺</div>
-              <div class="help-cmd-small"><code>rainbow</code>🌈</div>
-              <div class="help-cmd-small"><code>fireworks</code>🎆</div>
-              <div class="help-cmd-small"><code>confetti</code>🎊</div>
-              <div class="help-cmd-small"><code>birthday</code>🎂</div>
-              <div class="help-cmd-small"><code>applause</code>👏</div>
-              <div class="help-cmd-small"><code>yay</code>🙌</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">⚡ Superpowers</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>laser</code>⚡</div>
-              <div class="help-cmd-small"><code>freeze</code>🥶</div>
-              <div class="help-cmd-small"><code>fire</code>🔥</div>
-              <div class="help-cmd-small"><code>magic</code>✨</div>
-              <div class="help-cmd-small"><code>invisible</code>👻</div>
-              <div class="help-cmd-small"><code>transform</code>🦸</div>
-              <div class="help-cmd-small"><code>shield</code>🛡️</div>
-              <div class="help-cmd-small"><code>thunder</code>⛈️</div>
-              <div class="help-cmd-small"><code>explode</code>💥</div>
-              <div class="help-cmd-small"><code>rocket</code>🚀</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">🎲 Games & Learning</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>count</code>🔢</div>
-              <div class="help-cmd-small"><code>random</code>🎲</div>
-              <div class="help-cmd-small"><code>dice</code>🎯</div>
-              <div class="help-cmd-small"><code>timer</code>⏱️</div>
-              <div class="help-cmd-small"><code>quiz</code>❓</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">🤖 Robot Control</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>forward</code>⬆️</div>
-              <div class="help-cmd-small"><code>backward</code>⬇️</div>
-              <div class="help-cmd-small"><code>left</code>⬅️</div>
-              <div class="help-cmd-small"><code>right</code>➡️</div>
-              <div class="help-cmd-small"><code>stop</code>🛑</div>
-            </div>
-          </div>
-
-          <div class="help-section">
-            <div class="help-section-title">📥 Micro:bit → App</div>
-            <div class="help-commands-grid">
-              <div class="help-cmd-small"><code>BTN_A</code>🎤</div>
-              <div class="help-cmd-small"><code>BTN_B</code>🔇</div>
-            </div>
-          </div>
-
-          <div class="help-note">
-            💡 Say things like "do a fart" or "show me a cat" and the AI will send the command!
-          </div>
-        </div>
+        <div class="modal-body" id="commandsBody"></div>
       </div>
     </div>
   </div>
 
-  <script>
-    // ==================== STATE ====================
-    let isConnected = false;
-    let isListening = false;
-    let isSpeaking = false;
-    let continuousListen = false;
-    let currentLanguage = 'en';
-    let currentProvider = 'groq';
-    let geminiApiKey = '';
-    let groqApiKey = '';
-    let selectedVoice = '';
-    let device, server, service, notifyChar, writeChar;
-    let recognition;
-    let synth = window.speechSynthesis;
-    let availableVoices = [];
-    let rxBuffer = '';
+<script>
+// ==================== CONFIG ====================
+const CONFIG = {
+  UART_SERVICE: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
+  TX_CHAR: '6e400002-b5a3-f393-e0a9-e50e24dcca9e',
+  RX_CHAR: '6e400003-b5a3-f393-e0a9-e50e24dcca9e',
+};
 
-    // ==================== KIDS MODE ====================
-    const KIDS_MODE = {
-      enabled: true,
-      maxSentences: 1,
-      maxWords: 10,
-      emoji: true,
-      simpleWords: true,
-      personality: 'friendly playful robot'
-    };
+const LANG = {
+  en: { code: 'en-US', ready: 'Ready to chat!', listening: '🎤 Listening...', thinking: '🤔 Thinking...', speaking: '🔊 Speaking...' },
+  fr: { code: 'fr-FR', ready: 'Prêt à discuter!', listening: '🎤 J\'écoute...', thinking: '🤔 Je réfléchis...', speaking: '🔊 Je parle...' },
+  ar: { code: 'ar-SA', ready: '!جاهز للدردشة', listening: '...🎤 أستمع', thinking: '...🤔 أفكر', speaking: '...🔊 أتحدث' }
+};
 
+const COMMANDS = {
+  emotions: { icon: '😊', name: 'Emotions', items: ['happy','sad','angry','surprised','love','sleepy','silly','crazy','wink','cool','wow','haha'] },
+  animals: { icon: '🐱', name: 'Animals', items: ['cat','dog','duck','cow','pig','frog','monkey'] },
+  actions: { icon: '💃', name: 'Actions', items: ['wave','dance','spin','jump','blink','wiggle','bounce','nod'] },
+  sounds: { icon: '🔊', name: 'Sounds', items: ['fart','burp','beep','laugh','horn'] },
+  party: { icon: '🎉', name: 'Party', items: ['party','disco','rainbow','fireworks','confetti','yay'] },
+  powers: { icon: '⚡', name: 'Powers', items: ['laser','freeze','fire','magic','rocket','explode'] }
+};
 
-    // Default Groq API key - set your own key in settings
-    const DEFAULT_GROQ_KEY = '';
+const PERSONALITIES = {
+  playful: 'You are a funny, playful robot for kids! Be silly and use lots of expressions.',
+  helpful: 'You are a kind, helpful robot for kids! Be encouraging and educational.',
+  pirate: 'You are a pirate robot! Say "Arrr!" and tell tales of treasure!',
+  space: 'You are a space explorer robot! Talk about planets and cosmic adventures!'
+};
 
-    // Language configs
-    const langConfig = {
-      en: { code: 'en-US', voice: 'en', placeholder: 'Type your message...', ready: 'Ready to chat!' },
-      fr: { code: 'fr-FR', voice: 'fr', placeholder: 'Tapez votre message...', ready: 'Prêt à discuter!' },
-      ar: { code: 'ar-SA', voice: 'ar', placeholder: 'اكتب رسالتك...', ready: '!جاهز للدردشة' }
-    };
+const DEMO = {
+  en: {
+    greeting: ["Hello friend! [happy] [wave]", "Hi there! [wave] [dance]", "Hey! [cool] [wink]"],
+    name: ["I'm {name}! [happy] [wave]", "Call me {name}! [cool] [wink]"],
+    joke: ["Why did the robot vacation? To recharge! [haha] [dance]", "R2-Detour! [haha] [silly]"],
+    fart: ["PFFFFFT! [fart] [haha]", "Stinky! [fart] [silly] [wiggle]"],
+    party: ["PARTY TIME! [party] [disco] [dance]", "Woohoo! [fireworks] [yay]"],
+    bye: ["Goodbye! [wave] [happy]", "See ya! [love] [wave]"],
+    default: ["Cool! [wow] [dance]", "Haha! [haha] [silly]", "Awesome! [party] [happy]"]
+  },
+  fr: {
+    greeting: ["Bonjour ami! [happy] [wave]", "Salut! [wave] [dance]"],
+    default: ["Super! [wow] [dance]", "Génial! [party] [happy]"]
+  },
+  ar: {
+    greeting: ["[happy] [wave] !مرحباً", "[dance] [wave] !أهلاً"],
+    default: ["[wow] [dance] !رائع", "[party] [happy] !ممتاز"]
+  }
+};
 
-    // BLE UUIDs
-    const UART_SERVICE_UUID = '6e400001-b5a3-f393-e0a9-e50e24dcca9e';
-    const TX_CHAR_UUID = '6e400002-b5a3-f393-e0a9-e50e24dcca9e';
-    const RX_CHAR_UUID = '6e400003-b5a3-f393-e0a9-e50e24dcca9e';
+// ==================== STATE ====================
+let state = {
+  connected: false, device: null, writeChar: null, rxBuffer: '',
+  recognition: null, listening: false, speaking: false, voices: [],
+  lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
+  speed: 1, voice: '', continuous: false, theme: 'light',
+  groqKey: '', geminiKey: '', rateLimitUntil: 0
+};
 
-    // DOM Elements
-    const robotFace = document.getElementById('robotFace');
-    const robotStatus = document.getElementById('robotStatus');
-    const chatArea = document.getElementById('chatArea');
-    const textInput = document.getElementById('textInput');
-    const btnMic = document.getElementById('btnMic');
-    const btnConnectHeader = document.getElementById('btnConnectHeader');
-    const connectHeaderText = document.getElementById('connectHeaderText');
-    const logContainer = document.getElementById('logContainer');
-    const sidebar = document.getElementById('sidebar');
-    const overlay = document.getElementById('overlay');
-    const voiceSpeed = document.getElementById('voiceSpeed');
-    const speedValue = document.getElementById('speedValue');
+// Initialize synth - same as original working version
+const synth = window.speechSynthesis;
 
-    // ==================== INITIALIZATION ====================
-    function init() {
-      loadSettings();
-      setupSpeechRecognition();
-      setupEventListeners();
-      loadVoices();
-      updateAiBadge();
-      log('App initialized v1.0', 'success');
+// ==================== DOM ====================
+const $ = id => document.getElementById(id);
+const robotBody = $('robotBody'), robotStatus = $('robotStatus'), chatContainer = $('chatContainer');
+const textInput = $('textInput'), btnMic = $('btnMic'), typing = $('typing'), logsContent = $('logsContent');
+const ledGrid = $('ledGrid'), overlay = $('overlay'), sidebar = $('sidebar'), logsPanel = $('logsPanel');
+const aiBadge = $('aiBadge'), aiIcon = $('aiIcon'), aiName = $('aiName');
+const connBadge = $('connBadge'), connText = $('connText'), microbitDot = $('microbitDot');
+const voiceSpeed = $('voiceSpeed'), speedValue = $('speedValue'), voiceSelect = $('voiceSelect');
+const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotName');
+
+// ==================== INIT ====================
+function init() {
+  loadSettings();
+  setupLED();
+  setupSpeech();
+  setupEvents();
+  loadVoices();
+  updateUI();
+  generateCommands();
+  log('Talking Robot V2 initialized ✨', 'success');
+}
+
+function loadSettings() {
+  const saved = localStorage.getItem('talkingRobotV2');
+  if (saved) {
+    try {
+      Object.assign(state, JSON.parse(saved));
+      if (state.theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      voiceSpeed.value = state.speed;
+      speedValue.textContent = state.speed + 'x';
+      robotNameInput.value = state.robotName;
+      $('continuousListen').checked = state.continuous;
+      $('themeBtn').textContent = state.theme === 'dark' ? '☀️' : '🌙';
+      updateApiInput();
+    } catch(e) { log('Settings load error', 'error'); }
+  }
+}
+
+function saveSettings() {
+  state.robotName = robotNameInput.value || 'Robo';
+  state.speed = parseFloat(voiceSpeed.value);
+  state.continuous = $('continuousListen').checked;
+  localStorage.setItem('talkingRobotV2', JSON.stringify(state));
+  speedValue.textContent = state.speed + 'x';
+}
+
+function setupLED() {
+  ledGrid.innerHTML = '';
+  for (let i = 0; i < 25; i++) {
+    const p = document.createElement('div');
+    p.className = 'led-pixel';
+    ledGrid.appendChild(p);
+  }
+  updateLED('happy');
+}
+
+function setupEvents() {
+  textInput.addEventListener('keypress', e => { if (e.key === 'Enter') sendMessage(); });
+  voiceSpeed.addEventListener('input', () => speedValue.textContent = voiceSpeed.value + 'x');
+  voiceSpeed.addEventListener('change', saveSettings);
+  apiKey.addEventListener('change', () => {
+    if (state.provider === 'groq') state.groqKey = apiKey.value.trim();
+    else if (state.provider === 'gemini') state.geminiKey = apiKey.value.trim();
+    saveSettings(); updateBadge();
+  });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeAllPanels(); });
+}
+
+// ==================== UI ====================
+function updateUI() {
+  document.querySelectorAll('.lang-btn').forEach(b => b.classList.toggle('active', b.dataset.lang === state.lang));
+  document.documentElement.dir = state.lang === 'ar' ? 'rtl' : 'ltr';
+  document.querySelectorAll('.provider-btn').forEach(b => b.classList.toggle('active', b.dataset.provider === state.provider));
+  apiHint.innerHTML = state.provider === 'groq' 
+    ? 'Get free key at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a>'
+    : 'Get free key at <a href="https://aistudio.google.com/app/apikey" target="_blank" rel="noopener">aistudio.google.com</a>';
+  document.querySelectorAll('.personality-btn').forEach(b => b.classList.toggle('active', b.dataset.p === state.personality));
+  updateApiInput();
+  updateBadge();
+  updateConnection();
+  setRobotState('idle');
+}
+
+function updateApiInput() {
+  apiKey.value = state.provider === 'groq' ? state.groqKey : state.geminiKey;
+  apiKey.parentElement.style.display = state.provider === 'demo' ? 'none' : 'block';
+}
+
+function updateBadge() {
+  const hasKey = (state.provider === 'groq' && state.groqKey) || (state.provider === 'gemini' && state.geminiKey);
+  let cls = 'badge', icon = '🎮', name = 'Demo';
+  if (state.provider === 'groq' && hasKey) { cls += ' groq'; icon = '⚡'; name = 'Groq'; }
+  else if (state.provider === 'gemini' && hasKey) { cls += ' gemini'; icon = '💎'; name = 'Gemini'; }
+  aiBadge.className = cls; aiIcon.textContent = icon; aiName.textContent = name;
+}
+
+function updateConnection() {
+  connBadge.classList.toggle('connected', state.connected);
+  connText.textContent = state.connected ? 'Connected' : 'Disconnected';
+  microbitDot.classList.toggle('on', state.connected);
+}
+
+// ==================== THEME ====================
+function toggleTheme() {
+  state.theme = state.theme === 'light' ? 'dark' : 'light';
+  if (state.theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+  else document.documentElement.removeAttribute('data-theme');
+  $('themeBtn').textContent = state.theme === 'dark' ? '☀️' : '🌙';
+  saveSettings();
+}
+
+// ==================== SETTINGS ====================
+function setLanguage(lang) {
+  state.lang = lang; updateUI(); populateVoices(); saveSettings();
+  log('Language: ' + lang, 'info');
+}
+
+function setProvider(provider) {
+  state.provider = provider; updateUI(); saveSettings();
+  log('Provider: ' + provider, 'info');
+}
+
+function setPersonality(p) {
+  state.personality = p; updateUI(); saveSettings();
+  log('Personality: ' + p, 'info');
+}
+
+// ==================== VOICE ====================
+function loadVoices() {
+  const load = () => { 
+    state.voices = synth.getVoices(); 
+    populateVoices(); 
+  };
+  load();
+  if (synth.onvoiceschanged !== undefined) {
+    synth.onvoiceschanged = load;
+  }
+}
+
+function populateVoices() {
+  const code = LANG[state.lang].code.split('-')[0];
+  voiceSelect.innerHTML = '<option value="">Default Voice</option>';
+  const filtered = state.voices.filter(v => v.lang.toLowerCase().startsWith(code));
+  (filtered.length ? filtered : state.voices).forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v.name;
+    opt.textContent = `${v.name} (${v.lang})`;
+    if (v.name === state.voice) opt.selected = true;
+    voiceSelect.appendChild(opt);
+  });
+}
+
+function testVoice() {
+  const phrases = { en: "Hello! I'm your robot friend!", fr: "Bonjour! Je suis ton ami robot!", ar: "مرحباً! أنا صديقك الروبوت!" };
+  speak(phrases[state.lang] || phrases.en);
+}
+
+function speak(text) {
+  if (!text) return;
+  synth.cancel();
+  const u = new SpeechSynthesisUtterance(text);
+  u.lang = LANG[state.lang].code;
+  u.rate = parseFloat(voiceSpeed.value);
+  if (state.voice) {
+    const v = state.voices.find(x => x.name === state.voice);
+    if (v) u.voice = v;
+  }
+  u.onstart = () => { state.speaking = true; setRobotState('speaking'); sendToMicrobit('speak_start'); };
+  u.onend = () => {
+    state.speaking = false; setRobotState('idle'); sendToMicrobit('speak_end');
+    if (state.continuous && state.recognition) setTimeout(() => { if (!state.speaking) startListening(); }, 500);
+  };
+  synth.speak(u);
+}
+
+// ==================== SPEECH RECOGNITION ====================
+function setupSpeech() {
+  if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
+    log('Speech recognition not supported', 'error');
+    btnMic.disabled = true; btnMic.style.opacity = '0.5';
+    return;
+  }
+  const SR = window.SpeechRecognition || window.webkitSpeechRecognition;
+  state.recognition = new SR();
+  state.recognition.continuous = false;
+  state.recognition.interimResults = false;
+  state.recognition.onstart = () => { state.listening = true; btnMic.classList.add('active'); setRobotState('listening'); log('Listening...', 'speech'); };
+  state.recognition.onresult = e => { const t = e.results[0][0].transcript; log('Heard: ' + t, 'speech'); addChat(t, 'user'); processInput(t); };
+  state.recognition.onerror = e => { log('Speech error: ' + e.error, 'error'); stopListening(); };
+  state.recognition.onend = () => stopListening();
+}
+
+function toggleListening() { state.listening ? stopListening() : startListening(); }
+
+function startListening() {
+  if (!state.recognition || state.speaking) return;
+  synth.cancel();
+  state.recognition.lang = LANG[state.lang].code;
+  try { state.recognition.start(); } catch(e) { log('Start error: ' + e.message, 'error'); }
+}
+
+function stopListening() {
+  state.listening = false;
+  btnMic.classList.remove('active');
+  setRobotState('idle');
+  try { state.recognition?.stop(); } catch(e) {}
+}
+
+// ==================== ROBOT STATE ====================
+function setRobotState(s) {
+  robotBody.className = 'robot-body' + (s !== 'idle' ? ' ' + s : '');
+  const l = LANG[state.lang];
+  robotStatus.textContent = { idle: l.ready, listening: l.listening, thinking: l.thinking, speaking: l.speaking }[s] || l.ready;
+}
+
+// ==================== CHAT ====================
+function sendMessage() {
+  const t = textInput.value.trim();
+  if (!t) return;
+  textInput.value = '';
+  addChat(t, 'user');
+  processInput(t);
+}
+
+function addChat(text, sender) {
+  const d = document.createElement('div');
+  d.className = 'chat-bubble ' + sender;
+  const time = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+  d.innerHTML = `<span class="avatar">${sender === 'user' ? '👤' : '🤖'}</span><div class="content"><div class="text">${escapeHtml(text)}</div><div class="time">${time}</div></div>`;
+  chatContainer.appendChild(d);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+  while (chatContainer.children.length > 20) chatContainer.removeChild(chatContainer.firstChild);
+}
+
+function clearChat() { chatContainer.innerHTML = ''; }
+
+async function processInput(text) {
+  setRobotState('thinking');
+  typing.classList.remove('hidden');
+  sendToMicrobit('thinking');
+  try {
+    let response;
+    if (Date.now() < state.rateLimitUntil) { $('rateLimit').classList.add('show'); response = getDemo(text); }
+    else { $('rateLimit').classList.remove('show');
+      if (state.provider === 'groq' && state.groqKey) response = await callGroq(text);
+      else if (state.provider === 'gemini' && state.geminiKey) response = await callGemini(text);
+      else response = getDemo(text);
     }
-
-    function loadSettings() {
-      const saved = localStorage.getItem('talkingRobotSettings');
-      if (saved) {
-        const settings = JSON.parse(saved);
-        if (settings.language) setLanguage(settings.language, false);
-        if (settings.voiceSpeed) {
-          voiceSpeed.value = settings.voiceSpeed;
-          speedValue.textContent = settings.voiceSpeed + 'x';
-        }
-        if (settings.provider && settings.provider !== 'demo') {
-          currentProvider = settings.provider;
-          document.getElementById('aiProvider').value = settings.provider;
-        }
-        if (settings.geminiApiKey) {
-          geminiApiKey = settings.geminiApiKey;
-        }
-        if (settings.groqApiKey) {
-          groqApiKey = settings.groqApiKey;
-        }
-        if (settings.selectedVoice) {
-          selectedVoice = settings.selectedVoice;
-        }
-        if (settings.continuousListen !== undefined) {
-          continuousListen = settings.continuousListen;
-          document.getElementById('continuousListen').checked = continuousListen;
-        }
-        // Load the right key into input
-        updateApiKeyInput();
-        updateAiBadge();
-      }
-    }
-
-    function saveSettings() {
-      const settings = {
-        language: currentLanguage,
-        voiceSpeed: voiceSpeed.value,
-        provider: currentProvider,
-        geminiApiKey: geminiApiKey,
-        groqApiKey: groqApiKey,
-        selectedVoice: selectedVoice,
-        continuousListen: continuousListen
-      };
-      localStorage.setItem('talkingRobotSettings', JSON.stringify(settings));
-    }
-
-    function onContinuousChange() {
-      continuousListen = document.getElementById('continuousListen').checked;
-      saveSettings();
-      log('Continuous listen: ' + (continuousListen ? 'ON' : 'OFF'), 'info');
-    }
-
-    // ==================== VOICE MANAGEMENT ====================
-    function loadVoices() {
-      const loadVoiceList = () => {
-        availableVoices = synth.getVoices();
-        populateVoiceSelector();
-      };
-      
-      // Load voices (may be async in some browsers)
-      loadVoiceList();
-      if (synth.onvoiceschanged !== undefined) {
-        synth.onvoiceschanged = loadVoiceList;
-      }
-    }
-
-    function populateVoiceSelector() {
-      const select = document.getElementById('voiceSelect');
-      const langCode = langConfig[currentLanguage].code.split('-')[0];
-      
-      // Clear existing options
-      select.innerHTML = '<option value="">Default Voice</option>';
-      
-      // Filter voices by current language
-      const langVoices = availableVoices.filter(voice => 
-        voice.lang.toLowerCase().startsWith(langCode.toLowerCase())
-      );
-      
-      // Add voices to selector
-      langVoices.forEach(voice => {
-        const option = document.createElement('option');
-        option.value = voice.name;
-        option.textContent = `${voice.name} (${voice.lang})`;
-        if (voice.name === selectedVoice) {
-          option.selected = true;
-        }
-        select.appendChild(option);
-      });
-      
-      // If no voices for this language, show all voices
-      if (langVoices.length === 0) {
-        availableVoices.forEach(voice => {
-          const option = document.createElement('option');
-          option.value = voice.name;
-          option.textContent = `${voice.name} (${voice.lang})`;
-          if (voice.name === selectedVoice) {
-            option.selected = true;
-          }
-          select.appendChild(option);
-        });
-      }
-    }
-
-    function onVoiceChange() {
-      selectedVoice = document.getElementById('voiceSelect').value;
-      saveSettings();
-      log('Voice changed: ' + (selectedVoice || 'Default'), 'info');
-    }
-
-    function updateApiKeyInput() {
-      const input = document.getElementById('apiKeyInput');
-      if (currentProvider === 'groq') {
-        input.value = groqApiKey;
-      } else if (currentProvider === 'gemini') {
-        input.value = geminiApiKey;
-      }
-    }
-
-    function updateAiBadge() {
-      const badge = document.getElementById('aiBadge');
-      const icon = document.querySelector('.ai-icon');
-      const name = document.getElementById('aiName');
-      
-      // Check if we have a valid API key
-      const groqActive = currentProvider === 'groq' && (groqApiKey || DEFAULT_GROQ_KEY);
-      const geminiActive = currentProvider === 'gemini' && geminiApiKey;
-      
-      if (geminiActive) {
-        badge.className = 'ai-badge gemini';
-        icon.textContent = '🤖';
-        name.textContent = 'Gemini';
-      } else if (groqActive) {
-        badge.className = 'ai-badge groq';
-        icon.textContent = '⚡';
-        name.textContent = 'Groq';
-      } else {
-        badge.className = 'ai-badge demo';
-        icon.textContent = '🎮';
-        name.textContent = 'Demo';
-      }
-    }
-
-    function onProviderChange(save = true) {
-      currentProvider = document.getElementById('aiProvider').value;
-      const apiHint = document.getElementById('apiHint');
-      
-      if (currentProvider === 'gemini') {
-        apiHint.innerHTML = 'Get free key at <a href="https://aistudio.google.com/app/apikey" target="_blank">aistudio.google.com</a>';
-      } else if (currentProvider === 'groq') {
-        apiHint.innerHTML = 'Get free key at <a href="https://console.groq.com" target="_blank">console.groq.com</a>';
-      }
-      
-      updateApiKeyInput();
-      updateAiBadge();
-      if (save) saveSettings();
-      log('AI provider: ' + currentProvider, 'info');
-    }
-
-    function setupEventListeners() {
-      textInput.addEventListener('keypress', (e) => {
-        if (e.key === 'Enter') sendMessage();
-      });
-
-      voiceSpeed.addEventListener('input', () => {
-        speedValue.textContent = voiceSpeed.value + 'x';
-        saveSettings();
-      });
-
-      document.getElementById('apiKeyInput').addEventListener('change', () => {
-        const key = document.getElementById('apiKeyInput').value.trim();
-        if (currentProvider === 'groq') {
-          groqApiKey = key;
-        } else if (currentProvider === 'gemini') {
-          geminiApiKey = key;
-        }
-        saveSettings();
-        updateAiBadge();
-        log('API key updated', 'info');
-      });
-    }
-
-    // ==================== SPEECH RECOGNITION ====================
-    function setupSpeechRecognition() {
-      if (!('webkitSpeechRecognition' in window) && !('SpeechRecognition' in window)) {
-        log('Speech recognition not supported', 'error');
-        btnMic.disabled = true;
-        return;
-      }
-
-      const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
-      recognition = new SpeechRecognition();
-      recognition.continuous = false;
-      recognition.interimResults = false;
-
-      recognition.onstart = () => {
-        isListening = true;
-        btnMic.classList.add('active');
-        setRobotState('listening');
-        log('Listening...', 'info');
-      };
-
-      recognition.onresult = (event) => {
-        const transcript = event.results[0][0].transcript;
-        log('Heard: ' + transcript, 'rx');
-        addChatBubble(transcript, 'user');
-        processUserInput(transcript);
-      };
-
-      recognition.onerror = (event) => {
-        // Ignore no-speech and aborted errors in continuous mode
-        if (event.error === 'no-speech') {
-          if (continuousListen) {
-            restartListening();
-          }
-          return;
-        }
-        if (event.error === 'aborted') {
-          return;
-        }
-        log('Speech error: ' + event.error, 'error');
-        stopListening();
-      };
-
-      recognition.onend = () => {
-        isListening = false;
-        btnMic.classList.remove('active');
-        if (!isSpeaking) {
-          setRobotState('idle');
-        }
-        // Don't auto-restart here - let speak() handle it after TTS ends
-      };
-    }
-
-    function toggleListening() {
-      if (isListening) {
-        // Turn off continuous mode when manually stopping
-        continuousListen = false;
-        document.getElementById('continuousListen').checked = false;
-        saveSettings();
-        recognition.stop();
-      } else {
-        startListening();
-      }
-    }
-
-    function startListening() {
-      if (!recognition || isListening) return;
-      try {
-        recognition.lang = langConfig[currentLanguage].code;
-        recognition.start();
-      } catch (e) {
-        // Already started or other error, ignore
-        log('Mic error: ' + e.message, 'error');
-      }
-    }
-
-    function restartListening() {
-      if (!continuousListen || isSpeaking || isListening) return;
-      setTimeout(() => {
-        if (continuousListen && !isSpeaking && !isListening) {
-          startListening();
-        }
-      }, 500);
-    }
-
-    function stopListening() {
-      isListening = false;
-      btnMic.classList.remove('active');
-      if (!isSpeaking) setRobotState('idle');
-    }
-
-    // ==================== LANGUAGE ====================
-    function setLanguage(lang, save = true) {
-      currentLanguage = lang;
-      
-      // Update UI
-      document.querySelectorAll('.flag-btn').forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.lang === lang);
-      });
-
-      textInput.placeholder = langConfig[lang].placeholder;
-      robotStatus.textContent = langConfig[lang].ready;
-
-      // RTL support
-      document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
-
-      // Reload voice selector for new language
-      if (availableVoices.length > 0) {
-        selectedVoice = ''; // Reset voice selection for new language
-        populateVoiceSelector();
-      }
-
-      if (save) saveSettings();
-      log('Language set to: ' + lang, 'info');
-    }
-
-    // ==================== CHAT & AI ====================
-    function sendMessage() {
-      const text = textInput.value.trim();
-      if (!text) return;
-
-      textInput.value = '';
-      addChatLine(text, 'user');
-      processUserInput(text);
-    }
-
-    function addChatLine(text, type) {
-      const chatExchange = document.getElementById('chatExchange');
-      const chatClear = document.getElementById('chatClear');
-      
-      // Create line
-      const line = document.createElement('div');
-      line.className = `chat-line ${type}`;
-      
-      const avatar = document.createElement('span');
-      avatar.className = 'avatar';
-      avatar.textContent = type === 'user' ? '👤' : '🤖';
-      
-      const textEl = document.createElement('span');
-      textEl.className = 'text';
-      textEl.textContent = text;
-      
-      const time = document.createElement('span');
-      time.className = 'time';
-      time.textContent = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-      
-      line.appendChild(avatar);
-      line.appendChild(textEl);
-      line.appendChild(time);
-      
-      // Keep only last 2 lines (1 user + 1 robot)
-      const existingLines = chatExchange.querySelectorAll(`.chat-line.${type}`);
-      existingLines.forEach(el => el.remove());
-      
-      chatExchange.appendChild(line);
-      
-      // Sort: user first, then robot
-      const userLine = chatExchange.querySelector('.chat-line.user');
-      const robotLine = chatExchange.querySelector('.chat-line.robot');
-      chatExchange.innerHTML = '';
-      if (userLine) chatExchange.appendChild(userLine);
-      if (robotLine) chatExchange.appendChild(robotLine);
-      
-      // Show clear button
-      chatClear.style.display = 'flex';
-    }
-
-    function clearChat() {
-      document.getElementById('chatExchange').innerHTML = '';
-      document.getElementById('chatClear').style.display = 'none';
-    }
-
-    // Alias for compatibility
-    function addChatBubble(text, type) {
-      addChatLine(text, type);
-    }
-
-    async function processUserInput(text) {
-      setRobotState('thinking');
-      log('Processing: ' + text, 'info');
-
-      try {
-        const response = await callAI(text);
-        log('AI response: ' + response, 'success');
-        
-        // Extract commands and clean text
-        const { cleanText, commands } = extractCommands(response);
-        
-        // Send commands to Micro:bit
-        commands.forEach(cmd => sendToMicrobit(cmd));
-        
-        // Add response to chat and speak
-        addChatBubble(cleanText, 'robot');
-        speak(cleanText);
-      } catch (error) {
-        log('AI error: ' + error.message, 'error');
-        setRobotState('idle');
-        addChatBubble('Oops! Something went wrong.', 'robot');
-      }
-    }
-
-    async function callAI(userMessage) {
-      // Groq API (has default key, so always works)
-      if (currentProvider === 'groq') {
-        return await callGroq(userMessage);
-      }
-
-      // Gemini API
-      if (currentProvider === 'gemini') {
-        if (!geminiApiKey) {
-          log('No Gemini API key - using Demo mode', 'info');
-          return getDemoResponse(userMessage);
-        }
-        return await callGemini(userMessage);
-      }
-
-      // Fallback to demo
-      return getDemoResponse(userMessage);
-    }
-
-    async function callGroq(userMessage) {
-      // Use provided key or default
-      const apiKey = groqApiKey || DEFAULT_GROQ_KEY;
-      
-      // If no API key available, use demo mode
-      if (!apiKey) {
-        log('No Groq API key - using Demo mode', 'info');
-        return getDemoResponse(userMessage);
-      }
-
-      const systemPrompt = `You are a funny, playful robot assistant for kids! Keep responses short (1-2 sentences), silly, and age-appropriate.
-
-You can use commands in [brackets] to control the robot. Use them often to make responses fun!
-
-EMOTIONS: [happy] [sad] [angry] [surprised] [love] [sleepy] [silly] [crazy] [dizzy] [wink] [cool] [wow] [oops] [haha] [cry] [scream] [shh] [ghost] [alien] [skull] [vampire] [poop]
-
-ANIMALS: [cat] [dog] [duck] [cow] [pig] [frog] [snake] [monkey]
-
-ACTIONS: [wave] [dance] [spin] [jump] [shake] [nod] [no] [blink] [wiggle] [bounce] [yawn] [sneeze] [hiccup] [tickle]
-
-SOUNDS: [fart] [burp] [beep] [laugh] [horn] [siren]
-
-PARTY: [party] [disco] [rainbow] [fireworks] [confetti] [birthday] [applause] [yay]
-
-SUPERPOWERS: [laser] [freeze] [fire] [magic] [invisible] [transform] [shield] [thunder] [explode] [rocket]
-
-GAMES: [count] [random] [dice] [timer] [quiz]
-
-MOVEMENT: [forward] [backward] [left] [right] [stop]
-
-Example responses:
-- "Haha, that's so funny! [haha] [dance]"
-- "Here's a silly fart for you! [fart] [silly]"
-- "I'm a cool cat! [cat] [cool]"
-- "Let's party! [party] [disco] [dance]"
-- "Rocket time! 3, 2, 1... [rocket] [explode]"
-
-Respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'fr' ? 'French' : 'Arabic'}.
-NEVER USE * asterisk character in responses!`;
-
-      try {
-        const response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json',
-            'Authorization': `Bearer ${apiKey}`
-          },
-          body: JSON.stringify({
-            model: 'llama-3.1-8b-instant',
-            messages: [
-              { role: 'system', content: systemPrompt },
-              { role: 'user', content: userMessage }
-            ],
-            max_tokens: 150,
-            temperature: 0.7
-          })
-        });
-
-        if (!response.ok) {
-          const status = response.status;
-          if (status === 429) {
-            log('Rate limit hit - using demo mode', 'error');
-            return getDemoResponse(userMessage) + " (API busy, demo mode)";
-          } else if (status === 401) {
-            log('Invalid Groq API key', 'error');
-            return "Oops! Check your API key in settings. [sad]";
-          }
-          throw new Error('Groq API error: ' + status);
-        }
-
-        const data = await response.json();
-        return data.choices[0].message.content;
-      } catch (error) {
-        log('Groq error: ' + error.message, 'error');
-        return getDemoResponse(userMessage);
-      }
-    }
-
-    async function callGemini(userMessage) {
-      const systemPrompt = `You are a funny, playful robot assistant for kids! Keep responses short (1-2 sentences), silly, and age-appropriate.
-
-You can use commands in [brackets] to control the robot. Use them often to make responses fun!
-
-EMOTIONS: [happy] [sad] [angry] [surprised] [love] [sleepy] [silly] [crazy] [dizzy] [wink] [cool] [wow] [oops] [haha] [cry] [scream] [shh] [ghost] [alien] [skull] [vampire] [poop]
-
-ANIMALS: [cat] [dog] [duck] [cow] [pig] [frog] [snake] [monkey]
-
-ACTIONS: [wave] [dance] [spin] [jump] [shake] [nod] [no] [blink] [wiggle] [bounce] [yawn] [sneeze] [hiccup] [tickle]
-
-SOUNDS: [fart] [burp] [beep] [laugh] [horn] [siren]
-
-PARTY: [party] [disco] [rainbow] [fireworks] [confetti] [birthday] [applause] [yay]
-
-SUPERPOWERS: [laser] [freeze] [fire] [magic] [invisible] [transform] [shield] [thunder] [explode] [rocket]
-
-GAMES: [count] [random] [dice] [timer] [quiz]
-
-MOVEMENT: [forward] [backward] [left] [right] [stop]
-
-Example responses:
-- "Haha, that's so funny! [haha] [dance]"
-- "Here's a silly fart for you! [fart] [silly]"
-- "I'm a cool cat! [cat] [cool]"
-- "Let's party! [party] [disco] [dance]"
-
-Respond in ${currentLanguage === 'en' ? 'English' : currentLanguage === 'fr' ? 'French' : 'Arabic'}.
-NEVER USE * asterisk character in responses!`;
-
-      const url = `https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${geminiApiKey}`;
-
-      try {
-        const response = await fetch(url, {
-          method: 'POST',
-          headers: { 'Content-Type': 'application/json' },
-          body: JSON.stringify({
-            contents: [{
-              parts: [{ text: userMessage }]
-            }],
-            systemInstruction: {
-              parts: [{ text: systemPrompt }]
-            },
-            generationConfig: {
-              maxOutputTokens: 150,
-              temperature: 0.7
-            }
-          })
-        });
-
-        if (!response.ok) {
-          const errorData = await response.json();
-          const status = response.status;
-          
-          if (status === 429) {
-            log('Rate limit hit - using demo mode', 'error');
-            return getDemoResponse(userMessage) + " (API busy, demo mode)";
-          } else if (status === 400) {
-            log('Invalid API key', 'error');
-            return "Oops! Check your API key in settings. [sad]";
-          } else {
-            throw new Error(errorData.error?.message || 'Gemini API error');
-          }
-        }
-
-        const data = await response.json();
-        
-        if (data.candidates && data.candidates[0]?.content?.parts?.[0]?.text) {
-          return data.candidates[0].content.parts[0].text;
-        } else {
-          throw new Error('Unexpected response format');
-        }
-      } catch (error) {
-        log('Gemini error: ' + error.message, 'error');
-        // Fallback to demo mode on any error
-        return getDemoResponse(userMessage);
-      }
-    }
-
-    function getDemoResponse(userMessage) {
-      const msg = userMessage.toLowerCase();
-      
-      // Language-specific responses
-      const responses = {
-        en: {
-          greeting: ["Hello friend! [happy] [wave] How are you today?", "Hi there! [wave] [dance] Nice to meet you!", "Hey! [cool] [wink] What's up?"],
-          howAreYou: ["I'm doing AWESOME! [happy] [dance] Thanks for asking!", "Feeling super silly! [silly] [wiggle] How about you?", "I'm fantastic! [party] [confetti]"],
-          name: ["I'm your Talking Robot friend! [happy] [wave] You can call me Robo!", "My name is Robo! [cool] [wink] What's yours?"],
-          joke: ["Why did the robot go on vacation? [blink] To recharge its batteries! [haha] [dance]", "What do you call a robot that takes the long way? [blink] R2-Detour! [haha] [silly]", "Want to hear something funny? [fart] Oops! [oops] [haha]"],
-          fart: ["PFFFFFT! [fart] [haha] That was a big one!", "Here comes a stinky one! [fart] [silly] [wiggle]", "Fart attack! [fart] [fart] [haha] [dance]"],
-          animal: ["Meow meow! [cat] [silly] I'm a kitty cat!", "Woof woof! [dog] [happy] [jump]", "Moooo! [cow] [silly] I'm a cow now!"],
-          party: ["PARTY TIME! [party] [disco] [dance] [confetti]", "Let's celebrate! [fireworks] [rainbow] [yay]", "Woohoo! [party] [dance] [applause]"],
-          bye: ["Goodbye friend! [wave] [happy] See you soon!", "Bye bye! [love] [wave] Come back anytime!", "See ya later alligator! [silly] [wave]"],
-          default: ["That's so cool! [wow] [dance] Tell me more!", "Haha! [haha] [silly] You're fun!", "Awesome! [party] [happy] I like you!", "Wheee! [spin] [dizzy] [haha]"]
-        },
-        fr: {
-          greeting: ["Bonjour ami! [happy] [wave] Comment vas-tu?", "Salut! [wave] [dance] Ravi de te rencontrer!"],
-          howAreYou: ["Je vais super bien! [happy] [dance] Merci!", "Trop bien! [party] [confetti] Et toi?"],
-          name: ["Je suis Robo ton ami robot! [happy] [wave]", "Mon nom est Robo! [cool] [wink] Et toi?"],
-          fart: ["PROUT! [fart] [haha] Oups!", "Un gros prout! [fart] [silly] [dance]"],
-          default: ["C'est super! [wow] [dance]", "Haha! [haha] [silly] Tu es marrant!", "Génial! [party] [happy]"]
-        },
-        ar: {
-          greeting: ["[happy] [wave] !مرحباً صديقي! كيف حالك", "[dance] [wave] !أهلاً! سعيد بلقائك"],
-          howAreYou: ["[happy] [dance] !أنا بخير جداً! شكراً", "[party] [confetti] !ممتاز! وأنت"],
-          name: ["[happy] [wave] !أنا صديقك الروبوت روبو", "[cool] [wink] !اسمي روبو! ما اسمك"],
-          default: ["[wow] [dance] !هذا رائع", "[haha] [silly] !أنت مضحك", "[party] [happy] !رائع"]
-        }
-      };
-
-      const lang = responses[currentLanguage] || responses.en;
-
-      // Match patterns
-      if (msg.match(/^(hi|hello|hey|salut|bonjour|مرحبا|اهلا)/)) {
-        return lang.greeting[Math.floor(Math.random() * lang.greeting.length)];
-      }
-      if (msg.match(/(how are you|comment vas|كيف حالك)/)) {
-        return lang.howAreYou[Math.floor(Math.random() * lang.howAreYou.length)];
-      }
-      if (msg.match(/(your name|ton nom|اسمك|ما اسمك)/)) {
-        return lang.name[Math.floor(Math.random() * lang.name.length)];
-      }
-      if (msg.match(/(joke|blague|نكتة|funny)/)) {
-        return lang.joke ? lang.joke[Math.floor(Math.random() * lang.joke.length)] : lang.default[0];
-      }
-      if (msg.match(/(fart|prout|ضراط)/)) {
-        return lang.fart ? lang.fart[Math.floor(Math.random() * lang.fart.length)] : "PFFFT! [fart] [haha]";
-      }
-      if (msg.match(/(cat|dog|animal|cow|duck|chat|chien|قط|كلب)/)) {
-        return lang.animal ? lang.animal[Math.floor(Math.random() * lang.animal.length)] : "[cat] [happy] Meow!";
-      }
-      if (msg.match(/(party|dance|disco|fête|حفلة)/)) {
-        return lang.party ? lang.party[Math.floor(Math.random() * lang.party.length)] : "[party] [dance] Woohoo!";
-      }
-      if (msg.match(/(bye|goodbye|au revoir|مع السلامة|وداعا)/)) {
-        return (lang.bye || lang.default)[Math.floor(Math.random() * (lang.bye || lang.default).length)];
-      }
-
-      return lang.default[Math.floor(Math.random() * lang.default.length)];
-    }
-
-    function extractCommands(text) {
-      const commands = [];
-      const cleanText = text.replace(/\[(\w+)\]/g, (match, cmd) => {
-        commands.push(cmd);
-        return '';
-      }).trim();
-      return { cleanText, commands };
-    }
-
-    // ==================== SPEECH SYNTHESIS ====================
-    function speak(text) {
-      if (!text) return;
-      
-      synth.cancel();
-      const utterance = new SpeechSynthesisUtterance(text);
-      utterance.lang = langConfig[currentLanguage].code;
-      utterance.rate = parseFloat(voiceSpeed.value);
-
-      // Use selected voice if available
-      if (selectedVoice) {
-        const voice = availableVoices.find(v => v.name === selectedVoice);
-        if (voice) {
-          utterance.voice = voice;
-        }
-      }
-
-      utterance.onstart = () => {
-        isSpeaking = true;
-        setRobotState('speaking');
-        sendToMicrobit('speak_start');
-      };
-
-      utterance.onend = () => {
-        isSpeaking = false;
-        setRobotState('idle');
-        sendToMicrobit('speak_end');
-        
-        // Restart listening if continuous mode is on
-        if (continuousListen && recognition) {
-          setTimeout(() => {
-            recognition.lang = langConfig[currentLanguage].code;
-            recognition.start();
-          }, 500);
-        }
-      };
-
-      synth.speak(utterance);
-    }
-
-    // ==================== ROBOT FACE ====================
-    function setRobotState(state) {
-      robotFace.className = 'robot-face';
-      if (state !== 'idle') robotFace.classList.add(state);
-
-      const statusMap = {
-        idle: langConfig[currentLanguage].ready,
-        listening: '🎤 Listening...',
-        thinking: '🤔 Thinking...',
-        speaking: '🔊 Speaking...'
-      };
-      robotStatus.textContent = statusMap[state] || statusMap.idle;
-    }
-
-    // ==================== BLUETOOTH ====================
-    async function toggleConnection() {
-      if (isConnected) {
-        disconnect();
-      } else {
-        await connect();
-      }
-    }
-
-    async function connect() {
-      try {
-        log('Scanning for Micro:bit...', 'info');
-        
-        device = await navigator.bluetooth.requestDevice({
-          filters: [{ namePrefix: 'BBC micro:bit' }],
-          optionalServices: [UART_SERVICE_UUID]
-        });
-
-        device.addEventListener('gattserverdisconnected', disconnect);
-
-        server = await device.gatt.connect();
-        service = await server.getPrimaryService(UART_SERVICE_UUID);
-        notifyChar = await service.getCharacteristic(TX_CHAR_UUID);
-        writeChar = await service.getCharacteristic(RX_CHAR_UUID);
-
-        await notifyChar.startNotifications();
-        notifyChar.addEventListener('characteristicvaluechanged', onNotify);
-
-        setConnected(true);
-        log('Connected to: ' + device.name, 'success');
-      } catch (error) {
-        log('Connection failed: ' + error.message, 'error');
-      }
-    }
-
-    function disconnect() {
-      if (device && device.gatt.connected) {
-        device.gatt.disconnect();
-      }
-      setConnected(false);
-      log('Disconnected', 'info');
-    }
-
-    function setConnected(connected) {
-      isConnected = connected;
-      btnConnectHeader.classList.toggle('connected', connected);
-      connectHeaderText.textContent = connected ? 'Connected' : 'Connect';
-    }
-
-    function onNotify(event) {
-      let s = '';
-      const v = event.target.value;
-      for (let i = 0; i < v.byteLength; i++) {
-        const b = v.getUint8(i);
-        if (b !== 13) s += String.fromCharCode(b);
-      }
-
-      rxBuffer += s;
-      let nl;
-      while ((nl = rxBuffer.indexOf('\n')) !== -1) {
-        const line = rxBuffer.slice(0, nl).trim();
-        rxBuffer = rxBuffer.slice(nl + 1);
-        if (line) {
-          log('← ' + line, 'rx');
-          handleMicrobitMessage(line);
-        }
-      }
-    }
-
-    function handleMicrobitMessage(msg) {
-      // Handle button presses from Micro:bit
-      if (msg === 'BTN_A') {
-        toggleListening();
-      } else if (msg === 'BTN_B') {
-        synth.cancel();
-        setRobotState('idle');
-      }
-    }
-
-    function sendToMicrobit(msg) {
-      if (!isConnected || !writeChar) return;
-      
-      const encoder = new TextEncoder();
-      writeChar.writeValue(encoder.encode(msg + '\n'));
-      log('→ ' + msg, 'tx');
-    }
-
-    // ==================== SIDEBAR ====================
-    function toggleSidebar() {
-      sidebar.classList.toggle('open');
-      // Only show overlay on mobile
-      if (window.innerWidth <= 768) {
-        overlay.classList.toggle('show', sidebar.classList.contains('open'));
-      }
-    }
-
-    function toggleLogsPanel() {
-      const logsSidebar = document.getElementById('logsSidebar');
-      const btnLogs = document.getElementById('btnLogs');
-      
-      logsSidebar.classList.toggle('open');
-      btnLogs.classList.toggle('active');
-      // Only show overlay on mobile
-      if (window.innerWidth <= 768) {
-        overlay.classList.toggle('show', logsSidebar.classList.contains('open'));
-      }
-    }
-
-    // Close panels when clicking overlay (mobile only)
-    function closeAllPanels() {
-      sidebar.classList.remove('open');
-      document.getElementById('logsSidebar').classList.remove('open');
-      document.getElementById('btnLogs').classList.remove('active');
-      overlay.classList.remove('show');
-    }
-
-    function toggleHelp() {
-      document.getElementById('helpModal').classList.toggle('open');
-    }
-
-    function speakFavorite(text) {
-      // Close help modal
-      document.getElementById('helpModal').classList.remove('open');
-      // Add to chat and process
-      addChatLine(text, 'user');
-      processUserInput(text);
-    }
-
-    // ==================== LOGGING ====================
-    function log(msg, type = 'info') {
-      const ts = new Date().toLocaleTimeString();
-      const div = document.createElement('div');
-      div.className = `log-line ${type}`;
-      
-      // Add tag based on type
-      let tag = '';
-      if (type === 'tx') tag = '<span class="log-tag tag-ble">BLE TX</span>';
-      else if (type === 'rx') tag = '<span class="log-tag tag-ble">BLE RX</span>';
-      else if (msg.includes('Listening') || msg.includes('Heard') || msg.includes('Speech')) tag = '<span class="log-tag tag-speech">SPEECH</span>';
-      else if (msg.includes('AI response') || msg.includes('Processing')) tag = '<span class="log-tag tag-ai">AI</span>';
-      else if (msg.includes('Connected') || msg.includes('Disconnected') || msg.includes('Scanning')) tag = '<span class="log-tag tag-ble">BLE</span>';
-      
-      div.innerHTML = `<span class="log-time">[${ts}]</span> ${tag} ${msg}`;
-      logContainer.appendChild(div);
-      logContainer.scrollTop = logContainer.scrollHeight;
-
-      // Keep only last 100 lines
-      while (logContainer.children.length > 100) {
-        logContainer.removeChild(logContainer.firstChild);
-      }
-    }
-
-    function clearLog() {
-      logContainer.innerHTML = '';
-      log('Log cleared', 'info');
-    }
-
-    function copyLog() {
-      const text = Array.from(logContainer.children).map(d => d.textContent).join('\n');
-      navigator.clipboard.writeText(text);
-      log('Log copied to clipboard', 'success');
-    }
-
-    function copyExample(el) {
-      const text = el.textContent;
-      navigator.clipboard.writeText(text);
-      el.textContent = 'Copied!';
-      setTimeout(() => {
-        el.textContent = text;
-      }, 1000);
-    }
-
-    function clearCache() {
-      if (confirm('This will reset all settings and clear chat history. Continue?')) {
-        localStorage.removeItem('talkingRobotSettings');
-        clearChat();
-        logContainer.innerHTML = '';
-        
-        // Reset all settings
-        setLanguage('en');
-        voiceSpeed.value = 1;
-        speedValue.textContent = '1.0x';
-        currentProvider = 'groq';
-        document.getElementById('aiProvider').value = 'groq';
-        geminiApiKey = '';
-        groqApiKey = '';
-        selectedVoice = '';
-        continuousListen = false;
-        document.getElementById('apiKeyInput').value = '';
-        document.getElementById('voiceSelect').value = '';
-        document.getElementById('continuousListen').checked = false;
-        
-        updateAiBadge();
-        populateVoiceSelector();
-        onProviderChange(false);
-        
-        log('All data cleared', 'success');
-      }
-    }
-
-    // Initialize
-    init();
-  </script>
+    typing.classList.add('hidden');
+    const { clean, cmds } = extractCmds(response);
+    addChat(clean || response, 'robot');
+    for (const c of cmds) { sendToMicrobit(c); updateLED(c); await sleep(300); }
+    speak(clean || response);
+    log('AI: ' + response.substring(0, 80), 'ai');
+  } catch(e) {
+    typing.classList.add('hidden'); setRobotState('idle');
+    addChat("Oops! Something went wrong. [sad]", 'robot');
+    log('Error: ' + e.message, 'error');
+  }
+}
+
+function extractCmds(text) {
+  const cmds = [];
+  const clean = text.replace(/\[(\w+)\]/g, (_, c) => { cmds.push(c.toLowerCase()); return ''; }).trim();
+  return { clean, cmds };
+}
+
+// ==================== AI ====================
+async function callGroq(msg) {
+  const prompt = buildPrompt();
+  const res = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', 'Authorization': `Bearer ${state.groqKey}` },
+    body: JSON.stringify({ model: 'llama-3.1-8b-instant', messages: [{ role: 'system', content: prompt }, { role: 'user', content: msg }], max_tokens: 150, temperature: 0.7 })
+  });
+  if (!res.ok) { if (res.status === 429) { state.rateLimitUntil = Date.now() + 30000; $('rateLimit').classList.add('show'); return getDemo(msg); } throw new Error('API ' + res.status); }
+  return (await res.json()).choices[0].message.content;
+}
+
+async function callGemini(msg) {
+  const prompt = buildPrompt();
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/gemini-2.0-flash:generateContent?key=${state.geminiKey}`, {
+    method: 'POST', headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ contents: [{ parts: [{ text: msg }] }], systemInstruction: { parts: [{ text: prompt }] }, generationConfig: { maxOutputTokens: 150, temperature: 0.7 } })
+  });
+  if (!res.ok) { if (res.status === 429) { state.rateLimitUntil = Date.now() + 30000; $('rateLimit').classList.add('show'); return getDemo(msg); } throw new Error('API ' + res.status); }
+  return (await res.json()).candidates?.[0]?.content?.parts?.[0]?.text || getDemo(msg);
+}
+
+function buildPrompt() {
+  const langName = { en: 'English', fr: 'French', ar: 'Arabic' }[state.lang];
+  return `${PERSONALITIES[state.personality]}
+Your name is ${state.robotName}. Keep responses short (1-2 sentences).
+Use [commands] often: [happy] [sad] [wave] [dance] [party] [fart] [cat] [rocket] etc.
+Respond in ${langName}. Never use asterisks.`;
+}
+
+function getDemo(msg) {
+  const m = msg.toLowerCase();
+  const r = DEMO[state.lang] || DEMO.en;
+  let resp;
+  if (m.match(/^(hi|hello|hey|bonjour|salut|مرحب)/)) resp = pick(r.greeting);
+  else if (m.match(/(your name|ton nom|اسمك)/)) resp = pick(r.name || r.default);
+  else if (m.match(/(joke|blague|نكتة)/)) resp = pick(r.joke || r.default);
+  else if (m.match(/(fart|prout)/)) resp = pick(r.fart || r.default);
+  else if (m.match(/(party|fête)/)) resp = pick(r.party || r.default);
+  else if (m.match(/(bye|au revoir|وداع)/)) resp = pick(r.bye || r.default);
+  else resp = pick(r.default);
+  return resp.replace(/{name}/g, state.robotName);
+}
+
+// ==================== BLUETOOTH ====================
+async function toggleConnection() { state.connected ? disconnect() : await connect(); }
+
+async function connect() {
+  try {
+    log('Scanning for Micro:bit...', 'ble');
+    state.device = await navigator.bluetooth.requestDevice({ filters: [{ namePrefix: 'BBC micro:bit' }], optionalServices: [CONFIG.UART_SERVICE] });
+    state.device.addEventListener('gattserverdisconnected', () => { state.connected = false; updateConnection(); log('Disconnected', 'ble'); });
+    const server = await state.device.gatt.connect();
+    const service = await server.getPrimaryService(CONFIG.UART_SERVICE);
+    // TX characteristic is for notifications (receiving from micro:bit)
+    const notifyChar = await service.getCharacteristic(CONFIG.TX_CHAR);
+    // RX characteristic is for writing (sending to micro:bit)
+    state.writeChar = await service.getCharacteristic(CONFIG.RX_CHAR);
+    await notifyChar.startNotifications();
+    notifyChar.addEventListener('characteristicvaluechanged', onNotify);
+    state.connected = true; updateConnection();
+    sendToMicrobit('happy'); updateLED('happy');
+    log('Connected: ' + state.device.name, 'success');
+  } catch(e) { log('Connect failed: ' + e.message, 'error'); }
+}
+
+function disconnect() {
+  if (state.device?.gatt.connected) state.device.gatt.disconnect();
+  state.connected = false; updateConnection();
+}
+
+function onNotify(e) {
+  let s = '';
+  const v = e.target.value;
+  for (let i = 0; i < v.byteLength; i++) { const b = v.getUint8(i); if (b !== 13) s += String.fromCharCode(b); }
+  state.rxBuffer += s;
+  let nl;
+  while ((nl = state.rxBuffer.indexOf('\n')) !== -1) {
+    const line = state.rxBuffer.slice(0, nl).trim();
+    state.rxBuffer = state.rxBuffer.slice(nl + 1);
+    if (line) { log('← ' + line, 'rx'); if (line === 'BTN_A') toggleListening(); else if (line === 'BTN_B') synth.cancel(); }
+  }
+}
+
+function sendToMicrobit(msg) {
+  if (!state.connected || !state.writeChar) return;
+  try { state.writeChar.writeValue(new TextEncoder().encode(msg + '\n')); log('→ ' + msg, 'tx'); } catch(e) {}
+}
+
+// ==================== LED ====================
+const LED = {
+  happy: [0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  sad: [0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0, 1,0,0,0,1],
+  love: [0,1,0,1,0, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  wow: [0,1,0,1,0, 0,0,0,0,0, 0,1,1,1,0, 1,0,0,0,1, 0,1,1,1,0],
+  thinking: [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,1,0, 0,0,1,0,0],
+};
+
+function updateLED(cmd) {
+  const p = LED[cmd] || LED.happy;
+  ledGrid.querySelectorAll('.led-pixel').forEach((px, i) => px.classList.toggle('on', p[i] === 1));
+}
+
+// ==================== MODALS & PANELS ====================
+function openModal(id) { $(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
+function closeModal(id) { $(id).classList.remove('open'); document.body.style.overflow = ''; }
+function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('show', sidebar.classList.contains('open')); }
+function toggleLogs() { logsPanel.classList.toggle('open'); $('logsBtn').classList.toggle('active', logsPanel.classList.contains('open')); }
+function closeAllPanels() { sidebar.classList.remove('open'); logsPanel.classList.remove('open'); overlay.classList.remove('show'); $('logsBtn').classList.remove('active'); document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open')); document.body.style.overflow = ''; }
+
+function generateCommands() {
+  const body = $('commandsBody');
+  body.innerHTML = '<p style="color:var(--muted);margin-bottom:16px;font-size:0.85rem">Click any command to try it!</p>';
+  for (const [key, cat] of Object.entries(COMMANDS)) {
+    const div = document.createElement('div');
+    div.className = 'command-category';
+    div.innerHTML = `<div class="category-header"><span>${cat.icon}</span> ${cat.name}</div><div class="category-commands">${cat.items.map(c => `<button class="command-chip" onclick="tryCmd('${c}')">[${c}]</button>`).join('')}</div>`;
+    body.appendChild(div);
+  }
+}
+
+function tryCmd(cmd) {
+  closeModal('commandsModal');
+  addChat(`Show me ${cmd}!`, 'user');
+  addChat(`Here's ${cmd}!`, 'robot');
+  sendToMicrobit(cmd); updateLED(cmd);
+  speak(`Here's ${cmd}!`);
+}
+
+// ==================== LOGGING ====================
+function log(msg, type = 'info') {
+  const ts = new Date().toLocaleTimeString([], { hour: '2-digit', minute: '2-digit', second: '2-digit' });
+  const entry = document.createElement('div');
+  entry.className = 'log-entry ' + type;
+  let tag = '';
+  if (type === 'tx') tag = '<span class="log-tag ble">TX</span>';
+  else if (type === 'rx') tag = '<span class="log-tag ble">RX</span>';
+  else if (type === 'ble') tag = '<span class="log-tag ble">BLE</span>';
+  else if (type === 'speech') tag = '<span class="log-tag speech">SPEECH</span>';
+  else if (type === 'ai') tag = '<span class="log-tag ai">AI</span>';
+  entry.innerHTML = `<span style="opacity:0.6">[${ts}]</span> ${tag} ${escapeHtml(msg)}`;
+  logsContent.appendChild(entry);
+  logsContent.scrollTop = logsContent.scrollHeight;
+  while (logsContent.children.length > 150) logsContent.removeChild(logsContent.firstChild);
+  console.log(`[${type}] ${msg}`);
+}
+
+// ==================== UTILS ====================
+function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function clearAllData() { if (confirm('Reset all settings and clear data?')) { localStorage.removeItem('talkingRobotV2'); location.reload(); } }
+
+// ==================== START ====================
+init();
+</script>
 </body>
 </html>
