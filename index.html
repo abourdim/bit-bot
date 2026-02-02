@@ -58,6 +58,7 @@ body {
   padding: 12px 16px; background: var(--panel);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
+  transition: right 0.3s ease;
 }
 .header-left { display: flex; align-items: center; gap: 12px; }
 .logo { width: 48px; height: 48px; filter: drop-shadow(0 4px 8px rgba(0, 123, 255, 0.3)); }
@@ -98,7 +99,14 @@ body {
 .btn-icon.active { border-color: var(--primary); background: var(--primary); color: white; }
 
 /* Main */
-.main { flex: 1; padding: 80px 16px 140px; display: flex; flex-direction: column; align-items: center; }
+.main { flex: 1; padding: 80px 16px 140px; display: flex; flex-direction: column; align-items: center; transition: margin-right 0.3s ease; }
+
+/* Desktop: Push layout when logs open */
+@media (min-width: 900px) {
+  body.logs-open .main { margin-right: 400px; }
+  body.logs-open .header { right: 400px; }
+  body.logs-open .input-area { right: 400px; }
+}
 
 /* Robot Avatar */
 .robot-section { display: flex; flex-direction: column; align-items: center; padding: 20px; }
@@ -193,7 +201,26 @@ body {
 .led-pixel.on { background: #ff6b6b; box-shadow: 0 0 8px #ff6b6b; }
 
 /* Chat */
-.chat-section { width: 100%; max-width: 500px; padding: 20px 0; }
+.chat-section { 
+  width: 100%; 
+  max-width: 500px; 
+  padding: 16px;
+  background: var(--card);
+  border-radius: var(--radius);
+  border: 2px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+  margin-top: 20px;
+}
+.chat-header {
+  display: flex; align-items: center; justify-content: space-between;
+  padding-bottom: 12px; margin-bottom: 12px;
+  border-bottom: 1px solid var(--border);
+}
+.chat-header-title {
+  font-size: 0.8rem; font-weight: 600; color: var(--muted);
+  text-transform: uppercase; letter-spacing: 0.05em;
+  display: flex; align-items: center; gap: 8px;
+}
 .chat-container {
   display: flex;
   flex-direction: column;
@@ -201,7 +228,10 @@ body {
   padding: 10px;
   font-family: var(--mono);
   font-size: 0.75rem;
-  background: transparent;
+  background: var(--bg);
+  border-radius: 12px;
+  max-height: 300px;
+  overflow-y: auto;
 }
 .chat-bubble {
   display: flex; align-items: flex-start; gap: 10px;
@@ -216,14 +246,14 @@ body {
 .chat-bubble .content { flex: 1; min-width: 0; }
 .chat-bubble .text { font-size: 0.9rem; line-height: 1.4; word-wrap: break-word; }
 .chat-bubble .time { font-size: 0.65rem; opacity: 0.7; margin-top: 4px; }
-.typing-indicator { display: flex; align-items: center; gap: 4px; padding: 12px 16px; background: var(--card); border: 2px solid var(--border); border-radius: var(--radius); width: fit-content; }
+.typing-indicator { display: flex; align-items: center; gap: 4px; padding: 12px 16px; background: var(--panel); border: 2px solid var(--border); border-radius: var(--radius); width: fit-content; margin: 10px; }
 .typing-dot { width: 8px; height: 8px; background: var(--muted); border-radius: 50%; animation: typing 1.4s infinite; }
 .typing-dot:nth-child(2) { animation-delay: 0.2s; }
 .typing-dot:nth-child(3) { animation-delay: 0.4s; }
 @keyframes typing { 0%,60%,100%{transform:translateY(0)} 30%{transform:translateY(-8px)} }
-.chat-actions { display: flex; justify-content: flex-end; margin-top: 8px; }
-.btn-clear { padding: 6px 12px; border-radius: 8px; border: none; background: transparent; color: var(--muted); font-size: 0.75rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
-.btn-clear:hover { color: var(--danger); background: rgba(239,68,68,0.1); }
+.chat-actions { display: flex; justify-content: flex-end; }
+.btn-clear { padding: 4px 10px; border-radius: 6px; border: 1px solid var(--border); background: var(--panel); color: var(--muted); font-size: 0.7rem; font-weight: 500; cursor: pointer; transition: all 0.2s; }
+.btn-clear:hover { color: var(--danger); border-color: var(--danger); background: rgba(239,68,68,0.1); }
 .hidden { display: none !important; }
 
 /* Input Area */
@@ -234,6 +264,7 @@ body {
   border-top: 1px solid var(--border);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   z-index: 90;
+  transition: right 0.3s ease;
 }
 .input-row { display: flex; gap: 12px; align-items: center; max-width: 600px; margin: 0 auto; }
 .text-input {
@@ -523,14 +554,17 @@ body {
       </section>
 
       <section class="chat-section" aria-label="Chat">
+        <div class="chat-header">
+          <span class="chat-header-title">💬 Chat</span>
+          <div class="chat-actions">
+            <button class="btn-clear" onclick="clearChat()" aria-label="Clear chat">🗑️ Clear</button>
+          </div>
+        </div>
         <div class="chat-container" id="chatContainer" role="log" aria-live="polite"></div>
         <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing">
           <span class="typing-dot"></span>
           <span class="typing-dot"></span>
           <span class="typing-dot"></span>
-        </div>
-        <div class="chat-actions">
-          <button class="btn-clear" onclick="clearChat()" aria-label="Clear chat">🗑️ Clear</button>
         </div>
       </section>
     </main>
@@ -1414,8 +1448,20 @@ function updateLED(cmd) {
 function openModal(id) { $(id).classList.add('open'); document.body.style.overflow = 'hidden'; }
 function closeModal(id) { $(id).classList.remove('open'); document.body.style.overflow = ''; }
 function toggleSidebar() { sidebar.classList.toggle('open'); overlay.classList.toggle('show', sidebar.classList.contains('open')); }
-function toggleLogs() { logsPanel.classList.toggle('open'); $('logsBtn').classList.toggle('active', logsPanel.classList.contains('open')); }
-function closeAllPanels() { sidebar.classList.remove('open'); logsPanel.classList.remove('open'); overlay.classList.remove('show'); $('logsBtn').classList.remove('active'); document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open')); document.body.style.overflow = ''; }
+function toggleLogs() { 
+  logsPanel.classList.toggle('open'); 
+  document.body.classList.toggle('logs-open', logsPanel.classList.contains('open'));
+  $('logsBtn').classList.toggle('active', logsPanel.classList.contains('open')); 
+}
+function closeAllPanels() { 
+  sidebar.classList.remove('open'); 
+  logsPanel.classList.remove('open'); 
+  document.body.classList.remove('logs-open');
+  overlay.classList.remove('show'); 
+  $('logsBtn').classList.remove('active'); 
+  document.querySelectorAll('.modal.open').forEach(m => m.classList.remove('open')); 
+  document.body.style.overflow = ''; 
+}
 
 function generateCommands() {
   const body = $('commandsBody');
