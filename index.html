@@ -304,12 +304,23 @@ body {
 .overlay { display: none; position: fixed; inset: 0; background: rgba(0,0,0,0.5); z-index: 150; backdrop-filter: blur(2px); }
 .overlay.show { display: block; }
 .sidebar {
-  position: fixed; top: 0; right: 0; bottom: 0; width: 340px; max-width: 90vw;
+  position: fixed; top: 0; right: 0; bottom: 0; width: 340px; min-width: 280px; max-width: 90vw;
   background: var(--panel); border-left: 1px solid var(--border);
   z-index: 200; transform: translateX(100%); transition: transform 0.3s ease;
   display: flex; flex-direction: column;
 }
 .sidebar.open { transform: translateX(0); }
+.sidebar.resizing { transition: none; user-select: none; }
+.sidebar-resize-handle {
+  position: absolute; left: -5px; top: 0; bottom: 0; width: 10px;
+  cursor: ew-resize; z-index: 10;
+}
+.sidebar-resize-handle::before {
+  content: ''; position: absolute; left: 4px; top: 50%; transform: translateY(-50%);
+  width: 3px; height: 40px; background: var(--border); border-radius: 2px;
+  opacity: 0; transition: opacity 0.2s;
+}
+.sidebar-resize-handle:hover::before, .sidebar.resizing .sidebar-resize-handle::before { opacity: 1; }
 .sidebar-header { display: flex; align-items: center; justify-content: space-between; padding: 16px 20px; border-bottom: 1px solid var(--border); font-weight: 700; font-size: 1rem; }
 .btn-close { width: 36px; height: 36px; border-radius: 8px; border: none; background: var(--card); color: var(--text); font-size: 1.2rem; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: all 0.2s; }
 .btn-close:hover { background: var(--danger); color: white; }
@@ -584,6 +595,7 @@ body {
 
     <!-- Sidebar -->
     <aside class="sidebar" id="sidebar" aria-label="Settings panel">
+      <div class="sidebar-resize-handle" id="sidebarResizeHandle"></div>
       <div class="sidebar-header">
         <span>⚙️ Settings</span>
         <button class="btn-close" onclick="toggleSidebar()" aria-label="Close settings">×</button>
@@ -1477,7 +1489,7 @@ function generateCommands() {
 }
 
 function tryCmd(cmd) {
-  closeModal('commandsModal');
+  // Don't close modal - let user try multiple commands
   addChat(`Show me ${cmd}!`, 'user');
   addChat(`Here's ${cmd}!`, 'robot');
   sendToMicrobit(cmd); updateLED(cmd);
@@ -1645,22 +1657,63 @@ function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
 function clearAllData() { if (confirm('Reset all settings and clear data?')) { localStorage.removeItem('talkingRobotV2'); location.reload(); } }
 
+// Sidebar resize functionality
+function setupSidebarResize() {
+  const handle = $('sidebarResizeHandle');
+  let isResizing = false;
+  let startX, startWidth;
+  
+  handle.addEventListener('mousedown', (e) => {
+    isResizing = true;
+    startX = e.clientX;
+    startWidth = sidebar.offsetWidth;
+    sidebar.classList.add('resizing');
+    document.addEventListener('mousemove', handleMouseMove);
+    document.addEventListener('mouseup', handleMouseUp);
+    e.preventDefault();
+  });
+  
+  function handleMouseMove(e) {
+    if (!isResizing) return;
+    const diff = startX - e.clientX;
+    const newWidth = Math.min(Math.max(startWidth + diff, 280), window.innerWidth * 0.9);
+    sidebar.style.width = newWidth + 'px';
+  }
+  
+  function handleMouseUp() {
+    isResizing = false;
+    sidebar.classList.remove('resizing');
+    document.removeEventListener('mousemove', handleMouseMove);
+    document.removeEventListener('mouseup', handleMouseUp);
+  }
+  
+  // Touch support
+  handle.addEventListener('touchstart', (e) => {
+    isResizing = true;
+    startX = e.touches[0].clientX;
+    startWidth = sidebar.offsetWidth;
+    sidebar.classList.add('resizing');
+  });
+  
+  document.addEventListener('touchmove', (e) => {
+    if (!isResizing) return;
+    const diff = startX - e.touches[0].clientX;
+    const newWidth = Math.min(Math.max(startWidth + diff, 280), window.innerWidth * 0.9);
+    sidebar.style.width = newWidth + 'px';
+  });
+  
+  document.addEventListener('touchend', () => {
+    if (isResizing) {
+      isResizing = false;
+      sidebar.classList.remove('resizing');
+    }
+  });
+}
+
 // ==================== START ====================
 setupLogsResize();
+setupSidebarResize();
 init();
 </script>
 </body>
 </html>
-
-
-function handleUartLine(line) {
-  line = (line || '').trim();
-
-  // ✅ micro:bit LED sync frame
-  if (line.startsWith('LED:') && line.length >= 29) {
-    const bits = line.slice(4, 29);
-    const pattern = [...bits].map(b => b === '1' ? 1 : 0);
-    renderLEDPixels(pattern);
-    return;
-  }
-}
