@@ -54,26 +54,39 @@ body {
 /* Header */
 .header {
   position: fixed; top: 0; left: 0; right: 0; z-index: 100;
-  display: flex; align-items: center; justify-content: space-between;
-  padding: 12px 16px; background: var(--panel);
+  display: grid; grid-template-columns: auto 1fr auto;
+  align-items: center; gap: 16px;
+  padding: 12px 20px; background: var(--panel);
   border-bottom: 1px solid var(--border);
   backdrop-filter: blur(20px); -webkit-backdrop-filter: blur(20px);
   transition: left 0.3s ease, right 0.3s ease;
 }
-.header-left { display: flex; align-items: center; gap: 12px; }
-.logo { width: 48px; height: 48px; filter: drop-shadow(0 4px 8px rgba(0, 123, 255, 0.3)); }
-@keyframes float { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-4px)} }
-.header-titles { display: flex; flex-direction: column; }
+.header-left { display: flex; align-items: center; }
+.logo { 
+  width: 80px; height: 80px; 
+  filter: drop-shadow(0 4px 16px rgba(0, 123, 255, 0.5)); 
+  animation: logoPulse 3s ease-in-out infinite;
+}
+@keyframes logoPulse { 
+  0%, 100% { transform: scale(1) rotate(0deg); filter: drop-shadow(0 4px 16px rgba(0, 123, 255, 0.5)); } 
+  50% { transform: scale(1.08) rotate(2deg); filter: drop-shadow(0 8px 24px rgba(0, 123, 255, 0.7)); } 
+}
+.header-center { 
+  display: flex; flex-direction: column; align-items: center; 
+  justify-self: center;
+}
 .app-title {
-  font-size: 1.4rem; font-weight: 700;
+  font-size: 2.2rem; font-weight: 800;
   background: linear-gradient(135deg, var(--primary), var(--secondary), var(--accent));
   background-size: 200%; -webkit-background-clip: text; -webkit-text-fill-color: transparent;
   background-clip: text;
-  animation: shimmer 8s linear infinite;
+  animation: shimmer 6s linear infinite;
+  text-align: center;
+  letter-spacing: -0.5px;
 }
 @keyframes shimmer { 0%,100%{background-position:0 50%} 50%{background-position:100% 50%} }
-.app-subtitle { font-size: 0.7rem; color: var(--muted); }
-.header-center { display: flex; gap: 8px; }
+.app-subtitle { font-size: 1rem; color: var(--muted); text-align: center; font-weight: 500; }
+.header-right { display: flex; align-items: center; gap: 8px; }
 .badge {
   display: flex; align-items: center; gap: 6px;
   padding: 6px 12px; border-radius: 999px;
@@ -87,7 +100,6 @@ body {
 .badge.gemini { border-color: var(--primary); color: var(--primary); }
 .status-dot { width: 8px; height: 8px; border-radius: 50%; background: currentColor; animation: pulse 2s infinite; }
 @keyframes pulse { 0%,100%{opacity:1; transform: scale(1);} 50%{opacity:0.5; transform: scale(0.9);} }
-.header-right { display: flex; gap: 8px; }
 .btn-icon {
   width: 40px; height: 40px; border-radius: 10px;
   border: 2px solid var(--border); background: var(--panel);
@@ -98,8 +110,16 @@ body {
 .btn-icon:hover { border-color: var(--primary); background: var(--primary-soft); transform: translateY(-1px); }
 .btn-icon.active { border-color: var(--primary); background: var(--primary); color: white; }
 
+/* Mobile header adjustments */
+@media (max-width: 600px) {
+  .logo { width: 56px; height: 56px; }
+  .app-title { font-size: 1.5rem; }
+  .app-subtitle { font-size: 0.8rem; }
+  .badge { display: none; }
+}
+
 /* Main */
-.main { flex: 1; padding: 80px 16px 140px; display: flex; flex-direction: column; align-items: center; transition: margin-left 0.3s ease, margin-right 0.3s ease; }
+.main { flex: 1; padding: 115px 16px 140px; display: flex; flex-direction: column; align-items: center; transition: margin-left 0.3s ease, margin-right 0.3s ease; }
 
 /* Desktop: Push layout when logs open */
 @media (min-width: 900px) {
@@ -506,7 +526,7 @@ body {
 
 /* Mobile */
 @media (max-width: 768px) {
-  .header-titles { display: none; }
+  .app-subtitle { display: none; }
   .header-right .btn-icon:not(:first-child):not(:last-child) { display: none; }
   .sidebar { width: 100%; }
   .robot-body { width: min(240px, 70vw); height: min(240px, 70vw); }
@@ -538,12 +558,12 @@ body {
           <path style="stroke:none;fill:#007BFF;fill-rule:evenodd" d="M-90.825432,182.968948L-90.825432,182.926346L-88.826904,182.926346L-86.828384,182.926346L-86.828384,182.968964L-86.828384,183.011566L-88.826904,183.011551L-90.825432,183.011551L-90.825432,182.968948z"/>
           <path style="stroke:none;fill:#007BFF;fill-rule:evenodd" d="M-92.820084,183.14711L-92.820084,183.104507L-89.824234,183.104507L-86.828384,183.104523L-86.828384,183.147125L-86.828384,183.189728L-89.824234,183.189713L-92.820084,183.189713L-92.820084,183.14711z"/>
         </svg>
-        <div class="header-titles">
-          <h1 class="app-title">Talking Robot</h1>
-          <p class="app-subtitle">Your AI Robot Friend!</p>
-        </div>
       </div>
       <div class="header-center">
+        <h1 class="app-title">Talking Robot</h1>
+        <p class="app-subtitle">Your AI Robot Friend!</p>
+      </div>
+      <div class="header-right">
         <div class="badge" id="aiBadge" aria-label="AI Mode">
           <span id="aiIcon">🎮</span>
           <span id="aiName">Demo</span>
@@ -552,8 +572,6 @@ body {
           <span class="status-dot"></span>
           <span id="connText">Disconnected</span>
         </button>
-      </div>
-      <div class="header-right">
         <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
         <button class="btn-icon" id="commandsBtn" onclick="toggleCommands()" aria-label="Commands">📋</button>
         <button class="btn-icon" id="logsBtn" onclick="toggleLogs()" aria-label="Logs">📊</button>
@@ -836,7 +854,7 @@ let state = {
   recognition: null, listening: false, speaking: false, voices: [],
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
   speed: 1, voice: '', continuous: false, theme: 'light',
-  groqKey: '', geminiKey: '', rateLimitUntil: 0,
+  groqKey: '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', geminiKey: '', rateLimitUntil: 0,
   chatMemory: { playful: [], helpful: [], pirate: [], space: [] },
   ledFromMicrobitOnly: false
 };
