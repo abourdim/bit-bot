@@ -1595,9 +1595,16 @@ body {
   padding: 20px;
 }
 
+.games-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
 .games-grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  display: flex;
+  flex-direction: column;
   gap: 12px;
 }
 
@@ -1606,7 +1613,7 @@ body {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 8px;
+  gap: 6px;
   padding: 20px 16px;
   border-radius: var(--radius-lg);
   border: 2px solid var(--border);
@@ -1623,13 +1630,40 @@ body {
 .game-btn:active {
   transform: translateY(0);
 }
+.game-btn.game-featured {
+  padding: 24px 20px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+}
+.game-btn.game-featured:hover {
+  background: linear-gradient(135deg, var(--primary-soft) 0%, var(--accent-soft) 100%);
+  border-color: var(--primary);
+}
 .game-icon {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 .game-name {
-  font-size: 0.85rem;
+  font-size: 0.95rem;
   font-weight: 700;
   color: var(--text);
+}
+.game-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.games-microbit-note {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .btn-games {
@@ -2643,35 +2677,30 @@ body {
     <!-- ==================== GAMES PANEL ==================== -->
     <aside class="games-panel" id="gamesPanel" aria-label="Games">
       <div class="games-header">
-        <span class="games-title">🎮 Games</span>
+        <span class="games-title">🎮 AI Games</span>
         <button class="btn-close" onclick="toggleGames()" aria-label="Close">×</button>
       </div>
       <div class="games-content">
+        <p class="games-info">Interactive games using micro:bit + AI!</p>
         <div class="games-grid">
-          <button class="game-btn" onclick="startGame('quiz')">
+          <button class="game-btn game-featured" onclick="startGame('tiltquiz')">
             <span class="game-icon">🎯</span>
-            <span class="game-name">Quiz</span>
+            <span class="game-name">Smart Tilt Quiz</span>
+            <span class="game-desc">Tilt to answer!</span>
           </button>
-          <button class="game-btn" onclick="startGame('counting')">
-            <span class="game-icon">🔢</span>
-            <span class="game-name">Counting</span>
+          <button class="game-btn game-featured" onclick="startGame('adventure')">
+            <span class="game-icon">🗺️</span>
+            <span class="game-name">Adventure Explorer</span>
+            <span class="game-desc">AI storytelling!</span>
           </button>
-          <button class="game-btn" onclick="startGame('colors')">
-            <span class="game-icon">🎨</span>
-            <span class="game-name">Colors</span>
+          <button class="game-btn game-featured" onclick="startGame('science')">
+            <span class="game-icon">🔬</span>
+            <span class="game-name">Science Detective</span>
+            <span class="game-desc">Real sensors!</span>
           </button>
-          <button class="game-btn" onclick="startGame('abc')">
-            <span class="game-icon">🔤</span>
-            <span class="game-name">ABC</span>
-          </button>
-          <button class="game-btn" onclick="startGame('dice')">
-            <span class="game-icon">🎲</span>
-            <span class="game-name">Dice</span>
-          </button>
-          <button class="game-btn" onclick="startGame('story')">
-            <span class="game-icon">📖</span>
-            <span class="game-name">Story</span>
-          </button>
+        </div>
+        <div class="games-microbit-note">
+          <span>📡</span> Connect micro:bit for full experience!
         </div>
       </div>
     </aside>
@@ -2903,6 +2932,7 @@ let state = {
   connected: false, device: null, writeChar: null, rxBuffer: '',
   recognition: null, listening: false, speaking: false, voices: [],
   voicesLoaded: false, speechReady: false,
+  lastTemp: null, lastLight: null,
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
   speed: 1, voice: '', continuous: false, theme: 'light', soundOff: false,
   groqKey: '', geminiKey: '', cohereKey: '', mistralKey: '', openrouterKey: '',
@@ -3888,11 +3918,45 @@ function handleRx(event) {
           setLEDFromMicrobit(ledState);
           log('RX LED: ' + ledState.replace(/1/g, '█').replace(/0/g, '·'), 'rx');
         }
-      } else {
+      } 
+      // Handle sensor data
+      else if (line.startsWith('TEMP:')) {
+        const temp = parseInt(line.substring(5));
+        state.lastTemp = temp;
+        log('RX Temp: ' + temp + '°C', 'rx');
+        handleGameInput('temp', temp);
+      }
+      else if (line.startsWith('LIGHT:')) {
+        const light = parseInt(line.substring(6));
+        state.lastLight = light;
+        log('RX Light: ' + light, 'rx');
+        handleGameInput('light', light);
+      }
+      // Handle input events
+      else {
         log('RX: ' + line, 'rx');
-        // Handle button presses from micro:bit
-        if (line === 'BTN_A') toggleListening();
-        else if (line === 'BTN_B') synth.cancel();
+        
+        // Button and motion handlers
+        if (line === 'BTN_A') {
+          if (currentGame) handleGameInput('btn_a');
+          else toggleListening();
+        }
+        else if (line === 'BTN_B') {
+          if (currentGame) handleGameInput('btn_b');
+          else synth.cancel();
+        }
+        else if (line === 'BTN_AB') {
+          handleGameInput('btn_ab');
+        }
+        else if (line === 'TILT_LEFT') {
+          handleGameInput('tilt_left');
+        }
+        else if (line === 'TILT_RIGHT') {
+          handleGameInput('tilt_right');
+        }
+        else if (line === 'SHAKE') {
+          handleGameInput('shake');
+        }
       }
     }
   }
@@ -4246,212 +4310,515 @@ function showToast(message, type = '') {
   }, 3000);
 }
 
-// ==================== GAMES ====================
-const GAMES = {
-  quiz: {
-    questions: [
-      { q: "What color is the sky?", a: "blue", hint: "Look up!" },
-      { q: "How many legs does a cat have?", a: "4", hint: "Count them!" },
-      { q: "What sound does a dog make?", a: "woof", hint: "Bark bark!" },
-      { q: "What is 2 plus 2?", a: "4", hint: "Use your fingers!" },
-      { q: "What do bees make?", a: "honey", hint: "It's sweet!" },
-      { q: "What color is grass?", a: "green", hint: "Look outside!" },
-      { q: "How many fingers do you have?", a: "10", hint: "Count both hands!" },
-      { q: "What animal says meow?", a: "cat", hint: "It has whiskers!" }
-    ]
-  },
-  counting: {
-    max: 10
-  },
-  colors: {
-    list: ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown']
-  },
-  abc: {
-    letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
-  },
-  dice: {
-    faces: ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
-  }
-};
-
+// ==================== AI-POWERED GAMES ====================
 let currentGame = null;
 let gameState = {};
 
+// Game configurations
+const AI_GAMES = {
+  tiltquiz: {
+    name: 'Smart Tilt Quiz',
+    icon: '🎯',
+    subjects: ['math', 'science', 'animals', 'colors', 'spelling'],
+    difficulty: 1 // 1-5, adapts based on performance
+  },
+  adventure: {
+    name: 'Adventure Explorer',
+    icon: '🗺️',
+    themes: ['forest', 'space', 'ocean', 'castle', 'jungle']
+  },
+  science: {
+    name: 'Science Detective',
+    icon: '🔬',
+    experiments: ['temperature', 'light', 'motion']
+  }
+};
+
 function startGame(game) {
   currentGame = game;
-  gameState = {};
+  gameState = {
+    score: 0,
+    streak: 0,
+    questionsAnswered: 0,
+    difficulty: 1,
+    waitingForInput: false,
+    history: []
+  };
   $('gamesPanel').classList.remove('open');
   playSound('game');
   
   switch(game) {
-    case 'quiz':
-      gameState.questionIndex = Math.floor(Math.random() * GAMES.quiz.questions.length);
-      const q = GAMES.quiz.questions[gameState.questionIndex];
-      addBubble('robot', `🎯 Quiz time! ${q.q}`);
-      speak(`Quiz time! ${q.q}`);
-      updateLEDFromCommand('wow');
-      sendCommand('wow');
+    case 'tiltquiz':
+      startTiltQuiz();
       break;
-      
-    case 'counting':
-      gameState.target = Math.floor(Math.random() * GAMES.counting.max) + 1;
-      addBubble('robot', `🔢 Let's count! Can you count to ${gameState.target} with me? Start with 1!`);
-      speak(`Let's count! Can you count to ${gameState.target} with me? Start with 1!`);
-      gameState.current = 0;
-      updateLEDFromCommand('happy');
-      sendCommand('happy');
+    case 'adventure':
+      startAdventure();
       break;
-      
-    case 'colors':
-      const color = GAMES.colors.list[Math.floor(Math.random() * GAMES.colors.list.length)];
-      gameState.color = color;
-      addBubble('robot', `🎨 Color game! Can you find something ${color}? Tell me when you find it!`);
-      speak(`Color game! Can you find something ${color}? Tell me when you find it!`);
-      updateLEDFromCommand('rainbow');
-      sendCommand('rainbow');
-      break;
-      
-    case 'abc':
-      const letter = GAMES.abc.letters[Math.floor(Math.random() * GAMES.abc.letters.length)];
-      gameState.letter = letter;
-      addBubble('robot', `🔤 ABC game! What word starts with the letter ${letter}?`);
-      speak(`ABC game! What word starts with the letter ${letter}?`);
-      updateLEDFromCommand('happy');
-      sendCommand('happy');
-      break;
-      
-    case 'dice':
-      const roll = Math.floor(Math.random() * 6) + 1;
-      const face = GAMES.dice.faces[roll - 1];
-      addBubble('robot', `🎲 I rolled... ${face} That's ${roll}! Your turn - say "roll" to roll!`);
-      speak(`I rolled... ${roll}! That's ${roll}! Your turn! Say roll to roll the dice!`);
-      updateLEDFromCommand('spin');
-      sendCommand('spin');
-      currentGame = 'dice';
-      break;
-      
-    case 'story':
-      const starters = [
-        "Once upon a time, there was a brave robot who...",
-        "In a magical forest, a little bunny found...",
-        "Far away in space, an alien discovered...",
-        "Deep in the ocean, a friendly fish saw..."
-      ];
-      const starter = starters[Math.floor(Math.random() * starters.length)];
-      addBubble('robot', `📖 Story time! ${starter} What happens next? You tell me!`);
-      speak(`Story time! ${starter} What happens next? You tell me!`);
-      updateLEDFromCommand('magic');
-      sendCommand('magic');
+    case 'science':
+      startScience();
       break;
   }
 }
 
+// ==================== SMART TILT QUIZ ====================
+async function startTiltQuiz() {
+  const intro = `🎯 Smart Tilt Quiz! I'll ask questions and you tilt the micro:bit to answer! Tilt LEFT for A, tilt RIGHT for B. Let's start easy!`;
+  addBubble('robot', intro);
+  speak("Smart Tilt Quiz! Tilt left for A, tilt right for B. Let's go!");
+  sendCommand('quiz');
+  updateLEDFromCommand('wow');
+  
+  await delay(2000);
+  askTiltQuestion();
+}
+
+async function askTiltQuestion() {
+  if (currentGame !== 'tiltquiz') return;
+  
+  gameState.waitingForInput = true;
+  
+  // Generate question based on difficulty
+  const question = await generateQuizQuestion(gameState.difficulty);
+  gameState.currentQuestion = question;
+  
+  const questionText = `${question.question}\n\n⬅️ A: ${question.optionA}\n➡️ B: ${question.optionB}`;
+  addBubble('robot', questionText);
+  speak(`${question.question}. Option A: ${question.optionA}. Option B: ${question.optionB}. Tilt to answer!`);
+  
+  // Show arrows on LED
+  sendCommand('quiz');
+  
+  // Start timeout for answer
+  gameState.answerTimeout = setTimeout(() => {
+    if (gameState.waitingForInput && currentGame === 'tiltquiz') {
+      addBubble('robot', `⏰ Time's up! The answer was ${question.correct === 'A' ? question.optionA : question.optionB}. Let's try another!`);
+      speak("Time's up! Let's try another question.");
+      gameState.streak = 0;
+      askTiltQuestion();
+    }
+  }, 15000);
+}
+
+async function generateQuizQuestion(difficulty) {
+  // Use AI to generate age-appropriate questions
+  const prompt = `Generate a simple quiz question for a child (difficulty ${difficulty}/5). 
+Return ONLY valid JSON in this exact format:
+{"question":"What color is the sky?","optionA":"Blue","optionB":"Green","correct":"A","explanation":"The sky appears blue because of how sunlight scatters."}
+Make it fun and educational. Topics: math, animals, colors, nature, simple science.`;
+
+  try {
+    const response = await callAI(prompt);
+    // Try to parse JSON from response
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+  } catch (e) {
+    log('Quiz generation error: ' + e.message, 'error');
+  }
+  
+  // Fallback questions
+  const fallbacks = [
+    { question: "What color is a banana?", optionA: "Yellow", optionB: "Purple", correct: "A", explanation: "Ripe bananas are yellow!" },
+    { question: "What is 2 + 3?", optionA: "5", optionB: "4", correct: "A", explanation: "2 plus 3 equals 5!" },
+    { question: "What sound does a cat make?", optionA: "Woof", optionB: "Meow", correct: "B", explanation: "Cats say meow!" },
+    { question: "How many legs does a spider have?", optionA: "6", optionB: "8", correct: "B", explanation: "Spiders have 8 legs!" },
+    { question: "What do plants need to grow?", optionA: "Sunlight", optionB: "Darkness", correct: "A", explanation: "Plants need sunlight for photosynthesis!" }
+  ];
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+}
+
+function handleTiltQuizAnswer(answer) {
+  if (!gameState.waitingForInput || currentGame !== 'tiltquiz') return;
+  
+  clearTimeout(gameState.answerTimeout);
+  gameState.waitingForInput = false;
+  gameState.questionsAnswered++;
+  
+  const q = gameState.currentQuestion;
+  const isCorrect = answer === q.correct;
+  
+  if (isCorrect) {
+    gameState.score++;
+    gameState.streak++;
+    playSound('win');
+    
+    // Adjust difficulty
+    if (gameState.streak >= 3 && gameState.difficulty < 5) {
+      gameState.difficulty++;
+      addBubble('robot', `🎉 Correct! ${q.explanation} 🌟 You're doing great! Making it a bit harder!`);
+      speak(`Yes! That's right! ${q.explanation}. You're doing amazing! Let's try something harder!`);
+    } else {
+      addBubble('robot', `🎉 Correct! ${q.explanation}`);
+      speak(`Yes! That's right! ${q.explanation}`);
+    }
+    
+    sendCommand('party');
+    updateLEDFromCommand('party');
+  } else {
+    gameState.streak = 0;
+    
+    // Adjust difficulty down if struggling
+    if (gameState.difficulty > 1 && gameState.questionsAnswered > 2) {
+      gameState.difficulty--;
+    }
+    
+    const correctAnswer = q.correct === 'A' ? q.optionA : q.optionB;
+    addBubble('robot', `Almost! The answer is ${correctAnswer}. ${q.explanation} Don't worry, you're learning!`);
+    speak(`Not quite. The answer is ${correctAnswer}. ${q.explanation}. But that's okay, you're learning!`);
+    sendCommand('sad');
+    updateLEDFromCommand('sad');
+  }
+  
+  // Continue game
+  setTimeout(() => {
+    if (currentGame === 'tiltquiz') {
+      if (gameState.questionsAnswered >= 10) {
+        endTiltQuiz();
+      } else {
+        askTiltQuestion();
+      }
+    }
+  }, 3000);
+}
+
+function endTiltQuiz() {
+  const score = gameState.score;
+  const total = gameState.questionsAnswered;
+  const percent = Math.round((score / total) * 100);
+  
+  let message, emotion;
+  if (percent >= 80) {
+    message = `🏆 Amazing! You got ${score} out of ${total}! You're a quiz superstar!`;
+    emotion = 'party';
+  } else if (percent >= 60) {
+    message = `🌟 Great job! You got ${score} out of ${total}! Keep practicing!`;
+    emotion = 'happy';
+  } else {
+    message = `👍 Good try! You got ${score} out of ${total}! Want to play again to learn more?`;
+    emotion = 'happy';
+  }
+  
+  addBubble('robot', message);
+  speak(message.replace(/[🏆🌟👍]/g, ''));
+  sendCommand(emotion);
+  updateLEDFromCommand(emotion);
+  currentGame = null;
+}
+
+// ==================== ADVENTURE EXPLORER ====================
+async function startAdventure() {
+  const themes = AI_GAMES.adventure.themes;
+  const theme = themes[Math.floor(Math.random() * themes.length)];
+  gameState.theme = theme;
+  gameState.chapter = 1;
+  gameState.story = [];
+  
+  const intro = `🗺️ Adventure Explorer! You're about to explore a magical ${theme}! Shake the micro:bit to look around, and tilt LEFT or RIGHT to make choices. Press any button when you're ready!`;
+  addBubble('robot', intro);
+  speak(`Adventure Explorer! You're going to explore a magical ${theme}! Shake to look around, tilt to make choices. Press a button when ready!`);
+  sendCommand('magic');
+  updateLEDFromCommand('magic');
+  
+  gameState.waitingForInput = true;
+  gameState.awaitingStart = true;
+}
+
+async function continueAdventure(action) {
+  if (currentGame !== 'adventure') return;
+  
+  gameState.waitingForInput = false;
+  
+  // Build story context
+  const storyContext = gameState.story.slice(-3).join(' ');
+  
+  const prompt = `You are telling an interactive adventure story to a child (age 5-10) in a ${gameState.theme}.
+Previous story: ${storyContext || 'Just starting'}
+Player action: ${action}
+Chapter: ${gameState.chapter}
+
+Continue the story in 2-3 short, exciting sentences. Then give exactly 2 choices.
+End with a fun educational fact or question related to the ${gameState.theme}.
+Format your response as:
+STORY: [your story continuation]
+CHOICE_A: [first choice - something brave/curious]
+CHOICE_B: [second choice - something careful/clever]
+QUESTION: [fun fact or simple question for the child]`;
+
+  addBubble('robot', '✨ *thinking about the story*...');
+  sendCommand('thinking');
+  
+  try {
+    const response = await callAI(prompt);
+    
+    // Parse response
+    const storyMatch = response.match(/STORY:\s*(.+?)(?=CHOICE_A:|$)/s);
+    const choiceAMatch = response.match(/CHOICE_A:\s*(.+?)(?=CHOICE_B:|$)/s);
+    const choiceBMatch = response.match(/CHOICE_B:\s*(.+?)(?=QUESTION:|$)/s);
+    const questionMatch = response.match(/QUESTION:\s*(.+?)$/s);
+    
+    const story = storyMatch ? storyMatch[1].trim() : "You continue your adventure...";
+    const choiceA = choiceAMatch ? choiceAMatch[1].trim() : "Go left";
+    const choiceB = choiceBMatch ? choiceBMatch[1].trim() : "Go right";
+    const question = questionMatch ? questionMatch[1].trim() : "";
+    
+    gameState.story.push(story);
+    gameState.chapter++;
+    gameState.currentChoices = { a: choiceA, b: choiceB };
+    
+    // Remove the thinking bubble
+    const bubbles = chatContainer.querySelectorAll('.chat-bubble.robot');
+    if (bubbles.length > 0) {
+      const lastBubble = bubbles[bubbles.length - 1];
+      if (lastBubble.textContent.includes('thinking')) {
+        lastBubble.remove();
+      }
+    }
+    
+    const fullMessage = `📖 ${story}\n\n⬅️ A: ${choiceA}\n➡️ B: ${choiceB}${question ? '\n\n💡 ' + question : ''}`;
+    addBubble('robot', fullMessage);
+    speak(story + ". " + (question || "What do you choose? Tilt left for A, tilt right for B!"));
+    
+    sendCommand('wow');
+    updateLEDFromCommand('wow');
+    
+    gameState.waitingForInput = true;
+    
+    // Check if story should end
+    if (gameState.chapter > 8) {
+      setTimeout(() => endAdventure(), 10000);
+    }
+    
+  } catch (e) {
+    log('Adventure error: ' + e.message, 'error');
+    addBubble('robot', '🗺️ The path ahead is unclear... Tilt left to go back, tilt right to forge ahead!');
+    speak("The path ahead is unclear. Which way do you want to go?");
+    gameState.waitingForInput = true;
+  }
+}
+
+function endAdventure() {
+  if (currentGame !== 'adventure') return;
+  
+  const message = `🏆 What an amazing adventure! You explored ${gameState.chapter - 1} chapters in the ${gameState.theme}! You made brave choices and learned so much. Want to explore again?`;
+  addBubble('robot', message);
+  speak("What an amazing adventure! You were so brave! Want to explore again?");
+  sendCommand('party');
+  updateLEDFromCommand('party');
+  currentGame = null;
+}
+
+// ==================== SCIENCE DETECTIVE ====================
+async function startScience() {
+  const experiments = ['temperature', 'light'];
+  const experiment = experiments[Math.floor(Math.random() * experiments.length)];
+  gameState.experiment = experiment;
+  gameState.readings = [];
+  gameState.step = 0;
+  
+  let intro;
+  if (experiment === 'temperature') {
+    intro = `🔬 Science Detective: Temperature! We're going to do a real experiment! The micro:bit can feel temperature. Press button A to take a reading, then we'll warm it up and see what happens!`;
+    sendCommand('quiz');
+  } else {
+    intro = `🔬 Science Detective: Light! We're going to explore light! The micro:bit can see how bright it is. Press button A to take a reading. Try covering the micro:bit to block the light!`;
+    sendCommand('quiz');
+  }
+  
+  addBubble('robot', intro);
+  speak(intro.replace(/🔬/g, ''));
+  updateLEDFromCommand('wow');
+  
+  gameState.waitingForInput = true;
+  
+  // Request initial sensor reading
+  setTimeout(() => {
+    if (currentGame === 'science') {
+      requestSensorReading();
+    }
+  }, 3000);
+}
+
+function requestSensorReading() {
+  if (currentGame !== 'science') return;
+  
+  // Send command to micro:bit to read sensor
+  if (gameState.experiment === 'temperature') {
+    sendCommand('read_temp');
+    addBubble('robot', '🌡️ Reading temperature... Press button A or wait a moment!');
+  } else {
+    sendCommand('read_light');
+    addBubble('robot', '💡 Reading light level... Press button A or wait a moment!');
+  }
+  speak("Let me check the sensor!");
+}
+
+async function processScienceReading(type, value) {
+  if (currentGame !== 'science') return;
+  
+  gameState.readings.push({ type, value, time: Date.now() });
+  gameState.step++;
+  
+  const prompt = `You are a fun science teacher for kids (age 5-10).
+Experiment: ${gameState.experiment}
+Current reading: ${value}${type === 'temp' ? '°C' : ' light units'}
+Previous readings: ${JSON.stringify(gameState.readings.slice(-3))}
+Step: ${gameState.step}
+
+Explain what this reading means in a fun, simple way. Give a mini science fact.
+Then suggest the next step of the experiment (like warming it with hands, covering the sensor, etc).
+Keep it SHORT - 2-3 sentences max. Be enthusiastic!`;
+
+  try {
+    const response = await callAI(prompt);
+    addBubble('robot', `📊 Reading: ${value}${type === 'temp' ? '°C' : ''}\n\n${response}`);
+    speak(response);
+    sendCommand('happy');
+    updateLEDFromCommand('happy');
+  } catch (e) {
+    // Fallback responses
+    if (type === 'temp') {
+      const msg = value > 25 ? 
+        `Wow, ${value}°C! That's warm! Did you know your body is usually around 37°C? Try holding the micro:bit to warm it up!` :
+        `It's ${value}°C! That's a nice temperature. Try warming the micro:bit with your hands and let's measure again!`;
+      addBubble('robot', `🌡️ ${msg}`);
+      speak(msg);
+    } else {
+      const msg = value > 100 ?
+        `Light level: ${value}! It's bright! Try covering the micro:bit with your hand to block the light!` :
+        `Light level: ${value}! It's getting darker! Light helps plants grow. Uncover the micro:bit to let light in!`;
+      addBubble('robot', `💡 ${msg}`);
+      speak(msg);
+    }
+    sendCommand('happy');
+  }
+  
+  gameState.waitingForInput = true;
+  
+  // End after several readings
+  if (gameState.step >= 5) {
+    setTimeout(() => endScience(), 5000);
+  }
+}
+
+function endScience() {
+  if (currentGame !== 'science') return;
+  
+  const readings = gameState.readings;
+  const message = `🎓 Great science work! You took ${readings.length} measurements and learned about ${gameState.experiment}! Real scientists take measurements just like you did. Keep exploring!`;
+  addBubble('robot', message);
+  speak("Great science work! You're a real scientist now!");
+  sendCommand('party');
+  updateLEDFromCommand('party');
+  currentGame = null;
+}
+
+// ==================== GAME INPUT HANDLER ====================
+function handleGameInput(inputType, value = null) {
+  if (!currentGame) return;
+  
+  log(`Game input: ${inputType} ${value !== null ? '= ' + value : ''}`, 'info');
+  
+  // Handle tilt quiz
+  if (currentGame === 'tiltquiz' && gameState.waitingForInput) {
+    if (inputType === 'tilt_left') {
+      handleTiltQuizAnswer('A');
+    } else if (inputType === 'tilt_right') {
+      handleTiltQuizAnswer('B');
+    } else if (inputType === 'btn_a') {
+      handleTiltQuizAnswer('A');
+    } else if (inputType === 'btn_b') {
+      handleTiltQuizAnswer('B');
+    }
+  }
+  
+  // Handle adventure
+  else if (currentGame === 'adventure') {
+    if (gameState.awaitingStart && (inputType === 'btn_a' || inputType === 'btn_b')) {
+      gameState.awaitingStart = false;
+      continueAdventure('starts the adventure');
+    } else if (gameState.waitingForInput) {
+      if (inputType === 'tilt_left' || inputType === 'btn_a') {
+        const choice = gameState.currentChoices?.a || 'goes left';
+        continueAdventure('chose: ' + choice);
+      } else if (inputType === 'tilt_right' || inputType === 'btn_b') {
+        const choice = gameState.currentChoices?.b || 'goes right';
+        continueAdventure('chose: ' + choice);
+      } else if (inputType === 'shake') {
+        continueAdventure('looks around carefully');
+      }
+    }
+  }
+  
+  // Handle science
+  else if (currentGame === 'science') {
+    if (inputType === 'temp' && value !== null) {
+      processScienceReading('temp', value);
+    } else if (inputType === 'light' && value !== null) {
+      processScienceReading('light', value);
+    } else if (inputType === 'btn_a') {
+      requestSensorReading();
+    } else if (inputType === 'btn_b') {
+      // End experiment early
+      endScience();
+    }
+  }
+}
+
+// Helper function
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Check game answer from voice/text input
 function checkGameAnswer(text) {
   if (!currentGame) return false;
   
   const lower = text.toLowerCase();
   
-  switch(currentGame) {
-    case 'quiz':
-      const q = GAMES.quiz.questions[gameState.questionIndex];
-      if (lower.includes(q.a.toLowerCase())) {
-        playSound('win');
-        addBubble('robot', `🎉 Yes! That's right! Great job! [party]`);
-        speak("Yes! That's right! Great job!");
-        updateLEDFromCommand('party');
-        sendCommand('party');
-        currentGame = null;
-        return true;
-      } else if (lower.includes('hint')) {
-        addBubble('robot', `💡 Hint: ${q.hint}`);
-        speak(`Here's a hint: ${q.hint}`);
-        return true;
-      }
-      break;
-      
-    case 'counting':
-      const num = parseInt(lower.match(/\d+/)?.[0]);
-      if (num === gameState.current + 1) {
-        gameState.current = num;
-        if (num >= gameState.target) {
-          playSound('win');
-          addBubble('robot', `🎉 ${num}! We did it! Great counting! [dance]`);
-          speak(`${num}! We did it! Great counting!`);
-          updateLEDFromCommand('dance');
-          sendCommand('dance');
-          currentGame = null;
-        } else {
-          addBubble('robot', `${num}! Keep going!`);
-          speak(`${num}! Keep going!`);
-        }
-        return true;
-      }
-      break;
-      
-    case 'colors':
-      if (lower.includes('found') || lower.includes('see') || lower.includes('got')) {
-        playSound('win');
-        addBubble('robot', `🎉 Awesome! You found something ${gameState.color}! Great job! [happy]`);
-        speak(`Awesome! You found something ${gameState.color}! Great job!`);
-        updateLEDFromCommand('happy');
-        sendCommand('happy');
-        currentGame = null;
-        return true;
-      }
-      break;
-      
-    case 'abc':
-      const words = lower.split(/\s+/);
-      const startsWithLetter = words.some(w => w.charAt(0).toUpperCase() === gameState.letter);
-      if (startsWithLetter) {
-        playSound('win');
-        addBubble('robot', `🎉 Great! That starts with ${gameState.letter}! You're so smart! [wow]`);
-        speak(`Great! That starts with ${gameState.letter}! You're so smart!`);
-        updateLEDFromCommand('wow');
-        sendCommand('wow');
-        currentGame = null;
-        return true;
-      }
-      break;
-      
-    case 'dice':
-      if (lower.includes('roll')) {
-        const roll = Math.floor(Math.random() * 6) + 1;
-        const face = GAMES.dice.faces[roll - 1];
-        addBubble('robot', `🎲 You rolled... ${face} That's ${roll}! Say "roll" to roll again or "stop" to stop.`);
-        speak(`You rolled... ${roll}! Say roll to roll again or stop to stop.`);
-        updateLEDFromCommand('spin');
-        sendCommand('spin');
-        return true;
-      } else if (lower.includes('stop') || lower.includes('done') || lower.includes('quit')) {
-        addBubble('robot', `🎲 Fun game! Let's play again soon! [wave]`);
-        speak("Fun game! Let's play again soon!");
-        updateLEDFromCommand('wave');
-        sendCommand('wave');
-        currentGame = null;
-        return true;
-      }
-      break;
-      
-    case 'story':
-      // Continue the story
-      const continuations = [
-        `Wow! And then what happened?`,
-        `Oh exciting! Tell me more!`,
-        `Amazing! What did they do next?`,
-        `Cool! And then?`
-      ];
-      const cont = continuations[Math.floor(Math.random() * continuations.length)];
-      addBubble('robot', `📖 ${cont}`);
-      speak(cont);
-      if (lower.includes('end') || lower.includes('finish') || lower.includes('done')) {
-        addBubble('robot', `📖 The end! What a great story! [happy]`);
-        speak("The end! What a great story!");
-        updateLEDFromCommand('happy');
-        sendCommand('happy');
-        currentGame = null;
-      }
+  // Tilt Quiz - voice answers
+  if (currentGame === 'tiltquiz' && gameState.waitingForInput) {
+    if (lower.includes('a') && !lower.includes('b')) {
+      handleTiltQuizAnswer('A');
       return true;
+    } else if (lower.includes('b') && !lower.includes('a')) {
+      handleTiltQuizAnswer('B');
+      return true;
+    }
+  }
+  
+  // Adventure - voice commands
+  if (currentGame === 'adventure') {
+    if (lower.includes('left') || lower.includes('first') || lower.includes('option a')) {
+      handleGameInput('tilt_left');
+      return true;
+    } else if (lower.includes('right') || lower.includes('second') || lower.includes('option b')) {
+      handleGameInput('tilt_right');
+      return true;
+    } else if (lower.includes('look') || lower.includes('around')) {
+      handleGameInput('shake');
+      return true;
+    }
+  }
+  
+  // Science - voice commands
+  if (currentGame === 'science') {
+    if (lower.includes('read') || lower.includes('measure') || lower.includes('check')) {
+      requestSensorReading();
+      return true;
+    } else if (lower.includes('done') || lower.includes('stop') || lower.includes('finish')) {
+      endScience();
+      return true;
+    }
+  }
+  
+  // Quit any game
+  if (lower.includes('quit game') || lower.includes('stop game') || lower.includes('exit game')) {
+    addBubble('robot', '👋 Okay, we stopped the game. Want to play again later?');
+    speak("Okay, we stopped the game. Want to play again later?");
+    currentGame = null;
+    gameState = {};
+    return true;
   }
   
   return false;
