@@ -2902,6 +2902,7 @@ const DEMO = {
 let state = {
   connected: false, device: null, writeChar: null, rxBuffer: '',
   recognition: null, listening: false, speaking: false, voices: [],
+  voicesLoaded: false, speechReady: false,
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
   speed: 1, voice: '', continuous: false, theme: 'light', soundOff: false,
   groqKey: '', geminiKey: '', cohereKey: '', mistralKey: '', openrouterKey: '',
@@ -3402,18 +3403,47 @@ function setupSpeech() {
 
 function loadVoices() {
   const loadList = () => {
-    state.voices = synth.getVoices();
-    voiceSelect.innerHTML = '<option value="">Default Voice</option>';
-    state.voices.forEach((v, i) => {
-      const opt = document.createElement('option');
-      opt.value = i;
-      opt.textContent = v.name + ' (' + v.lang + ')';
-      if (state.voice && state.voice == i) opt.selected = true;
-      voiceSelect.appendChild(opt);
-    });
+    const voices = synth.getVoices();
+    if (voices.length > 0) {
+      state.voices = voices;
+      state.voicesLoaded = true;
+      voiceSelect.innerHTML = '<option value="">Default Voice</option>';
+      state.voices.forEach((v, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        if (state.voice && state.voice == i) opt.selected = true;
+        voiceSelect.appendChild(opt);
+      });
+      log('Voices loaded: ' + voices.length, 'success');
+    }
   };
+  
+  // Try to load immediately
   loadList();
+  
+  // Listen for voiceschanged event
   synth.onvoiceschanged = loadList;
+  
+  // Fallback: retry loading voices after a delay (fixes GitHub Pages issue)
+  if (!state.voicesLoaded) {
+    setTimeout(loadList, 100);
+    setTimeout(loadList, 500);
+    setTimeout(loadList, 1000);
+  }
+}
+
+// Wake up speech synthesis (required for Chrome on some hosts)
+function wakeSpeechSynthesis() {
+  if (state.speechReady) return;
+  
+  // Create a silent utterance to "wake up" the speech engine
+  const silentUtterance = new SpeechSynthesisUtterance('');
+  silentUtterance.volume = 0;
+  synth.speak(silentUtterance);
+  
+  state.speechReady = true;
+  log('Speech synthesis activated', 'success');
 }
 
 function toggleListening() {
@@ -3436,39 +3466,78 @@ function toggleListening() {
 }
 
 function speak(text) {
-  if (state.speaking) synth.cancel();
-  
-  const utterance = new SpeechSynthesisUtterance(text);
-  const style = VOICE_STYLE[state.personality];
-  
-  utterance.rate = Math.max(0.1, Math.min(10, state.speed * style.rateMul));
-  utterance.pitch = Math.max(0, Math.min(2, style.pitch));
-  utterance.volume = style.volume;
-  utterance.lang = LANG[state.lang].code;
-  
-  if (state.voice && state.voices[state.voice]) {
-    utterance.voice = state.voices[state.voice];
+  // Cancel any ongoing speech
+  if (synth.speaking) {
+    synth.cancel();
   }
   
-  utterance.onstart = () => {
-    state.speaking = true;
-    robotBody.classList.add('speaking');
-    robotStatus.textContent = LANG[state.lang].speaking;
-  };
+  // Chrome bug workaround: cancel and resume to prevent stuck state
+  synth.cancel();
   
-  utterance.onend = () => {
-    state.speaking = false;
-    robotBody.classList.remove('speaking');
-    robotStatus.textContent = LANG[state.lang].ready;
-    if (state.continuous && !state.listening) {
-      setTimeout(() => toggleListening(), 500);
+  // Wait a moment after cancel (helps with Chrome)
+  setTimeout(() => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    const style = VOICE_STYLE[state.personality];
+    
+    utterance.rate = Math.max(0.1, Math.min(10, state.speed * style.rateMul));
+    utterance.pitch = Math.max(0, Math.min(2, style.pitch));
+    utterance.volume = style.volume;
+    utterance.lang = LANG[state.lang].code;
+    
+    // Try to set voice if available
+    if (state.voice && state.voices && state.voices[state.voice]) {
+      utterance.voice = state.voices[state.voice];
+    } else if (state.voices && state.voices.length > 0) {
+      // Try to find a matching language voice
+      const langVoice = state.voices.find(v => v.lang.startsWith(LANG[state.lang].code.split('-')[0]));
+      if (langVoice) utterance.voice = langVoice;
     }
-  };
-  
-  synth.speak(utterance);
+    
+    utterance.onstart = () => {
+      state.speaking = true;
+      robotBody.classList.add('speaking');
+      robotStatus.textContent = LANG[state.lang].speaking;
+    };
+    
+    utterance.onend = () => {
+      state.speaking = false;
+      robotBody.classList.remove('speaking');
+      robotStatus.textContent = LANG[state.lang].ready;
+      if (state.continuous && !state.listening) {
+        setTimeout(() => toggleListening(), 500);
+      }
+    };
+    
+    utterance.onerror = (e) => {
+      state.speaking = false;
+      robotBody.classList.remove('speaking');
+      robotStatus.textContent = LANG[state.lang].ready;
+      log('Speech error: ' + e.error, 'error');
+    };
+    
+    // Chrome bug workaround: periodically resume speech synthesis
+    // This prevents Chrome from stopping mid-sentence on longer text
+    const resumeInfinity = setInterval(() => {
+      if (!synth.speaking) {
+        clearInterval(resumeInfinity);
+      } else {
+        synth.pause();
+        synth.resume();
+      }
+    }, 10000);
+    
+    synth.speak(utterance);
+    
+    // Extra safety: clear interval if speech doesn't start
+    setTimeout(() => {
+      if (!synth.speaking) clearInterval(resumeInfinity);
+    }, 2000);
+    
+  }, 50);
 }
 
 function testVoice() {
+  wakeSpeechSynthesis();
   state.voice = voiceSelect.value;
   saveSettings();
   speak('Hello! I am ' + state.robotName + '!');
@@ -3879,6 +3948,18 @@ async function tryCommand(cmd) {
 
 // ==================== EVENTS ====================
 function setupEvents() {
+  // Wake up speech synthesis on first user interaction (required for Chrome)
+  const wakeUpOnInteraction = () => {
+    wakeSpeechSynthesis();
+    loadVoices(); // Also retry loading voices
+    document.removeEventListener('click', wakeUpOnInteraction);
+    document.removeEventListener('touchstart', wakeUpOnInteraction);
+    document.removeEventListener('keydown', wakeUpOnInteraction);
+  };
+  document.addEventListener('click', wakeUpOnInteraction, { once: true });
+  document.addEventListener('touchstart', wakeUpOnInteraction, { once: true });
+  document.addEventListener('keydown', wakeUpOnInteraction, { once: true });
+  
   textInput.addEventListener('keypress', e => {
     if (e.key === 'Enter') sendMessage();
   });
@@ -3902,6 +3983,10 @@ function setupEvents() {
     if (!document.hidden && state.device && !state.connected) {
       log('Attempting reconnect...', 'ble');
       connect();
+    }
+    // Also try to reload voices when page becomes visible
+    if (!document.hidden && !state.voicesLoaded) {
+      loadVoices();
     }
   });
 }
