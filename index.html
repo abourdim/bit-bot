@@ -4,7 +4,12 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#6366f1">
-  <title>Talking Robot</title>
+  <meta name="description" content="Bit-Bot - Your AI Robot Friend. Chat with a fun robot using micro:bit!">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bit-Bot">
+  <link rel="manifest" href="manifest.json">
+  <title>Bit-Bot</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
@@ -114,9 +119,22 @@ body {
   align-items: center;
   justify-content: space-between;
   padding: 12px 16px;
+  padding-top: 20px;
   background: var(--bg-elevated);
   border-bottom: 1px solid var(--border);
   gap: 12px;
+}
+
+.bismillah {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  opacity: 0.4;
+  font-family: 'Amiri', serif;
+  letter-spacing: 0.05em;
 }
 
 .header-brand {
@@ -126,14 +144,16 @@ body {
 }
 
 .logo {
-  width: 40px;
-  height: 40px;
-  border-radius: var(--radius-md);
+  width: 80px;
+  height: auto;
+  border-radius: var(--radius-sm);
 }
 
-.brand-text {
-  display: flex;
-  flex-direction: column;
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
 }
 
 .app-title {
@@ -144,9 +164,27 @@ body {
 }
 
 .app-subtitle {
-  font-size: 0.75rem;
+  font-size: 0.7rem;
   color: var(--text-muted);
   font-weight: 500;
+}
+
+/* Robot personality badge */
+.robot-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  font-size: 0.9rem;
+  cursor: default;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.robot-badge:hover {
+  opacity: 1;
 }
 
 /* Header actions - only essential buttons */
@@ -262,9 +300,9 @@ body {
 
 /* Mobile header adjustments */
 @media (max-width: 480px) {
-  .app-subtitle { display: none; }
-  .app-title { font-size: 1.1rem; }
-  .logo { width: 36px; height: 36px; }
+  .header-center { display: none; }
+  .logo { width: 60px; height: auto; }
+  .robot-badge { width: 24px; height: 24px; font-size: 0.8rem; }
   .selection-grid.cols-4 { grid-template-columns: repeat(4, 1fr); gap: 6px; }
   .selection-grid.cols-4 .selection-btn { padding: 10px 4px; }
   .selection-grid.cols-4 .selection-btn .icon { font-size: 1.3rem; }
@@ -435,24 +473,15 @@ body {
 
 /* ==================== PERSONALITY HEADS ==================== */
 
-/* 🎪 Playful - Big round eyes, wide smile, rosy cheeks */
+/* 🎪 Playful - Big round eyes, wide smile */
 .robot-body.personality-playful .robot-eye {
   border-radius: 50%;
   width: 48px;
   height: 48px;
 }
-.robot-body.personality-playful::before,
-.robot-body.personality-playful::after {
-  content: '';
-  position: absolute;
-  width: 20px;
-  height: 12px;
-  background: rgba(255,107,107,0.4);
-  border-radius: 50%;
-  top: 50%;
+.robot-body.personality-playful .robot-eyes {
+  gap: 40px;
 }
-.robot-body.personality-playful::before { left: 20px; }
-.robot-body.personality-playful::after { right: 20px; }
 .robot-body.personality-playful:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
   width: 80px;
   height: 20px;
@@ -643,6 +672,138 @@ body {
 .robot-body.personality-ninja {
   border-color: #374151;
   background: linear-gradient(180deg, var(--surface) 40%, #4b5563 40%, #4b5563 60%, var(--surface) 60%);
+}
+
+/* 🧙 Wizard - Mystical eyes, long beard hint */
+.robot-body.personality-wizard .robot-eye {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+.robot-body.personality-wizard .robot-eye::before {
+  content: '★';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #fbbf24;
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  animation: sparkle 1.5s infinite;
+}
+.robot-body.personality-wizard .robot-eyes {
+  gap: 40px;
+}
+.robot-body.personality-wizard:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 50px;
+  border-radius: 0 0 50% 50%;
+  height: 12px;
+}
+.robot-body.personality-wizard {
+  border-color: #8b5cf6;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+/* 🤠 Cowboy - Wide eyes, big smile */
+.robot-body.personality-cowboy .robot-eye {
+  width: 40px;
+  height: 32px;
+  border-radius: 50%;
+  background: #78350f;
+  border: 3px solid #451a03;
+}
+.robot-body.personality-cowboy .robot-eye::before {
+  width: 8px;
+  height: 8px;
+  background: white;
+  top: 8px;
+  left: 8px;
+}
+.robot-body.personality-cowboy .robot-eyes {
+  gap: 36px;
+  margin-top: -20px;
+}
+.robot-body.personality-cowboy:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 70px;
+  border-radius: 0 0 35px 35px;
+  height: 18px;
+}
+.robot-body.personality-cowboy {
+  border-color: #b45309;
+  border-width: 4px;
+}
+
+/* 👽 Alien - Big oval eyes, small mouth */
+.robot-body.personality-alien .robot-eye {
+  width: 50px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #1f2937 0%, #10b981 100%);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+.robot-body.personality-alien .robot-eye::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 30px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+}
+.robot-body.personality-alien .robot-eyes {
+  gap: 20px;
+}
+.robot-body.personality-alien .robot-mouth {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.robot-body.personality-alien {
+  border-color: #10b981;
+  border-radius: 50% 50% var(--radius-xl) var(--radius-xl);
+}
+
+/* 🧜 Mermaid - Flowing eyes, gentle smile */
+.robot-body.personality-mermaid .robot-eye {
+  width: 44px;
+  height: 36px;
+  border-radius: 50% 50% 40% 40%;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+.robot-body.personality-mermaid .robot-eye::before {
+  content: '~';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: white;
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+}
+.robot-body.personality-mermaid .robot-eyes {
+  gap: 28px;
+}
+.robot-body.personality-mermaid:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 40px;
+  border-radius: 0 0 50% 50%;
+  height: 14px;
+  background: var(--bg);
+}
+.robot-body.personality-mermaid {
+  border-color: #06b6d4;
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(6, 182, 212, 0.2);
 }
 
 /* Status label */
@@ -1394,6 +1555,91 @@ body {
   transform: translateY(0);
 }
 
+/* ==================== GAMES PANEL ==================== */
+.games-panel {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  z-index: 155;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.games-panel.open { transform: translateX(0); }
+
+.games-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.games-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.games-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.games-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 12px;
+}
+
+.game-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 20px 16px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.game-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.game-btn:active {
+  transform: translateY(0);
+}
+.game-icon {
+  font-size: 2rem;
+}
+.game-name {
+  font-size: 0.85rem;
+  font-weight: 700;
+  color: var(--text);
+}
+
+.btn-games {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  border-color: #f59e0b;
+}
+.btn-games:hover {
+  background: linear-gradient(135deg, #fbbf24, #f87171);
+}
+
 /* ==================== LOGS PANEL ==================== */
 .logs-panel {
   position: fixed;
@@ -2015,6 +2261,22 @@ body {
             <span class="icon">🥷</span>
             <span class="label">Ninja</span>
           </div>
+          <div class="onboarding-personality" data-p="wizard" onclick="selectOnboardingPersonality('wizard')">
+            <span class="icon">🧙</span>
+            <span class="label">Wizard</span>
+          </div>
+          <div class="onboarding-personality" data-p="cowboy" onclick="selectOnboardingPersonality('cowboy')">
+            <span class="icon">🤠</span>
+            <span class="label">Cowboy</span>
+          </div>
+          <div class="onboarding-personality" data-p="alien" onclick="selectOnboardingPersonality('alien')">
+            <span class="icon">👽</span>
+            <span class="label">Alien</span>
+          </div>
+          <div class="onboarding-personality" data-p="mermaid" onclick="selectOnboardingPersonality('mermaid')">
+            <span class="icon">🧜</span>
+            <span class="label">Mermaid</span>
+          </div>
         </div>
         
         <div class="onboarding-actions">
@@ -2067,15 +2329,20 @@ body {
   <div class="app">
     <!-- ==================== HEADER - SIMPLIFIED ==================== -->
     <header class="header">
+      <span class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
       <div class="header-brand">
-        <img class="logo" src="logo.svg" alt="Logo">
-        <div class="brand-text">
-          <h1 class="app-title">Talking Robot</h1>
-          <p class="app-subtitle">Your AI Robot Friend</p>
-        </div>
+        <img class="logo" src="logo.svg" alt="Bit-Bot Logo">
+      </div>
+      
+      <div class="header-center">
+        <h1 class="app-title">Bit-Bot</h1>
+        <p class="app-subtitle">Beep boop! Let's chat! 🤖</p>
       </div>
       
       <div class="header-actions">
+        <div class="robot-badge" id="robotBadge" title="Current personality">
+          <span id="robotIcon">🎪</span>
+        </div>
         <div class="ai-badge" id="aiBadge" aria-label="AI Mode">
           <span id="aiIcon">🎮</span>
           <span id="aiName">Demo</span>
@@ -2140,6 +2407,7 @@ body {
     <div class="input-area">
       <div class="input-row">
         <button class="btn-commands" onclick="toggleCommands()" aria-label="Show commands">📋</button>
+        <button class="btn-commands btn-games" onclick="toggleGames()" aria-label="Play games">🎮</button>
         <input type="text" class="text-input" id="textInput" placeholder="Type a message..." autocomplete="off" aria-label="Message input">
         <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input">🎤</button>
         <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message">➤</button>
@@ -2214,6 +2482,22 @@ body {
               <button class="selection-btn" data-p="ninja" onclick="setPersonality('ninja')">
                 <span class="icon">🥷</span>
                 <span class="label">Ninja</span>
+              </button>
+              <button class="selection-btn" data-p="wizard" onclick="setPersonality('wizard')">
+                <span class="icon">🧙</span>
+                <span class="label">Wizard</span>
+              </button>
+              <button class="selection-btn" data-p="cowboy" onclick="setPersonality('cowboy')">
+                <span class="icon">🤠</span>
+                <span class="label">Cowboy</span>
+              </button>
+              <button class="selection-btn" data-p="alien" onclick="setPersonality('alien')">
+                <span class="icon">👽</span>
+                <span class="label">Alien</span>
+              </button>
+              <button class="selection-btn" data-p="mermaid" onclick="setPersonality('mermaid')">
+                <span class="icon">🧜</span>
+                <span class="label">Mermaid</span>
               </button>
             </div>
           </div>
@@ -2320,6 +2604,16 @@ body {
                 <span class="toggle-slider"></span>
               </label>
             </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div class="title">Sound Effects</div>
+                <div class="desc">Clicks, chimes & beeps</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
           </div>
           
           <div class="setting-group">
@@ -2344,6 +2638,42 @@ body {
         <button class="btn-close" onclick="toggleCommands()" aria-label="Close">×</button>
       </div>
       <div class="commands-content" id="commandsBody"></div>
+    </aside>
+
+    <!-- ==================== GAMES PANEL ==================== -->
+    <aside class="games-panel" id="gamesPanel" aria-label="Games">
+      <div class="games-header">
+        <span class="games-title">🎮 Games</span>
+        <button class="btn-close" onclick="toggleGames()" aria-label="Close">×</button>
+      </div>
+      <div class="games-content">
+        <div class="games-grid">
+          <button class="game-btn" onclick="startGame('quiz')">
+            <span class="game-icon">🎯</span>
+            <span class="game-name">Quiz</span>
+          </button>
+          <button class="game-btn" onclick="startGame('counting')">
+            <span class="game-icon">🔢</span>
+            <span class="game-name">Counting</span>
+          </button>
+          <button class="game-btn" onclick="startGame('colors')">
+            <span class="game-icon">🎨</span>
+            <span class="game-name">Colors</span>
+          </button>
+          <button class="game-btn" onclick="startGame('abc')">
+            <span class="game-icon">🔤</span>
+            <span class="game-name">ABC</span>
+          </button>
+          <button class="game-btn" onclick="startGame('dice')">
+            <span class="game-icon">🎲</span>
+            <span class="game-name">Dice</span>
+          </button>
+          <button class="game-btn" onclick="startGame('story')">
+            <span class="game-icon">📖</span>
+            <span class="game-name">Story</span>
+          </button>
+        </div>
+      </div>
     </aside>
 
     <!-- ==================== LOGS PANEL ==================== -->
@@ -2408,7 +2738,11 @@ const PERSONALITIES = {
   superhero: 'You are a superhero robot! Be brave and heroic! Say things like "To the rescue!" and fight for justice!',
   dinosaur: 'You are a dinosaur robot! ROAR! Talk about prehistoric times, volcanoes, and being big and strong!',
   fairy: 'You are a magical fairy robot! Be sparkly and sweet! Grant wishes and spread magic dust!',
-  ninja: 'You are a ninja robot! Be stealthy and wise! Speak calmly about training, honor, and martial arts!'
+  ninja: 'You are a ninja robot! Be stealthy and wise! Speak calmly about training, honor, and martial arts!',
+  wizard: 'You are a wizard robot! Cast spells and speak mysteriously! Say things like "Abracadabra!" and talk about magic potions!',
+  cowboy: 'You are a cowboy robot! Say "Yeehaw!" and talk about horses, the wild west, and adventures on the prairie!',
+  alien: 'You are an alien robot from outer space! Speak curiously about Earth! Say "Beep boop!" and ask funny questions about humans!',
+  mermaid: 'You are a mermaid robot! Sing songs and talk about the ocean, fish friends, and underwater adventures!'
 };
 
 const VOICE_STYLE = {
@@ -2419,8 +2753,130 @@ const VOICE_STYLE = {
   superhero: { rateMul: 1.10, pitch: 0.90, volume: 1.0 },
   dinosaur: { rateMul: 0.85, pitch: 0.70, volume: 1.0 },
   fairy: { rateMul: 1.15, pitch: 1.50, volume: 0.9 },
-  ninja: { rateMul: 0.90, pitch: 1.00, volume: 0.8 }
+  ninja: { rateMul: 0.90, pitch: 1.00, volume: 0.8 },
+  wizard: { rateMul: 0.80, pitch: 0.95, volume: 1.0 },
+  cowboy: { rateMul: 0.90, pitch: 0.80, volume: 1.0 },
+  alien: { rateMul: 1.20, pitch: 1.60, volume: 0.9 },
+  mermaid: { rateMul: 1.10, pitch: 1.35, volume: 0.95 }
 };
+
+// ==================== SOUND EFFECTS ====================
+let audioCtx = null;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (state.soundOff) return;
+  try {
+    const ctx = initAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    const now = ctx.currentTime;
+    
+    switch(type) {
+      case 'tap':
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.05);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+        break;
+        
+      case 'send':
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+        break;
+        
+      case 'receive':
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.setValueAtTime(800, now + 0.05);
+        osc.frequency.setValueAtTime(1000, now + 0.1);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+        break;
+        
+      case 'connect':
+        osc.frequency.setValueAtTime(523, now); // C5
+        osc.frequency.setValueAtTime(659, now + 0.1); // E5
+        osc.frequency.setValueAtTime(784, now + 0.2); // G5
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+        break;
+        
+      case 'disconnect':
+        osc.frequency.setValueAtTime(784, now); // G5
+        osc.frequency.setValueAtTime(659, now + 0.1); // E5
+        osc.frequency.setValueAtTime(523, now + 0.2); // C5
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+        break;
+        
+      case 'error':
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.setValueAtTime(150, now + 0.1);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+        break;
+        
+      case 'magic':
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.2);
+        osc.frequency.exponentialRampToValueAtTime(1000, now + 0.3);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+        break;
+        
+      case 'game':
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(554, now + 0.08);
+        osc.frequency.setValueAtTime(659, now + 0.16);
+        osc.frequency.setValueAtTime(880, now + 0.24);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+        break;
+        
+      case 'win':
+        osc.frequency.setValueAtTime(523, now);
+        osc.frequency.setValueAtTime(659, now + 0.1);
+        osc.frequency.setValueAtTime(784, now + 0.2);
+        osc.frequency.setValueAtTime(1047, now + 0.3);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+        break;
+    }
+  } catch(e) {
+    // Audio not supported
+  }
+}
 
 const DEMO = {
   en: {
@@ -2447,10 +2903,10 @@ let state = {
   connected: false, device: null, writeChar: null, rxBuffer: '',
   recognition: null, listening: false, speaking: false, voices: [],
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
-  speed: 1, voice: '', continuous: false, theme: 'light',
+  speed: 1, voice: '', continuous: false, theme: 'light', soundOff: false,
   groqKey: '', geminiKey: '', cohereKey: '', mistralKey: '', openrouterKey: '',
   rateLimitUntil: 0,
-  chatMemory: { playful: [], helpful: [], pirate: [], space: [], superhero: [], dinosaur: [], fairy: [], ninja: [] },
+  chatMemory: { playful: [], helpful: [], pirate: [], space: [], superhero: [], dinosaur: [], fairy: [], ninja: [], wizard: [], cowboy: [], alien: [], mermaid: [] },
   ledFromMicrobitOnly: false,
   onboardingComplete: false
 };
@@ -2485,10 +2941,13 @@ function init() {
   // Apply personality head style
   robotBody.classList.add('personality-' + state.personality);
   
+  // Update robot badge
+  updateRobotBadge();
+  
   // Show happy face on startup
   updateLEDFromCommand('happy');
   
-  log('Talking Robot initialized ✨', 'success');
+  log('Bit-Bot initialized ✨', 'success');
 }
 
 function loadSettings() {
@@ -2505,6 +2964,7 @@ function loadSettings() {
       speedValue.textContent = state.speed + 'x';
       robotNameInput.value = state.robotName;
       $('continuousListen').checked = state.continuous;
+      $('soundToggle').checked = !state.soundOff;
       updateApiInput();
       updateThemeButtons();
     } catch(e) { log('Settings load error', 'error'); }
@@ -2515,6 +2975,7 @@ function saveSettings() {
   state.robotName = robotNameInput.value || 'Robo';
   state.speed = parseFloat(voiceSpeed.value);
   state.continuous = $('continuousListen').checked;
+  state.soundOff = !$('soundToggle').checked;
   const key = apiKey.value.trim();
   if (state.provider === 'groq') state.groqKey = key;
   else if (state.provider === 'gemini') state.geminiKey = key;
@@ -2523,6 +2984,12 @@ function saveSettings() {
   else if (state.provider === 'openrouter') state.openrouterKey = key;
   localStorage.setItem('talkingRobotV2', JSON.stringify(state));
   updateAiBadge();
+}
+
+function toggleSound() {
+  state.soundOff = !$('soundToggle').checked;
+  if (!state.soundOff) playSound('tap');
+  saveSettings();
 }
 
 function loadChatMemory() {
@@ -2661,6 +3128,12 @@ function toggleCommands() {
   // No overlay - let user interact freely
 }
 
+function toggleGames() {
+  const gamesPanel = $('gamesPanel');
+  const isOpen = gamesPanel.classList.toggle('open');
+  if (isOpen) playSound('game');
+}
+
 function toggleLogs() {
   const isOpen = logsPanel.classList.toggle('open');
   // No overlay - let user interact freely
@@ -2669,6 +3142,7 @@ function toggleLogs() {
 function closeAllPanels() {
   settingsPanel.classList.remove('open');
   commandsPanel.classList.remove('open');
+  $('gamesPanel').classList.remove('open');
   logsPanel.classList.remove('open');
   saveSettings();
 }
@@ -2695,7 +3169,11 @@ const PERSONALITY_GREETINGS = {
   superhero: "Fear not! Your hero is here!",
   dinosaur: "ROAR! Me big dinosaur!",
   fairy: "Sparkle sparkle! Magic time!",
-  ninja: "Silent but ready to serve."
+  ninja: "Silent but ready to serve.",
+  wizard: "Abracadabra! Magic awaits!",
+  cowboy: "Yeehaw partner!",
+  alien: "Beep boop! Greetings Earthling!",
+  mermaid: "Splash! Hello from the sea!"
 };
 
 const PERSONALITY_COMMANDS = {
@@ -2706,8 +3184,32 @@ const PERSONALITY_COMMANDS = {
   superhero: 'cool',
   dinosaur: 'angry',
   fairy: 'love',
-  ninja: 'cool'
+  ninja: 'cool',
+  wizard: 'magic',
+  cowboy: 'happy',
+  alien: 'wow',
+  mermaid: 'love'
 };
+
+const PERSONALITY_ICONS = {
+  playful: '🎪',
+  helpful: '🎓',
+  pirate: '🏴‍☠️',
+  space: '🚀',
+  superhero: '🦸',
+  dinosaur: '🦖',
+  fairy: '🧚',
+  ninja: '🥷',
+  wizard: '🧙',
+  cowboy: '🤠',
+  alien: '👽',
+  mermaid: '🧜'
+};
+
+function updateRobotBadge() {
+  const icon = PERSONALITY_ICONS[state.personality] || '🎪';
+  $('robotIcon').textContent = icon;
+}
 
 function setPersonality(p) {
   state.personality = p;
@@ -2716,11 +3218,15 @@ function setPersonality(p) {
   });
   
   // Update robot head style
-  const personalities = ['playful', 'helpful', 'pirate', 'space', 'superhero', 'dinosaur', 'fairy', 'ninja'];
+  const personalities = ['playful', 'helpful', 'pirate', 'space', 'superhero', 'dinosaur', 'fairy', 'ninja', 'wizard', 'cowboy', 'alien', 'mermaid'];
   personalities.forEach(pers => robotBody.classList.remove('personality-' + pers));
   robotBody.classList.add('personality-' + p);
   
-  // Show LED and speak greeting
+  // Update robot badge
+  updateRobotBadge();
+  
+  // Play sound and show LED
+  playSound('magic');
   const cmd = PERSONALITY_COMMANDS[p] || 'happy';
   updateLEDFromCommand(cmd);
   sendCommand(cmd);
@@ -2987,6 +3493,10 @@ function addBubble(role, text, time, save = true) {
   chatContainer.scrollTop = chatContainer.scrollHeight;
   
   if (save) {
+    // Ensure personality key exists in chatMemory
+    if (!state.chatMemory[state.personality]) {
+      state.chatMemory[state.personality] = [];
+    }
     const memory = state.chatMemory[state.personality];
     memory.push({ role, text, time: time || new Date().toLocaleTimeString() });
     if (memory.length > 50) memory.shift();
@@ -3002,6 +3512,9 @@ function clearChat() {
       <div class="chat-empty-hint">Say "Hello" or tap 🎤 to start!</div>
     </div>
   `;
+  if (!state.chatMemory[state.personality]) {
+    state.chatMemory[state.personality] = [];
+  }
   state.chatMemory[state.personality] = [];
   saveChatMemory();
   log('Chat cleared', 'info');
@@ -3012,6 +3525,7 @@ function clearChat() {
 function sendMessage() {
   const text = textInput.value.trim();
   if (!text) return;
+  playSound('send');
   textInput.value = '';
   handleUserInput(text);
 }
@@ -3019,6 +3533,11 @@ function sendMessage() {
 async function handleUserInput(text) {
   addBubble('user', text);
   log('User: ' + text, 'speech');
+  
+  // Check if this is a game answer first
+  if (currentGame && checkGameAnswer(text)) {
+    return;
+  }
   
   typing.classList.remove('hidden');
   robotBody.classList.add('thinking');
@@ -3031,6 +3550,7 @@ async function handleUserInput(text) {
     response = await getAIResponse(text);
   }
   
+  playSound('receive');
   typing.classList.add('hidden');
   robotBody.classList.remove('thinking');
   
@@ -3221,6 +3741,7 @@ async function toggleConnection() {
     state.connected = false;
     state.device = null;
     state.writeChar = null;
+    playSound('disconnect');
     updateUI();
     log('Disconnected', 'ble');
   } else {
@@ -3241,6 +3762,7 @@ async function connect() {
       state.connected = false;
       state.writeChar = null;
       state.ledFromMicrobitOnly = false; // Allow local LED updates again
+      playSound('disconnect');
       updateUI();
       log('Disconnected', 'ble');
       showToast('Micro:bit disconnected');
@@ -3259,12 +3781,14 @@ async function connect() {
     
     state.connected = true;
     state.ledFromMicrobitOnly = true; // Micro:bit controls LED now
+    playSound('connect');
     updateUI();
     log('Connected to ' + state.device.name, 'ble');
     showToast('Connected to ' + state.device.name, 'success');
     
     await sendCommand('happy');
   } catch (e) {
+    playSound('error');
     log('Connection error: ' + e.message, 'error');
     showToast('Connection failed', 'error');
   }
@@ -3448,7 +3972,7 @@ function exportLogs() {
     return;
   }
   
-  let text = '# Talking Robot - Debug Logs\n';
+  let text = '# Bit-Bot - Debug Logs\n';
   text += '# Exported: ' + new Date().toISOString() + '\n\n';
   
   entries.forEach(entry => {
@@ -3635,6 +4159,217 @@ function showToast(message, type = '') {
   setTimeout(() => {
     toast.classList.remove('show');
   }, 3000);
+}
+
+// ==================== GAMES ====================
+const GAMES = {
+  quiz: {
+    questions: [
+      { q: "What color is the sky?", a: "blue", hint: "Look up!" },
+      { q: "How many legs does a cat have?", a: "4", hint: "Count them!" },
+      { q: "What sound does a dog make?", a: "woof", hint: "Bark bark!" },
+      { q: "What is 2 plus 2?", a: "4", hint: "Use your fingers!" },
+      { q: "What do bees make?", a: "honey", hint: "It's sweet!" },
+      { q: "What color is grass?", a: "green", hint: "Look outside!" },
+      { q: "How many fingers do you have?", a: "10", hint: "Count both hands!" },
+      { q: "What animal says meow?", a: "cat", hint: "It has whiskers!" }
+    ]
+  },
+  counting: {
+    max: 10
+  },
+  colors: {
+    list: ['red', 'blue', 'green', 'yellow', 'orange', 'purple', 'pink', 'brown']
+  },
+  abc: {
+    letters: 'ABCDEFGHIJKLMNOPQRSTUVWXYZ'.split('')
+  },
+  dice: {
+    faces: ['⚀', '⚁', '⚂', '⚃', '⚄', '⚅']
+  }
+};
+
+let currentGame = null;
+let gameState = {};
+
+function startGame(game) {
+  currentGame = game;
+  gameState = {};
+  $('gamesPanel').classList.remove('open');
+  playSound('game');
+  
+  switch(game) {
+    case 'quiz':
+      gameState.questionIndex = Math.floor(Math.random() * GAMES.quiz.questions.length);
+      const q = GAMES.quiz.questions[gameState.questionIndex];
+      addBubble('robot', `🎯 Quiz time! ${q.q}`);
+      speak(`Quiz time! ${q.q}`);
+      updateLEDFromCommand('wow');
+      sendCommand('wow');
+      break;
+      
+    case 'counting':
+      gameState.target = Math.floor(Math.random() * GAMES.counting.max) + 1;
+      addBubble('robot', `🔢 Let's count! Can you count to ${gameState.target} with me? Start with 1!`);
+      speak(`Let's count! Can you count to ${gameState.target} with me? Start with 1!`);
+      gameState.current = 0;
+      updateLEDFromCommand('happy');
+      sendCommand('happy');
+      break;
+      
+    case 'colors':
+      const color = GAMES.colors.list[Math.floor(Math.random() * GAMES.colors.list.length)];
+      gameState.color = color;
+      addBubble('robot', `🎨 Color game! Can you find something ${color}? Tell me when you find it!`);
+      speak(`Color game! Can you find something ${color}? Tell me when you find it!`);
+      updateLEDFromCommand('rainbow');
+      sendCommand('rainbow');
+      break;
+      
+    case 'abc':
+      const letter = GAMES.abc.letters[Math.floor(Math.random() * GAMES.abc.letters.length)];
+      gameState.letter = letter;
+      addBubble('robot', `🔤 ABC game! What word starts with the letter ${letter}?`);
+      speak(`ABC game! What word starts with the letter ${letter}?`);
+      updateLEDFromCommand('happy');
+      sendCommand('happy');
+      break;
+      
+    case 'dice':
+      const roll = Math.floor(Math.random() * 6) + 1;
+      const face = GAMES.dice.faces[roll - 1];
+      addBubble('robot', `🎲 I rolled... ${face} That's ${roll}! Your turn - say "roll" to roll!`);
+      speak(`I rolled... ${roll}! That's ${roll}! Your turn! Say roll to roll the dice!`);
+      updateLEDFromCommand('spin');
+      sendCommand('spin');
+      currentGame = 'dice';
+      break;
+      
+    case 'story':
+      const starters = [
+        "Once upon a time, there was a brave robot who...",
+        "In a magical forest, a little bunny found...",
+        "Far away in space, an alien discovered...",
+        "Deep in the ocean, a friendly fish saw..."
+      ];
+      const starter = starters[Math.floor(Math.random() * starters.length)];
+      addBubble('robot', `📖 Story time! ${starter} What happens next? You tell me!`);
+      speak(`Story time! ${starter} What happens next? You tell me!`);
+      updateLEDFromCommand('magic');
+      sendCommand('magic');
+      break;
+  }
+}
+
+function checkGameAnswer(text) {
+  if (!currentGame) return false;
+  
+  const lower = text.toLowerCase();
+  
+  switch(currentGame) {
+    case 'quiz':
+      const q = GAMES.quiz.questions[gameState.questionIndex];
+      if (lower.includes(q.a.toLowerCase())) {
+        playSound('win');
+        addBubble('robot', `🎉 Yes! That's right! Great job! [party]`);
+        speak("Yes! That's right! Great job!");
+        updateLEDFromCommand('party');
+        sendCommand('party');
+        currentGame = null;
+        return true;
+      } else if (lower.includes('hint')) {
+        addBubble('robot', `💡 Hint: ${q.hint}`);
+        speak(`Here's a hint: ${q.hint}`);
+        return true;
+      }
+      break;
+      
+    case 'counting':
+      const num = parseInt(lower.match(/\d+/)?.[0]);
+      if (num === gameState.current + 1) {
+        gameState.current = num;
+        if (num >= gameState.target) {
+          playSound('win');
+          addBubble('robot', `🎉 ${num}! We did it! Great counting! [dance]`);
+          speak(`${num}! We did it! Great counting!`);
+          updateLEDFromCommand('dance');
+          sendCommand('dance');
+          currentGame = null;
+        } else {
+          addBubble('robot', `${num}! Keep going!`);
+          speak(`${num}! Keep going!`);
+        }
+        return true;
+      }
+      break;
+      
+    case 'colors':
+      if (lower.includes('found') || lower.includes('see') || lower.includes('got')) {
+        playSound('win');
+        addBubble('robot', `🎉 Awesome! You found something ${gameState.color}! Great job! [happy]`);
+        speak(`Awesome! You found something ${gameState.color}! Great job!`);
+        updateLEDFromCommand('happy');
+        sendCommand('happy');
+        currentGame = null;
+        return true;
+      }
+      break;
+      
+    case 'abc':
+      const words = lower.split(/\s+/);
+      const startsWithLetter = words.some(w => w.charAt(0).toUpperCase() === gameState.letter);
+      if (startsWithLetter) {
+        playSound('win');
+        addBubble('robot', `🎉 Great! That starts with ${gameState.letter}! You're so smart! [wow]`);
+        speak(`Great! That starts with ${gameState.letter}! You're so smart!`);
+        updateLEDFromCommand('wow');
+        sendCommand('wow');
+        currentGame = null;
+        return true;
+      }
+      break;
+      
+    case 'dice':
+      if (lower.includes('roll')) {
+        const roll = Math.floor(Math.random() * 6) + 1;
+        const face = GAMES.dice.faces[roll - 1];
+        addBubble('robot', `🎲 You rolled... ${face} That's ${roll}! Say "roll" to roll again or "stop" to stop.`);
+        speak(`You rolled... ${roll}! Say roll to roll again or stop to stop.`);
+        updateLEDFromCommand('spin');
+        sendCommand('spin');
+        return true;
+      } else if (lower.includes('stop') || lower.includes('done') || lower.includes('quit')) {
+        addBubble('robot', `🎲 Fun game! Let's play again soon! [wave]`);
+        speak("Fun game! Let's play again soon!");
+        updateLEDFromCommand('wave');
+        sendCommand('wave');
+        currentGame = null;
+        return true;
+      }
+      break;
+      
+    case 'story':
+      // Continue the story
+      const continuations = [
+        `Wow! And then what happened?`,
+        `Oh exciting! Tell me more!`,
+        `Amazing! What did they do next?`,
+        `Cool! And then?`
+      ];
+      const cont = continuations[Math.floor(Math.random() * continuations.length)];
+      addBubble('robot', `📖 ${cont}`);
+      speak(cont);
+      if (lower.includes('end') || lower.includes('finish') || lower.includes('done')) {
+        addBubble('robot', `📖 The end! What a great story! [happy]`);
+        speak("The end! What a great story!");
+        updateLEDFromCommand('happy');
+        sendCommand('happy');
+        currentGame = null;
+      }
+      return true;
+  }
+  
+  return false;
 }
 
 // ==================== START ====================
