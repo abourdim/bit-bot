@@ -2610,8 +2610,14 @@ body {
               </button>
             </div>
             <div style="display:flex; gap:8px; margin-top:12px;">
-              <input type="text" class="form-input" id="apiKey" placeholder="Enter API key..." style="flex:1; margin-top:0;">
-              <button class="btn-outline" onclick="copyApiKey()" id="copyKeyBtn" style="white-space:nowrap;">📋 Copy</button>
+              <input type="password" class="form-input" id="apiKey" placeholder="Enter API key..." style="flex:1; margin-top:0;">
+            </div>
+            <div id="defaultKeyBox" style="margin-top:8px; padding:10px 12px; background:var(--primary-soft); border:2px dashed var(--primary-light); border-radius:var(--radius-md); display:none;">
+              <div style="font-size:0.7rem; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:4px;">📌 Default Key (tap to copy)</div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <code id="defaultKeyText" style="flex:1; font-size:0.65rem; font-family:var(--mono); color:var(--text); word-break:break-all; user-select:all;"></code>
+                <button class="btn-outline" onclick="copyDefaultKey()" id="copyKeyBtn" style="white-space:nowrap; padding:6px 12px; font-size:0.75rem;">📋 Copy</button>
+              </div>
             </div>
             <div class="form-hint" id="apiHint">Get free key at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a></div>
           </div>
@@ -3035,13 +3041,41 @@ function copyApiKey() {
   if (!key) { showToast('No API key to copy'); return; }
   navigator.clipboard.writeText(key).then(() => {
     showToast('API key copied! ✅');
-    $('copyKeyBtn').textContent = '✅ Copied';
-    setTimeout(() => { $('copyKeyBtn').textContent = '📋 Copy'; }, 2000);
   }).catch(() => {
     $('apiKey').select();
     document.execCommand('copy');
     showToast('API key copied! ✅');
   });
+}
+
+function copyDefaultKey() {
+  const key = $('defaultKeyText').textContent;
+  if (!key) return;
+  navigator.clipboard.writeText(key).then(() => {
+    showToast('Key copied! ✅');
+    $('copyKeyBtn').textContent = '✅ Copied';
+    setTimeout(() => { $('copyKeyBtn').textContent = '📋 Copy'; }, 2000);
+  }).catch(() => {
+    const range = document.createRange();
+    range.selectNodeContents($('defaultKeyText'));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    showToast('Key copied! ✅');
+  });
+}
+
+function updateDefaultKeyBox() {
+  const box = $('defaultKeyBox');
+  const defaultKeys = { groq: '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' };
+  const key = defaultKeys[state.provider];
+  if (key) {
+    $('defaultKeyText').textContent = key;
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
 }
 
 function loadChatMemory() {
@@ -3166,6 +3200,7 @@ function updateApiInput() {
     apiKey.value = '';
     apiHint.innerHTML = 'No API key needed for demo mode';
   }
+  updateDefaultKeyBox();
 }
 
 // ==================== PANEL TOGGLES ====================
