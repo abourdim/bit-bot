@@ -30,12 +30,14 @@ that require human hands. Don't hit Publish until they're done.
 
 ### 🖼 Listing imagery
 
-- [ ] **Shoot a real micro:bit photo** for the hero. Current hero
+- [ ] **Shoot a real hero photo** for the listing. Current hero
       (`etsy-mockups/etsy-mockup-1.png`) uses only an app screenshot.
-      Reviewers flagged that listings with *physical hardware + the
-      app together* convert better. Retake the hero with a micro:bit
-      V2 held next to (or propped on top of) a laptop showing the
-      Sensors tab. Good light, plain background, crop square.
+      Reviewers flagged that listings with *a real kid + the app
+      together* convert better. Retake the hero with a child at a
+      laptop showing Talking Robot's chat UI — animated robot face
+      smiling, mic button pulsing, a speech bubble visible. Optional:
+      a paired micro:bit V2 on the desk next to the laptop. Good
+      light, plain background, crop square.
 - [ ] **Test Etsy's square thumbnail crop** on mockup 1. The canvas
       is 2000×1500 (4:3). Etsy will center-crop to square for the
       search thumbnail — make sure the product name and the
