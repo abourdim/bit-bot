@@ -367,15 +367,21 @@ basic.forever(function () {
 // ==================== SHAKE DETECTION ====================
 input.onGesture(Gesture.Shake, function () {
     let currentTime = input.runningTime()
-    
+
     if (currentTime - lastShakeTime > INPUT_COOLDOWN) {
         lastShakeTime = currentTime
         bluetooth.uartWriteString("SHAKE\n")
+        bluetooth.uartWriteString("ACC:SHAKE\n")
         basic.showIcon(IconNames.Surprised)
         sendLEDState()
         basic.pause(300)
         showAndSync(HAPPY)
     }
+})
+
+// Logo touch (if supported by firmware) broadcasts like the AB combo
+input.onLogoEvent(TouchButtonEvent.Touched, function () {
+    bluetooth.uartWriteString("BTN:LOGO:1\n")
 })
 
 // ==================== COMMAND HANDLER ====================
@@ -539,6 +545,7 @@ bluetooth.onBluetoothDisconnected(function () {
 
 input.onButtonPressed(Button.A, function () {
     bluetooth.uartWriteString("BTN_A\n")
+    bluetooth.uartWriteString("BTN:A:1\n")
     basic.showIcon(IconNames.Target)
     sendLEDState()
     basic.pause(200)
@@ -547,6 +554,7 @@ input.onButtonPressed(Button.A, function () {
 
 input.onButtonPressed(Button.B, function () {
     bluetooth.uartWriteString("BTN_B\n")
+    bluetooth.uartWriteString("BTN:B:1\n")
     basic.showIcon(IconNames.No)
     sendLEDState()
     basic.pause(200)
@@ -555,6 +563,7 @@ input.onButtonPressed(Button.B, function () {
 
 input.onButtonPressed(Button.AB, function () {
     bluetooth.uartWriteString("BTN_AB\n")
+    bluetooth.uartWriteString("BTN:AB:1\n")
     // When both buttons pressed, send current sensor readings
     let temp = input.temperature()
     let light = input.lightLevel()
