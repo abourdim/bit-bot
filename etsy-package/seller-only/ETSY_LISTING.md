@@ -40,9 +40,9 @@
 
 ## Title (140 char max — pack it with searchable keywords)
 
-Bluetooth Web App for BBC micro:bit (optional) + Illustrated Guide | 8 Tabs, 5 Robots, Live Graphs | STEM Classroom | Digital Download
+Talking Robot — AI Voice Companion for Kids | Optional BBC micro:bit V2 Integration | Browser App, No Sign-In | Digital Download
 
-> Product name in your Etsy shop is **"Talking Robot"** — use the phrase **"for the BBC micro:bit (optional)"** everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
+> Product name in your Etsy shop is **"Talking Robot"** — use the phrase **"for the BBC micro:bit V2"** (or "optional micro:bit V2") everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
 
 ## Category
 
@@ -51,9 +51,9 @@ Digital Downloads → Educational Resources
 
 ## Tags (13 max — Etsy lets you use all 13, use them)
 
-micro:bit, microbit v2, STEM, coding kids, BBC microbit, bluetooth app, MakeCode, classroom resource, homeschool STEM, robotics, web bluetooth, coding club, chromebook stem
+ai robot, talking robot, kids ai, voice assistant kids, microbit, robot companion, coding toy, homeschool ai, STEM kids, chromebook ai, parental controls, speech recognition kids, ai for kids
 
-> Replaced the two weakest tags (`edtech` — corporate, not what teachers search; `sensor playground` — zero search volume) with `coding club` and `chromebook stem` (both strong long-tail teacher queries).
+> Mix: 6 high-intent AI/robot buyer terms up front, 3 education/homeschool terms in the middle, 3 trust/safety terms (`parental controls`, `chromebook ai`, `speech recognition kids`) to catch the cautious parent searcher, 1 micro:bit hardware term so the optional-integration audience still finds the listing.
 
 ## Price suggestion (revised after V2.0.0 — illustrated guide justifies ~30% bump)
 
@@ -65,42 +65,44 @@ micro:bit, microbit v2, STEM, coding kids, BBC microbit, bluetooth app, MakeCode
 
 ## Listing description
 
-> **Browser-based Bluetooth control panel for the BBC micro:bit (optional). No install. Works on Chromebook. Chrome or Edge required — not iPhone / iPad / Safari.**
+> **Browser-based AI voice companion for kids. No install. Works on Chromebook. Chrome or Edge recommended for voice features.**
 >
-> ✅ **Tested on Chromebook** — primary target device for schools. Installs as a PWA, works offline after the first load.
+> ✅ **Tested on Chromebook** — the primary home and school device for kids. Installs as a PWA, works offline after the first load.
 >
-> 🎮 **Talking Robot** turns your micro:bit into an interactive STEM lab — no installs, no accounts, no cloud. Just open it in your browser and connect.
+> 🤖 **Talking Robot** is a friendly AI buddy your kid can chat with out loud. Pick a personality, give it a name, press the mic, and go. Optional: pair a BBC micro:bit V2 over Bluetooth to mirror the robot's face on its 5×5 LED matrix.
 >
-> 🔒 **No accounts. No sign-in. No data collected. Safe for students under 13 — COPPA-friendly by design.**
+> 🔒 **No accounts. No sign-in. No data collected. Safe for kids under 13 — COPPA-friendly by design.** AI mode is optional; an offline "phrase pack" mode works with zero API key and zero internet after first load.
 >
-> 🧪 **Try it now** (Simulate mode, no micro:bit needed): <https://abourdim.github.io/bit-bot/>
+> 🧪 **Try it live** (works with no API key, no hardware): <https://abourdim.github.io/bit-bot/>
 >
 > ✨ **What you get** (instant download):
-> • A complete web app (HTML, CSS, JS) you run locally in Chrome or Edge
-> • Ready-to-flash micro:bit firmware (`makecode.ts`)
-> • **Illustrated trilingual user guide (EN/FR/AR) with built-in diagrams:**
->   — architecture diagram • micro:bit V2 pin-out • firmware flow storyboard
->   — interactive LED playground inside the guide (click cells, copy hex commands)
->   — visual troubleshooting: decision tree, symptom picker, icon gallery, reset recipe
-> • A printable Quick Setup guide (`SETUP.md`)
-> • 4 themes (Stealth, Neon, Arctic, Blaze)
-> • 8 tabs: LED Matrix, Sensors, Servos, GamePad, Graph, 3D Board, Bench, Settings
-> • 5 interactive 3D models (micro:bit, Buggy, Robot Arm, Balance Game, Weather Station)
-> • Session recording, live graphs, annotations, JSON export
-> • Beginner & Expert modes — grows with the learner
+> • A complete web app (`index.html` + kid-friendly `index_kids.html`) you run locally in Chrome or Edge
+> • **AI voice chat** via OpenAI (bring your own key) OR offline phrase-pack demo mode
+> • **4 personalities**: Playful, Helpful, Pirate, Space Explorer — plus a custom robot name
+> • **Animated SVG robot face** with glowing eyes, antenna, and mouth
+> • **Speech recognition + text-to-speech** with a "preview voice" button
+> • **Parental controls**: PIN-locked settings, AI on/off toggle, usage timer
+> • **Conversation history** (up to 20 sessions, stored locally — parents can review)
+> • **Optional micro:bit V2 integration**: pair over Web Bluetooth to mirror the robot's face on the LED matrix, plus a QR-code link to the MakeCode firmware
+> • **3 micro:bit firmware variants** (`microbit_makecode.js` / `v2` / `v3`) — flash whichever suits your board
+> • Dark / light themes (kid-friendly light by default)
+> • Installable PWA — add to home screen, works offline
+> • Printable quick-start card, shortcuts cheat sheet, A3 robot poster, lesson plan, sticker sheet, parental-controls guide
+> • Accessibility: skip links, ARIA labels, keyboard navigation, reduced-motion support
 >
-> 🧒 **Perfect for**: classrooms, homeschool, after-school clubs, makerspaces, STEM camps, robotics enthusiasts, parents teaching kids to code.
+> 🧒 **Perfect for**: parents of kids 6–12, homeschool families, after-school clubs, quiet car rides, kids who like robots and talking companions. Teachers welcome too.
 >
 > ⚙️ **Requires**:
-> • BBC micro:bit (optional) (sold separately)
-> • Chrome or Edge browser on a desktop, laptop, or Android device
-> • Bluetooth enabled
+> • A modern browser — Chrome or Edge recommended for voice input (Web Speech API)
+> • Microphone + speakers for voice chat (typing works too)
+> • (Optional) an OpenAI API key for smart AI mode — the app runs in offline demo mode without one
+> • (Optional) BBC micro:bit V2 if you want the LED face mirror — everything else works standalone
 >
-> ❌ **Does NOT work on**: Safari, Firefox, iPhone, iPad. (Web Bluetooth limitation — not the app.)
+> ❌ **Voice input does NOT work on**: Safari and iOS browsers (no Web Speech support). Typing still works there. The optional micro:bit pairing requires Chrome or Edge on desktop / Chromebook / Android — not iPhone / iPad.
 >
 > 📦 **Delivery**: Instant download after purchase — a single ZIP file.
 >
-> 📜 **License**: Single-teacher / single-family use. Use it in your own classroom or home as much as you like. You may **not** resell, redistribute, or upload it elsewhere.
+> 📜 **License**: Single-family / single-classroom use. Use it in your own home or classroom as much as you like. You may **not** resell, redistribute, or upload it elsewhere.
 >
 > ⏰ **Launch price $14.99 through Friday {{LAUNCH_DATE}}. Goes to $19.99 after.** Grab it now if you're on the fence.
 >
@@ -124,18 +126,18 @@ Paste this block into the listing just above the FAQ. No fabricated reviews — 
 
 ## Compare table for the description
 
-**What makes Talking Robot different?** Side-by-side with the two free alternatives most teachers try first:
+**What makes Talking Robot different?** Side-by-side with the two alternatives most parents weigh it against:
 
-| Feature | Talking Robot | MakeCode Editor | Raw Web Bluetooth demos |
+| Feature | Talking Robot | Generic ChatGPT kid wrapper | Physical AI toy ($79+) |
 |---|:---:|:---:|:---:|
-| Works in-browser, zero install | ✅ | ✅ | ✅ |
-| Ready-to-use sensor dashboard (temp, light, sound, accel, compass, touch) | ✅ | ❌ | ❌ |
-| Live graph + CSV / PNG export + session record & replay | ✅ | ❌ | ❌ |
-| Dual servo control UI with gauges and trim | ✅ | ❌ | Build it yourself |
-| 5 interactive 3D models (micro:bit, Buggy, Arm, Balance, Weather) | ✅ | ❌ | ❌ |
-| Trilingual EN/FR/AR with full RTL support | ✅ | Partial | ❌ |
-| Classroom lesson plan + printable stickers & A3 poster | ✅ | ❌ | ❌ |
-| Works offline after first load (installable PWA) | ✅ | ❌ | ❌ |
+| Offline / no-API-key fallback mode | ✅ | ❌ | ✅ |
+| Parental PIN on every setting | ✅ | ❌ | Partial |
+| No sign-in, no account, no email | ✅ | ❌ | ❌ (app required) |
+| Optional BBC micro:bit V2 integration (LED face mirror) | ✅ | ❌ | ❌ |
+| AI is optional — parent can toggle off | ✅ | ❌ | ❌ |
+| Works on any device you already own | ✅ | ✅ | ❌ (ships hardware) |
+| Conversation history reviewable by parent | ✅ | Partial | ❌ (in-app only) |
+| Price | **$14.99** | $0–$20/mo subscription | $79–$199 one-time |
 
 ---
 
@@ -156,23 +158,29 @@ Paste this block into the listing just above the FAQ. No fabricated reviews — 
 
 ## FAQ to add to the listing
 
-**Q: Do I need to know how to code?**
-No — just flash the firmware once and click Connect.
+**Q: Do I need a micro:bit at all?**
+No — the micro:bit is **completely optional**. The Talking Robot app works standalone in any modern browser. Pairing a BBC micro:bit V2 only adds one thing: the robot's face mirrored on its 5×5 LED matrix. Skip it entirely if you don't own one.
 
 **Q: Will this work on my iPad?**
-No. Apple does not allow Web Bluetooth in any iOS browser. Use a laptop, Chromebook, or Android tablet.
+The chat and typing work. Voice input (speech recognition) and the optional micro:bit pairing do **not** work on iOS/Safari — that's a browser limitation, not the app. For the full experience, use a laptop, Chromebook, or Android device with Chrome or Edge.
+
+**Q: Does it use my OpenAI API key?**
+Yes, if you want AI mode. You paste your own key into the app (it's stored locally in your browser's storage — never sent to us). Usage goes directly against your OpenAI account, so you control the spend. If you don't want to use an API key at all, **offline demo mode** uses built-in phrase packs and works with zero internet.
+
+**Q: What if my kid says something inappropriate, or the robot does?**
+Two layers. First, the app uses a content filter on inputs and responses. Second — and more importantly — every conversation is saved locally (up to 20 sessions), so a parent can open the history any time and read exactly what was said. The PIN-locked settings also let you disable AI entirely and stick to offline phrase packs, which never surprise you.
 
 **Q: Can I use this in my classroom of 30 students?**
 Yes — single teacher, one school, unlimited students. For multi-teacher / district licenses, message me.
 
 **Q: Do you offer refunds?**
-Because this is an instant download, I can't offer refunds once the ZIP has been delivered — please double-check compatibility (Chrome or Edge, desktop, BBC micro:bit (optional)) before buying. If the product doesn't work as described on a supported browser, message me within 14 days and I'll make it right.
+Because this is an instant download, I can't offer refunds once the ZIP has been delivered — please double-check compatibility (Chrome or Edge for voice + optional micro:bit pairing) and try the live demo link before buying. If the product doesn't work as described on a supported browser, message me within 14 days and I'll make it right.
 
-**Q: Is it safe for students under 13 (COPPA)?**
-Yes. Everything runs locally in the browser — no accounts, no sign-ins, no data collection, no cloud, no telemetry. Nothing leaves the device. COPPA-friendly by design.
+**Q: Is it safe for kids under 13 (COPPA)?**
+Yes. The app itself runs locally in the browser — no accounts, no sign-ins, no data collection, no cloud, no telemetry. Nothing leaves the device except the AI request to OpenAI if you choose to enable AI mode with your own key (and you can turn that off). COPPA-friendly by design.
 
 **Q: Will it get updates?**
-Yes — free updates within the v1.x line (new features and bug fixes), plus guaranteed bug-fix updates for 12 months after your purchase. A future v2.x major version, if released, would be a separate listing with an upgrade discount for existing buyers. This wording now matches `LICENSE.txt` clause 4 exactly — keep them in sync when you revise either.
+Yes — free updates within the v2.x line (new features and bug fixes), plus guaranteed bug-fix updates for 12 months after your purchase. A future major version, if released, would be a separate listing with an upgrade discount for existing buyers. This wording now matches `LICENSE.txt` clause 4 — keep them in sync when you revise either.
 
 ---
 
