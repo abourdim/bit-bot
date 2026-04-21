@@ -46,7 +46,7 @@
 
 ## Title (140 char max — pack it with searchable keywords)
 
-Bluetooth Web App for BBC micro:bit V2 + Illustrated Guide | 12 Personalities, Voice Chat, AI Companion | STEM Classroom | Digital Download
+AI Robot Chatbot for Kids + BBC micro:bit V2 | 12 Personalities, Voice, Animated Face | Browser PWA, Parental Controls | Digital Download
 
 > Product name in your Etsy shop is **"Talking Robot"** — use the phrase **"for the BBC micro:bit V2"** everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
 
@@ -57,7 +57,7 @@ Digital Downloads → Educational Resources
 
 ## Tags (13 max — Etsy lets you use all 13, use them)
 
-micro:bit, microbit v2, STEM, coding kids, BBC microbit, bluetooth app, MakeCode, classroom resource, homeschool STEM, robotics, web bluetooth, coding club, chromebook stem
+ai chatbot kids, micro:bit, microbit v2, coding kids, robot companion, voice chat, kids ai, STEM classroom, homeschool STEM, parental controls, coding club, chromebook app, bluetooth app
 
 > Replaced the two weakest tags (`edtech` — corporate, not what teachers search; `sensor playground` — zero search volume) with `coding club` and `chromebook stem` (both strong long-tail teacher queries).
 
@@ -82,18 +82,17 @@ micro:bit, microbit v2, STEM, coding kids, BBC microbit, bluetooth app, MakeCode
 > 🧪 **Try it now** (Simulate mode, no micro:bit needed): <https://abourdim.github.io/bit-bot/>
 >
 > ✨ **What you get** (instant download):
-> • A complete web app (HTML, CSS, JS) you run locally in Chrome or Edge
-> • Ready-to-flash micro:bit firmware (`makecode.ts`)
-> • **Illustrated trilingual user guide (EN/FR/AR) with built-in diagrams:**
->   — architecture diagram • micro:bit V2 pin-out • firmware flow storyboard
->   — interactive LED playground inside the guide (click cells, copy hex commands)
->   — visual troubleshooting: decision tree, symptom picker, icon gallery, reset recipe
-> • A printable Quick Setup guide (`SETUP.md`)
-> • 4 themes (Stealth, Neon, Arctic, Blaze)
-> • 12 personalities + voice + chat + emotions + parental controls
-> • 5 interactive 3D models (micro:bit, Buggy, Robot Arm, Balance Game, Weather Station)
-> • Session recording, live graphs, annotations, JSON export
-> • Beginner & Expert modes — grows with the learner
+> • A complete web app (HTML, CSS, JS) you run locally in Chrome or Edge — works **offline** after first load (PWA)
+> • Ready-to-flash micro:bit firmware (`makecode.ts`) — mirrors the robot's face on the 5×5 LED display
+> • **12 robot personalities** — Playful, Helpful, Pirate, Space Explorer, Hero, Dino, Fairy, Ninja, Wizard, Cowboy, Alien, Mermaid
+> • **Animated SVG robot face** with glowing eyes, antenna, state-based expressions (happy, thinking, surprised, sleepy…)
+> • **Voice in + voice out** — speech recognition for mic input, Web Speech synthesis for replies; tune voice speed + pitch
+> • **Chat mode** — text + emoji conversation with typing indicators, timestamps, auto-scroll
+> • **Parental controls** — PIN lock, demo-only mode (zero outside requests), daily usage timer
+> • **6 AI providers** (all optional): Demo mode (offline, free), Groq, Gemini, Cohere, Mistral, OpenRouter — pick per conversation
+> • **Trilingual UI** (EN / FR / AR with full RTL) — plus TTS voices in 16 locales
+> • Conversation history (last 20 sessions saved locally — never uploaded)
+> • Dark + Light themes, mobile-first responsive layout
 >
 > 🧒 **Perfect for**: classrooms, homeschool, after-school clubs, makerspaces, STEM camps, robotics enthusiasts, parents teaching kids to code.
 >
@@ -130,55 +129,66 @@ Paste this block into the listing just above the FAQ. No fabricated reviews — 
 
 ## Compare table for the description
 
-**What makes Talking Robot different?** Side-by-side with the two free alternatives most teachers try first:
+**What makes Talking Robot different?** Side-by-side with the two alternatives most parents try first:
 
-| Feature | Talking Robot | MakeCode Editor | Raw Web Bluetooth demos |
+| Feature | Talking Robot | ChatGPT for Kids | Off-the-shelf AI toys |
 |---|:---:|:---:|:---:|
-| Works in-browser, zero install | ✅ | ✅ | ✅ |
-| Ready-to-use sensor dashboard (temp, light, sound, accel, emotion, touch) | ✅ | ❌ | ❌ |
-| Live graph + CSV / PNG export + session record & replay | ✅ | ❌ | ❌ |
-| Dual voice control UI with gauges and trim | ✅ | ❌ | Build it yourself |
-| 5 interactive 3D models (micro:bit, Buggy, Arm, Balance, Weather) | ✅ | ❌ | ❌ |
-| Trilingual EN/FR/AR with full RTL support | ✅ | Partial | ❌ |
+| Offline demo mode (zero AI requests, free forever) | ✅ | ❌ | ❌ |
+| 12 distinct personalities | ✅ | System prompt only | 1–3 |
+| Parental controls (PIN, timer, demo-only) | ✅ | ❌ | Varies |
+| Works on Chromebook + any laptop (no app install) | ✅ | ✅ | ❌ |
+| Optional micro:bit V2 bridge (5×5 face mirror) | ✅ | ❌ | ❌ |
+| Trilingual UI — EN/FR/AR with RTL | ✅ | Partial | ❌ |
+| Voice in + voice out (Web Speech APIs) | ✅ | ✅ | ✅ |
+| Local-only conversations (COPPA-friendly by default) | ✅ | ❌ | ❌ |
 | Classroom lesson plan + printable stickers & A3 poster | ✅ | ❌ | ❌ |
-| Works offline after first load (installable PWA) | ✅ | ❌ | ❌ |
+| Bring-your-own AI key (Groq/Gemini/Cohere/Mistral/OpenRouter) | ✅ | Locked-in | Locked-in |
 
 ---
 
 ## Photo / mockup checklist (Etsy allows 10)
 
-1. Hero: micro:bit + laptop screen with the app open (LED matrix tab)
-2. Sensor dashboard screenshot
-3. **Demo GIF — 5-second silent loop of pairing + drawing on the 5×5 LED matrix** (auto-plays on Etsy, highest conversion slot after the hero)
-4. robot face viewer screenshot
-5. All 4 themes side-by-side
-6. Mobile / tablet view
-7. Onboarding overlay screenshot
-8. "Works on Chrome / Edge — not iPhone" infographic
-9. List of features as a styled image (text-on-image converts well on Etsy)
-10. The Quick Setup guide preview
+1. Hero: the animated robot face mid-expression (big, colorful, emotive)
+2. Chat bubble screenshot — a sample conversation with a "Pirate" personality
+3. **Demo GIF — 5-second silent loop of the robot reacting to a voice question** (auto-plays on Etsy, highest conversion slot after the hero)
+4. Personality picker grid — all 12 names visible
+5. Parental controls panel screenshot (PIN + timer visible — parents look for this)
+6. Mobile view — kid holding a phone, robot face filling the screen
+7. "6 AI providers — or go offline for free" infographic
+8. Demo-mode banner screenshot showing "zero data sent" indicator
+9. micro:bit + 5×5 LED face mirror photo (shows it's a physical + digital toy)
+10. Trilingual screenshot — same chat in EN, FR, AR side-by-side
 
 > Tip: Etsy's first photo is square — design for a square crop.
 
 ## FAQ to add to the listing
 
-**Q: Do I need to know how to code?**
-No — just flash the firmware once and click Connect.
+**Q: Does my kid need a micro:bit to use this?**
+No — the robot chat, voice, face, and personalities all work on any laptop or Android tablet with Chrome or Edge. The micro:bit is **optional** — if you have one, its 5×5 LED display mirrors the robot's face in real time.
+
+**Q: Is there a subscription or AI fee?**
+No. **Demo mode is free forever and ships with the app** — canned kid-safe responses, offline, zero requests. If you want a smarter bot, plug in your own free tier of Groq, Gemini, Cohere, Mistral, or OpenRouter — the app talks to any of the six, and you control cost + provider per conversation. No subscription from me.
+
+**Q: Is it safe for kids under 13 (COPPA/GDPR)?**
+Yes, by design. In demo mode, **nothing leaves the device** — no accounts, no cloud, no telemetry. Even if you plug in an AI key, every request goes directly from the child's browser to the provider you chose — the app has no server and I never see any chat content.
+
+**Q: Can a parent limit how long it's used?**
+Yes — parental controls include a **PIN lock**, demo-only toggle (disables all outside AI), and a **daily usage timer**. The timer ends the session and shows a friendly "come back tomorrow" screen.
 
 **Q: Will this work on my iPad?**
-No. Apple does not allow Web Bluetooth in any iOS browser. Use a laptop, Chromebook, or Android tablet.
+Voice + chat work on iPad. The **optional micro:bit Bluetooth mirror** does not — Apple blocks Web Bluetooth in all iOS browsers. For the full experience use a laptop, Chromebook, or Android tablet.
+
+**Q: What languages does it speak?**
+UI is trilingual EN / FR / AR (with full right-to-left layout for Arabic). The voice engine supports 16 locales including en-US, en-GB, fr-FR, es-ES, de-DE, it-IT, ar-SA, ja-JP, ko-KR, zh-CN.
 
 **Q: Can I use this in my classroom of 30 students?**
 Yes — single teacher, one school, unlimited students. For multi-teacher / district licenses, message me.
 
 **Q: Do you offer refunds?**
-Because this is an instant download, I can't offer refunds once the ZIP has been delivered — please double-check compatibility (Chrome or Edge, desktop, BBC micro:bit V2) before buying. If the product doesn't work as described on a supported browser, message me within 14 days and I'll make it right.
-
-**Q: Is it safe for students under 13 (COPPA)?**
-Yes. Everything runs locally in the browser — no accounts, no sign-ins, no data collection, no cloud, no telemetry. Nothing leaves the device. COPPA-friendly by design.
+Because this is an instant download, I can't offer refunds once the ZIP has been delivered — please double-check compatibility (Chrome or Edge browser, desktop or Android tablet) before buying. If the product doesn't work as described on a supported browser, message me within 14 days and I'll make it right.
 
 **Q: Will it get updates?**
-Yes — free updates within the v1.x line (new features and bug fixes), plus guaranteed bug-fix updates for 12 months after your purchase. A future v2.x major version, if released, would be a separate listing with an upgrade discount for existing buyers. This wording now matches `LICENSE.txt` clause 4 exactly — keep them in sync when you revise either.
+Yes — free updates within the v2.x line (new personalities, new voices, bug fixes), plus guaranteed bug-fix updates for 12 months after your purchase. A future v3.x major version, if released, would be a separate listing with an upgrade discount for existing buyers.
 
 ---
 
