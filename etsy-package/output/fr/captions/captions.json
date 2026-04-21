@@ -12,10 +12,10 @@
       "Appairez une fois, streamez toujours · export CSV pour chaque leçon",
       "Conçu pour les salles de STEM · licence école disponible",
       "Mises à jour à vie · firmware ouvert · fonctionne hors ligne",
-      "Capteurs réels, graphiques en direct, CSV prêts pour l'analyse"
+      "Export de session prêt pour la classe"
     ],
     "social_captions": [
-      "Un onglet de navigateur a transformé mon micro:bit en labo de données. Les élèves ont mené une expérience de 20 minutes sans rien installer. 🔬",
+      "Un onglet de navigateur transforme mon micro:bit en labo de données. Les élèves ont mené une expérience de 20 minutes sans rien installer. 🔬",
       "Si vous avez déjà vu 30 Chromebooks bloqués sur une install Python, voici l'alternative.",
       "Un achat Etsy. Zéro ticket DSI. Trente élèves qui tracent des données d'accéléromètre en direct."
     ],
@@ -32,17 +32,17 @@
   },
   "kid": {
     "hero_titles": [
-      "Ton micro:bit\ndevient un terrain de jeu",
+      "Ton micro:bit\nprend vie dans ton navigateur",
       "Commande des robots avec du code\n(et un onglet)",
       "Fais bouger\nton micro:bit depuis l'écran",
       "Dessine. Détecte. Bouge.\nTout sur une page.",
       "bit-bot : transforme un micro:bit en jeu"
     ],
     "subtitles": [
-      "Capteurs, voices, modèles 3D. Sans install. Sans compte.",
+      "Capteurs, voices, fonctionnalités. Sans install. Sans compte.",
       "Fonctionne hors ligne après la première ouverture.",
-      "Dessine sur les LEDs. Écoute le buzzer. Incline le modèle 3D.",
-      "8 onglets à explorer. Tes parents n'y comprendront rien.",
+      "Explore ton produit. Découvre ce qu'il peut faire.",
+      "tout un outil à explorer. Tes parents n'y comprendront rien.",
       "Code-le, envoie-le, regarde-le se passer."
     ],
     "social_captions": [

@@ -18,11 +18,11 @@ Generated 2026-04-21 · template-generated
 2. Appairez une fois, streamez toujours · export CSV pour chaque leçon
 3. Conçu pour les salles de STEM · licence école disponible
 4. Mises à jour à vie · firmware ouvert · fonctionne hors ligne
-5. Capteurs réels, graphiques en direct, CSV prêts pour l'analyse
+5. Export de session prêt pour la classe
 
 ### social_captions
 
-1. Un onglet de navigateur a transformé mon micro:bit en labo de données. Les élèves ont mené une expérience de 20 minutes sans rien installer. 🔬
+1. Un onglet de navigateur transforme mon micro:bit en labo de données. Les élèves ont mené une expérience de 20 minutes sans rien installer. 🔬
 2. Si vous avez déjà vu 30 Chromebooks bloqués sur une install Python, voici l'alternative.
 3. Un achat Etsy. Zéro ticket DSI. Trente élèves qui tracent des données d'accéléromètre en direct.
 
@@ -42,7 +42,7 @@ Generated 2026-04-21 · template-generated
 
 ### hero_titles
 
-1. Ton micro:bit / devient un terrain de jeu
+1. Ton micro:bit / prend vie dans ton navigateur
 2. Commande des robots avec du code / (et un onglet)
 3. Fais bouger / ton micro:bit depuis l'écran
 4. Dessine. Détecte. Bouge. / Tout sur une page.
@@ -50,10 +50,10 @@ Generated 2026-04-21 · template-generated
 
 ### subtitles
 
-1. Capteurs, voices, modèles 3D. Sans install. Sans compte.
+1. Capteurs, voices, fonctionnalités. Sans install. Sans compte.
 2. Fonctionne hors ligne après la première ouverture.
-3. Dessine sur les LEDs. Écoute le buzzer. Incline le modèle 3D.
-4. 8 onglets à explorer. Tes parents n'y comprendront rien.
+3. Explore ton produit. Découvre ce qu'il peut faire.
+4. tout un outil à explorer. Tes parents n'y comprendront rien.
 5. Code-le, envoie-le, regarde-le se passer.
 
 ### social_captions
