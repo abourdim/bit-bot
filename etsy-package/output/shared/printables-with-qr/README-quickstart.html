@@ -1,0 +1,184 @@
+<!DOCTYPE html>
+<!--
+  ═══════════════════════════════════════════════════════════════════════
+  ⚠️  REWRITE PER PRODUCT — DO NOT SHIP AS-IS
+  ───────────────────────────────────────────────────────────────────────
+  apply-template.mjs only substituted identifiers (Talking Robot,
+  v2.0.0, https://abourdim.github.io/bit-bot/, etc.). The feature content, steps,
+  shortcuts, and examples below were inherited from the template's
+  source product (bit-bot) and WILL BE WRONG for your product
+  unless you rewrite them.
+  
+  Before including this file in a buyer ZIP:
+    1. Delete this banner.
+    2. Rewrite every mention of specific features, shortcuts,
+       tab names, hardware interactions, etc. to match your product.
+    3. Verify with: grep -iE "voice|chart\.js|3d board|gamepad|
+       voice mode|emotion|led matrix|12 personalities|sensors tab" this-file.
+  ═══════════════════════════════════════════════════════════════════════
+-->
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Talking Robot — Welcome</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Orbitron:wght@500&family=Tajawal:wght@400;500;700&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A4 portrait; margin: 0; }
+  body { width: 210mm; height: 297mm; font-family: 'Tajawal', sans-serif; background: #020617; color: #cbd5e1; overflow: hidden; font-size: 13px; line-height: 1.6; }
+  .page { width: 210mm; height: 297mm; padding: 14mm 18mm; position: relative; }
+  .page::before {
+    content: ''; position: absolute; inset: 0;
+    background: repeating-linear-gradient(0deg, transparent, transparent 3px, rgba(34,197,94,.012) 3px, rgba(34,197,94,.012) 6px);
+    pointer-events: none;
+  }
+
+  .header { text-align: center; margin-bottom: 6mm; position: relative; }
+  .header h1 { font-family: 'Righteous', sans-serif; font-size: 36px; color: #22c55e; }
+  .header .sub { font-size: 15px; color: #94a3b8; }
+  .header .ver { font-size: 11px; color: #64748b; margin-top: 2px; font-family: 'Orbitron', monospace; }
+  .header .line { width: 60%; height: 2px; background: linear-gradient(90deg, transparent, rgba(34,197,94,.35), transparent); margin: 8px auto 0; }
+
+  h2 { font-family: 'Righteous', sans-serif; font-size: 18px; color: #22d3ee; margin: 6mm 0 3mm; padding-left: 10px; border-left: 3px solid #22d3ee; }
+  p { margin: 2mm 0; color: #94a3b8; }
+
+  .thanks {
+    background: rgba(34,197,94,.05); border: 1px solid rgba(34,197,94,.18);
+    border-radius: 10px; padding: 10px 14px; margin: 3mm 0; font-size: 12px;
+  }
+  .thanks strong { color: #22c55e; }
+
+  .files { display: grid; grid-template-columns: 1fr 1fr; gap: 4px; margin: 3mm 0; }
+  .file {
+    display: flex; align-items: center; gap: 6px; padding: 4px 8px;
+    background: rgba(15,23,42,.5); border-radius: 6px; font-size: 12px;
+  }
+  .file .icon { font-size: 14px; }
+  .file code { color: #22c55e; font-family: 'Orbitron', monospace; font-size: 10px; }
+  .file span { color: #64748b; font-size: 10px; }
+
+  .steps-mini { margin: 3mm 0; }
+  .step-m {
+    display: flex; align-items: center; gap: 10px; padding: 6px 10px;
+    margin: 3px 0; background: rgba(34,197,94,.04); border-radius: 8px;
+  }
+  .step-m .num {
+    width: 24px; height: 24px; background: #22c55e; color: #020617;
+    border-radius: 50%; font-family: 'Orbitron', monospace; font-size: 12px;
+    display: flex; align-items: center; justify-content: center; font-weight: 700;
+    flex-shrink: 0;
+  }
+
+  .req { margin: 3mm 0; }
+  .req div { display: flex; align-items: center; gap: 6px; padding: 2px 0; font-size: 12px; }
+  .req .check { color: #22c55e; }
+  .req .label { color: #94a3b8; }
+
+  .box {
+    background: rgba(34,197,94,.04); border: 1px solid rgba(34,197,94,.12);
+    border-radius: 10px; padding: 10px 14px; margin: 3mm 0;
+  }
+  .box h4 { font-size: 13px; color: #22c55e; margin-bottom: 3px; }
+  .box p { font-size: 12px; margin: 1mm 0; }
+
+  .footer {
+    position: absolute; bottom: 10mm; left: 18mm; right: 18mm;
+    text-align: center; border-top: 1px solid rgba(34,197,94,.1);
+    padding-top: 4px;
+  }
+  .footer span { font-size: 10px; color: #64748b; }
+  .footer .brand { font-family: 'Orbitron', monospace; color: #22c55e; }
+  code.c { color: #22c55e; background: rgba(34,197,94,.1); padding: 0 4px; border-radius: 3px; font-family: 'Orbitron', monospace; font-size: 11px; }
+  kbd { background: rgba(0,0,0,.5); border: 1px solid rgba(34,197,94,.25); border-radius: 4px; padding: 0 6px; font-family: 'Orbitron', monospace; font-size: 10px; color: #22c55e; }
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <h1>Talking Robot</h1>
+    <div class="sub">Browser BLE Control Panel for the BBC micro:bit (optional)</div>
+    <div class="ver">v2.0.0 &bull; Digital Download</div>
+    <div class="line"></div>
+  </div>
+
+  <div class="thanks">
+    <strong>Thank you for buying Talking Robot!</strong> You just grabbed a zero-install, zero-account, browser-local control panel for the BBC micro:bit (optional). Everything runs on your machine &mdash; no cloud, no telemetry, no nonsense. This page walks you through the first three things to do.
+  </div>
+
+  <h2>First 3 Things To Do</h2>
+  <div class="steps-mini">
+    <div class="step-m"><div class="num">1</div><span><strong style="color:#22c55e;">Flash the firmware.</strong> Open <a style="color:#22d3ee;">makecode.microbit.org</a>, switch to JavaScript, paste <code class="c">makecode.ts</code>, click Download, and drag the <code class="c">.hex</code> to your micro:bit V2. The board will show an <strong style="color:#fff;">X</strong>.</span></div>
+    <div class="step-m"><div class="num">2</div><span><strong style="color:#22c55e;">Open the app.</strong> Double-click <code class="c">index.html</code> in <strong style="color:#fff;">Chrome</strong> or <strong style="color:#fff;">Edge</strong>. It loads locally. Click <strong style="color:#22c55e;">Connect</strong>, pick your board, watch the status dot turn green.</span></div>
+    <div class="step-m"><div class="num">3</div><span><strong style="color:#22c55e;">Play.</strong> Press <kbd>1</kbd>&hellip;<kbd>8</kbd> to hop between LEDs, Sensors, Voice, Commands, Graph, 3D, Bench, About. Tap <kbd>F</kbd> for fullscreen graph. No board? Flip on <strong style="color:#22d3ee;">Simulate Mode</strong>.</span></div>
+  </div>
+
+  <h2>What&apos;s in the ZIP</h2>
+  <div class="files">
+    <div class="file"><span class="icon">🌐</span><code>index.html</code><span>&mdash; Main app</span></div>
+    <div class="file"><span class="icon">🎨</span><code>styles.css</code><span>&mdash; 4 themes</span></div>
+    <div class="file"><span class="icon">📦</span><code>sw.js</code><span>&mdash; Offline PWA</span></div>
+    <div class="file"><span class="icon">🤖</span><code>makecode.ts</code><span>&mdash; Firmware</span></div>
+    <div class="file"><span class="icon">⚙️</span><code>js/*.js</code><span>&mdash; BLE + logic</span></div>
+    <div class="file"><span class="icon">🎲</span><code>js/models/</code><span>&mdash; 5 3D models</span></div>
+    <div class="file"><span class="icon">📖</span><code>docs/guide.html</code><span>&mdash; Full user guide</span></div>
+    <div class="file"><span class="icon">⌨️</span><code>docs/cheatsheet.html</code><span>&mdash; Shortcuts</span></div>
+    <div class="file"><span class="icon">❓</span><code>docs/faq.html</code><span>&mdash; FAQ</span></div>
+    <div class="file"><span class="icon">📜</span><code>LICENSE.txt</code><span>&mdash; Your license</span></div>
+  </div>
+  <p style="font-size:11px;color:#64748b;">Printable extras live in <code class="c">etsy-package/</code>: quick-start card, shortcut cheat sheet, A3 classroom poster, sticker sheet, lesson plan.</p>
+
+  <h2>Requirements</h2>
+  <div class="req">
+    <div><span class="check">&#10003;</span><span class="label">BBC micro:bit <strong style="color:#fff;">V2</strong> (V1 lacks the sound sensor)</span></div>
+    <div><span class="check">&#10003;</span><span class="label">Chrome 90+ or Edge 90+ on desktop or Android (Web Bluetooth)</span></div>
+    <div><span class="check">&#10003;</span><span class="label">Bluetooth enabled on the host device</span></div>
+    <div><span class="check">&#10003;</span><span class="label">Optional: hobby voices on pins <strong style="color:#22c55e;">P1</strong> / <strong style="color:#22c55e;">P2</strong></span></div>
+    <div><span class="check">&#10003;</span><span class="label">No internet needed after first load &mdash; installs as a PWA</span></div>
+  </div>
+
+  <h2>Key Features</h2>
+  <div class="box">
+    <p><strong style="color:#22d3ee;">Control:</strong> 5&times;5 LED matrix &bull; 2 voices (P1/P2) &bull; buzzer &bull; D-pad gamepad</p>
+    <p><strong style="color:#22d3ee;">Read:</strong> temperature &bull; light &bull; sound &bull; voice mode &bull; emotion &bull; buttons &bull; touch pins</p>
+    <p><strong style="color:#22d3ee;">Visualize:</strong> Web Speech API live graph (fullscreen, record, export JSON) &bull; 3D Three.js board view with 5 models</p>
+    <p><strong style="color:#22d3ee;">Polish:</strong> 4 themes &bull; EN / FR / AR &bull; simulate mode &bull; keyboard shortcuts &bull; PWA offline</p>
+  </div>
+
+  <h2>Privacy</h2>
+  <div class="box">
+    <h4>100% Local &mdash; Zero Data Collection</h4>
+    <p>Runs entirely in your browser. No accounts, no cloud, no tracking, no analytics. Sessions, settings, and recordings stay on your device. Safe for school networks.</p>
+  </div>
+
+  <h2>Languages</h2>
+  <p>Built-in <strong style="color:#fff;">English</strong>, <strong style="color:#fff;">Français</strong>, and <strong style="color:#fff;">العربية</strong> (full RTL). Cycle with <kbd>L</kbd>.</p>
+
+  <h2>Need Help?</h2>
+  <div class="box">
+    <p>Open <code class="c">docs/guide.html</code> for the complete walkthrough and troubleshooting.</p>
+    <p>Open <code class="c">docs/faq.html</code> for the top buyer questions.</p>
+    <p>Press <kbd>?</kbd> inside the app for the built-in shortcuts overlay.</p>
+  </div>
+
+  <div class="footer">
+    <span>Thank you for supporting indie educational software! &bull; </span>
+    <span class="brand">Talking Robot v2.0.0</span>
+    <span> &bull; Free lifetime updates via Etsy</span>
+  </div>
+
+</div>
+<!-- QR-BLOCK-START -->
+<div style="position:fixed;right:12mm;bottom:12mm;display:flex;gap:8mm;align-items:center;
+  background:rgba(10,14,18,0.92);color:#e8ffe8;padding:4mm 5mm;border-radius:3mm;
+  box-shadow:0 2mm 6mm rgba(0,0,0,0.35);font-family:-apple-system,Segoe UI,sans-serif;
+  max-width:80mm;z-index:9999;">
+  <img src="data:image/png;base64,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" alt="QR code — scan to open live demo" style="width:24mm;height:24mm;background:#fff;padding:1mm;border-radius:1.5mm;display:block;"/>
+  <div style="display:flex;flex-direction:column;gap:1mm;min-width:0;">
+    <div style="font-weight:700;font-size:9pt;color:#00ff88;line-height:1.2;">Run it now — no install</div>
+    <div style="font-size:7pt;opacity:0.75;line-height:1.3;word-break:break-all;">abourdim.github.io/bit-bot/</div>
+  </div>
+</div>
+<!-- QR-BLOCK-END -->
+</body>
+</html>
