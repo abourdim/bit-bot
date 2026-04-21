@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- REWRITE PER PRODUCT — DO NOT SHIP AS-IS -->
 <html lang="en" dir="ltr">
 <head>
 <meta charset="utf-8" />
@@ -124,7 +125,7 @@
 <div class="slate">
   <div class="slate-clap">🎬</div>
   <div class="tag">— ETSY PLAYBOOK · v2.0.0 —</div>
-  <h1>Talking <span>Robot</span></h1>
+  <h1>micro:bit <span>Playground</span></h1>
   <div class="tag">The 1-minute listing demo · copy-ready snippets</div>
   <div class="meta"><span><b>Format:</b> 9:16 portrait</span><span><b>Length:</b> ≤ 60 s</span><span><b>Goal:</b> turn scrollers into buyers</span></div>
 </div>
@@ -144,14 +145,14 @@
 <h2>Before you press Record</h2>
 <div class="card">
   <ul class="checklist" onclick="var li=event.target.closest('li');if(li)li.classList.toggle('checked')">
-    <li><input type="checkbox"><label>Chrome or Edge open, <code>index_kids.html</code> loaded<span class="where">Voice input needs Chrome/Edge — Safari chats by typing only</span></label></li>
-    <li><input type="checkbox"><label>Robot named + personality picked (Playful reads warmest on camera)<span class="where">Settings → personality menu</span></label></li>
-    <li><input type="checkbox"><label>Mic tested — speech-recognition indicator lights up<span class="where">Tap the big mic button once, say "hi"</span></label></li>
-    <li><input type="checkbox"><label>Theme picked — <strong>Light</strong> reads kid-friendly on camera<span class="where">Header → theme toggle</span></label></li>
-    <li><input type="checkbox"><label>API key pasted (if demoing smart-AI mode) OR offline demo mode on<span class="where">Settings (PIN-locked) → AI mode</span></label></li>
-    <li><input type="checkbox"><label>(Optional) micro:bit V2 flashed + paired — face mirrors on LEDs<span class="where">Only if the script shows the LED mirror moment</span></label></li>
+    <li><input type="checkbox"><label>micro:bit V2 powered on, showing <kbd>X</kbd> icon<span class="where">If not → reflash <code>makecode.ts</code></span></label></li>
+    <li><input type="checkbox"><label>Chrome or Edge open, <code>index.html</code> loaded<span class="where">Safari/Firefox/iOS will not work</span></label></li>
+    <li><input type="checkbox"><label>BLE connected — status chip is <strong>green</strong><span class="where">Click 🔗 Connect, pick BBC micro:bit from picker</span></label></li>
+    <li><input type="checkbox"><label>Theme picked — <strong>Neon</strong> looks best on camera<span class="where">Header → paint-roller dropdown</span></label></li>
+    <li><input type="checkbox"><label>micro:bit V2 paired (optional)</label></li>
+    <li><input type="checkbox"><label>Robot Face tab open, Buggy or Robot Arm selected<span class="where">Tab 6 → model dropdown</span></label></li>
     <li><input type="checkbox"><label>Phone in 9:16 mode on a tripod, lit from the front</label></li>
-    <li><input type="checkbox"><label>Desk cleared — only the laptop + a kid prop (plushie, crayon) in frame</label></li>
+    <li><input type="checkbox"><label>Desk cleared — only the board and one prop in frame</label></li>
     <li><input type="checkbox"><label>Script read aloud once — timed under 55 s</label></li>
   </ul>
 </div>
@@ -161,118 +162,113 @@
 <h2>Structure</h2>
 <div class="card">
   <pre style="color:var(--accent2);font-family:var(--mono);font-size:.9rem;line-height:1.7;margin:0">
- 0–3 s   HOOK        "Meet my kid's new robot friend — all in a browser."
- 3–10 s  CONTEXT     Robot face on-screen, kid taps the mic, says "hi!"
-10–25 s  DEMO        Robot answers in voice. Switch personality → Pirate reply.
-25–40 s  DEMO        (Optional) micro:bit on desk mirrors the face. Parent PIN lock.
-40–50 s  PAYOFF      Parent opens conversation history + usage-timer settings.
-50–55 s  CTA         "AI voice companion — link in description."
+ 0–3 s   HOOK        "Watch what this micro:bit does in 60 seconds."
+ 3–10 s  CONTEXT     Board on-screen, X icon → status turns green.
+10–35 s  DEMO        Demo the core features. Highlight main benefits.
+35–50 s  PAYOFF      Zoom on live graph + 3D model mirroring real board.
+50–55 s  CTA         "Full kit in my shop — link below."
 55–60 s  END FRAME   Logo + handle frozen for the loop preview.</pre>
 </div>
 
 <!-- ═══════════ SCRIPT ═══════════ -->
 <div class="slug" id="script">SLUG — SCENE-BY-SCENE SCRIPT</div>
-<h2>Template: "Meet your kid's new robot friend"</h2>
+<h2>Template: "The micro:bit becomes a playground"</h2>
 
 <div class="scene">
   <div class="scene-head"><span class="scene-time">00:00–00:03</span><span class="scene-phase phase-hook">HOOK</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 SAY</div>"Meet my kid's new robot friend. Lives in a browser. No sign-in. No app."</div>
-    <div class="do"><div class="do-label">🎬 DO</div>Laptop on-screen showing the animated SVG robot face blinking. Kid's hand in frame.</div>
+    <div class="say"><div class="say-label">🎙 SAY</div>"Your micro:bit is a playground. No install, no account — just a browser."</div>
+    <div class="do"><div class="do-label">🎬 DO</div>Hold the board in frame. Close-up of the X icon pulsing on the LED matrix.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:03–00:10</span><span class="scene-phase phase-demo">CONTEXT · FIRST CHAT</span></div>
+  <div class="scene-head"><span class="scene-time">00:03–00:10</span><span class="scene-phase phase-demo">CONTEXT</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 SAY</div>"You name it, pick a personality, press the mic — and it talks back."</div>
-    <div class="do"><div class="do-label">🎬 DO</div>Screen-record: type robot name "Biscuit" → tap mic → kid says "hi Biscuit!" → robot replies out loud, eyes glow.</div>
+    <div class="say"><div class="say-label">🎙 SAY</div>"Open the page, click connect — and that's it. Sensors live, LEDs live, voices live."</div>
+    <div class="do"><div class="do-label">🎬 DO</div>Screen recording: click <strong>🔗 Connect to micro:bit</strong>, pick the board, status chip goes green.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:10–00:25</span><span class="scene-phase phase-demo">DEMO · PERSONALITY SWITCH</span></div>
+  <div class="scene-head"><span class="scene-time">00:10–00:25</span><span class="scene-phase phase-demo">DEMO · SENSORS + 3D</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 SAY</div>"Four personalities. Playful, Helpful, Pirate, Space Explorer — same question, totally different reply."</div>
-    <div class="do"><div class="do-label">🎬 DO</div>Switch personality from Playful → Pirate. Ask "what's for dinner?" twice. Robot delivers both answers with different voice + face animation.</div>
+    <div class="say"><div class="say-label">🎙 SAY</div>"Tilt it — the 3D model on screen tilts too. Tap the logo — it reacts."</div>
+    <div class="do"><div class="do-label">🎬 DO</div>Tab <kbd>6</kbd> → Robot Face. Tilt the real board → the virtual one follows. Hand holds the micro:bit next to the screen for the split.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:25–00:40</span><span class="scene-phase phase-demo">DEMO · MICRO:BIT MIRROR (OPTIONAL)</span></div>
+  <div class="scene-head"><span class="scene-time">00:25–00:40</span><span class="scene-phase phase-demo">DÉMO · FEATURES</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 SAY</div>"Got a micro:bit? The robot's face shows up on the LEDs too. Totally optional."</div>
-    <div class="do"><div class="do-label">🎬 DO</div>Show BBC micro:bit V2 on the desk. Pair via Settings → LED matrix mirrors the robot's blink + smile in real time. Split-screen with the laptop face.</div>
+    <div class="say"><div class="say-label">🎙 SAY</div>"Move a voice from the browser. Drive a robot with the Commands."</div>
+    <div class="do"><div class="do-label">🎬 DO</div>Click through the live demo; features run in the browser.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:40–00:50</span><span class="scene-phase phase-payoff">PAYOFF · PARENT CONTROLS</span></div>
+  <div class="scene-head"><span class="scene-time">00:40–00:50</span><span class="scene-phase phase-payoff">PAYOFF · GRAPH</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 SAY</div>"Parent PIN. Usage timer. Every conversation saved locally — you can read them all."</div>
-    <div class="do"><div class="do-label">🎬 DO</div>Open Settings → enter PIN → show usage-timer slider + AI on/off toggle + conversation-history list (20 sessions).</div>
+    <div class="say"><div class="say-label">🎙 SAY</div>"Record, replay, export CSV. It's a whole science lab in a browser tab."</div>
+    <div class="do"><div class="do-label">🎬 DO</div>Tab <kbd>5</kbd> → 🎲 Simulate → live chart dances. Zoom on the Record/CSV buttons.</div>
   </div>
 </div>
 
 <div class="scene">
   <div class="scene-head"><span class="scene-time">00:50–00:60</span><span class="scene-phase phase-cta">CTA + END FRAME</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 SAY</div>"AI voice companion — no sign-in, no app, lifetime updates. Link in description."</div>
-    <div class="do"><div class="do-label">🎬 DO</div>Switch to logo + handle overlay on the robot-face background. Hold 3 seconds still — becomes the loop frame.</div>
+    <div class="say"><div class="say-label">🎙 SAY</div>"Full kit, lifetime updates — link in description. Teachers, tag me when you use it."</div>
+    <div class="do"><div class="do-label">🎬 DO</div>Switch to logo + handle overlay. Hold 3 seconds still — becomes the loop frame.</div>
   </div>
 </div>
 
 <!-- ═══════════ LISTING COPY ═══════════ -->
 <div class="slug" id="listing">SLUG — COPY-READY LISTING TEXT</div>
 <h2>Etsy title (140 chars max)</h2>
-<div class="copybox">Talking Robot — AI Voice Companion for Kids · 4 Personalities · Optional micro:bit V2 LED Mirror · Parent PIN · Browser App<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">COPY</button></div>
+<div class="copybox">Talking Robot — BLE Control Panel for Teachers &amp; Kids · Sensors · Voice · Live Graph · 3D Models · No Install · Chrome / Edge<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">COPY</button></div>
 
 <h2>Short description (first 160 chars — shown in search)</h2>
-<div class="copybox">Browser-based AI voice companion for kids. 4 personalities, parent PIN, usage timer, no sign-in. Optional BBC micro:bit V2 integration for the LED face mirror.<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">COPY</button></div>
+<div class="copybox">Browser-based BLE control panel for the BBC micro:bit (optional). Sensors, voices, live graphs, 3D models, and a Commands — all from Chrome. No install, no account.<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">COPY</button></div>
 
 <h2>Full description</h2>
-<div class="copybox">🤖 Talking Robot — an AI voice companion for kids that runs right in the browser.
+<div class="copybox">🎮 Talking Robot — a browser-based BLE control panel for the BBC micro:bit (optional).
 
-Name your robot, pick a personality, press the mic — and it talks back. No install, no sign-in, no app store. Optional: pair a BBC micro:bit V2 over Bluetooth to mirror the robot's face on the LED matrix.
+Open one HTML file in Chrome or Edge, pair over Bluetooth, and unlock 12 personalities of hands-on STEM fun — no install, no account, no backend, no tracking.
 
 WHAT YOU GET
-• 🎙 Voice chat (speech recognition + text-to-speech with voice preview)
-• 🤖 4 personalities: Playful · Helpful · Pirate · Space Explorer
-• 🧠 AI mode via OpenAI (bring your own key) OR offline phrase-pack demo mode
-• 🎨 Animated SVG robot face (eyes, antenna, mouth)
-• 🔐 Parental PIN on every setting
-• ⏱ Usage timer + AI on/off toggle
-• 💬 Conversation history — up to 20 sessions saved locally for parent review
-• 📡 Optional micro:bit V2 LED mirror (face on the 5×5 LED) via Web Bluetooth
-• 📲 QR-code link to the MakeCode firmware for quick micro:bit setup
-• 🌗 Dark &amp; light themes (kid-friendly light by default)
+• 🎛 LED matrix + preset icons + text scroller
+• 📡 Live sensors: temperature, light, sound, voice mode, emotion, touch
+• ⚙️ 2 voices (P1 + P2) with sliders, gauges, trim, OFF buttons
+• 🎮 D-pad Commands for robots and games
+• 📈 Live Graph (Web Speech API) — record, replay, annotate, export PNG + CSV
+• 🎲 5 interactive 3D models (Three.js): micro:bit, Buggy, Arm, Balance, Weather
+• 🎨 4 themes (Stealth · Neon · Arctic · Blaze) + 3 languages (EN · FR · AR with full RTL)
 • 📱 PWA — installable, offline-capable
-• ♿ Accessibility: skip links, ARIA, keyboard nav
+• 👶 Beginner mode + 🧙 Expert mode
 
 WHAT'S IN YOUR DOWNLOAD
-• index_kids.html — kid-friendly UI
-• index.html — full app with every setting
-• microbit_makecode.js / v2 / v3 — three firmware variants for the optional LED mirror
-• docs/ — user guide, cheat sheet, parental-controls guide, FAQ, Etsy playbook
-• Printables — quick-start card, shortcuts cheat sheet, A3 robot poster, lesson plan, sticker sheet
-• LICENSE — single-family / single-classroom license
+• index.html — the full app
+• makecode.ts — micro:bit firmware (flash once from MakeCode)
+• SETUP.md — 5-minute quick-start
+• docs/ — illustrated guide, cheat sheet, FAQ, Etsy playbook
+• LICENSE — personal / classroom single-user license
 
 REQUIREMENTS
-• Any modern browser (Chrome or Edge recommended for voice input)
-• Microphone + speakers for voice chat (typing works too)
-• Optional: OpenAI API key for smart AI mode — offline demo works without one
-• Optional: BBC micro:bit V2 for the LED face mirror
+• BBC micro:bit (optional) (V1 works but has no sound sensor)
+• Chrome or Edge on desktop (or Chrome on Android)
+• Bluetooth enabled
+• HTTPS or file:// — double-clicking the HTML works
 
 WHO IT'S FOR
-Parents of kids 6–12 · homeschool families · after-school clubs · quiet car rides · teachers who want a kid-safe chat companion on classroom Chromebooks.
+Teachers running STEM workshops · home-schooling families · robotics clubs · makers prototyping BLE projects · anyone curious about the micro:bit.
 
 PRIVACY FIRST
-Runs locally. No accounts, no analytics, no cloud. Conversation history and settings live in your browser and on your disk. The only outbound call is the optional AI request using your own API key — and you can turn AI off entirely.
+Nothing leaves your computer. No analytics, no logins, no cloud. All calibrations, recordings, and presets live in your browser's localStorage and on your disk.
 
 LIFETIME UPDATES
 Every version shipped from this listing is yours forever. Re-download the latest ZIP anytime from your Etsy Purchases page.
 
-Happy chatting! 🤖💬✨<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">COPY</button></div>
+Happy hacking! 🚀🎮🤖<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">COPY</button></div>
 
 <h2>Price tiers</h2>
 <table>
@@ -286,48 +282,48 @@ Happy chatting! 🤖💬✨<button class="copybtn" onclick="navigator.clipboard.
 <div class="slug" id="tags">SLUG — TAGS + MATERIALS</div>
 <h2>13 Etsy tags (20 chars each)</h2>
 <div class="pills">
-  <span class="pill">ai robot</span>
-  <span class="pill">talking robot</span>
-  <span class="pill">kids ai</span>
-  <span class="pill">voice assistant kids</span>
-  <span class="pill">microbit</span>
-  <span class="pill">robot companion</span>
-  <span class="pill">coding toy</span>
-  <span class="pill">homeschool ai</span>
-  <span class="pill">STEM kids</span>
-  <span class="pill">chromebook ai</span>
-  <span class="pill">parental controls</span>
-  <span class="pill">speech recognition kids</span>
-  <span class="pill">ai for kids</span>
+  <span class="pill">micro:bit</span>
+  <span class="pill">BLE</span>
+  <span class="pill">bluetooth</span>
+  <span class="pill">education</span>
+  <span class="pill">STEM</span>
+  <span class="pill">robotics</span>
+  <span class="pill">kids coding</span>
+  <span class="pill">teacher resource</span>
+  <span class="pill">sensors</span>
+  <span class="pill">voices</span>
+  <span class="pill">classroom</span>
+  <span class="pill">home school</span>
+  <span class="pill">makerspace</span>
 </div>
 
 <h2>Materials (what powers it)</h2>
 <div class="pills">
   <span class="pill">HTML5</span>
   <span class="pill">JavaScript</span>
-  <span class="pill">Web Speech API</span>
-  <span class="pill">OpenAI API</span>
   <span class="pill">Web Bluetooth</span>
+  <span class="pill">Web Speech API</span>
+  <span class="pill">Three.js</span>
   <span class="pill">PWA</span>
   <span class="pill">MakeCode</span>
-  <span class="pill">SVG animation</span>
+  <span class="pill">TypeScript</span>
 </div>
 
 <h2>SEO keywords</h2>
-<p><code>ai voice companion</code> · <code>no sign-in</code> · <code>privacy-first</code> · <code>parental controls</code> · <code>kid-safe ai</code> · <code>offline-capable</code> · <code>microbit v2 optional</code> · <code>homeschool ai</code></p>
+<p><code>browser-based</code> · <code>no-install</code> · <code>privacy-first</code> · <code>offline-capable</code> · <code>web bluetooth</code> · <code>teacher resource</code> · <code>STEM workshop</code> · <code>micro:bit V2</code></p>
 
 <!-- ═══════════ IMAGES ═══════════ -->
 <div class="slug" id="images">SLUG — 7-IMAGE LISTING ORDER</div>
 <h2>Image sequence (Etsy shows 1 &amp; 2 largest)</h2>
 <div class="card">
   <ol style="padding-left:22px;line-height:2">
-    <li><strong>Hero</strong> — laptop screen showing the animated robot face mid-smile, kid's hand tapping the mic. Title overlay in Orbitron.</li>
-    <li><strong>4 personalities</strong> — 2×2 grid screenshot: Playful · Helpful · Pirate · Space Explorer avatars.</li>
-    <li><strong>Voice chat close-up</strong> — screenshot of a cheerful conversation bubble, mic button glowing, speech-recognition waveform visible.</li>
-    <li><strong>Parent controls</strong> — settings pane with PIN prompt, usage-timer slider, AI on/off toggle, history list.</li>
-    <li><strong>(Optional) micro:bit mirror</strong> — real BBC micro:bit V2 on the desk with the robot's smiley face on the LED matrix, laptop in frame.</li>
-    <li><strong>Theme sampler</strong> — 2-up grid: Light (default kid mode) · Dark (evening mode).</li>
-    <li><strong>Text card</strong> — "No sign-in · Parent PIN · Lifetime updates · Works offline" on a soft gradient.</li>
+    <li><strong>Hero</strong> — real micro:bit + laptop split-screen showing the 3D model mirroring the board's tilt. Title overlay in Orbitron.</li>
+    <li><strong>Tabs overview</strong> — grid screenshot of all 12 personalities with emoji labels.</li>
+    <li><strong>Live graph close-up</strong> — Web Speech API with colored lines + annotations, Record button glowing red.</li>
+    <li><strong>animated robot + Robot Arm</strong> — split screenshot showing two of the five Three.js models.</li>
+    <li><strong>Hand-holding the board</strong> — real voice plugged into P1, sliders on screen in the background.</li>
+    <li><strong>Theme sampler</strong> — 2×2 grid: Stealth · Neon · Arctic · Blaze.</li>
+    <li><strong>Text card</strong> — "Single-user license · Lifetime updates · No cloud · Chrome / Edge" on a dark gradient.</li>
   </ol>
 </div>
 
@@ -336,19 +332,19 @@ Happy chatting! 🤖💬✨<button class="copybtn" onclick="navigator.clipboard.
 <h2>Common mistakes</h2>
 <table>
   <tr><th>❌ Don't</th><th>✅ Do</th></tr>
-  <tr><td>Start with "Hi, I'm…" + 10s of intro</td><td>Open with the kid saying "hi!" and the robot replying in the first 3 s</td></tr>
+  <tr><td>Start with "Hi, I'm…" + 10s of intro</td><td>Open with the real board tilting a 3D model in the first 3 s</td></tr>
   <tr><td>Film landscape (16:9)</td><td>9:16 portrait — Etsy autoplays on mobile</td></tr>
-  <tr><td>Talk over the robot's voice line</td><td>Let the robot's reply breathe for 1–2 s, then add your voiceover</td></tr>
-  <tr><td>Forget captions (Etsy plays muted)</td><td>Burn in captions for both the kid's prompt and the robot's reply</td></tr>
-  <tr><td>Show voice chat on Safari / iOS</td><td>Always demo on Chrome/Edge for voice — Safari buyers will refund</td></tr>
+  <tr><td>Talk over busy on-screen animation</td><td>Let the visual breathe for 1s, then explain</td></tr>
+  <tr><td>Forget captions (Etsy plays muted)</td><td>Burn in captions or add a text overlay every scene</td></tr>
+  <tr><td>Show iOS / Safari in the video</td><td>Always demo on Chrome/Edge — iPhone users will buy and return</td></tr>
   <tr><td>Skip the CTA</td><td>Say "link below" in the last 5 seconds every single time</td></tr>
 </table>
 
 <!-- ═══════════ QUICK CARD ═══════════ -->
 <div class="slug">SLUG — POCKET CHEAT CARD</div>
-<div class="copybox">PRE    Kids app open · mic tested · personality picked · 9:16 phone
-SHOOT  "Hi Biscuit!" in 3 s · personality switch · (opt.) LED mirror · parent PIN · CTA
-POST   Trim to 55 s · captions for kid + robot lines · first frame = thumbnail
+<div class="copybox">PRE    V2 powered (X icon) · Chrome open · BLE green · 9:16 phone
+SHOOT  Hook in 3s · Live demo · CTA
+POST   Trim to 55 s · captions burn-in · first frame = thumbnail
 LIST   Title · 160-char desc · 13 tags · 7 images · price tiers</div>
 
 <p style="text-align:center;margin-top:40px;color:var(--muted);font-size:.85rem">

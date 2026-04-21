@@ -1,4 +1,5 @@
 <!doctype html>
+<!-- REWRITE PER PRODUCT — DO NOT SHIP AS-IS · TRANSLATE TO ARABIC -->
 <html lang="ar" dir="rtl">
 <head>
 <meta charset="utf-8" />
@@ -126,7 +127,7 @@
 <div class="slate">
   <div class="slate-clap">🎬</div>
   <div class="tag">— دليل Etsy · الإصدار 1.0.2 —</div>
-  <h1>Talking <span>Robot</span></h1>
+  <h1>micro:bit <span>Playground</span></h1>
   <div class="tag">عرض المنتج في دقيقة واحدة · مقتطفات جاهزة للنسخ</div>
   <div class="meta"><span><b>الصيغة:</b> عمودي 9:16</span><span><b>المدة:</b> ≤ 60 ثانية</span><span><b>الهدف:</b> تحويل المتصفحين إلى مشترين</span></div>
 </div>
@@ -146,14 +147,14 @@
 <h2>قبل الضغط على تسجيل</h2>
 <div class="card">
   <ul class="checklist" onclick="var li=event.target.closest('li');if(li)li.classList.toggle('checked')">
-    <li><input type="checkbox"><label>Chrome أو Edge مفتوح، وملف <code>index_kids.html</code> محمَّل<span class="where">الإدخال الصوتي يتطلب Chrome/Edge — Safari يدعم الكتابة فقط</span></label></li>
-    <li><input type="checkbox"><label>تم تسمية الروبوت واختيار الشخصية (اللعوب يبدو الأدفأ أمام الكاميرا)<span class="where">الإعدادات ← قائمة الشخصيات</span></label></li>
-    <li><input type="checkbox"><label>اختُبر الميكروفون — مؤشر التعرف على الكلام يُضيء<span class="where">اضغط زر الميكروفون الكبير مرة، قل «مرحبًا»</span></label></li>
-    <li><input type="checkbox"><label>تم اختيار السمة — <strong>الفاتح</strong> يبدو الأنسب للأطفال أمام الكاميرا<span class="where">الرأس ← مبدّل السمة</span></label></li>
-    <li><input type="checkbox"><label>تم لصق مفتاح API (لعرض وضع الذكاء الاصطناعي) أو تفعيل الوضع المحلي<span class="where">الإعدادات (بقفل PIN) ← وضع الذكاء الاصطناعي</span></label></li>
-    <li><input type="checkbox"><label>(اختياري) تم تحميل وربط micro:bit V2 — الوجه ينعكس على LED<span class="where">فقط إذا كان السكريبت يعرض لحظة المرآة LED</span></label></li>
+    <li><input type="checkbox"><label>جهاز micro:bit V2 يعمل ويعرض أيقونة <kbd>X</kbd><span class="where">إن لم يكن كذلك ← أعد تحميل <code>makecode.ts</code></span></label></li>
+    <li><input type="checkbox"><label>Chrome أو Edge مفتوح، وملف <code>index.html</code> محمَّل<span class="where">Safari وFirefox وiOS لن تعمل</span></label></li>
+    <li><input type="checkbox"><label>BLE متصل — شارة الحالة <strong>خضراء</strong><span class="where">اضغط 🔗 اتصال، ثم اختر BBC micro:bit من النافذة</span></label></li>
+    <li><input type="checkbox"><label>تم اختيار السمة — <strong>Neon</strong> تبدو الأفضل أمام الكاميرا<span class="where">الرأس ← قائمة رولر الطلاء</span></label></li>
+    <li><input type="checkbox"><label>المحرِّك موصول بـ P1 (عند عرض الذراع الروبوتية أو العربة)</label></li>
+    <li><input type="checkbox"><label>علامة تبويب Robot Face مفتوحة، مع اختيار العربة أو الذراع<span class="where">علامة التبويب 6 ← قائمة النماذج</span></label></li>
     <li><input type="checkbox"><label>الهاتف بوضع 9:16 على ترايبود، مضاء من الأمام</label></li>
-    <li><input type="checkbox"><label>المكتب مرتَّب — الحاسوب وقطعة طفل (لعبة، قلم تلوين) في الإطار</label></li>
+    <li><input type="checkbox"><label>المكتب مرتَّب — اللوحة وقطعة واحدة فقط في الإطار</label></li>
     <li><input type="checkbox"><label>قراءة النص بصوت عالٍ مرة واحدة — بزمن أقل من 55 ثانية</label></li>
   </ul>
 </div>
@@ -163,118 +164,113 @@
 <h2>البنية</h2>
 <div class="card">
   <pre style="color:var(--accent2);font-family:var(--mono);font-size:.9rem;line-height:1.7;margin:0">
- 0–3 s   HOOK        «تعرّف على صديق طفلي الروبوت الجديد — كله في متصفح.»
- 3–10 s  CONTEXT     وجه الروبوت على الشاشة، الطفل يضغط الميكروفون ويقول «مرحبًا!»
-10–25 s  DEMO        الروبوت يرد بصوت. تبديل الشخصية → رد الـقرصان.
-25–40 s  DEMO        (اختياري) micro:bit على المكتب يعكس الوجه. قفل PIN للوالدين.
-40–50 s  PAYOFF      الوالد يفتح سجل المحادثات ومؤقت الاستخدام.
-50–55 s  CTA         «رفيق صوتي بالذكاء الاصطناعي — الرابط في الوصف.»
-55–60 s  END FRAME   الشعار + المعرّف مجمَّد لمعاينة التكرار.</pre>
+ 0–3 s   HOOK        «Watch what this micro:bit does in 60 seconds.»
+ 3–10 s  CONTEXT     Board on-screen, X icon → status turns green.
+10–35 s  DEMO        Type a message. Press Speak. Pick a personality. LED face smiles.
+35–50 s  PAYOFF      Zoom on live graph + 3D model mirroring real board.
+50–55 s  CTA         «Full kit in my shop — link below.»
+55–60 s  END FRAME   Logo + handle frozen for the loop preview.</pre>
 </div>
 
 <!-- ═══════════ النص ═══════════ -->
 <div class="slug" id="script">النص مشهدًا مشهدًا</div>
-<h2>القالب: «صديق طفلك الروبوت الجديد»</h2>
+<h2>القالب: «الـ micro:bit يصبح ساحة لعب»</h2>
 
 <div class="scene">
   <div class="scene-head"><span class="scene-time">00:00–00:03</span><span class="scene-phase phase-hook">الخطاف</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 قل</div>«تعرّف على صديق طفلي الروبوت الجديد. يعيش في المتصفح. بدون تسجيل دخول. بدون تطبيق.»</div>
-    <div class="do"><div class="do-label">🎬 افعل</div>الحاسوب على الشاشة يعرض وجه الروبوت المتحرك بتقنية SVG يرمش. يد الطفل في الإطار.</div>
+    <div class="say"><div class="say-label">🎙 قل</div>«جهاز micro:bit لديك هو ساحة لعب. بدون تثبيت، بدون حساب — فقط متصفح.»</div>
+    <div class="do"><div class="do-label">🎬 افعل</div>أمسك اللوحة في الإطار. لقطة مقربة لأيقونة X تنبض على شبكة LED.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:03–00:10</span><span class="scene-phase phase-demo">السياق · أول محادثة</span></div>
+  <div class="scene-head"><span class="scene-time">00:03–00:10</span><span class="scene-phase phase-demo">السياق</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 قل</div>«تُسمّيه، تختار شخصيته، تضغط الميكروفون — فيرد عليك.»</div>
-    <div class="do"><div class="do-label">🎬 افعل</div>تسجيل شاشة: اكتب اسم الروبوت «بسكويت» ← اضغط الميكروفون ← الطفل يقول «مرحبًا بسكويت!» ← الروبوت يرد بصوت عالٍ، وعيناه تتوهجان.</div>
+    <div class="say"><div class="say-label">🎙 قل</div>«افتح الصفحة، اضغط اتصال — وهذا كل شيء. حساسات مباشرة، LED مباشر، محركات مباشرة.»</div>
+    <div class="do"><div class="do-label">🎬 افعل</div>تسجيل شاشة: اضغط على <strong>🔗 الاتصال بـ micro:bit</strong>، اختر اللوحة، شارة الحالة تصبح خضراء.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:10–00:25</span><span class="scene-phase phase-demo">العرض · تبديل الشخصية</span></div>
+  <div class="scene-head"><span class="scene-time">00:10–00:25</span><span class="scene-phase phase-demo">العرض · الحساسات + 3D</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 قل</div>«أربع شخصيات. لعوب، مساعد، قرصان، مستكشف فضاء — نفس السؤال، رد مختلف تمامًا.»</div>
-    <div class="do"><div class="do-label">🎬 افعل</div>بدّل الشخصية من لعوب ← قرصان. اطرح «ما طعام العشاء؟» مرتين. الروبوت يرد بصوت وحركة وجه مختلفين.</div>
+    <div class="say"><div class="say-label">🎙 قل</div>«أملها — فيميل النموذج ثلاثي الأبعاد على الشاشة أيضًا. المس الشعار — فيستجيب.»</div>
+    <div class="do"><div class="do-label">🎬 افعل</div>علامة التبويب <kbd>6</kbd> ← Robot Face. أمل اللوحة الحقيقية ← فيتبعها النموذج الافتراضي. اليد تحمل micro:bit بجانب الشاشة للانقسام.</div>
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:25–00:40</span><span class="scene-phase phase-demo">العرض · مرآة micro:bit (اختياري)</span></div>
+  <div class="scene-head"><span class="scene-time">00:25–00:40</span><span class="scene-phase phase-demo">العرض · المحركات + يد التحكم</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 قل</div>«عندك micro:bit؟ وجه الروبوت يظهر على مصفوفة LED أيضًا. اختياري تمامًا.»</div>
-    <div class="do"><div class="do-label">🎬 افعل</div>اعرض BBC micro:bit V2 على المكتب. اربط عبر الإعدادات ← مصفوفة LED تعكس رمش الروبوت وابتسامته في الوقت الحقيقي. شاشة مقسومة مع الحاسوب.</div>
+    <div class="say"><div class="say-label">🎙 قل</div>«حرّك محركًا من المتصفح. قُد روبوتًا بيد التحكم.»</div>
+    <div class="do"><div class="do-label">🎬 افعل</div>عرض الميزات الأساسية.
   </div>
 </div>
 
 <div class="scene">
-  <div class="scene-head"><span class="scene-time">00:40–00:50</span><span class="scene-phase phase-payoff">المكافأة · ضوابط الوالدين</span></div>
+  <div class="scene-head"><span class="scene-time">00:40–00:50</span><span class="scene-phase phase-payoff">المكافأة · المخطط</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 قل</div>«PIN للوالدين. مؤقت استخدام. كل محادثة محفوظة محليًا — يمكنك قراءتها كلها.»</div>
-    <div class="do"><div class="do-label">🎬 افعل</div>افتح الإعدادات ← أدخل PIN ← اعرض منزلقة المؤقت + مبدّل الذكاء الاصطناعي + قائمة السجل (20 جلسة).</div>
+    <div class="say"><div class="say-label">🎙 قل</div>«سجّل، أعِد التشغيل، صدِّر CSV. إنه مختبر علوم كامل داخل علامة تبويب.»</div>
+    <div class="do"><div class="do-label">🎬 افعل</div>علامة التبويب <kbd>5</kbd> ← 🎲 محاكاة ← يرقص المخطط الحي. زُم على أزرار التسجيل/CSV.</div>
   </div>
 </div>
 
 <div class="scene">
   <div class="scene-head"><span class="scene-time">00:50–00:60</span><span class="scene-phase phase-cta">CTA + إطار الختام</span></div>
   <div class="scene-body">
-    <div class="say"><div class="say-label">🎙 قل</div>«رفيق صوتي بالذكاء الاصطناعي — بلا تسجيل، بلا تطبيق، تحديثات مدى الحياة. الرابط في الوصف.»</div>
-    <div class="do"><div class="do-label">🎬 افعل</div>انتقل إلى طبقة الشعار + المعرّف فوق خلفية وجه الروبوت. ثبّت 3 ثوانٍ — لتصبح إطار التكرار.</div>
+    <div class="say"><div class="say-label">🎙 قل</div>«طقم كامل، تحديثات مدى الحياة — الرابط في الوصف. أيها المعلمون، اذكروني عند استخدامه.»</div>
+    <div class="do"><div class="do-label">🎬 افعل</div>انتقل إلى طبقة الشعار + المعرّف. ثبّت 3 ثوانٍ بلا حركة — لتصبح إطار التكرار.</div>
   </div>
 </div>
 
 <!-- ═══════════ نص الإعلان ═══════════ -->
 <div class="slug" id="listing">نص إعلان جاهز للنسخ</div>
 <h2>عنوان Etsy (140 حرفًا كحد أقصى)</h2>
-<div class="copybox">Talking Robot — رفيق صوتي بالذكاء الاصطناعي للأطفال · 4 شخصيات · مرآة LED micro:bit V2 اختياري · PIN للوالدين · تطبيق متصفح<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">نسخ</button></div>
+<div class="copybox">Talking Robot — لوحة تحكم BLE للمعلمين والأطفال · حساسات · محركات · مخطط حي · نماذج 3D · بلا تثبيت · Chrome / Edge<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">نسخ</button></div>
 
 <h2>الوصف المختصر (أول 160 حرفًا — تظهر في البحث)</h2>
-<div class="copybox">رفيق صوتي بالذكاء الاصطناعي للأطفال داخل المتصفح. 4 شخصيات، PIN للوالدين، مؤقت، بلا حساب. تكامل اختياري مع BBC micro:bit V2 لمرآة LED.<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">نسخ</button></div>
+<div class="copybox">لوحة تحكم BLE داخل المتصفح للوحة BBC micro:bit (optional). حساسات ومحركات ومخططات حية ونماذج ثلاثية الأبعاد ويد تحكم — كلها من Chrome. بلا تثبيت وبلا حساب.<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">نسخ</button></div>
 
 <h2>الوصف الكامل</h2>
-<div class="copybox">🤖 Talking Robot — رفيق صوتي بالذكاء الاصطناعي للأطفال يعمل مباشرة في المتصفح.
+<div class="copybox">🎮 Talking Robot — لوحة تحكم BLE تعمل داخل المتصفح للوحة BBC micro:bit (optional).
 
-سمِّ روبوتك، اختر شخصيته، اضغط الميكروفون — فيرد عليك. بلا تثبيت، بلا تسجيل دخول، بلا متجر تطبيقات. اختياري: اقترن بلوحة BBC micro:bit V2 عبر Bluetooth لتعكس وجه الروبوت على مصفوفة LED.
+افتح ملف HTML واحدًا في Chrome أو Edge، واقترن عبر Bluetooth، وافتح 8 علامات تبويب من المرح التعليمي (STEM) التفاعلي — بلا تثبيت، بلا حساب، بلا خادم خلفي، بلا تتبع.
 
 ما ستحصل عليه
-• 🎙 محادثة صوتية (تعرّف على الكلام + نطق نصي مع معاينة الأصوات)
-• 🤖 4 شخصيات: لعوب · مساعد · قرصان · مستكشف فضاء
-• 🧠 وضع الذكاء الاصطناعي عبر OpenAI (مفتاحك الخاص) أو الوضع المحلي مع حزم عبارات
-• 🎨 وجه SVG متحرك (عينان، هوائي، فم)
-• 🔐 PIN للوالدين على كل إعداد
-• ⏱ مؤقت الاستخدام + مبدّل تشغيل/إيقاف الذكاء الاصطناعي
-• 💬 سجل المحادثات — حتى 20 جلسة محفوظة محليًا لمراجعة الوالدين
-• 📡 مرآة LED micro:bit V2 اختياري (الوجه على مصفوفة 5×5) عبر Web Bluetooth
-• 📲 رمز QR لرابط برنامج MakeCode الثابت للإعداد السريع
-• 🌗 سمتان فاتحة وداكنة (فاتحة كدفتر افتراضي للأطفال)
+• 🎛 شبكة LED + أيقونات جاهزة + نص متحرك
+• 📡 حساسات مباشرة: الحرارة، الإضاءة، الصوت، مقياس التسارع، البوصلة، اللمس
+• ⚙️ محركان (P1 + P2) مع منزلقات ومؤشرات وضبط وأزرار إيقاف
+• 🎮 يد تحكم D-pad للروبوتات والألعاب
+• 📈 مخطط حي (Web Speech API) — تسجيل وإعادة تشغيل وتعليقات وتصدير PNG + CSV
+• 🎲 5 نماذج ثلاثية الأبعاد تفاعلية (Three.js): micro:bit، العربة، الذراع، التوازن، الطقس
+• 🎨 4 سمات (Stealth · Neon · Arctic · Blaze) + 3 لغات (EN · FR · AR مع دعم RTL كامل)
 • 📱 PWA — قابل للتثبيت ويعمل بدون إنترنت
-• ♿ إمكانية وصول: روابط تخطي، ARIA، التنقل بلوحة المفاتيح
+• 👶 وضع المبتدئ + 🧙 وضع الخبير
 
 محتويات التنزيل
-• index_kids.html — واجهة للأطفال
-• index.html — التطبيق الكامل بجميع الإعدادات
-• microbit_makecode.js / v2 / v3 — ثلاث نسخ من البرنامج الثابت لمرآة LED الاختيارية
-• docs/ — دليل المستخدم، مرجع سريع، دليل الضوابط الأبوية، الأسئلة الشائعة، دليل Etsy
-• مطبوعات — بطاقة بداية سريعة، مرجع، ملصق A3، خطة درس، ورقة ملصقات
-• LICENSE — رخصة عائلة وحيدة / صف وحيد
+• index.html — التطبيق الكامل
+• makecode.ts — برنامج micro:bit الثابت (تُحمَّل مرة واحدة من MakeCode)
+• SETUP.md — بداية سريعة في 5 دقائق
+• docs/ — دليل مصور، ومرجع سريع، وأسئلة شائعة، ودليل Etsy
+• LICENSE — رخصة مستخدم وحيد للاستخدام الشخصي / الصفي
 
 المتطلبات
-• متصفح حديث (Chrome أو Edge موصى به للإدخال الصوتي)
-• ميكروفون وسمّاعات للمحادثة الصوتية (الكتابة تعمل أيضًا)
-• اختياري: مفتاح OpenAI API لوضع الذكاء الاصطناعي الذكي — الوضع المحلي يعمل بدونه
-• اختياري: BBC micro:bit V2 لمرآة LED للوجه
+• BBC micro:bit (optional) (V1 يعمل لكن بدون حساس صوت)
+• Chrome أو Edge على سطح المكتب (أو Chrome على أندرويد)
+• تفعيل Bluetooth
+• HTTPS أو file:// — النقر المزدوج على HTML يكفي
 
 لمن هو موجَّه
-الآباء والأمهات لأطفال من 6 إلى 12 سنة · الأسر التي تدرّس منزليًا · النوادي بعد المدرسة · رحلات السيارة الهادئة · المعلمون الذين يريدون رفيق محادثة آمن للأطفال على أجهزة Chromebook الصفية.
+المعلمون الذين يديرون ورش STEM · الأسر التي تدرّس منزليًا · نوادي الروبوتات · صانعو النماذج الأولية لمشاريع BLE · كل مهتم بـ micro:bit.
 
 الخصوصية أولًا
-يعمل محليًا. بلا حساب، بلا تحليلات، بلا سحابة. السجل والإعدادات تبقى في متصفحك وعلى قرصك. المكالمة الصادرة الوحيدة هي طلب الذكاء الاصطناعي الاختياري بمفتاحك — ويمكن إيقاف الذكاء الاصطناعي تمامًا.
+لا شيء يغادر جهازك. بلا تتبع، بلا تسجيل دخول، بلا سحابة. جميع المعايرات والتسجيلات والإعدادات المسبقة تبقى في localStorage للمتصفح وعلى قرصك.
 
 تحديثات مدى الحياة
 كل إصدار يُطرح من هذا الإعلان هو ملكك للأبد. أعد تنزيل أحدث ZIP في أي وقت من صفحة مشترياتك في Etsy.
 
-محادثة سعيدة! 🤖💬✨<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">نسخ</button></div>
+قرصنة سعيدة! 🚀🎮🤖<button class="copybtn" onclick="navigator.clipboard.writeText(this.previousSibling.textContent.trim())">نسخ</button></div>
 
 <h2>فئات الأسعار</h2>
 <table>
@@ -288,48 +284,48 @@
 <div class="slug" id="tags">الوسوم والمواد</div>
 <h2>13 وسمًا لـ Etsy (20 حرفًا لكل وسم)</h2>
 <div class="pills">
-  <span class="pill">روبوت ذكي</span>
-  <span class="pill">talking robot</span>
-  <span class="pill">ذكاء اصطناعي للأطفال</span>
-  <span class="pill">مساعد صوتي أطفال</span>
-  <span class="pill">microbit</span>
-  <span class="pill">رفيق روبوت</span>
-  <span class="pill">لعبة برمجة</span>
-  <span class="pill">تعليم منزلي AI</span>
-  <span class="pill">STEM أطفال</span>
-  <span class="pill">chromebook AI</span>
-  <span class="pill">ضوابط أبوية</span>
-  <span class="pill">تعرّف على الكلام</span>
-  <span class="pill">AI للأطفال</span>
+  <span class="pill">micro:bit</span>
+  <span class="pill">BLE</span>
+  <span class="pill">bluetooth</span>
+  <span class="pill">تعليم</span>
+  <span class="pill">STEM</span>
+  <span class="pill">روبوتات</span>
+  <span class="pill">برمجة أطفال</span>
+  <span class="pill">مورد للمعلم</span>
+  <span class="pill">حساسات</span>
+  <span class="pill">محركات</span>
+  <span class="pill">غرفة صف</span>
+  <span class="pill">تعليم منزلي</span>
+  <span class="pill">ميكرسبيس</span>
 </div>
 
 <h2>المواد (ما الذي يشغّله)</h2>
 <div class="pills">
   <span class="pill">HTML5</span>
   <span class="pill">JavaScript</span>
-  <span class="pill">Web Speech API</span>
-  <span class="pill">OpenAI API</span>
   <span class="pill">Web Bluetooth</span>
+  <span class="pill">Web Speech API</span>
+  <span class="pill">Three.js</span>
   <span class="pill">PWA</span>
   <span class="pill">MakeCode</span>
-  <span class="pill">SVG animation</span>
+  <span class="pill">TypeScript</span>
 </div>
 
 <h2>كلمات SEO</h2>
-<p><code>ai voice companion</code> · <code>no sign-in</code> · <code>privacy-first</code> · <code>parental controls</code> · <code>kid-safe ai</code> · <code>offline-capable</code> · <code>microbit v2 optional</code> · <code>homeschool ai</code></p>
+<p><code>browser-based</code> · <code>no-install</code> · <code>privacy-first</code> · <code>offline-capable</code> · <code>web bluetooth</code> · <code>teacher resource</code> · <code>STEM workshop</code> · <code>micro:bit V2</code></p>
 
 <!-- ═══════════ الصور ═══════════ -->
 <div class="slug" id="images">ترتيب الصور السبع للإعلان</div>
 <h2>تسلسل الصور (Etsy يعرض 1 و 2 بأكبر حجم)</h2>
 <div class="card">
   <ol style="padding-right:22px;line-height:2">
-    <li><strong>الصورة البطل</strong> — شاشة حاسوب تعرض وجه الروبوت المتحرك وهو يبتسم، ويد الطفل تضغط الميكروفون. عنوان بخط Orbitron فوقها.</li>
-    <li><strong>4 شخصيات</strong> — لقطة 2×2: أفاتار لعوب · مساعد · قرصان · مستكشف فضاء.</li>
-    <li><strong>لقطة مقرَّبة للمحادثة الصوتية</strong> — فقاعة محادثة بهيجة، زر الميكروفون متوهج، موجة التعرّف على الكلام ظاهرة.</li>
-    <li><strong>ضوابط الوالدين</strong> — لوحة الإعدادات مع طلب PIN، منزلقة المؤقت، مبدّل الذكاء الاصطناعي، قائمة السجل.</li>
-    <li><strong>(اختياري) مرآة micro:bit</strong> — BBC micro:bit V2 حقيقي على المكتب مع وجه الروبوت المبتسم على مصفوفة LED، الحاسوب في الإطار.</li>
-    <li><strong>عيّنة السمات</strong> — شبكة 2 في 1: فاتح (وضع الأطفال الافتراضي) · داكن (وضع المساء).</li>
-    <li><strong>بطاقة نصية</strong> — «بلا تسجيل · PIN للوالدين · تحديثات مدى الحياة · يعمل بدون إنترنت» على تدرج ناعم.</li>
+    <li><strong>الصورة البطل</strong> — micro:bit حقيقي + لقطة شاشة مقسومة للحاسوب تُظهر النموذج ثلاثي الأبعاد وهو يعكس ميل اللوحة. عنوان بخط Orbitron فوقها.</li>
+    <li><strong>نظرة عامة على الألسنة</strong> — لقطة شبكية لجميع الألسنة الثماني مع رموزها.</li>
+    <li><strong>لقطة مقرَّبة للمخطط</strong> — Web Speech API بخطوط ملونة وتعليقات، مع زر تسجيل أحمر متوهج.</li>
+    <li><strong>العربة + الذراع الروبوتية 3D</strong> — لقطة شاشة مقسومة تُظهر نموذجين من بين نماذج Three.js الخمسة.</li>
+    <li><strong>يد تمسك اللوحة</strong> — محرك حقيقي موصول بـ P1، والمنزلقات على الشاشة في الخلفية.</li>
+    <li><strong>عيّنة السمات</strong> — شبكة 2×2: Stealth · Neon · Arctic · Blaze.</li>
+    <li><strong>بطاقة نصية</strong> — «رخصة مستخدم وحيد · تحديثات مدى الحياة · بلا سحابة · Chrome / Edge» على تدرج داكن.</li>
   </ol>
 </div>
 
@@ -338,19 +334,19 @@
 <h2>أخطاء شائعة</h2>
 <table>
   <tr><th>❌ لا تفعل</th><th>✅ افعل</th></tr>
-  <tr><td>ابدأ بـ «مرحبًا، أنا…» مع 10 ثوانٍ من المقدمة</td><td>افتح بالطفل يقول «مرحبًا!» والروبوت يرد في أول 3 ثوانٍ</td></tr>
+  <tr><td>ابدأ بـ «مرحبًا، أنا…» مع 10 ثوانٍ من المقدمة</td><td>افتح باللوحة الحقيقية وهي تُميل نموذجًا ثلاثي الأبعاد في أول 3 ثوانٍ</td></tr>
   <tr><td>التصوير بالوضع الأفقي (16:9)</td><td>عمودي 9:16 — Etsy يشغّل تلقائيًا على الجوال</td></tr>
-  <tr><td>التحدث فوق خط الروبوت الصوتي</td><td>اترك رد الروبوت يتنفس 1–2 ثانية، ثم أضف تعليقك الصوتي</td></tr>
-  <tr><td>نسيان الترجمة (Etsy يشغّل كتم الصوت)</td><td>ادمج ترجمة سؤال الطفل ورد الروبوت معًا</td></tr>
-  <tr><td>عرض المحادثة الصوتية على Safari / iOS</td><td>اعرض دائمًا على Chrome/Edge للصوت — مشترو Safari سيطلبون استرجاع المبلغ</td></tr>
+  <tr><td>التحدث فوق رسوم متحركة مزدحمة</td><td>اترك الصورة تتنفس لثانية، ثم اشرح</td></tr>
+  <tr><td>نسيان الترجمة (Etsy يشغّل كتم الصوت)</td><td>ادمج الترجمة أو أضف نصًا في كل مشهد</td></tr>
+  <tr><td>عرض iOS / Safari في الفيديو</td><td>اعرض دائمًا على Chrome/Edge — مستخدمو iPhone سيشترون ثم يطلبون استرجاع المبلغ</td></tr>
   <tr><td>تخطي CTA</td><td>قل «الرابط في الأسفل» في آخر 5 ثوانٍ في كل مرة</td></tr>
 </table>
 
 <!-- ═══════════ بطاقة سريعة ═══════════ -->
 <div class="slug">بطاقة الجيب المرجعية</div>
-<div class="copybox">قبل     تطبيق الأطفال مفتوح · الميكروفون مختبَر · الشخصية مختارة · هاتف 9:16
-صوِّر   «مرحبًا بسكويت!» في 3 ثوانٍ · تبديل شخصية · (اختياري) مرآة LED · PIN للوالدين · CTA
-بعد     قصّ إلى 55 ثانية · ترجمة للطفل والروبوت · أول إطار = المصغَّرة
+<div class="copybox">قبل     V2 يعمل (أيقونة X) · Chrome مفتوح · BLE أخضر · هاتف 9:16
+صوِّر   خطاف في 3 ثوانٍ · إمالة ← انعكاس 3D · محرك يتحرك · محاكاة مخطط · CTA
+بعد     قصّ إلى 55 ثانية · ترجمة مدمجة · أول إطار = المصغَّرة
 أعلن    عنوان · وصف 160 حرفًا · 13 وسمًا · 7 صور · فئات الأسعار</div>
 
 <p style="text-align:center;margin-top:40px;color:var(--muted);font-size:.85rem">

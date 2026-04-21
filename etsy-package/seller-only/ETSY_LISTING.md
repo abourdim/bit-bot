@@ -3,6 +3,12 @@
 > ### 🛒 [Open Etsy "Create a Listing"](https://www.etsy.com/your/shops/me/listing-editor/create)
 > Jump straight into a fresh listing draft — keep this file open in another tab and paste section-by-section.
 
+> 🌍 **Localized buyer-facing copy** lives in sibling files. Create a **separate listing** per language (Etsy search ranks mono-language listings better than mixed ones):
+> - **French** — [`ETSY_LISTING-fr.md`](./ETSY_LISTING-fr.md) (titre, tags, description, FAQ, messages)
+> - **Arabic** — [`ETSY_LISTING-ar.md`](./ETSY_LISTING-ar.md) (العنوان، الوسوم، الوصف، الأسئلة الشائعة، الرسائل)
+>
+> Seller-internal strategy (pricing, UTM, Pinterest, launch sequence, Tier-2 ideas) stays in this file only — the localized files have just the text that ends up in the Etsy UI.
+
 ## Contents
 
 - [Title](#title-140-char-max--pack-it-with-searchable-keywords)
@@ -31,18 +37,18 @@
 - [Screenshot prep](#screenshot-prep--exactly-what-to-capture-for-the-10-listing-photos)
 - [Pinterest pins](#pinterest-pins-free-traffic--biggest-channel-for-stem--homeschool-buyers)
 - [Free-traffic playbook](#free-traffic-playbook-beyond-pinterest)
-- [Second listing — School Site License ($229)](#second-listing--school-site-license-199)
+- [Second listing — School Site License ($199)](#second-listing--school-site-license-199)
 - [Third listing — Arabic](#third-listing--arabic-uncontested-market)
-- [V2.0.0 sell ideas](#new-sell-ideas-enabled-by-the-illustrated-guide-v102)
+- [V1.2.0 sell ideas](#new-sell-ideas-enabled-by-the-illustrated-guide-v102)
 - [Tier-2 sell ideas](#tier-2-sell-ideas--deeper-less-obvious)
 
 ---
 
 ## Title (140 char max — pack it with searchable keywords)
 
-Talking Robot — AI Voice Companion for Kids | Optional BBC micro:bit V2 Integration | Browser App, No Sign-In | Digital Download
+Bluetooth Web App for BBC micro:bit V2 + Illustrated Guide | 12 Personalities, Voice Chat, AI Companion | STEM Classroom | Digital Download
 
-> Product name in your Etsy shop is **"Talking Robot"** — use the phrase **"for the BBC micro:bit V2"** (or "optional micro:bit V2") everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
+> Product name in your Etsy shop is **"Talking Robot"** — use the phrase **"for the BBC micro:bit V2"** everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
 
 ## Category
 
@@ -51,60 +57,58 @@ Digital Downloads → Educational Resources
 
 ## Tags (13 max — Etsy lets you use all 13, use them)
 
-ai robot, talking robot, kids ai, voice assistant kids, microbit, robot companion, coding toy, homeschool ai, STEM kids, chromebook ai, parental controls, speech recognition kids, ai for kids
+micro:bit, microbit v2, STEM, coding kids, BBC microbit, bluetooth app, MakeCode, classroom resource, homeschool STEM, robotics, web bluetooth, coding club, chromebook stem
 
-> Mix: 6 high-intent AI/robot buyer terms up front, 3 education/homeschool terms in the middle, 3 trust/safety terms (`parental controls`, `chromebook ai`, `speech recognition kids`) to catch the cautious parent searcher, 1 micro:bit hardware term so the optional-integration audience still finds the listing.
+> Replaced the two weakest tags (`edtech` — corporate, not what teachers search; `sensor playground` — zero search volume) with `coding club` and `chromebook stem` (both strong long-tail teacher queries).
 
-## Price suggestion (revised after V2.0.0 — illustrated guide justifies ~30% bump)
+## Price suggestion (revised after V1.2.0 — illustrated guide justifies ~30% bump)
 
-- **$14.99** launch (was $9.99 — the interactive illustrated guide is worth the bump)
-- **$19.99** standard, after 5 reviews
-- **$34.99** with a printable Lesson Plan PDF bundle
-- **$229** School Site License (separate listing — was $149; TpT comparables are $200–$400 so $149 was leaving money on the table)
-- **Starting at $599** for districts (3+ sites — quote via Etsy message)
+- **$12.99** launch (was $9.99 — the interactive illustrated guide is worth the bump)
+- **$17.99** standard, after 5 reviews
+- **$29.99** with a printable Lesson Plan PDF bundle
+- **$199** School Site License (separate listing — was $149; TpT comparables are $200–$400 so $149 was leaving money on the table)
+- **Starting at $499** for districts (3+ sites — quote via Etsy message)
 
 ## Listing description
 
-> **Browser-based AI voice companion for kids. No install. Works on Chromebook. Chrome or Edge recommended for voice features.**
+> **Browser-based Bluetooth control panel for the BBC micro:bit V2. No install. Works on Chromebook. Chrome or Edge required — not iPhone / iPad / Safari.**
 >
-> ✅ **Tested on Chromebook** — the primary home and school device for kids. Installs as a PWA, works offline after the first load.
+> ✅ **Tested on Chromebook** — primary target device for schools. Installs as a PWA, works offline after the first load.
 >
-> 🤖 **Talking Robot** is a friendly AI buddy your kid can chat with out loud. Pick a personality, give it a name, press the mic, and go. Optional: pair a BBC micro:bit V2 over Bluetooth to mirror the robot's face on its 5×5 LED matrix.
+> 🎮 **Talking Robot** turns your micro:bit into an interactive STEM lab — no installs, no accounts, no cloud. Just open it in your browser and connect.
 >
-> 🔒 **No accounts. No sign-in. No data collected. Safe for kids under 13 — COPPA-friendly by design.** AI mode is optional; an offline "phrase pack" mode works with zero API key and zero internet after first load.
+> 🔒 **No accounts. No sign-in. No data collected. Safe for students under 13 — COPPA-friendly by design.**
 >
-> 🧪 **Try it live** (works with no API key, no hardware): <https://abourdim.github.io/bit-bot/>
+> 🧪 **Try it now** (Simulate mode, no micro:bit needed): <https://abourdim.github.io/bit-bot/>
 >
 > ✨ **What you get** (instant download):
-> • A complete web app (`index.html` + kid-friendly `index_kids.html`) you run locally in Chrome or Edge
-> • **AI voice chat** via OpenAI (bring your own key) OR offline phrase-pack demo mode
-> • **4 personalities**: Playful, Helpful, Pirate, Space Explorer — plus a custom robot name
-> • **Animated SVG robot face** with glowing eyes, antenna, and mouth
-> • **Speech recognition + text-to-speech** with a "preview voice" button
-> • **Parental controls**: PIN-locked settings, AI on/off toggle, usage timer
-> • **Conversation history** (up to 20 sessions, stored locally — parents can review)
-> • **Optional micro:bit V2 integration**: pair over Web Bluetooth to mirror the robot's face on the LED matrix, plus a QR-code link to the MakeCode firmware
-> • **3 micro:bit firmware variants** (`microbit_makecode.js` / `v2` / `v3`) — flash whichever suits your board
-> • Dark / light themes (kid-friendly light by default)
-> • Installable PWA — add to home screen, works offline
-> • Printable quick-start card, shortcuts cheat sheet, A3 robot poster, lesson plan, sticker sheet, parental-controls guide
-> • Accessibility: skip links, ARIA labels, keyboard navigation, reduced-motion support
+> • A complete web app (HTML, CSS, JS) you run locally in Chrome or Edge
+> • Ready-to-flash micro:bit firmware (`makecode.ts`)
+> • **Illustrated trilingual user guide (EN/FR/AR) with built-in diagrams:**
+>   — architecture diagram • micro:bit V2 pin-out • firmware flow storyboard
+>   — interactive LED playground inside the guide (click cells, copy hex commands)
+>   — visual troubleshooting: decision tree, symptom picker, icon gallery, reset recipe
+> • A printable Quick Setup guide (`SETUP.md`)
+> • 4 themes (Stealth, Neon, Arctic, Blaze)
+> • 12 personalities + voice + chat + emotions + parental controls
+> • 5 interactive 3D models (micro:bit, Buggy, Robot Arm, Balance Game, Weather Station)
+> • Session recording, live graphs, annotations, JSON export
+> • Beginner & Expert modes — grows with the learner
 >
-> 🧒 **Perfect for**: parents of kids 6–12, homeschool families, after-school clubs, quiet car rides, kids who like robots and talking companions. Teachers welcome too.
+> 🧒 **Perfect for**: classrooms, homeschool, after-school clubs, makerspaces, STEM camps, robotics enthusiasts, parents teaching kids to code.
 >
 > ⚙️ **Requires**:
-> • A modern browser — Chrome or Edge recommended for voice input (Web Speech API)
-> • Microphone + speakers for voice chat (typing works too)
-> • (Optional) an OpenAI API key for smart AI mode — the app runs in offline demo mode without one
-> • (Optional) BBC micro:bit V2 if you want the LED face mirror — everything else works standalone
+> • BBC micro:bit V2 (sold separately)
+> • Chrome or Edge browser on a desktop, laptop, or Android device
+> • Bluetooth enabled
 >
-> ❌ **Voice input does NOT work on**: Safari and iOS browsers (no Web Speech support). Typing still works there. The optional micro:bit pairing requires Chrome or Edge on desktop / Chromebook / Android — not iPhone / iPad.
+> ❌ **Does NOT work on**: Safari, Firefox, iPhone, iPad. (Web Bluetooth limitation — not the app.)
 >
 > 📦 **Delivery**: Instant download after purchase — a single ZIP file.
 >
-> 📜 **License**: Single-family / single-classroom use. Use it in your own home or classroom as much as you like. You may **not** resell, redistribute, or upload it elsewhere.
+> 📜 **License**: Single-teacher / single-family use. Use it in your own classroom or home as much as you like. You may **not** resell, redistribute, or upload it elsewhere.
 >
-> ⏰ **Launch price $14.99 through Friday {{LAUNCH_DATE}}. Goes to $19.99 after.** Grab it now if you're on the fence.
+> ⏰ **Launch price $12.99 through Friday {{LAUNCH_DATE}}. Goes to $17.99 after.** Grab it now if you're on the fence.
 >
 > <!-- SELLER TODO: replace {{LAUNCH_DATE}} above with the actual launch-Friday date (e.g. "May 2, 2026") BEFORE publishing the listing. See the TOC note next to "Listing description". -->
 >
@@ -126,61 +130,55 @@ Paste this block into the listing just above the FAQ. No fabricated reviews — 
 
 ## Compare table for the description
 
-**What makes Talking Robot different?** Side-by-side with the two alternatives most parents weigh it against:
+**What makes Talking Robot different?** Side-by-side with the two free alternatives most teachers try first:
 
-| Feature | Talking Robot | Generic ChatGPT kid wrapper | Physical AI toy ($79+) |
+| Feature | Talking Robot | MakeCode Editor | Raw Web Bluetooth demos |
 |---|:---:|:---:|:---:|
-| Offline / no-API-key fallback mode | ✅ | ❌ | ✅ |
-| Parental PIN on every setting | ✅ | ❌ | Partial |
-| No sign-in, no account, no email | ✅ | ❌ | ❌ (app required) |
-| Optional BBC micro:bit V2 integration (LED face mirror) | ✅ | ❌ | ❌ |
-| AI is optional — parent can toggle off | ✅ | ❌ | ❌ |
-| Works on any device you already own | ✅ | ✅ | ❌ (ships hardware) |
-| Conversation history reviewable by parent | ✅ | Partial | ❌ (in-app only) |
-| Price | **$14.99** | $0–$20/mo subscription | $79–$199 one-time |
+| Works in-browser, zero install | ✅ | ✅ | ✅ |
+| Ready-to-use sensor dashboard (temp, light, sound, accel, emotion, touch) | ✅ | ❌ | ❌ |
+| Live graph + CSV / PNG export + session record & replay | ✅ | ❌ | ❌ |
+| Dual voice control UI with gauges and trim | ✅ | ❌ | Build it yourself |
+| 5 interactive 3D models (micro:bit, Buggy, Arm, Balance, Weather) | ✅ | ❌ | ❌ |
+| Trilingual EN/FR/AR with full RTL support | ✅ | Partial | ❌ |
+| Classroom lesson plan + printable stickers & A3 poster | ✅ | ❌ | ❌ |
+| Works offline after first load (installable PWA) | ✅ | ❌ | ❌ |
 
 ---
 
 ## Photo / mockup checklist (Etsy allows 10)
 
-1. Hero: laptop screen with the robot's animated SVG face open + kid's hand near the mic button
-2. Personality picker screenshot (all 4 — Playful / Helpful / Pirate / Space Explorer)
-3. **Demo GIF — 5-second silent loop of kid tapping mic, robot face animates, reply bubble appears** (auto-plays on Etsy, highest conversion slot after the hero)
-4. Parental controls screenshot (PIN unlock + usage timer)
-5. All 4 personalities shown as face variants side-by-side
-6. Mobile / tablet view (PWA install prompt visible)
-7. Onboarding overlay screenshot (name-your-robot step)
+1. Hero: micro:bit + laptop screen with the app open (LED matrix tab)
+2. Sensor dashboard screenshot
+3. **Demo GIF — 5-second silent loop of pairing + drawing on the 5×5 LED matrix** (auto-plays on Etsy, highest conversion slot after the hero)
+4. robot face viewer screenshot
+5. All 4 themes side-by-side
+6. Mobile / tablet view
+7. Onboarding overlay screenshot
 8. "Works on Chrome / Edge — not iPhone" infographic
 9. List of features as a styled image (text-on-image converts well on Etsy)
-10. Optional extra: robot face mirrored on a paired micro:bit V2's 5×5 LED matrix
+10. The Quick Setup guide preview
 
 > Tip: Etsy's first photo is square — design for a square crop.
 
 ## FAQ to add to the listing
 
-**Q: Do I need a micro:bit at all?**
-No — the micro:bit is **completely optional**. The Talking Robot app works standalone in any modern browser. Pairing a BBC micro:bit V2 only adds one thing: the robot's face mirrored on its 5×5 LED matrix. Skip it entirely if you don't own one.
+**Q: Do I need to know how to code?**
+No — just flash the firmware once and click Connect.
 
 **Q: Will this work on my iPad?**
-The chat and typing work. Voice input (speech recognition) and the optional micro:bit pairing do **not** work on iOS/Safari — that's a browser limitation, not the app. For the full experience, use a laptop, Chromebook, or Android device with Chrome or Edge.
-
-**Q: Does it use my OpenAI API key?**
-Yes, if you want AI mode. You paste your own key into the app (it's stored locally in your browser's storage — never sent to us). Usage goes directly against your OpenAI account, so you control the spend. If you don't want to use an API key at all, **offline demo mode** uses built-in phrase packs and works with zero internet.
-
-**Q: What if my kid says something inappropriate, or the robot does?**
-Two layers. First, the app uses a content filter on inputs and responses. Second — and more importantly — every conversation is saved locally (up to 20 sessions), so a parent can open the history any time and read exactly what was said. The PIN-locked settings also let you disable AI entirely and stick to offline phrase packs, which never surprise you.
+No. Apple does not allow Web Bluetooth in any iOS browser. Use a laptop, Chromebook, or Android tablet.
 
 **Q: Can I use this in my classroom of 30 students?**
 Yes — single teacher, one school, unlimited students. For multi-teacher / district licenses, message me.
 
 **Q: Do you offer refunds?**
-Because this is an instant download, I can't offer refunds once the ZIP has been delivered — please double-check compatibility (Chrome or Edge for voice + optional micro:bit pairing) and try the live demo link before buying. If the product doesn't work as described on a supported browser, message me within 14 days and I'll make it right.
+Because this is an instant download, I can't offer refunds once the ZIP has been delivered — please double-check compatibility (Chrome or Edge, desktop, BBC micro:bit V2) before buying. If the product doesn't work as described on a supported browser, message me within 14 days and I'll make it right.
 
-**Q: Is it safe for kids under 13 (COPPA)?**
-Yes. The app itself runs locally in the browser — no accounts, no sign-ins, no data collection, no cloud, no telemetry. Nothing leaves the device except the AI request to OpenAI if you choose to enable AI mode with your own key (and you can turn that off). COPPA-friendly by design.
+**Q: Is it safe for students under 13 (COPPA)?**
+Yes. Everything runs locally in the browser — no accounts, no sign-ins, no data collection, no cloud, no telemetry. Nothing leaves the device. COPPA-friendly by design.
 
 **Q: Will it get updates?**
-Yes — free updates within the v2.x line (new features and bug fixes), plus guaranteed bug-fix updates for 12 months after your purchase. A future major version, if released, would be a separate listing with an upgrade discount for existing buyers. This wording now matches `LICENSE.txt` clause 4 — keep them in sync when you revise either.
+Yes — free updates within the v1.x line (new features and bug fixes), plus guaranteed bug-fix updates for 12 months after your purchase. A future v2.x major version, if released, would be a separate listing with an upgrade discount for existing buyers. This wording now matches `LICENSE.txt` clause 4 exactly — keep them in sync when you revise either.
 
 ---
 
@@ -190,7 +188,7 @@ Yes — free updates within the v2.x line (new features and bug fixes), plus gua
 >
 > **If it doesn't pair on a Chromebook in under 5 minutes on a supported browser (Chrome or Edge), message me and I'll refund you personally.**
 >
-> This isn't an Etsy-policy refund, it's a me-refund. I'd rather lose $14.99 than leave a teacher stuck before first period.
+> This isn't an Etsy-policy refund, it's a me-refund. I'd rather lose $12.99 than leave a teacher stuck before first period.
 
 ---
 
@@ -208,7 +206,7 @@ A3 micro:bit V2 Pin-out Classroom Poster — Printable PDF | STEM Wall Chart for
 ### Description
 > 🖨️ **One poster. One price. Print it today.**
 >
-> A printable A3 **BBC micro:bit (optional) pin-out poster** — the exact diagram used in the Talking Robot illustrated guide. Labeled pins, accelerometer axes, sound sensor callout, touch-logo arrow, radio + BLE note.
+> A printable A3 **BBC micro:bit V2 pin-out poster** — the exact diagram used in the Talking Robot illustrated guide. Labeled pins, voice mode axes, sound sensor callout, touch-logo arrow, radio + BLE note.
 >
 > 📄 **What you get:** 1 PDF, A3 (297×420 mm) + US Tabloid (11×17 in) versions, print-at-home or send to any copy shop.
 >
@@ -250,7 +248,7 @@ All three are generated from the existing printable HTML templates already shipp
 4. Email provider: **ConvertKit** (free tier up to 1,000 subs) or **MailerLite** (free tier up to 1,000 subs).
 5. Autoresponder email #1 delivers the PDF + links to the Etsy listing.
 6. Autoresponder email #2 (3 days later) shares a classroom tip + the $5 tripwire listing.
-7. Autoresponder email #3 (7 days later) shares a Pinterest pin + the main $14.99 listing with a **10% code**.
+7. Autoresponder email #3 (7 days later) shares a Pinterest pin + the main $12.99 listing with a **10% code**.
 
 ### Where to share the landing page
 - Pinterest pins (use UTMs — see below)
@@ -266,13 +264,13 @@ All three are generated from the existing printable HTML templates already shipp
 
 ### Code spec (create in Etsy: Shop Manager → Marketing → Sales and discounts → Item-specific sale)
 - Code name: **LAUNCH10**
-- Discount: **$5.99 off** (brings $14.99 → **$7.00**)
+- Discount: **$5.99 off** (brings $12.99 → **$7.00**)
 - Quantity: **10 uses** (Etsy supports per-code use caps)
 - Duration: 30 days from first use
 - Applies to: main single-user listing only (not site license, not tripwire)
 
 ### Where to share the code
-- Pinterest pin caption: *"First 10 buyers — code LAUNCH10 for $9 (from $14.99)"*
+- Pinterest pin caption: *"First 10 buyers — code LAUNCH10 for $7 (from $12.99)"*
 - Facebook group posts (where self-promo day allows it)
 - Your newsletter's first autoresponder
 
@@ -327,7 +325,7 @@ The shipped ZIP already contains `etsy-playbook-en.html`, `etsy-playbook-fr.html
 | Listing | Language | Title source | Description source | Video |
 |---------|----------|--------------|--------------------|-------|
 | #1 | English | EN title above | EN description above | 15-sec silent loop, EN end-card |
-| #2 | Français | Translate EN title, keep "for the BBC micro:bit (optional)" English | From `etsy-playbook-fr.html` | Same footage, FR end-card text |
+| #2 | Français | Translate EN title, keep "for the BBC micro:bit V2" English | From `etsy-playbook-fr.html` | Same footage, FR end-card text |
 | #3 | العربية | See [Third listing — Arabic](#third-listing--arabic-uncontested-market) section below | From `etsy-playbook-ar.html` | Same footage, AR end-card text (RTL) |
 
 ### Localized video plan
@@ -417,7 +415,7 @@ This is sent automatically the moment a buyer pays. Etsy already shows them the 
 >
 > Your download is ready right now — Etsy has emailed you the link, and you can also grab it from **You → Purchases & Reviews**.
 >
-> 📘 **Start here:** unzip the file and open **SETUP.md** (5-minute guide). You'll need a BBC micro:bit (optional) and Chrome or Edge — Safari and iPhones won't work (that's a Web Bluetooth limitation, not the app).
+> 📘 **Start here:** unzip the file and open **SETUP.md** (5-minute guide). You'll need a BBC micro:bit V2 and Chrome or Edge — Safari and iPhones won't work (that's a Web Bluetooth limitation, not the app).
 >
 > 💬 **Stuck?** Reply to this message with your Etsy order number and a screenshot — I'll get back to you within 24 hours.
 >
@@ -436,7 +434,7 @@ Use this when someone messages you *before* buying with a compatibility question
 
 > Hi! Great question — quick check before you buy:
 >
-> 1. Do you have a **BBC micro:bit (optional)** (the one with the gold microphone)? V1 is missing the sound sensor and a couple of features.
+> 1. Do you have a **BBC micro:bit V2** (the one with the gold microphone)? V1 is missing the sound sensor and a couple of features.
 > 2. What browser will you be using? It must be **Chrome or Edge** on a desktop, laptop, Chromebook, or Android tablet. Safari, Firefox, iPhone, and iPad are not supported (Web Bluetooth limitation).
 >
 > If both are a yes, you're good to go. Let me know if you'd like me to send a 30-second demo video before you decide.
@@ -455,11 +453,11 @@ Etsy plays the listing video **muted and on loop**, so design it like a GIF. No 
 
 | Time | Shot | Notes |
 |------|------|-------|
-| 0:00 – 0:02 | App home screen, animated robot face smiling, "🎤 Tap to talk" button pulsing | Capture kid tapping the mic, face shifts to listening |
-| 0:02 – 0:04 | Kid says "Tell me a joke" → reply bubble appears, TTS waveform on robot face | Show live speech recognition badge |
-| 0:04 – 0:06 | Fast cycle through all 4 personalities (Playful → Helpful → Pirate → Space Explorer) | One per ~500ms, face + name change |
-| 0:06 – 0:09 | Parent opens Settings, enters PIN, sets 20-min usage timer | Shows PIN keypad + timer slider |
-| 0:09 – 0:12 | Optional micro:bit V2 pairing: robot face on screen mirrored on the 5×5 LED matrix in real hardware | Side-by-side split if you own a V2 |
+| 0:00 – 0:02 | App home screen, "🔗 Connect" button pulsing | Capture the click → device picker → green "Connected" chip |
+| 0:02 – 0:04 | Hand drags fingertip on the 5×5 LED grid → cut to micro:bit hardware lighting up the same pattern | Side-by-side split screen if possible |
+| 0:04 – 0:06 | Tilt the physical micro:bit → animated robot on screen tilts in sync | Use the Balance or Buggy 3D model |
+| 0:06 – 0:09 | Live graph drawing a sine wave in fullscreen, Neon theme | Smooth motion, bright glow |
+| 0:09 – 0:12 | Fast cycle through all 4 themes (Stealth → Neon → Arctic → Blaze) | One theme per ~700ms |
 | 0:12 – 0:15 | End card: logo + text overlay "Talking Robot — works in Chrome / Edge" | Hold for 3 seconds, this is the loop seam |
 
 **Tools:** screen-record with QuickTime or OBS, then cut in iMovie / CapCut. Export 1:1 (1080×1080) if Etsy still prefers square; otherwise 16:9 (1920×1080).
@@ -470,15 +468,15 @@ Etsy plays the listing video **muted and on loop**, so design it like a GIF. No 
 
 Upload this to **Loom**, **YouTube** (unlisted), or **Vimeo** and paste the link in your pre-purchase replies. Voiceover allowed.
 
-> *(0:00)* "This is the Talking Robot. It runs in your browser — no installs, no accounts."
+> *(0:00)* "This is the Talking Robot. It runs in your browser — no installs."
 >
-> *(0:04)* "Your kid picks a personality — Playful, Helpful, Pirate, or Space Explorer — gives the robot a name, and taps the mic."
+> *(0:04)* "Plug in a micro:bit V2, click Connect, pick it from the list. Done."
 >
-> *(0:09)* "The robot listens, replies out loud, and its animated face reacts with emotions. Parents set a PIN and a daily usage timer. Every conversation is saved locally — up to 20 sessions — so you can always read what was said."
+> *(0:09)* "You get twelve personalities: LED matrix, live sensors, two voice channels, a gamepad, recordable graphs, and five interactive 3D models that move when the board moves."
 >
-> *(0:18)* "Optional: pair a BBC micro:bit V2 over Bluetooth and the robot's face mirrors onto its 5×5 LED matrix. A QR code opens the MakeCode firmware — no cable needed."
+> *(0:18)* "Tilt the board — the animated robot tilts. Press a button — the screen lights up. Everything is live."
 >
-> *(0:24)* "It's a one-time download. Install it as a PWA for offline demo mode. Link's in the description."
+> *(0:24)* "It's a one-time download. Use it in your classroom, home-school, or maker space. Link's in the description."
 >
 > *(0:30)* End card: shop URL.
 
@@ -493,24 +491,24 @@ Etsy shows photo #1 as a **square** in search results, and the first 5 above the
 **Setup before you start:**
 - Open `index.html` in Chrome at **1440×900** (clean window, hide bookmarks bar with `Cmd+Shift+B`).
 - Use macOS `Cmd+Shift+4` then `Space` then click the window for clean shadow-included PNGs.
-- Have a kid's voice handy (or use the offline demo mode) so the chat transcript looks real.
-- Clear localStorage first so the onboarding / name-your-robot step is visible for shot #7.
+- Connect a real micro:bit V2 first — empty/disconnected screens look unfinished.
+- Have **Simulate Mode ON** for graph shots so the lines look alive.
 
-| # | Scene | What to capture | Overlay text |
-|---|-------|-----------------|--------------|
-| 1 | **Hero** — animated robot face mid-smile, mic button pulsing, reply bubble "Hi, I'm Zippy!" | Square crop. Kid's hand optional, makes it warmer. | "Talking Robot — AI voice companion for kids" + "Instant download" |
-| 2 | Personality picker — all 4 cards visible (Playful / Helpful / Pirate / Space Explorer) | Hover the active one so it pops | "4 personalities — pick a vibe" |
-| 3 | Mid-chat view — 2–3 speech bubbles, TTS waveform on the robot face | Capture with a fun kid-friendly exchange | "Speech in, speech out — runs in the browser" |
-| 4 | Parental controls — PIN keypad + usage timer + conversation history (20 sessions) | Show 1–2 sample sessions in the list | "Parent PIN • usage timer • full chat history" |
-| 5 | **2×2 grid** — one face per personality (same robot name, different expressions) | Match lighting in each | "4 personalities, one robot name" |
-| 6 | Mobile-width view (DevTools → 414×896) with the PWA install banner showing | Use Chrome's device toolbar (`Cmd+Shift+M`) | "Install as an app — works offline in demo mode" |
-| 7 | Onboarding overlay (clear localStorage with `localStorage.clear()` then reload) | Show the name-your-robot + pick-a-personality steps | "Friendly first-run setup" |
-| 8 | **Compatibility infographic** — make in Canva / Figma, not a screenshot | ✅ Chrome / Edge / Android. ❌ Safari / Firefox / iPhone / iPad (speech APIs) | "Check before you buy" |
+| # | Tab / theme | What to capture | Overlay text |
+|---|-------------|-----------------|--------------|
+| 1 | **Hero** — Stealth theme, Robot Face tab, micro:bit physically next to laptop | Square crop. App on screen, real hardware in frame. | "micro:bit V2 Playground" + "Instant download" |
+| 2 | Chat panel, all sparklines populated, micro:bit being held in hand for motion | Show 6+ live values | "Live sensor dashboard — temp, light, sound, motion" |
+| 3 | Graph tab in **fullscreen**, Neon theme, ~3 datasets plotting | Capture mid-animation | "Real-time charts • record • export" |
+| 4 | Robot Face tab, Buggy model rotated to show wheels + LED screen | Drag to a 3/4 angle first | "5 interactive 3D models" |
+| 5 | **2×2 grid** — one screenshot per theme (Stealth, Neon, Arctic, Blaze) | Same tab in each, e.g. Sensors | "4 themes — pick your vibe" |
+| 6 | Mobile-width view (DevTools → 414×896) of the Robot Face tab | Use Chrome's device toolbar (`Cmd+Shift+M`) | "Works on Chromebooks & Android tablets" |
+| 7 | Onboarding overlay (clear localStorage with `localStorage.clear()` then reload) | Show all 4 welcome steps | "Friendly first-run guide" |
+| 8 | **Compatibility infographic** — make in Canva / Figma, not a screenshot | ✅ Chrome / Edge / Android. ❌ Safari / Firefox / iPhone / iPad | "Check before you buy" |
 | 9 | **Feature wall** — text-on-image styled list of top 8 features | Use a Canva template | Bullet list of what's inside |
-| 10 | Optional micro:bit V2 mirror shot — laptop with the robot face, a physical micro:bit next to it showing the same pattern on its 5×5 LED matrix | Pair over Web Bluetooth first, then snap | "Optional: pair a micro:bit V2 to mirror the face" |
+| 10 | Preview of the SETUP.md guide rendered in a browser or as a PDF mockup | Show the table of contents + a couple of headings | "Step-by-step setup included" |
 
 **File output:**
-- Save all as PNG, name them `01-hero.png`, `02-personalities.png`, `03-chat-demo.png`, `04-parental-controls.png`, `05-personality-grid.png`, `06-mobile-pwa.png`, `07-onboarding.png`, `08-compatibility.png`, `09-feature-wall.png`, `10-microbit-mirror.png` in `~/Desktop/etsy-photos/`.
+- Save all as PNG, name them `01-hero.png` … `10-setup-preview.png` in `~/Desktop/etsy-photos/`.
 - Compress with [TinyPNG](https://tinypng.com) before uploading — Etsy caps at 5 MB per photo.
 - Keep originals — you'll re-use them for Pinterest, the demo video end-card, and your shop banner.
 
@@ -533,18 +531,18 @@ Pinterest indexes pins for years, unlike Instagram. One good pin can drive sales
 ### Pin titles (100 chars max — searchable, so include keywords)
 
 ```
-1. The browser AI voice companion kids actually talk to — no account, no cloud
-2. 4 personalities, custom robot name, parent PIN — Talking Robot for kids
-3. Homeschool screen-time win: voice-chat AI with a 20-session history parents can read
-4. Talking Robot + Chrome = a safe AI buddy on any laptop or Chromebook
-5. Optional: pair a micro:bit V2 and the robot's face mirrors onto its LEDs
+1. Turn a micro:bit into a STEM lab — works in any browser
+2. The micro:bit Bluetooth app every STEM teacher wishes existed
+3. Homeschool STEM: 12 personalities, 12 personalities, zero installs
+4. micro:bit V2 + Chrome = a $10 robotics classroom
+5. From "what's a micro:bit" to "I built a robot" in 5 minutes
 ```
 
 ### Pin descriptions (500 chars, keyword-rich, written for the searcher)
 
-> Looking for a safe AI buddy your kid can actually talk to out loud? Talking Robot runs straight from the browser — 4 personalities (Playful, Helpful, Pirate, Space Explorer), a custom robot name, parent PIN + usage timer, and a local 20-session conversation history parents can read any time. Optional: pair a BBC micro:bit V2 and the robot's face mirrors onto its 5×5 LED matrix. No installs, no accounts, no cloud. Works on Chrome and Edge. One-time download. #AIforkids #homeschool #talkingrobot #edtech #parentalcontrols
+> Looking for a micro:bit project that works straight from the browser? Talking Robot gives you 12 personalities of live control — LED matrix, sensors, voices, gamepad, real-time graphs, and 5 interactive 3D models — all over Bluetooth. Perfect for STEM teachers, homeschool parents, and after-school clubs. No installs, no accounts. Works on Chrome and Edge. One-time download. #microbit #STEM #homeschool #coding #edtech
 
-> A browser-based AI voice companion for kids — speech in, speech out, animated SVG face with emotions. 4 personalities, offline demo mode, parent PIN + usage timer, and a 20-session local conversation history so you always know what was said. Optional micro:bit V2 pairing mirrors the robot's face on the LEDs via a one-scan QR-code MakeCode setup. Instant download from Etsy. #talkingrobot #AIforkids #homeschoolresources #screentimewin #coding
+> The Bluetooth control panel for the BBC micro:bit V2 that turns one $20 board into an entire robotics lab. Draw on the LEDs, watch live chat bubbles, drive a animated robot with the on-screen gamepad, and record sessions for science class. Browser-based — no installs. Instant download from Etsy. #microbit #classroomresources #stemforkids #robotics #makered
 
 ### Hashtag bank (rotate, don't reuse the same set)
 
@@ -566,7 +564,7 @@ Create or pin to: **STEM Activities for Kids**, **Homeschool Resources**, **Clas
 Quick rules of engagement for each channel — read each one carefully, several have strict self-promo policies.
 
 ### TikTok / Instagram Reels (15–30 sec)
-Reuse your demo video. Hook in the first 1.5 seconds: kid taps the mic, the robot face lights up and replies out loud. Caption: *"Finally, an AI my 7-year-old can talk to without me worrying"*. Drop the Etsy link in your bio (TikTok) or use the linked sticker (IG). Don't say "link in bio" out loud — TikTok throttles those.
+Reuse your demo video. Hook in the first 1.5 seconds: tilt the micro:bit, the animated robot tilts on screen. Caption: *"Bought my class a $20 STEM lab"*. Drop the Etsy link in your bio (TikTok) or use the linked sticker (IG). Don't say "link in bio" out loud — TikTok throttles those.
 
 ### Reddit — proceed carefully
 Reddit will ban self-promo posts in seconds. Safe approach:
@@ -580,8 +578,8 @@ Search for: **"micro:bit teachers"**, **"BBC micro:bit Educators"**, **"Homescho
 ### Teachers Pay Teachers (TpT)
 Teachers Pay Teachers is bigger than Etsy for the K–12 audience. Same product, second listing — they don't conflict. Slight repackage: rename `SETUP.md` to "Teacher Setup Guide" and add a one-page "Lesson Plan Idea" PDF. Charge **2×** what you charge on Etsy — TpT buyers expect it.
 
-### Your own Talking Robot YouTube channel (long-term)
-A weekly 5-minute "fun conversation my kid had with Talking Robot today" video, ending with a soft *"if you want this app, link's in the description"*. Channel takes 6 months to compound but pays forever. Skip if you don't enjoy being on camera.
+### Your own micro:bit YouTube channel (long-term)
+A weekly 5-minute "what you can build with Talking Robot" video, ending with a soft *"if you want this app, link's in the description"*. Channel takes 6 months to compound but pays forever. Skip if you don't enjoy being on camera.
 
 ### What NOT to do
 - ❌ Cold-DM teachers on LinkedIn — gets flagged as spam, hurts your account.
@@ -590,27 +588,27 @@ A weekly 5-minute "fun conversation my kid had with Talking Robot today" video, 
 
 ---
 
-## Second listing — School Site License ($229)
+## Second listing — School Site License ($199)
 
 **Why:** One site-license sale = 15 individual sales. Same files, different LICENSE. Zero extra work once the ZIP is built. Buyer file: `~/Desktop/microbit-bot-v1.0-site-license.zip` (already built).
 
 ### Title
 
 ```
-School Site License — Talking Robot AI Voice Companion App for Kids | Up to 30 Teachers, Unlimited Students | Browser-Based, Offline Demo, Parental Controls | Instant Digital Download
+School Site License for the BBC micro:bit V2 Bluetooth Web App | Up to 30 Teachers, Unlimited Students | STEM Classroom | Instant Digital Download
 ```
 
 ### Price
 
-- **$229** launch
-- **$229** after 2 sales
-- **$599+** for multi-site / district — list as "Request a Quote" in the description, handle via Etsy messages
+- **$199** launch
+- **$199** after 2 sales
+- **$499+** for multi-site / district — list as "Request a Quote" in the description, handle via Etsy messages
 
 ### Description
 
-> 🏫 **School Site License — Talking Robot**
+> 🏫 **School Site License — micro:bit V2 Playground**
 >
-> The browser-based AI voice companion for kids, licensed for your whole school.
+> The browser-based micro:bit control panel, licensed for your whole school.
 >
 > ✅ **What the license covers:**
 > • Up to 30 teachers / instructors at **one** physical school, library, or learning center
@@ -620,15 +618,14 @@ School Site License — Talking Robot AI Voice Companion App for Kids | Up to 30
 > • Internal modification and distribution among staff
 >
 > 🛠️ **What you get** (instant download):
-> • The full Talking Robot web app (runs locally in any Chromebook / laptop, installable as a PWA)
-> • 4 personalities (Playful, Helpful, Pirate, Space Explorer), per-device parent PIN + usage timer
-> • Optional BBC micro:bit V2 pairing file + QR-code MakeCode firmware link (mirrors the robot face on the LED matrix)
+> • The full Talking Robot web app (runs locally in any Chromebook / laptop)
+> • Ready-to-flash firmware (makecode.ts) for BBC micro:bit V2
 > • Printable setup guide
 > • Signed Site License PDF (fill in your school name and keep on file)
 >
-> 👩‍🏫 **Perfect for:** library maker corners, reading/literacy programs, ELL conversation practice, SEL circles, summer camps, after-school programs.
+> 👩‍🏫 **Perfect for:** STEM departments, robotics clubs, library maker corners, summer camps, after-school coding programs.
 >
-> ⚙️ **Requires:** Chrome or Edge on a laptop, Chromebook, or Android device. Not supported: Safari, Firefox, iPhone, iPad (speech APIs + Web Bluetooth limitations). The micro:bit V2 pairing is entirely optional.
+> ⚙️ **Requires:** BBC micro:bit V2 (sold separately) + Chrome or Edge. Not supported: Safari, Firefox, iPhone, iPad (Web Bluetooth limitation).
 >
 > 🏢 **Need more than one site?** Message me before buying — I offer discounted multi-site and district licenses.
 >
@@ -668,7 +665,7 @@ Re-use photos 1–10 from the single-user listing. Add **photo #11**: a mock-up 
 ### Title (Arabic + transliteration — Etsy indexes both)
 
 ```
-الروبوت المتحدث — رفيق ذكاء اصطناعي صوتي للأطفال في المتصفح | 4 شخصيات، تحكم أبوي، وضع غير متصل | تحميل فوري | Talking Robot Arabic
+لوحة تحكم مايكروبت V2 عبر البلوتوث — تطبيق STEM للمعلمين والأطفال | تحميل فوري | Talking Robot Arabic
 ```
 
 ### Category
@@ -678,31 +675,29 @@ Same as English listing: `Craft Supplies & Tools → Patterns & How To → Tutor
 ### Description (Arabic)
 
 ```
-🤖 الروبوت المتحدث — رفيق ذكاء اصطناعي صوتي آمن للأطفال، يعمل في المتصفح
+🎮 لوحة تحكم مايكروبت — تطبيق متكامل عبر البلوتوث للوحة BBC micro:bit V2
 
-دع طفلك يتحدث مع روبوت ودود — يختار شخصيته، يعطيه اسماً، يضغط الميكروفون، ويبدأ الحديث. بدون تثبيت، بدون حساب، بدون إنترنت إجباري.
+حوّل المايكروبت إلى مختبر STEM تفاعلي — بدون تثبيت، بدون حساب، بدون إنترنت. فقط افتح المتصفح واتصل.
 
 ✨ ما ستحصل عليه (تحميل فوري):
 • تطبيق ويب كامل (HTML, CSS, JS) يعمل محلياً في متصفح Chrome أو Edge
-• 4 شخصيات: المرح، المساعد، القرصان، مستكشف الفضاء
-• التعرف على الكلام + تحويل النص إلى كلام — يسمع طفلك ويرد عليه بصوت عالٍ
-• وجه SVG متحرك يعبّر عن المشاعر
-• اسم روبوت مخصص يختاره طفلك
-• رقم PIN للوالدين + مؤقت استخدام يومي
-• سجل محادثات محلي لآخر 20 جلسة — يمكن للوالدين قراءة كل ما قيل
-• وضع غير متصل (Offline Demo) مع عبارات جاهزة — يعمل بدون إنترنت وبدون مفتاح API
-• قابل للتثبيت كتطبيق PWA
-• اختياري: إقران لوحة BBC micro:bit V2 عبر البلوتوث — وجه الروبوت ينعكس على مصفوفة LED 5×5 (رمز QR يفتح برنامج MakeCode)
+• برنامج جاهز للمايكروبت (makecode.ts)
+• دليل إعداد مطبوع
+• 4 ثيمات (ستيلث، نيون، أركتيك، بليز)
+• 8 تبويبات: مصفوفة LED، المستشعرات، المحركات، جويباد، الرسم البياني، عرض ثلاثي الأبعاد، البنش، الإعدادات
+• 5 نماذج ثلاثية الأبعاد تفاعلية (مايكروبت، روبوت، ذراع روبوتي، لعبة توازن، محطة طقس)
+• تسجيل الجلسات، رسوم بيانية حية، تصدير JSON
+• وضع المبتدئ ووضع الخبير — يتطور مع المتعلم
 • واجهة عربية كاملة مع دعم RTL (اليمين إلى اليسار)
 
-🧒 مناسب لـ: الأطفال من 5 إلى 12 سنة، التعليم المنزلي، وقت الشاشة الآمن، ممارسة المحادثة باللغة العربية أو الإنجليزية، حصص SEL في المدارس.
+🧒 مناسب لـ: الفصول الدراسية، التعليم المنزلي، النوادي المدرسية، ورش الصنع، معسكرات STEM، الأطفال المهتمين بالبرمجة والروبوتات.
 
 ⚙️ يتطلب:
+• لوحة BBC micro:bit V2 (تُشترى بشكل منفصل)
 • متصفح Chrome أو Edge على كمبيوتر أو لابتوب أو جهاز أندرويد
-• ميكروفون للإدخال الصوتي
-• مفتاح OpenAI API اختياري (يُلصق محلياً، لا يُرسل لأحد) — أو استخدم الوضع غير المتصل مجاناً
+• تفعيل البلوتوث
 
-❌ لا يعمل على: Safari، Firefox، iPhone، iPad (قيود Web Speech API في هذه المتصفحات).
+❌ لا يعمل على: Safari، Firefox، iPhone، iPad (قيود Web Bluetooth في هذه المتصفحات).
 
 📦 التسليم: تحميل فوري بعد الشراء — ملف ZIP واحد.
 
@@ -732,7 +727,7 @@ Same as the English listing.
 
 تم تجهيز التحميل فوراً — ستجد الرابط في بريدك الإلكتروني ومن خلال حسابك في Etsy → Purchases & Reviews.
 
-📘 ابدأ من هنا: فك ضغط الملف وافتح SETUP.md (دليل 5 دقائق). تحتاج فقط إلى متصفح Chrome أو Edge وميكروفون — لا يعمل على Safari أو iPhone (قيود Web Speech API). إقران micro:bit V2 اختياري تماماً.
+📘 ابدأ من هنا: فك ضغط الملف وافتح SETUP.md (دليل 5 دقائق). تحتاج لوحة BBC micro:bit V2 ومتصفح Chrome أو Edge — لا يعمل على Safari أو iPhone (قيود Web Bluetooth).
 
 💬 واجهت مشكلة؟ راسلني برقم الطلب وصورة من الشاشة — سأرد خلال 24 ساعة.
 
@@ -746,20 +741,20 @@ Same as the English listing.
 
 ### Arabic-market channels (beyond Etsy)
 
-- **Facebook groups**: "الذكاء الاصطناعي للأطفال", "التعليم المنزلي", "أمهات عربيات", "Algeria Homeschool Network"
-- **TikTok**: Arabic-language voice-AI-for-kids demos have near-zero saturation. Post a 15-sec clip of a kid chatting with the robot, with Arabic on-screen text.
-- **Instagram**: Tag Arabic parenting and homeschool influencers. A 15-sec Reel of a happy exchange with the robot converts well.
+- **Facebook groups**: "تعليم البرمجة للأطفال", "التعليم المنزلي", "ستيم للأطفال", "Algeria Homeschool Network"
+- **TikTok**: Arabic-language micro:bit demos have near-zero saturation. Post a 15-sec clip with Arabic on-screen text.
+- **Instagram**: Tag @microbit_educational and Arabic STEM influencers.
 - **Telegram channels**: many Arabic homeschool communities live on Telegram, not Facebook. One good post in a 5k-member channel = 30–50 visits.
 
 ### Pricing note
 
-Price at **$14.99** (same as English) — do **not** discount for Arabic buyers. Diaspora buyers pay in USD/EUR comfortably; local buyers in MENA expect foreign digital goods to be priced internationally.
+Price at **$12.99** (same as English) — do **not** discount for Arabic buyers. Diaspora buyers pay in USD/EUR comfortably; local buyers in MENA expect foreign digital goods to be priced internationally.
 
 ---
 
-## New sell ideas enabled by the illustrated guide (V2.0.0)
+## New sell ideas enabled by the illustrated guide (V1.2.0)
 
-The visual helpers added in V2.0.0 unlock product angles that weren't viable before. Ranked by payoff ÷ effort.
+The visual helpers added in V1.2.0 unlock product angles that weren't viable before. Ranked by payoff ÷ effort.
 
 ### 1. Printable classroom posters (new Etsy listing, $4–8 each)
 The SVG diagrams inside `guide.html` are print-ready. Extract each as a standalone 1-page PDF and sell as a **STEM classroom wall poster pack**:
@@ -771,7 +766,7 @@ The SVG diagrams inside `guide.html` are print-ready. Extract each as a standalo
 
 Price the 4-poster pack at **$14.99** on Etsy + **$24.99** on Teachers Pay Teachers. Buyers who already own the app will upgrade for the printable versions. Pure margin.
 
-### 2. "Teacher's First-Workshop Pack" bundle ($34.99)
+### 2. "Teacher's First-Workshop Pack" bundle ($29.99)
 A listing that combines:
 - The app (standard ZIP)
 - 4 printable posters (above)
@@ -802,7 +797,7 @@ The guide makes the firmware protocol transparent. Offer **1-hour custom firmwar
 TpT rewards interactivity. Your `guide.html` has a clickable LED playground, collapsible symptom picker, and state-saving localStorage. Badge the TpT listing as **"Interactive — runs in browser, no prep"**. Charge **$24.99** (2× Etsy price). TpT's search surfaces interactive listings above static PDFs.
 
 ### 8. Pre-order for "Playground v9" with a lesson book ($39)
-Use the momentum of V2.0.0 to announce a lesson book (20 activities, printable). Take pre-orders at $39 with a "delivered by December" timeline. Half the buyers won't notice the delay; the other half will wait happily.
+Use the momentum of V1.2.0 to announce a lesson book (20 activities, printable). Take pre-orders at $39 with a "delivered by December" timeline. Half the buyers won't notice the delay; the other half will wait happily.
 
 ### 9. Affiliate-style referral — small shops link to yours in exchange for yours linking back
 Find 3–5 non-competing STEM Etsy shops (robot kits, STEM books). Propose: "I'll add a 'recommended companion' section to my listing linking to yours if you do the same." Zero cost, 3× visibility.
@@ -834,7 +829,7 @@ Tired of the "install → flash → paste → pray" dance? This USB stick does i
 
 📦 What ships to your door:
 • 1× 4 GB USB stick containing the complete Talking Robot app
-• 1× Pre-flashed BBC micro:bit (optional) (firmware already loaded, shows the X icon on first power-on)
+• 1× Pre-flashed BBC micro:bit V2 (firmware already loaded, shows the X icon on first power-on)
 • 1× Illustrated Quick-Start card (EN/FR/AR, printed on 250 gsm cardstock)
 • 1× Padded envelope, tracked delivery
 
@@ -855,7 +850,7 @@ Tired of the "install → flash → paste → pray" dance? This USB stick does i
 ```
 
 #### 1c. Price ladder
-- Launch (first 10 units): **$34.99** + €4.50 shipping EU / $9 worldwide
+- Launch (first 10 units): **$29.99** + €4.50 shipping EU / $9 worldwide
 - Standard: **$39.99**
 - Stick-only (no board): **$14.99** (for buyers who already own a V2)
 
@@ -863,11 +858,11 @@ Tired of the "install → flash → paste → pray" dance? This USB stick does i
 | Item | Cost |
 |------|------|
 | 4 GB USB stick (bulk) | $2.50 |
-| BBC micro:bit (optional) (wholesale from PiHut/ElecFreaks) | $12.00 |
+| BBC micro:bit V2 (wholesale from PiHut/ElecFreaks) | $12.00 |
 | Printed Quick-Start card (250 gsm, 4 col) | $0.80 |
 | Padded envelope + label | $0.60 |
 | **Total COGS** | **~$15.90** |
-| Margin at $34.99 launch | **~$14 per unit** |
+| Margin at $29.99 launch | **~$14 per unit** |
 
 #### 1e. Workflow
 1. Buy 20 micro:bit V2 boards wholesale, 20 sticks, 20 envelopes. One-time ~$320 outlay.
@@ -906,13 +901,13 @@ Offer **5 teachers** a free perpetual license + $50 Etsy credit in exchange for:
 >
 > Hi [First Name],
 >
-> I run a small Etsy shop called [Shop Name] — I make Talking Robot, a browser-based AI voice companion for kids with parental controls. I saw your [Twitter / blog / review] and the way you talk about kid-safe tech resonated with me.
+> I run a small Etsy shop called [Shop Name] — I make a browser-based Talking Robot app. I saw your [Twitter / blog / review] and the way you talk about STEM resonated with me.
 >
 > I'm launching an Ambassador program for 5 teachers this quarter. Here's what it looks like:
 >
 > **What I give you:**
-> - A free perpetual license for the full app (normally $19.99)
-> - A free School Site License for your school (normally $229)
+> - A free perpetual license for the full app (normally $17.99)
+> - A free School Site License for your school (normally $199)
 > - $50 Etsy credit to spend however you want
 > - Early access to everything I ship for the next 12 months
 > - Your name on the shop page as a featured teacher
@@ -958,7 +953,7 @@ Ambassador log (spreadsheet columns):
 
 ### 3. 🥈 School-district pitch deck (1 sale = 50× individual licenses)
 
-A 10-slide PDF + cover-letter template, sold on Etsy as "School-District Licensing Pack — Quote on Request" starting at **$599** (with upsell to $2,500+ via message).
+A 10-slide PDF + cover-letter template, sold on Etsy as "School-District Licensing Pack — Quote on Request" starting at **$499** (with upsell to $2,500+ via message).
 
 #### 3a. Listing title
 ```
@@ -971,8 +966,8 @@ Talking Robot — District-Wide STEM Licensing | Quote for 3+ Schools | Includes
 |-------|-------|-------------|
 | 1 | **Cover** | Logo + "Talking Robot — District-Wide Licensing Proposal for [District Name]" + your name + date |
 | 2 | **The problem** | 3 bullets: "Most STEM software requires installs / accounts / cloud approvals. IT departments say no. Teachers get stuck." |
-| 3 | **What it is** | Screenshot of the app + tab map. One sentence: "A browser-based Bluetooth control panel for BBC micro:bit (optional) — no install, no account, no cloud." |
-| 4 | **Standards alignment** | Map Talking Robot's use cases (conversation practice, SEL, ELL) to Common Core ELA / ISTE / national SEL frameworks. *(Adapt per country.)* |
+| 3 | **What it is** | Screenshot of the app + tab map. One sentence: "A browser-based Bluetooth control panel for BBC micro:bit V2 — no install, no account, no cloud." |
+| 4 | **Standards alignment** | Map the 12 personalities to Common Core / ISTE / national STEM frameworks. *(Adapt per country.)* |
 | 5 | **What the district gets** | Unlimited schools + unlimited teachers + unlimited students + 12 months of updates + dedicated support channel + **4 printable classroom posters** + 3 live training sessions |
 | 6 | **Adoption ROI** | Cost per student: at 3 schools × 800 students = 2400 students. Total cost $2,500 → **$1.04 per student per year**. Compare to any per-seat STEM license ($15–50/student). |
 | 7 | **IT concerns addressed** | No cloud. No external servers. No data leaves the device. No accounts. No installs. Offline-capable PWA. Runs on Chromebooks. |
@@ -1010,7 +1005,7 @@ Warmly,
 4. Send a written quote within 48h of the call
 5. Handle contract via DocuSign (free tier)
 6. Payment via invoice / bank transfer (not Etsy — Etsy's limit is $2,500, and custom B2B contracts go outside)
-7. **Return to Etsy to close the lead sale** with a $599 "Consulting Fee" item so the buyer can "complete" the purchase there (Etsy rewards closed sales)
+7. **Return to Etsy to close the lead sale** with a $499 "Consulting Fee" item so the buyer can "complete" the purchase there (Etsy rewards closed sales)
 
 #### 3e. Expected close rate
 - Cold outreach: ~2% close → 1 district sale per 50 emails
@@ -1052,7 +1047,7 @@ Last year you bought Talking Robot on Etsy (order #[X]). Thank you! I just shipp
 Because you're an early supporter:
 • The update is FREE — download here: [Stripe link or Gumroad link w/ $0 code]
 • Or the full "Workshop Pack" with 4 printable posters + lesson plan is $19.99
-  (normally $34.99): [Stripe link]
+  (normally $29.99): [Stripe link]
 
 No Etsy needed. I get to skip the 10% fee, you get a 33% discount — we both win.
 
@@ -1111,7 +1106,7 @@ Teachers buy certificates specifically to reward students. Add it as a tiny comp
 #### 6a. What ships
 - 1 printable PDF certificate (A4 + US Letter versions)
 - Fillable fields: student name, class, teacher signature, date
-- 4 certificate styles: beginner ("My First Chat"), intermediate ("Robot Namer"), advanced ("Personality Explorer — all 4 unlocked"), mastery ("Talking Robot Certified")
+- 4 certificate styles: beginner ("I made my first LED"), intermediate ("I built a sensor dashboard"), advanced ("I built a robot"), mastery ("Talking Robot Certified")
 - Editable in any PDF viewer (no Adobe needed)
 
 #### 6b. Implementation (~1 hour)
@@ -1122,14 +1117,14 @@ Teachers buy certificates specifically to reward students. Add it as a tiny comp
 
 #### 6c. Listing copy
 ```
-Title: Talking Robot Achievement Certificates for Kids — 4 Printable Designs | Editable PDF | Instant Download
+Title: STEM Achievement Certificates for micro:bit Students — 4 Printable Designs | Editable PDF | Instant Download
 
 Description:
-🏆 Reward your kids or students — 4 printable certificates for Talking Robot milestones.
-• My First Chat
-• Robot Namer
-• Personality Explorer
-• Talking Robot Certified
+🏆 Reward your students — 4 printable certificates for Talking Robot milestones.
+• I Made My First LED
+• Sensor Scientist
+• Robot Builder
+• Playground Master
 
 Editable fields for student name, class, date, teacher signature. Print on any paper. Prints well in color OR black & white.
 
@@ -1172,7 +1167,7 @@ Everything you need for your first STEM workshop of the year. Available Aug 1 �
 
 [Full bundle contents...]
 
-🎁 This month only: 20-min Zoom onboarding call with the creator. $229 value, included free.
+🎁 This month only: 20-min Zoom onboarding call with the creator. $199 value, included free.
 
 Ships instantly. License covers one teacher / one family. Full terms in LICENSE.
 
@@ -1180,7 +1175,7 @@ Ships instantly. License covers one teacher / one family. Full terms in LICENSE.
 ```
 
 #### 7d. Expected month-1 boost
-- Normal month: 15 sales × $14.99 = $195
+- Normal month: 15 sales × $12.99 = $195
 - Back-to-School: 30 sales × $39.99 = $1,200
 - **Etsy algorithm interprets the sales spike as "hot listing" → pushes all your other listings up**
 
@@ -1191,20 +1186,20 @@ Ships instantly. License covers one teacher / one family. Full terms in LICENSE.
 Publish free tutorials on [Instructables](https://www.instructables.com) that rank on Google for micro:bit searches, each ending with a soft CTA to your paid app.
 
 #### 8a. Tutorial ideas (pick 3, publish one per week)
-1. "**How to set up a kid-safe AI chatbot in your browser in 5 minutes**" — generic guide, any free/paid LLM
-2. "**Teach kids voice interaction with Web Speech API**" — dev-ish walkthrough, parent-friendly
-3. "**Mirror an animated face onto a BBC micro:bit V2 over Web Bluetooth**" — technical, advanced
+1. "**How to make a micro:bit thermometer in 5 minutes**" — manual version (MakeCode only)
+2. "**micro:bit sound level meter** — no code needed" — same
+3. "**Control a voice from your laptop via Bluetooth**" — advanced manual setup
 
 Each Instructable has:
-- Real, working code / screenshots (shows you're credible)
-- 3–5 photos of kids actually using it
+- Real, working code (shows you're credible)
+- 3–5 photos of your actual setup
 - Step-by-step like any normal Instructable
 
 #### 8b. The soft CTA (end of each Instructable)
 ```
-🎉 Congrats — your kid-safe voice bot is live!
+🎉 Congrats — your thermometer is working!
 
-Want 4 personalities, a parent PIN + usage timer, a 20-session local conversation history, an offline demo mode, and an optional micro:bit V2 face mirror — all in one app, no setup, no cloud? My browser-based **Talking Robot** does all of that out of the box. You can find it here: [Etsy URL].
+Want to plot the temperature, record sessions, and export CSV data without writing any extra code? My browser-based **Talking Robot** does all of that out of the box (it's what I used to take the screenshots in this tutorial). You can find it here: [Etsy URL].
 
 Either way — happy making!
 ```
@@ -1223,9 +1218,9 @@ Either way — happy making!
 
 ---
 
-### 9. White-label to kids-tech & EdTech brands (licensing deal)
+### 9. White-label to robotics-kit makers (licensing deal)
 
-Reach out to kids-tablet makers, parental-control SaaS vendors, and STEM/edtech brands. Offer them a co-branded version of Talking Robot for $1/device (or $1/seat) × their annual volume. Even small vendors move 5,000–20,000 units/year.
+Reach out to micro:bit hardware distributors. Offer them a co-branded version of your app for $1/kit × their annual kit volume. Even small distributors move 5,000–20,000 kits/year.
 
 #### 9a. Target companies &amp; verified contact info
 
@@ -1250,13 +1245,13 @@ Reach out to kids-tablet makers, parental-control SaaS vendors, and STEM/edtech 
 
 #### 9b. Cold-outreach email (shorter than ambassador pitch)
 ```
-Subject: White-label AI voice companion for kids — $1/unit licensing
+Subject: White-label micro:bit app for your kits — $1/unit licensing
 
 Hi [Name],
 
-I'm the developer of Talking Robot — a browser-based AI voice companion for kids with 4 personalities, a parent PIN + usage timer, offline demo mode, and a local 20-session conversation history. You can see it at [Etsy URL].
+I'm the developer of Talking Robot — a browser-based app that turns a bare micro:bit V2 into an interactive STEM lab (LEDs, sensors, voices, graphs, 3D). You can see it at [Etsy URL].
 
-Proposal: I license you a co-branded version of the app ("Powered by [Your Company]" footer, your logo) to ship with your kids-device or EdTech bundle. Users scan a QR code and get the full app — no cloud, no install, no account.
+Proposal: I license you a co-branded version of the app ("Powered by [Your Company]" footer, your logo) to ship with your micro:bit kits. Buyers scan the QR code on the box and get the full app — no cloud, no install.
 
 Licensing: $1 per kit sold, minimum 1,000 kits per year. You pay nothing upfront; I invoice quarterly based on your reported sales.
 
@@ -1289,14 +1284,14 @@ A lot of people will find `guide.html` via Pinterest / Google / ambassador blog 
 
 #### 10a. How it works
 - Every visitor to `guide.html` sees a small floating banner at the top
-- Banner says: *"Love the guide? Get the full app + all diagrams for $14.99 →"*
+- Banner says: *"Love the guide? Get the full app + all diagrams for $12.99 →"*
 - Banner is dismissible (stored in localStorage — don't nag)
 - Once they've paired a real micro:bit in the app, the banner auto-hides (they're a buyer)
 
 #### 10b. CSS + JS snippet to add near the top of `guide.html`
 ```html
 <div id="buyBanner" style="position:fixed;top:0;left:0;right:0;z-index:200;background:linear-gradient(90deg,#2563eb,#16a34a);color:white;padding:10px 14px;text-align:center;font-size:14px;box-shadow:0 2px 10px rgba(0,0,0,0.2);display:none;">
-  <span class="en">Love the guide? Get the full Talking Robot app — 4 personalities, parent PIN &amp; offline demo — for $14.99</span>
+  <span class="en">Love the guide? Get the full app with all diagrams &amp; 12 personalities for $12.99</span>
   <span class="fr">Vous aimez le guide ? L'app complète avec tous les diagrammes : 12,99 $</span>
   <span class="ar">يعجبك الدليل؟ التطبيق الكامل بـ 12.99$</span>
   <a href="https://etsy.com/listing/YOUR-LISTING-ID" target="_blank" style="color:white;font-weight:700;margin:0 14px;text-decoration:underline;">→ Buy on Etsy</a>

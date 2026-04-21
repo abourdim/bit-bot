@@ -25,84 +25,81 @@ A second-by-second script: **what to say** + **what to click / do** to produce a
 
 Before you press Record:
 
-- [ ] Chrome or Edge open with `index_kids.html` loaded, localStorage cleared (so the name-your-robot onboarding shows)
-- [ ] Microphone working — do a quick "hello robot" test, confirm speech recognition picks it up
-- [ ] OpenAI API key pasted in settings OR offline-demo mode selected (whichever you want to demo)
-- [ ] Parental PIN set to a memorable number (e.g. 1234) so you can show unlock on camera
-- [ ] Theme set — light kid-friendly theme photographs best
+- [ ] BBC micro:bit (optional) powered on, showing the **X** icon *(if not → re-flash `makecode.ts`)*
+- [ ] Chrome or Edge open with `index.html` loaded
+- [ ] BLE paired — status chip is **green**
+- [ ] Theme set — **Neon** photographs best; **Arctic** reads best in harsh daylight
 - [ ] Language matches your voiceover (EN / FR / AR)
-- [ ] (Optional) BBC micro:bit V2 powered on and paired if you plan to show the LED face mirror
-- [ ] Hero setup: a child at a laptop, animated robot face visible on screen, optional micro:bit next to the laptop
+- [ ] micro:bit V2 paired if you are showing voice + LED face demo
+- [ ] Tab 6 (3D) open with Buggy or Robot Arm selected — looks impressive in the hero shot
 - [ ] Phone in 9:16 on a tripod, front-lit, clean background
-- [ ] Desk cleared — only the laptop + (optionally) the micro:bit in frame
+- [ ] Desk cleared — only the board + one prop (buggy / voice / cable) in frame
 - [ ] Captions app running OR on-screen text plan ready
 - [ ] Script read aloud once, timed under 55 seconds
-- [ ] Phone silenced, siblings / dogs warned
+- [ ] Phone silenced, kids / dogs warned
 
 ---
 
 ## The 60-second arc
 
 ```
- 0–3 s   HOOK        "Your kid wants to talk to a robot?"
- 3–10 s  INTRO       Open index_kids.html · kid names the robot · picks a personality
-10–25 s  DEMO        Kid says "tell me a joke" · robot replies with voice · swap to Pirate mid-sentence
-25–40 s  FEATURES    Parental PIN · offline mode · optional micro:bit face mirror on 5×5 LEDs
-40–55 s  PRIVACY+CTA "No sign-in. No account. All local. Just $14.99."
-55–60 s  END FRAME   Lingering robot smile — matches the cover, holds the loop
+ 0–3 s   HOOK        "Watch what this micro:bit does in 60 seconds."
+ 3–10 s  CONTEXT     Board → laptop → Connect → green chip.
+10–35 s  DEMO        Demo the core features. Highlight main benefits.
+35–50 s  PAYOFF      Live graph with Simulate. Record / Replay / CSV.
+50–55 s  CTA         "Full kit, lifetime updates — link below."
+55–60 s  END FRAME   Logo + handle frozen for the loop preview.
 ```
 
 Etsy loops the video, so the **end frame should match the cover** — keeps viewers watching the loop.
 
 ---
 
-## Script Template A — "Your kid wants to talk to a robot?" (hero demo)
+## Script Template A — "Your micro:bit becomes a playground" (hero demo)
 
-**Use case:** the main Etsy listing video. Showcases the onboarding, a live voice chat, personality swap, parental PIN, and optional micro:bit face mirror — all in 60 seconds.
+**Use case:** the main Etsy listing video. Showcases the 3D, the BLE pairing, and the live graph in one go.
 
 | Time | What to SAY | What to CLICK / DO |
 |---|---|---|
-| 0–3 s | *"Your kid wants to talk to a robot?"* | Tight shot: child looking at a laptop, the animated robot face smiling at them, mic button pulsing. |
-| 3–10 s | *"Open one file. Give the robot a name. Pick a personality."* | Kid double-clicks **index_kids.html** → types a name (e.g. *Zippy*) → taps **Playful** on the personality picker. |
-| 10–18 s | *"Tap the mic and just talk."* | Kid taps mic, says *"Tell me a joke"*. Robot face animates, speaks the joke out loud. Reply bubble shows on screen. |
-| 18–25 s | *"Swap personality mid-chat."* | Kid taps **Pirate** mid-sentence → next reply comes back in pirate voice. Face expression shifts. |
-| 25–32 s | *"Parents: PIN-locked settings, usage timer, read every conversation."* | Parent opens Settings, enters PIN, flips AI off, sets a 20-min timer. Scroll past the 20-session history list. |
-| 32–40 s | *"Works offline. Optional: pair a micro:bit and the face mirrors on the LEDs."* | Toggle airplane mode — app still works (offline phrase pack). Then show the paired BBC micro:bit V2 next to the laptop: same face on its 5×5 LED matrix. |
-| 40–50 s | *"No sign-in. No account. All local. Just $14.99."* | Face-cam back on. Eye contact. Price pill on screen. |
-| 50–55 s | *"Link below — try the live demo first."* | Hold the laptop at an angle so both the kid's smile and the robot's smile are in the shot. |
-| 55–60 s | *(silence)* | Linger on the robot's smile. This becomes the loop frame. |
+| 0–3 s | *"Your micro:bit becomes a playground — in the browser, in 60 seconds."* | Close-up of the real board with the X icon on the LEDs. Your hand holds it. |
+| 3–10 s | *"One page, one click, paired."* | Cut to the laptop. Click **🔗 Connect to micro:bit** → pick the board → chip turns green. |
+| 10–20 s | *"Sensors live — tilt it, the 3D model tilts too."* | Tab **6 · Robot Face**. Tilt the real board. The virtual one mirrors it. Hold both in frame. |
+| 30–40 s | *"Live graph with record, replay, CSV. A lab in a browser tab."* | Tab **5 · Graph** → click **🎲 Simulate** → chart dances → hover on **⏺ Record** and **📄 CSV**. |
+| 40–50 s | *"4 themes, 3 languages, works offline, no install, no account."* | Quick theme swap (header dropdown) → show Neon → Arctic. |
+| 50–55 s | *"Link below — lifetime updates, teachers and kids welcome."* | Face-cam back on. Eye contact. |
+| 55–60 s | *"Happy hacking."* | Hold still. Logo + handle overlay freezes. This becomes the loop frame. |
 
 ---
 
-## Script Template B — "Teacher Tuesday" (classroom / SEL angle)
+## Script Template B — "Teacher Tuesday" (classroom angle)
 
-**Use case:** targeting teachers, SEL instructors, ELL/conversation-practice leads, and homeschool co-ops.
+**Use case:** targeting teachers and STEM workshop organisers.
 
 | Time | What to SAY | What to CLICK / DO |
 |---|---|---|
-| 0–3 s | *"Teachers — a safe AI buddy your students can actually talk to."* | Overhead shot of a laptop on a classroom desk, robot face smiling, two students leaning in. |
-| 3–10 s | *"One file. No install on 30 Chromebooks. No student accounts."* | Double-click `index_kids.html` on a Chromebook. Zero-setup, zero-sign-in. |
-| 10–20 s | *"Students pick a personality and practice conversation out loud."* | Student taps **Helpful**, says *"Give me an idea for my story"*. Robot replies warmly. |
-| 20–30 s | *"Parent / teacher PIN locks the settings. Every conversation is saved locally — you can review up to 20 sessions."* | Enter PIN → show the conversation history list. |
-| 30–40 s | *"Offline demo mode for no-Wi-Fi days. Arabic RTL + French built in."* | Swap language to Arabic — UI flips RTL. Swap to French. Toggle airplane mode — still works. |
-| 40–50 s | *"Site license for up to 30 teachers. Lifetime updates. Check before you buy — Chrome or Edge only."* | Text overlay with the licensing tiers + "Chrome / Edge only" badge. |
-| 50–60 s | *"Link below. Tag me if you run a session."* | Face-cam, laptop in the background, smile, freeze on the robot face. |
+| 0–3 s | *"STEM teachers — you need to see this."* | Overhead shot of a laptop + 5 micro:bits laid out on a desk. |
+| 3–10 s | *"One browser tab. Live sensors. No install on 30 laptops."* | Click Connect. Status goes green. Cut to Chat panel — values streaming. |
+| 10–20 s | *"Calibrate the emotion right in the UI. Baseline the sound for a quiet classroom."* | Chat panel → Calibrate. Show the Set Level / Set Ambient buttons. |
+| 20–30 s | *"Record a full lesson. Export CSV. Drop into a lab report."* | Graph tab → Record → Stop → Save Session → CSV. |
+| 30–40 s | *"4 themes — Arctic for projectors. 3 languages — Arabic with full RTL."* | Swap theme to Arctic. Swap language to Arabic — watch the UI flip RTL. |
+| 40–50 s | *"Site license for up to 30 teachers. Lifetime updates."* | Text overlay with the licensing tiers + Etsy shop name. |
+| 50–60 s | *"Link below. Tag me when you run a workshop."* | Face-cam, hold the micro:bit, smile, freeze on logo. |
 
 ---
 
-## Script Template C — "My kid talked to a robot" (parent / home-school UGC)
+## Script Template C — "Kid builds a robot" (parent / home-school angle)
 
-**Use case:** showing a young child using the app — UGC / influencer feel.
+**Use case:** showing a young maker using the app — UGC / influencer feel.
 
 | Time | What to SAY | What to CLICK / DO |
 |---|---|---|
-| 0–3 s | *"My 7-year-old wanted an AI buddy. So I got him one he can't share anything private with."* | Close-up: small hands tapping the mic, robot face lights up. |
-| 3–10 s | *"Runs in the browser. No account. No app store."* | Kid double-clicks `index_kids.html`, types a robot name, picks a personality. |
-| 10–20 s | *"He names the robot. Picks a personality. Starts talking."* | Kid picks **Space Explorer** → says *"Do aliens really exist?"* → robot answers warmly. |
-| 20–30 s | *"He swaps to Pirate for laughs, then back."* | Kid taps Pirate → next reply in pirate voice → kid laughs, swaps back to Playful. |
-| 30–40 s | *"I can see every conversation and cap screen time with a PIN."* | Parent opens Settings, enters PIN, shows the 20-session history + usage timer. |
-| 40–50 s | *"Nothing leaves the laptop. Offline demo mode if the Wi-Fi dies."* | Airplane mode on — app still replies from phrase packs. |
-| 50–60 s | *"$14.99 on Etsy. Link below."* | Kid smiling at the screen, robot smiling back. Freeze. |
+| 0–3 s | *"My kid built a robot. With a browser tab."* | Close-up: a small hand tapping Connect. |
+| 3–10 s | *"The micro:bit drives the voice. The 3D model mirrors the real robot."* | Tab 6 (animated robot). Real robot next to the laptop. Buggy in 3D follows. |
+| 10–20 s | *"D-pad in the browser → arrows on the LED → commands to the motors."* | Tab 4 (Commands). Press ⬆ → LED arrow. Buggy crawls forward. |
+| 20–30 s | *"Tilt the brain — the ball rolls to the targets."* | Tab 6 → Balance Game model. Tilt the board. Ball rolls. |
+| 30–40 s | *"Graph the sensors. Record the run. Replay for homework."* | Tab 5 → Record 3 s of accel → Replay → Save Session. |
+| 40–50 s | *"No login. Nothing leaves the computer. Offline after first load."* | Close the Wi-Fi indicator (airplane mode). App still works. |
+| 50–60 s | *"Full kit on Etsy. Link below."* | Kid holding the robot + board. Smile. Freeze. |
 
 ---
 
@@ -110,9 +107,9 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 
 - **One scene per phase.** Do not cut every 2 s — it feels frantic.
 - **Switch scenes on words**, not mid-sentence.
-- **Pause 1 second on the parental PIN keypad** — visual emphasis on safety.
+- **Pause 1 second on the graph record button** — visual emphasis.
 - **Look at the camera lens**, not the screen, during all CTAs.
-- **Smile for the final 3 seconds**. The robot smiles back — that's your loop frame.
+- **Smile for the final 3 seconds**. The loop frame matters.
 - **Watch the clock** — if you pass 55 s, re-cut. Etsy compresses aggressively.
 
 ---
@@ -121,23 +118,23 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 
 | ❌ Don't | ✅ Do |
 |---|---|
-| Start with "Hi, I'm…" + 10 s intro | First 3 s = kid tapping mic, robot face animates, voice replies |
+| Start with "Hi, I'm…" + 10 s intro | First 3 s = the board tilting a 3D model on the laptop |
 | Film landscape (16:9) | 9:16 portrait — Etsy autoplays on mobile |
-| Demo on Safari / iPhone | Show Chrome/Edge only. iOS users will buy and refund — voice input doesn't work there |
-| Skip captions | Burn in captions — the feed is muted by default, and the robot's voice only reads with sound on |
-| Let the kid go off-script on camera | Rehearse the joke / question once off-camera so the robot's reply lands in the frame |
-| Forget the CTA | "Link below — $14.99" in the last 5 s, every single time |
-| End mid-sentence | Land your closing line. Then hold 2 seconds on the robot's smile |
-| Cluttered desk | Clean frame — laptop + (optional) micro:bit only |
+| Demo on Safari / iPhone | Show Chrome/Edge only. iOS users will buy and refund |
+| Skip captions | Burn in captions — the feed is muted by default |
+| Whisper | Speak 15% louder and 10% slower than normal conversation |
+| Forget the CTA | "Link below" in the last 5 s, every single time |
+| End mid-sentence | Land your closing line. Then hold 2 seconds of silence |
+| Cluttered desk | Clean area in frame — even a tiny frame shows clutter |
 
 ---
 
 ## After you press Stop
 
-1. Watch the playback **once**, eyes off the script. Does the 0–3 s hook land?
+1. Watch the playback **once**, eyes off the script. Does it land?
 2. If >60 s → trim with a simple editor (iMovie, CapCut, DaVinci). Aim for 55 s.
-3. Burn in captions if you haven't already. Keep them centered below the robot face.
-4. First frame — set it to the robot's smile + mic pulse. This is your cover frame and your loop frame.
+3. Burn in captions if you haven't already. Keep them centered below the subject.
+4. First frame — set it to a strong, still visual (the board in hand, or the logo). This is your cover.
 5. Export MP4 / H.264, under 100 MB.
 6. Upload to the Etsy listing. Verify autoplay. Check on a phone with sound off.
 
@@ -145,8 +142,8 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 
 ## Etsy-specific upload tips
 
-- Etsy listing videos appear at the top as an **autoplaying preview tile**. First frame is the cover — make it visually clean: robot smile + pulsing mic + kid silhouette.
-- Use the listing **title** to echo the video's first words. If you say *"Your kid wants to talk to a robot?"*, the listing title starts with *"Talking Robot — AI Voice Companion for Kids…"*.
+- Etsy listing videos appear at the top as an **autoplaying preview tile**. First frame is the cover — make it visually clean.
+- Use the listing **title** to echo the video's first words. If you say *"Your micro:bit becomes a playground"*, the listing title starts with *"Talking Robot — BLE Control Panel…"*.
 - Add the captions text into the listing **description** — searchable, helps SEO.
 - Tag the listing with words you actually said in the video.
 - Price tiers: single user `{{PRICE}}` · classroom / site `{{PRICE}}`.
@@ -160,7 +157,7 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 1. **Take 1** — read the script literally. Find the awkward bits.
 2. **Take 2** — fix the awkward bits. Less reading, more talking.
 3. **Take 3** — drop the script. Talk to a friend, not to a camera.
-4. **Take 4** — slow down 10 %. Add one deliberate pause on the PIN keypad.
+4. **Take 4** — slow down 10 %. Add one deliberate pause.
 5. **Take 5** — your keeper.
 
 ---
@@ -168,11 +165,11 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 ## Quick-reference cheat card
 
 ```
-PRE     index_kids.html · localStorage cleared · mic tested · PIN set · (optional) micro:bit paired
-LAUNCH  Record → "Your kid wants to talk to a robot?" in the first 3 s
-DURING  Name it · pick personality · tap mic · swap mid-chat · PIN · offline · (optional) LED mirror
-AFTER   Stop → trim to 55 s → burn captions → first frame = robot smile = loop frame
-UPLOAD  Etsy listing → upload MP4 → echo "Talking Robot" in the listing title
+PRE     V2 has X icon · Chrome open · BLE green · 9:16 phone · Neon theme
+LAUNCH  Record → first words land in the first 3 seconds
+DURING  Tilt → 3D · A → LED · slider → voice · Simulate → graph
+AFTER   Stop → trim to 55 s → burn captions → first frame = thumbnail
+UPLOAD  Etsy listing → upload MP4 → echo first words in listing title
 ```
 
 ---
@@ -181,34 +178,34 @@ UPLOAD  Etsy listing → upload MP4 → echo "Talking Robot" in the listing titl
 
 **Title (140 chars max):**
 ```
-Talking Robot — AI Voice Companion for Kids | Optional BBC micro:bit V2 Integration | Browser App, No Sign-In | Digital Download
+Talking Robot — BLE Control Panel for Teachers & Kids · Sensors · Voice · Live Graph · 3D Models · No Install · Chrome / Edge
 ```
 
 **160-char short description:**
 ```
-Browser-based AI voice companion for kids. 4 personalities, parent PIN, usage timer, offline demo mode. Optional BBC micro:bit V2 LED face mirror. Chrome / Edge.
+Browser-based BLE control panel for the BBC micro:bit (optional). Sensors, voices, live graphs, 3D models, and a Commands — all from Chrome. No install, no account.
 ```
 
 **13 Etsy tags:**
 ```
-ai robot, talking robot, kids ai, voice assistant kids, microbit, robot companion, coding toy, homeschool ai, STEM kids, chromebook ai, parental controls, speech recognition kids, ai for kids
+micro:bit, BLE, bluetooth, education, STEM, robotics, kids coding, teacher resource, sensors, voices, classroom, home school, makerspace
 ```
 
 **Materials:**
 ```
-HTML5, JavaScript, Web Speech API, Web Bluetooth, OpenAI API, SVG, PWA, MakeCode
+HTML5, JavaScript, Web Bluetooth, Web Speech API, Three.js, PWA, MakeCode, TypeScript
 ```
 
 **SEO keywords:**
 ```
-browser-based · no-install · privacy-first · offline-capable · parental PIN · coppa-friendly · web speech api · micro:bit V2 face mirror · homeschool AI
+browser-based · no-install · privacy-first · offline-capable · web bluetooth · micro:bit V2 · STEM workshop · teacher resource
 ```
 
 **Price tiers (fill the `{{PRICE}}` placeholders):**
 
 | Tier | Who | Price |
 |---|---|---|
-| Single user | One family / teacher / maker | `{{PRICE}}` |
+| Single user | One teacher / family / maker | `{{PRICE}}` |
 | Classroom / Site | Up to 30 teachers at one school | `{{PRICE}}` |
 | District / OEM | Multiple sites — DM through order | Custom |
 
@@ -216,33 +213,13 @@ browser-based · no-install · privacy-first · offline-capable · parental PIN 
 
 ## 7-image listing order
 
-1. **Hero** — laptop screen with the animated robot face smiling + mic button pulsing + kid's hand reaching toward it. Title overlay in Orbitron.
-2. **Personality picker** — all 4 cards (Playful · Helpful · Pirate · Space Explorer) visible, active one highlighted.
-3. **Mid-chat demo** — speech bubbles on screen, TTS waveform drawn over the robot face, kid's silhouette in the corner.
-4. **Parental controls** — PIN keypad + usage timer + scrollable 20-session conversation history.
-5. **Personality grid** — 2×2 grid, one face expression per personality, same robot name.
-6. **Compatibility infographic** — ✅ Chrome / Edge / Android · ❌ Safari / Firefox / iPhone / iPad (speech APIs).
-7. **Optional micro:bit mirror** — laptop with robot face + paired BBC micro:bit V2 next to it showing the same expression on its 5×5 LED matrix.
-
----
-
-## 13 Etsy tags
-
-```
-ai robot
-talking robot
-kids ai
-voice assistant kids
-microbit
-robot companion
-coding toy
-homeschool ai
-STEM kids
-chromebook ai
-parental controls
-speech recognition kids
-ai for kids
-```
+1. **Hero** — real micro:bit + laptop, 3D model mirroring the board's tilt. Title overlay in Orbitron.
+2. **Tabs overview** — grid screenshot of all 12 personalities with emoji labels.
+3. **Live graph** — Web Speech API close-up with colored lines + annotations, Record button glowing red.
+4. **3D models** — split screenshot of Buggy + Robot Arm.
+5. **Hand-holding** — real voice plugged into P1, sliders on the screen.
+6. **Theme sampler** — 2×2 grid: Stealth · Neon · Arctic · Blaze.
+7. **License card** — "Single-user license · Lifetime updates · No cloud · Chrome / Edge" on a dark gradient.
 
 ---
 
