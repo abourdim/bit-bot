@@ -10,7 +10,7 @@
         "آيباد",
         "آيفون"
       ],
-      "answer": "للأسف متصفح Safari على iOS لا يدعم Web Bluetooth، لذا لن يتمكن Talking Robot من الاتصال بجهاز micro:bit على iPad أو iPhone. استخدم Chrome أو Edge على حاسوب محمول أو جهاز Android."
+      "answer": "للأسف متصفح Safari على iOS لا يدعم Web Bluetooth، لذا لن يتمكن bit-bot من الاتصال بجهاز micro:bit على iPad أو iPhone. استخدم Chrome أو Edge على حاسوب محمول أو جهاز Android."
     },
     {
       "id": "chrome-edge",
@@ -21,7 +21,7 @@
         "firefox",
         "توافق"
       ],
-      "answer": "Talking Robot يعمل في **Chrome 89+** و **Edge 89+** على Windows وmacOS وLinux وChromebook وAndroid. Firefox وSafari غير مدعومَين (لا يوجد Web Bluetooth)."
+      "answer": "bit-bot يعمل في **Chrome 89+** و **Edge 89+** على Windows وmacOS وLinux وChromebook وAndroid. Firefox وSafari غير مدعومَين (لا يوجد Web Bluetooth)."
     },
     {
       "id": "installation",
@@ -31,7 +31,7 @@
         "install",
         "بدء"
       ],
-      "answer": "بدون تثبيت — Talking Robot ملف HTML تفتحه في Chrome أو Edge. حمّل ZIP من Etsy، فك الضغط، انقر مزدوجاً على `index.html`، اضغط **اتصال**، اختر لوحتك."
+      "answer": "بدون تثبيت — bit-bot ملف HTML تفتحه في Chrome أو Edge. حمّل ZIP من Etsy، فك الضغط، انقر مزدوجاً على `index.html`، اضغط **اتصال**، اختر لوحتك."
     },
     {
       "id": "microbit-version",
@@ -41,7 +41,7 @@
         "v1.5",
         "قديم"
       ],
-      "answer": "Talking Robot مُصمَّم لـ **BBC micro:bit V2**. V1.5 يعمل لمستشعرات BLE لكنه بدون ميكروفون أو مكبر صوت. V1.0 لا يدعم Bluetooth LE ولا يمكنه الاتصال."
+      "answer": "bit-bot مُصمَّم لـ **BBC micro:bit V2**. V1.5 يعمل لمستشعرات BLE لكنه بدون ميكروفون أو مكبر صوت. V1.0 لا يدعم Bluetooth LE ولا يمكنه الاتصال."
     },
     {
       "id": "offline",
@@ -51,7 +51,7 @@
         "بدون إنترنت",
         "wifi"
       ],
-      "answer": "بعد التحميل الأول، يعمل Talking Robot دون اتصال بالكامل (PWA). مثالي لجدران الحماية المدرسية."
+      "answer": "بعد التحميل الأول، يعمل bit-bot دون اتصال بالكامل (PWA). مثالي لجدران الحماية المدرسية."
     },
     {
       "id": "multiple-students",
@@ -83,7 +83,7 @@
         "لغة",
         "ترجمة"
       ],
-      "answer": "Talking Robot متوفر بالإنجليزية والفرنسية والعربية (مع تخطيط RTL كامل). غيّر اللغة من منتقي العلم في أعلى اليمين."
+      "answer": "bit-bot متوفر بالإنجليزية والفرنسية والعربية (مع تخطيط RTL كامل). غيّر اللغة من منتقي العلم في أعلى اليمين."
     },
     {
       "id": "updates",
@@ -101,7 +101,7 @@
         "بيانات",
         "سحاب"
       ],
-      "answer": "صفر قياسات عن بُعد. Talking Robot ليس له خادم ولا حساب ولا سحاب. كل بيانات المستشعرات تبقى على جهازك."
+      "answer": "صفر قياسات عن بُعد. bit-bot ليس له خادم ولا حساب ولا سحاب. كل بيانات المستشعرات تبقى على جهازك."
     },
     {
       "id": "csv-export",
@@ -119,7 +119,7 @@
         "محرك",
         "تحريك"
       ],
-      "answer": "Talking Robot يقود محركَي voice متصلَين بالمنفذَين P1 وP2. علامة تبويب المحركات بها منزلقات، علامة تبويب لوحة اللعب ترسل أوامر اتجاهية."
+      "answer": "bit-bot يقود محركَي voice متصلَين بالمنفذَين P1 وP2. علامة تبويب المحركات بها منزلقات، علامة تبويب لوحة اللعب ترسل أوامر اتجاهية."
     }
   ];
   const WIDGET_ID = '__talking-robot_chatbot__';

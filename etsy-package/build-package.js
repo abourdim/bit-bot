@@ -1,5 +1,5 @@
 /**
- * Talking Robot — Etsy Package Builder
+ * bit-bot — Etsy Package Builder
  * Renders printables to PNG, gathers the app + docs, and builds the ZIP.
  *
  * Usage:

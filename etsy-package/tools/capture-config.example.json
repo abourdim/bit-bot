@@ -1,7 +1,7 @@
 {
   "_comment": "Product-specific config for capture-screenshots.mjs. Edit this file, not the script. Missing keys disable the related feature (e.g. omit 'variants.themes' if your product has no themes).",
 
-  "productName": "Talking Robot",
+  "productName": "bit-bot",
   "appContainer": ".app",
   "toastContainer": ".toast-container",
 

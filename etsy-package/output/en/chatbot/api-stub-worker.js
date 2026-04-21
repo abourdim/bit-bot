@@ -29,7 +29,7 @@ export default {
 
     // USERGUIDE.md content is embedded at deploy time; here we use a stub.
     const userGuide = `${env.USER_GUIDE_MD || 'See the full user guide in the Etsy ZIP.'}`;
-    const system = `You are the customer support agent for "Talking Robot". You answer ONLY questions related to this product. For anything off-topic (math, coding help, weather, politics), politely redirect to product questions. Keep answers under 120 words. Be direct, helpful, and cite specific features from the user guide below when relevant.
+    const system = `You are the customer support agent for "bit-bot". You answer ONLY questions related to this product. For anything off-topic (math, coding help, weather, politics), politely redirect to product questions. Keep answers under 120 words. Be direct, helpful, and cite specific features from the user guide below when relevant.
 
 <user_guide>
 ${userGuide}

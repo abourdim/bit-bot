@@ -92,13 +92,13 @@
 
 ## <a id="t5"></a>Template 5 — District tech buyer (site-license pitch)
 
-**Subject:** Site license for Talking Robot — {{DISTRICT_NAME}}
+**Subject:** Site license for bit-bot — {{DISTRICT_NAME}}
 
 > Dear {{TITLE}} {{LAST_NAME}},
 >
 > I'm reaching out because {{DISTRICT_NAME}} {{CONTEXT: "has a strong CS-for-All program" / "recently ran a district-wide STEM pilot" / "lists computing in its strategic plan"}}, and I build a tool that may fit the micro:bit portion of that work.
 >
-> **Talking Robot** is a browser-based control panel for the BBC micro:bit V2. It works on Chromebooks (the dominant K-12 device), requires no install, no accounts, no cloud, no data collection — it meets COPPA, FERPA, and the typical district privacy-vendor review checklist.
+> **bit-bot** is a browser-based control panel for the BBC micro:bit V2. It works on Chromebooks (the dominant K-12 device), requires no install, no accounts, no cloud, no data collection — it meets COPPA, FERPA, and the typical district privacy-vendor review checklist.
 >
 > The site-license tier covers unlimited teachers at up to one site for **$199/year** (comparable TpT bundles run $200–$400). Multi-site district pricing starts at **$499** for three sites.
 >
@@ -135,7 +135,7 @@
 
 ## <a id="t7"></a>Template 7 — Post-demo "did it work" follow-up
 
-**Subject:** Did the Talking Robot demo work on your setup?
+**Subject:** Did the bit-bot demo work on your setup?
 
 > Hi {{FIRST_NAME}},
 >

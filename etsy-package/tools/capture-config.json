@@ -1,4 +1,4 @@
-{ "productName": "Talking Robot", "appContainer": "body", "toastContainer": ".toast-container",
+{ "productName": "bit-bot", "appContainer": "body", "toastContainer": ".toast-container",
   "onboarding": { "localStorageKey": "_ob", "closeSelectors": [] },
   "theme": { "storageKey": "talkbot_theme", "default": "light", "attr": "data-theme", "attrTarget": "html" },
   "tabs": [

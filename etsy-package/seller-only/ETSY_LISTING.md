@@ -1,4 +1,4 @@
-# Etsy listing copy — Talking Robot
+# Etsy listing copy — bit-bot
 
 > ### 🛒 [Open Etsy "Create a Listing"](https://www.etsy.com/your/shops/me/listing-editor/create)
 > Jump straight into a fresh listing draft — keep this file open in another tab and paste section-by-section.
@@ -48,7 +48,7 @@
 
 AI Robot Chatbot for Kids + BBC micro:bit V2 | 12 Personalities, Voice, Animated Face | Browser PWA, Parental Controls | Digital Download
 
-> Product name in your Etsy shop is **"Talking Robot"** — use the phrase **"for the BBC micro:bit V2"** everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
+> Product name in your Etsy shop is **"bit-bot"** — use the phrase **"for the BBC micro:bit V2"** everywhere else to stay within the Micro:bit Educational Foundation's trademark-use guidelines.
 
 ## Category
 
@@ -75,7 +75,7 @@ ai chatbot kids, micro:bit, microbit v2, coding kids, robot companion, voice cha
 >
 > ✅ **Tested on Chromebook** — primary target device for schools. Installs as a PWA, works offline after the first load.
 >
-> 🎮 **Talking Robot** turns your micro:bit into an interactive STEM lab — no installs, no accounts, no cloud. Just open it in your browser and connect.
+> 🎮 **bit-bot** turns your micro:bit into an interactive STEM lab — no installs, no accounts, no cloud. Just open it in your browser and connect.
 >
 > 🔒 **No accounts. No sign-in. No data collected. Safe for students under 13 — COPPA-friendly by design.**
 >
@@ -129,9 +129,9 @@ Paste this block into the listing just above the FAQ. No fabricated reviews — 
 
 ## Compare table for the description
 
-**What makes Talking Robot different?** Side-by-side with the two alternatives most parents try first:
+**What makes bit-bot different?** Side-by-side with the two alternatives most parents try first:
 
-| Feature | Talking Robot | ChatGPT for Kids | Off-the-shelf AI toys |
+| Feature | bit-bot | ChatGPT for Kids | Off-the-shelf AI toys |
 |---|:---:|:---:|:---:|
 | Offline demo mode (zero AI requests, free forever) | ✅ | ❌ | ❌ |
 | 12 distinct personalities | ✅ | System prompt only | 1–3 |
@@ -216,7 +216,7 @@ A3 micro:bit V2 Pin-out Classroom Poster — Printable PDF | STEM Wall Chart for
 ### Description
 > 🖨️ **One poster. One price. Print it today.**
 >
-> A printable A3 **BBC micro:bit V2 pin-out poster** — the exact diagram used in the Talking Robot illustrated guide. Labeled pins, voice mode axes, sound sensor callout, touch-logo arrow, radio + BLE note.
+> A printable A3 **BBC micro:bit V2 pin-out poster** — the exact diagram used in the bit-bot illustrated guide. Labeled pins, voice mode axes, sound sensor callout, touch-logo arrow, radio + BLE note.
 >
 > 📄 **What you get:** 1 PDF, A3 (297×420 mm) + US Tabloid (11×17 in) versions, print-at-home or send to any copy shop.
 >
@@ -224,7 +224,7 @@ A3 micro:bit V2 Pin-out Classroom Poster — Printable PDF | STEM Wall Chart for
 >
 > ⚡ **Instant download** — the file is yours seconds after checkout.
 >
-> 💬 Loved it? Check out the full **Talking Robot** app in my shop — the browser Bluetooth control panel this poster was designed for.
+> 💬 Loved it? Check out the full **bit-bot** app in my shop — the browser Bluetooth control panel this poster was designed for.
 
 ### Tags (13)
 ```
@@ -288,7 +288,7 @@ All three are generated from the existing printable HTML templates already shipp
 
 Send via Etsy's "Contact buyer" → keep it short, keep it human, never beg.
 
-> Hi [First Name] — thank you for grabbing Talking Robot with the launch code! 🎉
+> Hi [First Name] — thank you for grabbing bit-bot with the launch code! 🎉
 >
 > I offered LAUNCH10 to the first 10 buyers in exchange for something small: **an honest review** once you've had a chance to try it. If it worked for you, a quick ⭐ means a LOT for a brand-new shop — it's the difference between Etsy showing my listing to other teachers or burying it.
 >
@@ -401,7 +401,7 @@ The logic: every wrong-browser buyer who refunds or leaves a 1-star review costs
 Paste this into Etsy's **"Message buyer"** once delivery is confirmed. Keep it short, friendly, human — this is the single biggest lever on new-shop review count.
 
 ```
-Hey {{BUYER_FIRST_NAME}} — thanks so much for grabbing Talking Robot! 🎮
+Hey {{BUYER_FIRST_NAME}} — thanks so much for grabbing bit-bot! 🎮
 
 Quick question: did it pair OK on your Chromebook (or whichever laptop you used)?
 If anything was weird, reply here — I'll fix it the same day.
@@ -453,7 +453,7 @@ Use this when someone messages you *before* buying with a compatibility question
 
 ## Post-sale follow-up (optional, send 7 days after purchase)
 
-> Hi! Just checking in — were you able to get the Talking Robot running this week? If you ran into anything, reply here and I'll sort it out. If it worked smoothly, a star rating on the listing helps me keep building tools like this. Either way, thanks for the support!
+> Hi! Just checking in — were you able to get the bit-bot running this week? If you ran into anything, reply here and I'll sort it out. If it worked smoothly, a star rating on the listing helps me keep building tools like this. Either way, thanks for the support!
 
 ---
 
@@ -468,7 +468,7 @@ Etsy plays the listing video **muted and on loop**, so design it like a GIF. No 
 | 0:04 – 0:06 | Tilt the physical micro:bit → animated robot on screen tilts in sync | Use the Balance or Robot 3D model |
 | 0:06 – 0:09 | Live graph drawing a sine wave in fullscreen, default theme | Smooth motion, bright glow |
 | 0:09 – 0:12 | Fast cycle through all 4 themes (Dark → Default → Light → Accent) | One theme per ~700ms |
-| 0:12 – 0:15 | End card: logo + text overlay "Talking Robot — works in Chrome / Edge" | Hold for 3 seconds, this is the loop seam |
+| 0:12 – 0:15 | End card: logo + text overlay "bit-bot — works in Chrome / Edge" | Hold for 3 seconds, this is the loop seam |
 
 **Tools:** screen-record with QuickTime or OBS, then cut in iMovie / CapCut. Export 1:1 (1080×1080) if Etsy still prefers square; otherwise 16:9 (1920×1080).
 
@@ -478,7 +478,7 @@ Etsy plays the listing video **muted and on loop**, so design it like a GIF. No 
 
 Upload this to **Loom**, **YouTube** (unlisted), or **Vimeo** and paste the link in your pre-purchase replies. Voiceover allowed.
 
-> *(0:00)* "This is the Talking Robot. It runs in your browser — no installs."
+> *(0:00)* "This is the bit-bot. It runs in your browser — no installs."
 >
 > *(0:04)* "Plug in a micro:bit V2, click Connect, pick it from the list. Done."
 >
@@ -550,7 +550,7 @@ Pinterest indexes pins for years, unlike Instagram. One good pin can drive sales
 
 ### Pin descriptions (500 chars, keyword-rich, written for the searcher)
 
-> Looking for a micro:bit project that works straight from the browser? Talking Robot gives you 12 personalities of live control — LED matrix, sensors, voices, gamepad, real-time graphs, and 5 interactive 3D models — all over Bluetooth. Perfect for STEM teachers, homeschool parents, and after-school clubs. No installs, no accounts. Works on Chrome and Edge. One-time download. #microbit #STEM #homeschool #coding #edtech
+> Looking for a micro:bit project that works straight from the browser? bit-bot gives you 12 personalities of live control — LED matrix, sensors, voices, gamepad, real-time graphs, and 5 interactive 3D models — all over Bluetooth. Perfect for STEM teachers, homeschool parents, and after-school clubs. No installs, no accounts. Works on Chrome and Edge. One-time download. #microbit #STEM #homeschool #coding #edtech
 
 > The Bluetooth control panel for the BBC micro:bit V2 that turns one $20 board into an entire robotics lab. Draw on the LEDs, watch live chat bubbles, drive a animated robot with the on-screen gamepad, and record sessions for science class. Browser-based — no installs. Instant download from Etsy. #microbit #classroomresources #stemforkids #robotics #makered
 
@@ -589,7 +589,7 @@ Search for: **"micro:bit teachers"**, **"BBC micro:bit Educators"**, **"Homescho
 Teachers Pay Teachers is bigger than Etsy for the K–12 audience. Same product, second listing — they don't conflict. Slight repackage: rename `SETUP.md` to "Teacher Setup Guide" and add a one-page "Lesson Plan Idea" PDF. Charge **2×** what you charge on Etsy — TpT buyers expect it.
 
 ### Your own micro:bit YouTube channel (long-term)
-A weekly 5-minute "what you can build with Talking Robot" video, ending with a soft *"if you want this app, link's in the description"*. Channel takes 6 months to compound but pays forever. Skip if you don't enjoy being on camera.
+A weekly 5-minute "what you can build with bit-bot" video, ending with a soft *"if you want this app, link's in the description"*. Channel takes 6 months to compound but pays forever. Skip if you don't enjoy being on camera.
 
 ### What NOT to do
 - ❌ Cold-DM teachers on LinkedIn — gets flagged as spam, hurts your account.
@@ -628,7 +628,7 @@ School Site License for the BBC micro:bit V2 Bluetooth Web App | Up to 30 Teache
 > • Internal modification and distribution among staff
 >
 > 🛠️ **What you get** (instant download):
-> • The full Talking Robot web app (runs locally in any Chromebook / laptop)
+> • The full bit-bot web app (runs locally in any Chromebook / laptop)
 > • Ready-to-flash firmware (makecode.ts) for BBC micro:bit V2
 > • Printable setup guide
 > • Signed Site License PDF (fill in your school name and keep on file)
@@ -654,7 +654,7 @@ Re-use photos 1–10 from the single-user listing. Add **photo #11**: a mock-up 
 
 ### Messages to buyers (override the standard auto-reply)
 
-> Thank you for licensing Talking Robot for your school! 🏫
+> Thank you for licensing bit-bot for your school! 🏫
 >
 > Your download is in **You → Purchases & Reviews**. Inside the ZIP you'll find a `LICENSE` file — please fill in your school name, address, your email, and this Etsy order number, and keep it on file.
 >
@@ -675,7 +675,7 @@ Re-use photos 1–10 from the single-user listing. Add **photo #11**: a mock-up 
 ### Title (Arabic + transliteration — Etsy indexes both)
 
 ```
-لوحة تحكم مايكروبت V2 عبر البلوتوث — تطبيق STEM للمعلمين والأطفال | تحميل فوري | Talking Robot Arabic
+لوحة تحكم مايكروبت V2 عبر البلوتوث — تطبيق STEM للمعلمين والأطفال | تحميل فوري | bit-bot Arabic
 ```
 
 ### Category
@@ -838,7 +838,7 @@ Plug-and-Play micro:bit V2 STEM USB — Pre-Flashed + Illustrated Guide | Worksh
 Tired of the "install → flash → paste → pray" dance? This USB stick does it for you. One plug-in and your students are drawing on the LEDs in 30 seconds.
 
 📦 What ships to your door:
-• 1× 4 GB USB stick containing the complete Talking Robot app
+• 1× 4 GB USB stick containing the complete bit-bot app
 • 1× Pre-flashed BBC micro:bit V2 (firmware already loaded, shows the X icon on first power-on)
 • 1× Illustrated Quick-Start card (EN/FR/AR, printed on 250 gsm cardstock)
 • 1× Padded envelope, tracked delivery
@@ -911,7 +911,7 @@ Offer **5 teachers** a free perpetual license + $50 Etsy credit in exchange for:
 >
 > Hi [First Name],
 >
-> I run a small Etsy shop called [Shop Name] — I make a browser-based Talking Robot app. I saw your [Twitter / blog / review] and the way you talk about STEM resonated with me.
+> I run a small Etsy shop called [Shop Name] — I make a browser-based bit-bot app. I saw your [Twitter / blog / review] and the way you talk about STEM resonated with me.
 >
 > I'm launching an Ambassador program for 5 teachers this quarter. Here's what it looks like:
 >
@@ -967,14 +967,14 @@ A 10-slide PDF + cover-letter template, sold on Etsy as "School-District Licensi
 
 #### 3a. Listing title
 ```
-Talking Robot — District-Wide STEM Licensing | Quote for 3+ Schools | Includes Teacher Training Materials
+bit-bot — District-Wide STEM Licensing | Quote for 3+ Schools | Includes Teacher Training Materials
 ```
 
 #### 3b. The 10-slide deck outline
 
 | Slide | Title | Key content |
 |-------|-------|-------------|
-| 1 | **Cover** | Logo + "Talking Robot — District-Wide Licensing Proposal for [District Name]" + your name + date |
+| 1 | **Cover** | Logo + "bit-bot — District-Wide Licensing Proposal for [District Name]" + your name + date |
 | 2 | **The problem** | 3 bullets: "Most STEM software requires installs / accounts / cloud approvals. IT departments say no. Teachers get stuck." |
 | 3 | **What it is** | Screenshot of the app + tab map. One sentence: "A browser-based Bluetooth control panel for BBC micro:bit V2 — no install, no account, no cloud." |
 | 4 | **Standards alignment** | Map the 12 personalities to Common Core / ISTE / national STEM frameworks. *(Adapt per country.)* |
@@ -989,7 +989,7 @@ Talking Robot — District-Wide STEM Licensing | Quote for 3+ Schools | Includes
 ```
 Dear [Principal / Head of STEM / Superintendent] [Last Name],
 
-My name is [Your Name], and I am the developer of Talking Robot — a browser-based STEM tool already in use by educators in [countries]. I am writing to propose a District-Wide License for [District Name].
+My name is [Your Name], and I am the developer of bit-bot — a browser-based STEM tool already in use by educators in [countries]. I am writing to propose a District-Wide License for [District Name].
 
 In the attached 10-slide proposal you will find:
 • What the tool is, demonstrated with screenshots
@@ -1042,7 +1042,7 @@ Etsy takes ~10% on every sale *including* repeat ones. But once a buyer has comp
 
 #### 4a. Setup (one-time, ~45 minutes)
 1. Create a free [Stripe](https://stripe.com) account.
-2. Stripe Dashboard → **Products** → add `Talking Robot v9` (placeholder for next release).
+2. Stripe Dashboard → **Products** → add `bit-bot v9` (placeholder for next release).
 3. Stripe → **Payment Links** → create one per product. Copy each URL.
 4. Add a Google Sheet: columns `Etsy Order #`, `Buyer Email`, `Date`, `Product`. Populate from your Etsy orders.
 
@@ -1052,7 +1052,7 @@ Subject: v9 is here — free update for you + $5 Stripe link inside
 
 Hi [First Name],
 
-Last year you bought Talking Robot on Etsy (order #[X]). Thank you! I just shipped v9 — it has [new feature 1], [new feature 2], and [new feature 3].
+Last year you bought bit-bot on Etsy (order #[X]). Thank you! I just shipped v9 — it has [new feature 1], [new feature 2], and [new feature 3].
 
 Because you're an early supporter:
 • The update is FREE — download here: [Stripe link or Gumroad link w/ $0 code]
@@ -1116,7 +1116,7 @@ Teachers buy certificates specifically to reward students. Add it as a tiny comp
 #### 6a. What ships
 - 1 printable PDF certificate (A4 + US Letter versions)
 - Fillable fields: student name, class, teacher signature, date
-- 4 certificate styles: beginner ("I made my first LED"), intermediate ("I built a sensor dashboard"), advanced ("I built a robot"), mastery ("Talking Robot Certified")
+- 4 certificate styles: beginner ("I made my first LED"), intermediate ("I built a sensor dashboard"), advanced ("I built a robot"), mastery ("bit-bot Certified")
 - Editable in any PDF viewer (no Adobe needed)
 
 #### 6b. Implementation (~1 hour)
@@ -1130,7 +1130,7 @@ Teachers buy certificates specifically to reward students. Add it as a tiny comp
 Title: STEM Achievement Certificates for micro:bit Students — 4 Printable Designs | Editable PDF | Instant Download
 
 Description:
-🏆 Reward your students — 4 printable certificates for Talking Robot milestones.
+🏆 Reward your students — 4 printable certificates for bit-bot milestones.
 • I Made My First LED
 • Sensor Scientist
 • Robot Builder
@@ -1138,7 +1138,7 @@ Description:
 
 Editable fields for student name, class, date, teacher signature. Print on any paper. Prints well in color OR black & white.
 
-Perfect as end-of-workshop rewards, homeschool milestones, or parent-facing proof of progress. Works standalone — no app purchase required, but designed to pair with our Talking Robot.
+Perfect as end-of-workshop rewards, homeschool milestones, or parent-facing proof of progress. Works standalone — no app purchase required, but designed to pair with our bit-bot.
 
 Price: $6.99
 ```
@@ -1209,7 +1209,7 @@ Each Instructable has:
 ```
 🎉 Congrats — your thermometer is working!
 
-Want to plot the temperature, record sessions, and export CSV data without writing any extra code? My browser-based **Talking Robot** does all of that out of the box (it's what I used to take the screenshots in this tutorial). You can find it here: [Etsy URL].
+Want to plot the temperature, record sessions, and export CSV data without writing any extra code? My browser-based **bit-bot** does all of that out of the box (it's what I used to take the screenshots in this tutorial). You can find it here: [Etsy URL].
 
 Either way — happy making!
 ```
@@ -1259,7 +1259,7 @@ Subject: White-label micro:bit app for your kits — $1/unit licensing
 
 Hi [Name],
 
-I'm the developer of Talking Robot — a browser-based app that turns a bare micro:bit V2 into an interactive STEM lab (LEDs, sensors, voices, graphs, 3D). You can see it at [Etsy URL].
+I'm the developer of bit-bot — a browser-based app that turns a bare micro:bit V2 into an interactive STEM lab (LEDs, sensors, voices, graphs, 3D). You can see it at [Etsy URL].
 
 Proposal: I license you a co-branded version of the app ("Powered by [Your Company]" footer, your logo) to ship with your micro:bit kits. Buyers scan the QR code on the box and get the full app — no cloud, no install.
 

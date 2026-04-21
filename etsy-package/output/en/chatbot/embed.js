@@ -8,7 +8,7 @@
         "ios",
         "safari"
       ],
-      "answer": "Unfortunately iOS Safari doesn't support Web Bluetooth, so Talking Robot won't connect to a micro:bit on iPad or iPhone. Use Chrome or Edge on a laptop, desktop, or Android device instead."
+      "answer": "Unfortunately iOS Safari doesn't support Web Bluetooth, so bit-bot won't connect to a micro:bit on iPad or iPhone. Use Chrome or Edge on a laptop, desktop, or Android device instead."
     },
     {
       "id": "chrome-edge",
@@ -19,7 +19,7 @@
         "firefox",
         "compatibility"
       ],
-      "answer": "Talking Robot runs in **Chrome 89+** and **Edge 89+** on Windows, macOS, Linux, Chromebook, and Android. Firefox and Safari aren't supported because they lack Web Bluetooth."
+      "answer": "bit-bot runs in **Chrome 89+** and **Edge 89+** on Windows, macOS, Linux, Chromebook, and Android. Firefox and Safari aren't supported because they lack Web Bluetooth."
     },
     {
       "id": "installation",
@@ -29,7 +29,7 @@
         "setup",
         "how do i start"
       ],
-      "answer": "No installation — Talking Robot is a single HTML file you open in Chrome or Edge. Download the ZIP from Etsy, unzip, double-click `index.html`, click **Connect**, pick your board. That's it."
+      "answer": "No installation — bit-bot is a single HTML file you open in Chrome or Edge. Download the ZIP from Etsy, unzip, double-click `index.html`, click **Connect**, pick your board. That's it."
     },
     {
       "id": "microbit-version",
@@ -39,7 +39,7 @@
         "v1.5",
         "old micro:bit"
       ],
-      "answer": "Talking Robot is built for **BBC micro:bit V2**. V1.5 works for BLE sensors but doesn't have a microphone or speaker, so sound features won't respond. V1.0 lacks Bluetooth LE entirely and can't connect."
+      "answer": "bit-bot is built for **BBC micro:bit V2**. V1.5 works for BLE sensors but doesn't have a microphone or speaker, so sound features won't respond. V1.0 lacks Bluetooth LE entirely and can't connect."
     },
     {
       "id": "offline",
@@ -49,7 +49,7 @@
         "wifi",
         "internet needed"
       ],
-      "answer": "After the first page load, Talking Robot works fully offline — it's a PWA. Once opened on a classroom Chromebook, students can keep using it without a network connection. Perfect for school firewalls."
+      "answer": "After the first page load, bit-bot works fully offline — it's a PWA. Once opened on a classroom Chromebook, students can keep using it without a network connection. Perfect for school firewalls."
     },
     {
       "id": "multiple-students",
@@ -70,7 +70,7 @@
         "makecode",
         "flash"
       ],
-      "answer": "Firmware is a short MakeCode program included as `makecode.ts`. Copy-paste into [makecode.microbit.org](https://makecode.microbit.org) (JavaScript mode), download the .hex, drag to your micro:bit. Once flashed, it works forever — Talking Robot pairs with it over BLE."
+      "answer": "Firmware is a short MakeCode program included as `makecode.ts`. Copy-paste into [makecode.microbit.org](https://makecode.microbit.org) (JavaScript mode), download the .hex, drag to your micro:bit. Once flashed, it works forever — bit-bot pairs with it over BLE."
     },
     {
       "id": "languages",
@@ -81,7 +81,7 @@
         "language",
         "translate"
       ],
-      "answer": "Talking Robot ships in English, French, and Arabic (with full RTL layout). Switch at the top-right flag picker. Other languages can be added by editing `js/lang.js`."
+      "answer": "bit-bot ships in English, French, and Arabic (with full RTL layout). Switch at the top-right flag picker. Other languages can be added by editing `js/lang.js`."
     },
     {
       "id": "updates",
@@ -102,7 +102,7 @@
         "cloud",
         "sends"
       ],
-      "answer": "Zero telemetry. Talking Robot has no server, no account, no cloud. All sensor data stays on the device. Your only network request is the first page load; after that everything runs in the browser tab."
+      "answer": "Zero telemetry. bit-bot has no server, no account, no cloud. All sensor data stays on the device. Your only network request is the first page load; after that everything runs in the browser tab."
     },
     {
       "id": "csv-export",
@@ -122,7 +122,7 @@
         "move",
         "physical"
       ],
-      "answer": "Talking Robot drives two voices connected to pins P1 and P2. The Motors tab has sliders for angle control, the Commands tab sends directional commands, and the 3D tab mirrors the board's orientation in real time."
+      "answer": "bit-bot drives two voices connected to pins P1 and P2. The Motors tab has sliders for angle control, the Commands tab sends directional commands, and the 3D tab mirrors the board's orientation in real time."
     }
   ];
   const WIDGET_ID = '__talking-robot_chatbot__';

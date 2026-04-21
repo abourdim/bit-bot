@@ -1,9 +1,9 @@
-Talking Robot — Single-User / Classroom License Agreement
+bit-bot — Single-User / Classroom License Agreement
 ==================================================================
 
 Version: 1.2
 Effective Date: April 2026
-Product: Talking Robot v2.0.0
+Product: bit-bot v2.0.0
 Licensor: the original author (as listed in the Etsy listing)
 
 1. GRANT OF LICENSE
@@ -11,12 +11,12 @@ Licensor: the original author (as listed in the Etsy listing)
    This license grants you (the "Licensee") a non-exclusive, non-transferable,
    perpetual right to:
 
-   a) Use Talking Robot on unlimited computers within your household,
+   a) Use bit-bot on unlimited computers within your household,
       classroom, or single educational organization
-   b) Use Talking Robot for personal, educational, and non-commercial
+   b) Use bit-bot for personal, educational, and non-commercial
       classroom purposes
    c) Create, record, and distribute sensor sessions, graphs, recordings, and
-      teaching materials produced with Talking Robot
+      teaching materials produced with bit-bot
    d) Print and distribute the included printable materials (quick-start card,
       shortcuts cheat sheet, classroom poster, lesson plan template, sticker
       sheet, welcome README) within your household or organization
@@ -30,15 +30,15 @@ Licensor: the original author (as listed in the Etsy listing)
    a) Redistribute, resell, or sublicense the app files, themes, 3D models,
       or printables as a standalone product
    b) Remove or alter copyright notices, version strings, or attribution
-   c) Claim Talking Robot as your own creation
+   c) Claim bit-bot as your own creation
    d) Upload the app files to public repositories, app stores, or CDNs
-   e) Bundle Talking Robot with hardware kits, courses, or other
+   e) Bundle bit-bot with hardware kits, courses, or other
       products offered for resale without a separate commercial license
    f) Use the app files to create a competing product
 
 3. OWNERSHIP
 
-   Talking Robot is the intellectual property of the Licensor. This
+   bit-bot is the intellectual property of the Licensor. This
    license does not transfer ownership of the software. "BBC micro:bit" is a
    trademark of the Micro:bit Educational Foundation and is referenced here
    only for compatibility purposes; this product is not affiliated with or
@@ -68,14 +68,14 @@ Licensor: the original author (as listed in the Etsy listing)
 
 7. DISCLAIMER
 
-   Talking Robot is provided "AS IS" without warranty of any kind,
+   bit-bot is provided "AS IS" without warranty of any kind,
    express or implied. The Licensor shall not be liable for any damages,
    hardware issues, data loss, or classroom mishaps arising from use of this
    software. Always supervise children when connecting Bluetooth hardware.
 
 8. PRIVACY
 
-   Talking Robot runs 100% locally in your browser. No data is
+   bit-bot runs 100% locally in your browser. No data is
    collected, transmitted, or stored on external servers. No accounts, no
    telemetry, no analytics. All settings, session recordings, and exported
    JSON files remain on your device. Perfect for schools with strict data
@@ -102,5 +102,5 @@ Licensor: the original author (as listed in the Etsy listing)
 
 ==================================================================
 Thank you for supporting independent educational software!
-Talking Robot v2.0.0 — Chat • Listen • Learn • Play
+bit-bot v2.0.0 — Chat • Listen • Learn • Play
 ==================================================================

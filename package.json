@@ -3,7 +3,7 @@
   "version": "2.0.0",
   "private": true,
   "type": "module",
-  "description": "Talking Robot — an AI-powered voice companion for kids that optionally connects to a BBC micro:bit V2 over Bluetooth",
+  "description": "bit-bot — an AI-powered voice companion for kids that optionally connects to a BBC micro:bit V2 over Bluetooth",
   "scripts": {
     "build:etsy": "node etsy-package/build-package.js",
     "serve": "npx serve ."

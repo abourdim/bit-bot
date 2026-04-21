@@ -1,4 +1,4 @@
-# Annonce Etsy — Talking Robot (FR)
+# Annonce Etsy — bit-bot (FR)
 
 > **Destiné à l'audience francophone.** Contient uniquement le texte visible par l'acheteur (titre, tags, description, FAQ, messages). La stratégie vendeur (prix, UTM, Pinterest, plan de lancement) reste dans `ETSY_LISTING.md` en anglais.
 >
@@ -24,7 +24,7 @@
 
 Application Bluetooth Web pour BBC micro:bit V2 + Guide Illustré | 12 Personnalités, Voix, Visage Animé | STEM École | Téléchargement Numérique
 
-> Nom produit sur la boutique Etsy : **« Talking Robot »**. Utilisez la formulation **« pour le BBC micro:bit V2 »** partout afin de respecter les règles de marque de la Micro:bit Educational Foundation.
+> Nom produit sur la boutique Etsy : **« bit-bot »**. Utilisez la formulation **« pour le BBC micro:bit V2 »** partout afin de respecter les règles de marque de la Micro:bit Educational Foundation.
 
 ## Catégorie
 
@@ -41,7 +41,7 @@ micro:bit, microbit v2, STEM, codage enfants, BBC microbit, application bluetoot
 >
 > ✅ **Testé sur Chromebook** — appareil cible principal pour les écoles. S'installe comme une PWA, fonctionne hors ligne après le premier chargement.
 >
-> 🎮 **Talking Robot** transforme votre micro:bit en laboratoire STEM interactif — rien à installer, aucun compte, aucun cloud. Ouvrez-le dans votre navigateur et connectez-vous.
+> 🎮 **bit-bot** transforme votre micro:bit en laboratoire STEM interactif — rien à installer, aucun compte, aucun cloud. Ouvrez-le dans votre navigateur et connectez-vous.
 >
 > 🔒 **Aucun compte. Aucune connexion. Aucune donnée collectée. Sûr pour les élèves de moins de 13 ans — conforme RGPD par conception.**
 >
@@ -108,7 +108,7 @@ Oui — mises à jour gratuites dans la ligne v1.x (nouvelles fonctionnalités e
 
 ## Annonce de boutique
 
-> 🎮 **Talking Robot** — panneau de contrôle Bluetooth + guide illustré pour le BBC micro:bit V2. Rien à installer. Fonctionne sur Chromebook. Conçu pour les salles STEM.
+> 🎮 **bit-bot** — panneau de contrôle Bluetooth + guide illustré pour le BBC micro:bit V2. Rien à installer. Fonctionne sur Chromebook. Conçu pour les salles STEM.
 >
 > Sortie v1.2.0 : guide illustré trilingue (EN/FR/AR), aire de jeu LED interactive, modes Débutant/Expert. Ouvrez-le dans Chrome ou Edge, cliquez Connecter — vos capteurs s'animent.
 >
@@ -121,7 +121,7 @@ Oui — mises à jour gratuites dans la ligne v1.x (nouvelles fonctionnalités e
 Message à envoyer dans Etsy **« Contacter l'acheteur »** une fois la livraison confirmée.
 
 ```
-Bonjour {{BUYER_FIRST_NAME}} — merci beaucoup d'avoir pris Talking Robot ! 🎮
+Bonjour {{BUYER_FIRST_NAME}} — merci beaucoup d'avoir pris bit-bot ! 🎮
 
 Petite question : est-ce que l'appairage s'est bien passé sur votre Chromebook (ou l'ordinateur que vous avez utilisé) ?
 Si quoi que ce soit coince, répondez ici — je corrige le jour même.
@@ -173,4 +173,4 @@ Message envoyé automatiquement dès l'achat.
 
 À envoyer 7 jours après l'achat (facultatif).
 
-> Bonjour ! Petit suivi — avez-vous réussi à faire fonctionner Talking Robot cette semaine ? Si vous avez rencontré un souci, répondez ici et je le règle. Si tout a bien fonctionné, une note sur l'annonce m'aide à continuer à créer ce genre d'outils. Dans tous les cas, merci pour votre soutien !
+> Bonjour ! Petit suivi — avez-vous réussi à faire fonctionner bit-bot cette semaine ? Si vous avez rencontré un souci, répondez ici et je le règle. Si tout a bien fonctionné, une note sur l'annonce m'aide à continuer à créer ce genre d'outils. Dans tous les cas, merci pour votre soutien !

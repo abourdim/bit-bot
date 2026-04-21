@@ -1,11 +1,11 @@
 /**
- * Talking Robot V2 - Micro:bit MakeCode JavaScript
+ * bit-bot V2 - Micro:bit MakeCode JavaScript
  * VERSION: 2.0 with LED Sync
  * 
  * NEW: Sends LED state back to web app for real-time display sync!
  * 
  * Flash this to your Micro:bit using MakeCode
- * Works with the Talking Robot V2 web app via BLE UART
+ * Works with the bit-bot V2 web app via BLE UART
  * 
  * Instructions:
  * 1. Go to https://makecode.microbit.org

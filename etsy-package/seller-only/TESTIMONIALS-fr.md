@@ -17,7 +17,7 @@ Trois messages, envoyés dans l'ordre, à 3-7 jours d'intervalle. Adapter le ton
 
 > Bonjour {{PRENOM}},
 >
-> J'espère que Talking Robot fonctionne bien en classe. Une chose qui m'aiderait énormément si vous êtes partant(e) : **une photo de vos élèves en train de l'utiliser.**
+> J'espère que bit-bot fonctionne bien en classe. Une chose qui m'aiderait énormément si vous êtes partant(e) : **une photo de vos élèves en train de l'utiliser.**
 >
 > Je suis une toute petite boutique d'une personne, et ce qui me freine le plus, c'est que les nouveaux acheteurs ne voient pas de vraies classes utilisant l'outil. Une seule photo + deux phrases de votre part auraient plus d'effet que cent euros de publicités Etsy.
 >

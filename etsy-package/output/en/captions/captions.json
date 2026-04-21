@@ -2,7 +2,7 @@
   "teacher": {
     "hero_titles": [
       "Every sensor, live in every browser",
-      "Talking Robot for classrooms that don't have 30 laptops",
+      "bit-bot for classrooms that don't have 30 laptops",
       "Zero-install STEM for real school Wi-Fi",
       "Teach the sensor, not the setup",
       "The micro:bit panel your IT team won't fight"
@@ -36,7 +36,7 @@
       "Control robots with code\n(and a browser tab)",
       "Make the micro:bit\ndo stuff on screen",
       "Draw. Sense. Move.\nAll from one page.",
-      "Talking Robot: turn a micro:bit into a game"
+      "bit-bot: turn a micro:bit into a game"
     ],
     "subtitles": [
       "Sensors, voices, 3D models. No install. No account.",
@@ -64,7 +64,7 @@
   "maker": {
     "hero_titles": [
       "BLE Control Panel\nfor Makers",
-      "Talking Robot: hack the micro:bit\nfrom the browser",
+      "bit-bot: hack the micro:bit\nfrom the browser",
       "Web Bluetooth that\nactually works",
       "MakeCode firmware\n+ live browser dashboard",
       "Open source friendly\nBLE control surface"

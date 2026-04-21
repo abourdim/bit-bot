@@ -1,4 +1,4 @@
-# Talking Robot — Accessibility Pack
+# bit-bot — Accessibility Pack
 
 Materials that meet common classroom accessibility requirements for
 low-vision, blind, and Braille-reading students. These files are bundled

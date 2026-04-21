@@ -1,4 +1,4 @@
-# Marketing Asset Guide — Talking Robot
+# Marketing Asset Guide — bit-bot
 
 A walkthrough of **every asset** the marketing pipeline produces: what it
 is, where it goes, and when to use it. Keep this open when you're

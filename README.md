@@ -1,4 +1,4 @@
-# 🤖 Talking Robot V2
+# 🤖 bit-bot V2
 
 ## Comprehensive Upgrade with 20 Enhancements!
 
@@ -162,4 +162,4 @@ Made with ❤️ for kids who love robots!
 
 ---
 
-**Have fun with your Talking Robot! 🤖💬**
+**Have fun with your bit-bot! 🤖💬**

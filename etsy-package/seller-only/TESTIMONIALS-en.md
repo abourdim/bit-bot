@@ -17,7 +17,7 @@ Three messages, sent in order, 3-7 days apart. Adapt tone to the buyer (teacher 
 
 > Hi {{FIRST_NAME}},
 >
-> Hope Talking Robot has been working in the classroom. One thing that would mean a huge amount if you're up for it: **a photo of your students using it.**
+> Hope bit-bot has been working in the classroom. One thing that would mean a huge amount if you're up for it: **a photo of your students using it.**
 >
 > I'm a tiny one-person shop and the biggest thing holding me back is that new buyers can't see real classrooms using the tool. A single photo + a two-sentence quote from you would go further than a hundred dollars of Etsy ads.
 >

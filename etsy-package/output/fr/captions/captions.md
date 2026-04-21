@@ -1,4 +1,4 @@
-# Talking Robot — A/B caption bank
+# bit-bot — A/B caption bank
 
 Generated 2026-04-21 · template-generated
 
@@ -7,7 +7,7 @@ Generated 2026-04-21 · template-generated
 ### hero_titles
 
 1. Chaque capteur, en direct dans le navigateur
-2. Talking Robot pour les salles sans 30 ordinateurs neufs
+2. bit-bot pour les salles sans 30 ordinateurs neufs
 3. STEM sans installation, compatible Wi-Fi d'école
 4. Enseignez le capteur, pas l'installation
 5. Le panneau micro:bit que votre DSI ne va pas bloquer
@@ -46,7 +46,7 @@ Generated 2026-04-21 · template-generated
 2. Commande des robots avec du code / (et un onglet)
 3. Fais bouger / ton micro:bit depuis l'écran
 4. Dessine. Détecte. Bouge. / Tout sur une page.
-5. Talking Robot : transforme un micro:bit en jeu
+5. bit-bot : transforme un micro:bit en jeu
 
 ### subtitles
 
@@ -79,7 +79,7 @@ Generated 2026-04-21 · template-generated
 ### hero_titles
 
 1. Panneau BLE / pour makers
-2. Talking Robot : bidouille le micro:bit / depuis le navigateur
+2. bit-bot : bidouille le micro:bit / depuis le navigateur
 3. Du Web Bluetooth / qui fonctionne vraiment
 4. Firmware MakeCode + / tableau de bord navigateur
 5. Surface de contrôle BLE / compatible open source

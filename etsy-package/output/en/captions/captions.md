@@ -1,4 +1,4 @@
-# Talking Robot — A/B caption bank
+# bit-bot — A/B caption bank
 
 Generated 2026-04-21 · template-generated
 
@@ -7,7 +7,7 @@ Generated 2026-04-21 · template-generated
 ### hero_titles
 
 1. Every sensor, live in every browser
-2. Talking Robot for classrooms that don't have 30 laptops
+2. bit-bot for classrooms that don't have 30 laptops
 3. Zero-install STEM for real school Wi-Fi
 4. Teach the sensor, not the setup
 5. The micro:bit panel your IT team won't fight
@@ -46,7 +46,7 @@ Generated 2026-04-21 · template-generated
 2. Control robots with code / (and a browser tab)
 3. Make the micro:bit / do stuff on screen
 4. Draw. Sense. Move. / All from one page.
-5. Talking Robot: turn a micro:bit into a game
+5. bit-bot: turn a micro:bit into a game
 
 ### subtitles
 
@@ -79,7 +79,7 @@ Generated 2026-04-21 · template-generated
 ### hero_titles
 
 1. BLE Control Panel / for Makers
-2. Talking Robot: hack the micro:bit / from the browser
+2. bit-bot: hack the micro:bit / from the browser
 3. Web Bluetooth that / actually works
 4. MakeCode firmware / + live browser dashboard
 5. Open source friendly / BLE control surface

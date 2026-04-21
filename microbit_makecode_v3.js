@@ -1,5 +1,5 @@
 /**
- * Talking Robot V3 - Micro:bit MakeCode JavaScript
+ * bit-bot V3 - Micro:bit MakeCode JavaScript
  * VERSION: 3.0 with AI Games Support
  * 
  * NEW FEATURES:
@@ -10,7 +10,7 @@
  * - LED state sync
  * 
  * Flash this to your Micro:bit using MakeCode
- * Works with the Talking Robot V3 web app via BLE UART
+ * Works with the bit-bot V3 web app via BLE UART
  * 
  * Instructions:
  * 1. Go to https://makecode.microbit.org

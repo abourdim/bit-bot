@@ -1,4 +1,4 @@
-# Talking Robot → Etsy 1-Minute Demo Playbook
+# bit-bot → Etsy 1-Minute Demo Playbook
 
 **For Etsy listing videos (60-second cap, 9:16 portrait, autoplay-muted preview).**
 
@@ -55,13 +55,13 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 
 ---
 
-## Script Template A — "Talking Robot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge" (hero demo)
+## Script Template A — "bit-bot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge" (hero demo)
 
 **Use case:** the main Etsy listing video. Showcases the 3D, the BLE pairing, and the live graph in one go.
 
 | Time | What to SAY | What to CLICK / DO |
 |---|---|---|
-| 0–3 s | *"Talking Robot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge — in the browser, in 60 seconds."* | Close-up of the real board with the X icon on the LEDs. Your hand holds it. |
+| 0–3 s | *"bit-bot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge — in the browser, in 60 seconds."* | Close-up of the real board with the X icon on the LEDs. Your hand holds it. |
 | 3–10 s | *"One page, one click, paired."* | Cut to the laptop. Click **🔗 Connect to micro:bit** → pick the board → chip turns green. |
 | 10–20 s | *"Sensors live — tilt it, the 3D model tilts too."* | Tab **6 · Robot Face**. Tilt the real board. The virtual one mirrors it. Hold both in frame. |
 | 30–40 s | *"Live graph with record, replay, CSV. A lab in a browser tab."* | Tab **5 · Graph** → click **🎲 Simulate** → chart dances → hover on **⏺ Record** and **📄 CSV**. |
@@ -143,7 +143,7 @@ Etsy loops the video, so the **end frame should match the cover** — keeps view
 ## Etsy-specific upload tips
 
 - Etsy listing videos appear at the top as an **autoplaying preview tile**. First frame is the cover — make it visually clean.
-- Use the listing **title** to echo the video's first words. If you say *"Talking Robot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge"*, the listing title starts with the same opening words.
+- Use the listing **title** to echo the video's first words. If you say *"bit-bot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge"*, the listing title starts with the same opening words.
 - Add the captions text into the listing **description** — searchable, helps SEO.
 - Tag the listing with words you actually said in the video.
 - Price tiers: single user `{{PRICE}}` · classroom / site `{{PRICE}}`.
@@ -178,7 +178,7 @@ UPLOAD  Etsy listing → upload MP4 → echo first words in listing title
 
 **Title (140 chars max):**
 ```
-Talking Robot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge
+bit-bot — AI Chat Companion for Kids · 12 Personalities · Voice · Optional micro:bit · No Accounts · Chrome / Edge
 ```
 
 **160-char short description:**
@@ -223,4 +223,4 @@ browser-based · no-install · privacy-first · offline-capable · web bluetooth
 
 ---
 
-*Made for Talking Robot v2.0.0 — print this on A4, laminate, keep next to the shoot rig.*
+*Made for bit-bot v2.0.0 — print this on A4, laminate, keep next to the shoot rig.*

@@ -1,4 +1,4 @@
-# Talking Robot — A/B caption bank
+# bit-bot — A/B caption bank
 
 Generated 2026-04-21 · template-generated
 
@@ -7,7 +7,7 @@ Generated 2026-04-21 · template-generated
 ### hero_titles
 
 1. كل مستشعر، مباشرةً في المتصفح
-2. Talking Robot للفصول التي ليس لديها 30 حاسوباً جديداً
+2. bit-bot للفصول التي ليس لديها 30 حاسوباً جديداً
 3. STEM بدون تثبيت، متوافق مع Wi-Fi المدرسة
 4. علّم المستشعر، لا عملية التثبيت
 5. لوحة micro:bit التي لن يمنعها مسؤول تقنية المعلومات
@@ -46,7 +46,7 @@ Generated 2026-04-21 · template-generated
 2. تحكم بالروبوتات بالكود / (وعلامة تبويب متصفح)
 3. اجعل micro:bit / يفعل أشياء على الشاشة
 4. ارسم. استشعر. حرّك. / كل ذلك من صفحة واحدة.
-5. Talking Robot: حوّل micro:bit إلى لعبة
+5. bit-bot: حوّل micro:bit إلى لعبة
 
 ### subtitles
 
@@ -79,7 +79,7 @@ Generated 2026-04-21 · template-generated
 ### hero_titles
 
 1. لوحة تحكم BLE / للمبدعين
-2. Talking Robot: اخترق micro:bit / من المتصفح
+2. bit-bot: اخترق micro:bit / من المتصفح
 3. Web Bluetooth يعمل / فعلاً
 4. فيرموير MakeCode + / لوحة تحكم المتصفح
 5. سطح تحكم BLE / متوافق مع المصدر المفتوح

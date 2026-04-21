@@ -2,7 +2,7 @@
   "teacher": {
     "hero_titles": [
       "Chaque capteur, en direct dans le navigateur",
-      "Talking Robot pour les salles sans 30 ordinateurs neufs",
+      "bit-bot pour les salles sans 30 ordinateurs neufs",
       "STEM sans installation, compatible Wi-Fi d'école",
       "Enseignez le capteur, pas l'installation",
       "Le panneau micro:bit que votre DSI ne va pas bloquer"
@@ -36,7 +36,7 @@
       "Commande des robots avec du code\n(et un onglet)",
       "Fais bouger\nton micro:bit depuis l'écran",
       "Dessine. Détecte. Bouge.\nTout sur une page.",
-      "Talking Robot : transforme un micro:bit en jeu"
+      "bit-bot : transforme un micro:bit en jeu"
     ],
     "subtitles": [
       "Capteurs, voices, modèles 3D. Sans install. Sans compte.",
@@ -64,7 +64,7 @@
   "maker": {
     "hero_titles": [
       "Panneau BLE\npour makers",
-      "Talking Robot : bidouille le micro:bit\ndepuis le navigateur",
+      "bit-bot : bidouille le micro:bit\ndepuis le navigateur",
       "Du Web Bluetooth\nqui fonctionne vraiment",
       "Firmware MakeCode +\ntableau de bord navigateur",
       "Surface de contrôle BLE\ncompatible open source"

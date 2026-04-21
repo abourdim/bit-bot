@@ -1,7 +1,7 @@
 # `etsy-package/` — User Guide
 
 Everything in this folder exists for **one purpose**: to publish and maintain
-the **Talking Robot** listing on Etsy.
+the **bit-bot** listing on Etsy.
 
 > 🛒 **Create a listing**: <https://www.etsy.com/your/shops/me/listing-editor/create>
 

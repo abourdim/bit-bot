@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#6366f1">
-  <title data-i18n="app_title_full">Talking Robot V2</title>
+  <title data-i18n="app_title_full">bit-bot V2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
@@ -553,7 +553,7 @@ body {
         <img class="logo" src="logo.svg" alt="WDI Logo" aria-hidden="true">
       </div>
       <div class="header-center">
-        <h1 class="app-title" data-i18n="app_title">Talking Robot</h1>
+        <h1 class="app-title" data-i18n="app_title">bit-bot</h1>
         <p class="app-subtitle" data-i18n="app_subtitle">Your AI Robot Friend!</p>
         <span class="app-version">V1.0</span>
       </div>
@@ -804,8 +804,8 @@ const LANG = {
 /* ============ Trilingual UI dictionary (i18n) ============ */
 const I18N = {
   en: {
-    app_title_full: "Talking Robot",
-    app_title: "Talking Robot",
+    app_title_full: "bit-bot",
+    app_title: "bit-bot",
     app_subtitle: "Your AI Robot Friend!",
     skip_to_main: "Skip to main content",
     rate_limit_title: "⏳ Rate limit reached — using demo mode",
@@ -1042,7 +1042,7 @@ let state = {
   connected: false, device: null, writeChar: null, rxBuffer: '',
   recognition: null, listening: false, speaking: false, voices: [],
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
-  speed: 1, voice: '', continuous: false, theme: 'light',
+  speed: 1, voice: '', continuous: false, theme: 'dark',
   groqKey: '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', geminiKey: '', rateLimitUntil: 0,
   chatMemory: { playful: [], helpful: [], pirate: [], space: [] },
   ledFromMicrobitOnly: false
@@ -1078,7 +1078,7 @@ function init() {
   loadVoices();
   updateUI();
   generateCommands();
-  log('Talking Robot V2 initialized ✨', 'success');
+  log('bit-bot V2 initialized ✨', 'success');
 }
 
 function loadSettings() {
@@ -1883,7 +1883,7 @@ function exportLogs() {
     return;
   }
   
-  let text = '# Talking Robot V2 - Debug Logs\n';
+  let text = '# bit-bot V2 - Debug Logs\n';
   text += '# Exported: ' + new Date().toISOString() + '\n';
   text += '# Total entries: ' + entries.length + '\n\n';
   

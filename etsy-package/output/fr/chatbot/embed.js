@@ -8,7 +8,7 @@
         "ios",
         "safari"
       ],
-      "answer": "Malheureusement Safari iOS ne supporte pas le Web Bluetooth, donc Talking Robot ne pourra pas se connecter à un micro:bit sur iPad ou iPhone. Utilisez Chrome ou Edge sur un ordinateur ou un appareil Android."
+      "answer": "Malheureusement Safari iOS ne supporte pas le Web Bluetooth, donc bit-bot ne pourra pas se connecter à un micro:bit sur iPad ou iPhone. Utilisez Chrome ou Edge sur un ordinateur ou un appareil Android."
     },
     {
       "id": "chrome-edge",
@@ -19,7 +19,7 @@
         "firefox",
         "compatibilité"
       ],
-      "answer": "Talking Robot fonctionne dans **Chrome 89+** et **Edge 89+** sur Windows, macOS, Linux, Chromebook et Android. Firefox et Safari ne sont pas supportés (pas de Web Bluetooth)."
+      "answer": "bit-bot fonctionne dans **Chrome 89+** et **Edge 89+** sur Windows, macOS, Linux, Chromebook et Android. Firefox et Safari ne sont pas supportés (pas de Web Bluetooth)."
     },
     {
       "id": "installation",
@@ -29,7 +29,7 @@
         "install",
         "démarrer"
       ],
-      "answer": "Pas d'installation — Talking Robot est un fichier HTML que vous ouvrez dans Chrome ou Edge. Téléchargez le ZIP depuis Etsy, dézippez, double-cliquez `index.html`, cliquez **Connecter**, choisissez votre carte."
+      "answer": "Pas d'installation — bit-bot est un fichier HTML que vous ouvrez dans Chrome ou Edge. Téléchargez le ZIP depuis Etsy, dézippez, double-cliquez `index.html`, cliquez **Connecter**, choisissez votre carte."
     },
     {
       "id": "microbit-version",
@@ -39,7 +39,7 @@
         "v1.5",
         "ancien"
       ],
-      "answer": "Talking Robot est conçu pour le **BBC micro:bit V2**. Le V1.5 fonctionne pour les capteurs BLE mais n'a pas de micro ni haut-parleur. Le V1.0 n'a pas de Bluetooth LE et ne peut pas se connecter."
+      "answer": "bit-bot est conçu pour le **BBC micro:bit V2**. Le V1.5 fonctionne pour les capteurs BLE mais n'a pas de micro ni haut-parleur. Le V1.0 n'a pas de Bluetooth LE et ne peut pas se connecter."
     },
     {
       "id": "offline",
@@ -49,7 +49,7 @@
         "sans internet",
         "wifi"
       ],
-      "answer": "Après le premier chargement, Talking Robot fonctionne entièrement hors ligne (c'est une PWA). Parfait pour les pare-feu d'école."
+      "answer": "Après le premier chargement, bit-bot fonctionne entièrement hors ligne (c'est une PWA). Parfait pour les pare-feu d'école."
     },
     {
       "id": "multiple-students",
@@ -79,7 +79,7 @@
         "langue",
         "traduction"
       ],
-      "answer": "Talking Robot est disponible en anglais, français et arabe (avec mise en page RTL complète). Changer de langue depuis le sélecteur de drapeau en haut à droite."
+      "answer": "bit-bot est disponible en anglais, français et arabe (avec mise en page RTL complète). Changer de langue depuis le sélecteur de drapeau en haut à droite."
     },
     {
       "id": "updates",
@@ -98,7 +98,7 @@
         "données",
         "cloud"
       ],
-      "answer": "Zéro télémétrie. Talking Robot n'a ni serveur, ni compte, ni cloud. Toutes les données des capteurs restent sur votre appareil."
+      "answer": "Zéro télémétrie. bit-bot n'a ni serveur, ni compte, ni cloud. Toutes les données des capteurs restent sur votre appareil."
     },
     {
       "id": "csv-export",
@@ -117,7 +117,7 @@
         "moteur",
         "bouger"
       ],
-      "answer": "Talking Robot pilote deux voices connectés aux broches P1 et P2. L'onglet Moteurs a des curseurs, l'onglet Manette envoie des commandes directionnelles."
+      "answer": "bit-bot pilote deux voices connectés aux broches P1 et P2. L'onglet Moteurs a des curseurs, l'onglet Manette envoie des commandes directionnelles."
     }
   ];
   const WIDGET_ID = '__talking-robot_chatbot__';

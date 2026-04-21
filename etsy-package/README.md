@@ -1,6 +1,6 @@
 # etsy-package 🛒
 
-All Etsy-release assets for **Talking Robot**: the ZIP builder, the
+All Etsy-release assets for **bit-bot**: the ZIP builder, the
 printables shipped to buyers, the Etsy listing mockups, and — inside
 [`seller-only/`](seller-only/) — the business playbook and site-license paperwork.
 

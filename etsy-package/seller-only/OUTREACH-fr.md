@@ -93,13 +93,13 @@
 
 ## <a id="t5"></a>Template 5 — Acheteur académique (licence site)
 
-**Objet :** Licence établissement pour Talking Robot — {{ACADEMIE}}
+**Objet :** Licence établissement pour bit-bot — {{ACADEMIE}}
 
 > Madame, Monsieur {{NOM}},
 >
 > Je me permets de vous contacter car {{ACADEMIE}} {{CONTEXT : « développe un programme CSTI » / « a piloté une initiative STEM récente » / « inscrit le numérique éducatif dans son projet »}}, et je développe un outil qui pourrait s'intégrer à la partie micro:bit de cette démarche.
 >
-> **Talking Robot** est un panneau de contrôle basé navigateur pour le BBC micro:bit V2. Il fonctionne sur Chromebook, ne nécessite aucune installation, aucun compte, aucun cloud, aucune collecte de données — il respecte le RGPD et les exigences typiques d'un DPO d'académie.
+> **bit-bot** est un panneau de contrôle basé navigateur pour le BBC micro:bit V2. Il fonctionne sur Chromebook, ne nécessite aucune installation, aucun compte, aucun cloud, aucune collecte de données — il respecte le RGPD et les exigences typiques d'un DPO d'académie.
 >
 > La licence établissement couvre un nombre illimité d'enseignants sur un site pour **199 € / an** (les bundles comparables tournent entre 200 et 400 €). Licence multi-sites à partir de **499 €** pour trois sites.
 >
@@ -137,7 +137,7 @@
 
 ## <a id="t7"></a>Template 7 — Relance post-démo
 
-**Objet :** La démo Talking Robot a fonctionné sur votre configuration ?
+**Objet :** La démo bit-bot a fonctionné sur votre configuration ?
 
 > Bonjour {{PRENOM}},
 >
