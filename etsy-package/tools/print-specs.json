@@ -1,0 +1,91 @@
+{
+  "_comment": "Print specs for bit-bot (AI chat companion). 12 personalities · 6 AI providers · voice in/out · parental controls (PIN, demo-only, timer). Poster A3 + flyer A4 per language.",
+
+  "common": {
+    "url": "abourdim.github.io/bit-bot",
+    "qrUrl": "https://abourdim.github.io/bit-bot/?utm_source=etsy&utm_medium=print&utm_campaign=poster",
+    "screenshots": {
+      "teacher": "screenshot-chat.png",
+      "kid": "screenshot-audience-kid-3d.png",
+      "maker": "screenshot-audience-maker-3d.png"
+    }
+  },
+
+  "en": {
+    "brand": "bit-bot",
+    "posterTitle": "An AI classroom companion.\nIn a browser tab.",
+    "posterKicker": "BYOK · 6 AI PROVIDERS · PARENTAL CONTROLS",
+    "posterSubtitle": "Talk to 12 personalities. Voice in, voice out. Zero telemetry.",
+    "features": [
+      { "icon": "🎭", "h": "12 personalities", "p": "Pirate, professor, detective, chef, scientist, comic, bard and more — each with its own prompt, voice and vibe." },
+      { "icon": "🔑", "h": "Bring your own AI key", "p": "Groq, Gemini, Cohere, Mistral, OpenRouter — or Demo mode (offline) for the first five minutes of class." },
+      { "icon": "🛡️", "h": "Parental controls", "p": "PIN-lock settings, lock to Demo-only, session timer with auto-logout. Keys stay in the browser." }
+    ],
+    "steps": [
+      "Open Chrome or Edge on any laptop.",
+      "Paste an AI key — or pick Demo mode.",
+      "Choose a personality.",
+      "Type or speak a question.",
+      "The bot answers out loud."
+    ],
+    "stepsHeader": "Get started in 60 seconds",
+    "qrCaption": "Scan to try the live demo",
+    "audienceLine": "For teachers, kids, and makers.",
+    "footerLeft": "Chrome / Edge · No account · Zero telemetry",
+    "footerRight": "PWA-installable · Open source friendly",
+    "flyerTagline": "The browser IS the classroom AI.",
+    "motto": "Every good question deserves a voice that answers back."
+  },
+
+  "fr": {
+    "brand": "bit-bot",
+    "posterTitle": "Un compagnon IA\npour la classe.",
+    "posterKicker": "BYOK · 6 FOURNISSEURS D'IA · CONTRÔLE PARENTAL",
+    "posterSubtitle": "Parle à 12 personnalités. Voix à l'entrée, voix à la sortie. Zéro télémétrie.",
+    "features": [
+      { "icon": "🎭", "h": "12 personnalités", "p": "Pirate, professeur, détective, chef, scientifique, barde — chacune avec son prompt, sa voix et son style." },
+      { "icon": "🔑", "h": "Ta propre clé IA", "p": "Groq, Gemini, Cohere, Mistral, OpenRouter — ou mode Démo (hors ligne) pour les 5 premières minutes." },
+      { "icon": "🛡️", "h": "Contrôle parental", "p": "Réglages verrouillés par PIN, verrouillage mode Démo, minuteur avec auto-déconnexion. Les clés restent dans le navigateur." }
+    ],
+    "steps": [
+      "Ouvre Chrome ou Edge.",
+      "Colle une clé IA — ou choisis le mode Démo.",
+      "Choisis une personnalité.",
+      "Tape ou parle une question.",
+      "Le bot répond à voix haute."
+    ],
+    "stepsHeader": "Démarrez en 60 secondes",
+    "qrCaption": "Scannez pour la démo en direct",
+    "audienceLine": "Pour les enseignants, les enfants et les makers.",
+    "footerLeft": "Chrome / Edge · Sans compte · Zéro télémétrie",
+    "footerRight": "Installable en PWA · Compatible open source",
+    "flyerTagline": "Le navigateur EST l'IA de classe.",
+    "motto": "Chaque bonne question mérite une voix qui répond."
+  },
+
+  "ar": {
+    "brand": "bit-bot",
+    "posterTitle": "رفيق ذكاءٍ اصطناعي للقاعة.\nفي علامة تبويب.",
+    "posterKicker": "BYOK · 6 مزوّدي ذكاء · رقابة أبوية",
+    "posterSubtitle": "تحدّث إلى 12 شخصية. صوت للدخول والخروج. بلا تتبّع.",
+    "features": [
+      { "icon": "🎭", "h": "12 شخصية", "p": "قرصان، أستاذ، محقق، طاهٍ، عالِم، شاعر — لكلٍّ برومبت وصوت وأسلوب." },
+      { "icon": "🔑", "h": "مفتاحك الخاص", "p": "Groq, Gemini, Cohere, Mistral, OpenRouter — أو وضع Demo (بدون إنترنت) لأول 5 دقائق." },
+      { "icon": "🛡️", "h": "رقابة أبوية", "p": "قفل الإعدادات برقم PIN، قصر الاستخدام على Demo، مؤقت مع خروج تلقائي. المفاتيح تبقى في المتصفح." }
+    ],
+    "steps": [
+      "افتح Chrome أو Edge.",
+      "الصق مفتاح ذكاء — أو اختر وضع Demo.",
+      "اختر شخصية.",
+      "اكتب أو تحدّث بسؤال.",
+      "يجيب البوت بصوت مسموع."
+    ],
+    "stepsHeader": "ابدأ خلال 60 ثانية",
+    "qrCaption": "امسح لتجربة العرض المباشر",
+    "audienceLine": "للمعلمين والأطفال والمبدعين.",
+    "footerLeft": "Chrome / Edge · بدون حساب · بلا تتبّع",
+    "footerRight": "قابل للتثبيت كـ PWA · متوافق مع المصدر المفتوح",
+    "flyerTagline": "المتصفح هو ذكاء القاعة.",
+    "motto": "كل سؤال جيد يستحق صوتاً يجيب."
+  }
+}

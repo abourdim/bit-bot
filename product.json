@@ -1,0 +1,20 @@
+{
+  "PRODUCT_NAME": "bit-bot",
+  "PRODUCT_SLUG": "TalkingRobot",
+  "GITHUB_REPO": "bit-bot",
+  "GITHUB_USER": "abourdim",
+  "LIVE_DEMO_URL": "https://abourdim.github.io/bit-bot/",
+  "VERSION": "v2.0.0",
+  "VERSION_UPPER": "V2.0.0",
+  "VERSION_PLAIN": "2.0.0",
+  "TAGLINE": "Chat • Listen • Learn • Play",
+  "HARDWARE": "BBC micro:bit (optional)",
+  "PRICE_LAUNCH": "14.99",
+  "PRICE_STANDARD": "19.99",
+  "PRICE_BUNDLE": "34.99",
+  "PRICE_TRIPWIRE": "5",
+  "PRICE_SITE": "229",
+  "PRICE_DISTRICT": "599",
+  "PROMO_CODE": "LAUNCH10",
+  "PROMO_PRICE": "9"
+}

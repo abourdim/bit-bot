@@ -1,0 +1,5149 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="dark">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <meta name="theme-color" content="#6366f1">
+  <meta name="description" content="Bit-Bot - Your AI Robot Friend. Chat with a fun robot using micro:bit!">
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="default">
+  <meta name="apple-mobile-web-app-title" content="Bit-Bot">
+  <link rel="manifest" href="manifest.json">
+  <title>Bit-Bot</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;500;600;700;800&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
+  <style>
+/* ==================== DESIGN SYSTEM ==================== */
+:root {
+  /* Primary palette - simplified to 2 main colors */
+  --primary: #6366f1;
+  --primary-light: #818cf8;
+  --primary-soft: rgba(99,102,241,0.12);
+  --accent: #10b981;
+  --accent-soft: rgba(16,185,129,0.12);
+  
+  /* Semantic colors */
+  --warning: #f59e0b;
+  --danger: #ef4444;
+  --info: #3b82f6;
+  
+  /* Neutrals */
+  --bg: #f8fafc;
+  --bg-elevated: #ffffff;
+  --surface: #ffffff;
+  --border: #e2e8f0;
+  --border-strong: #cbd5e1;
+  --text: #1e293b;
+  --text-secondary: #64748b;
+  --text-muted: #94a3b8;
+  
+  /* Typography */
+  --font: 'Nunito', system-ui, sans-serif;
+  --mono: 'JetBrains Mono', monospace;
+  
+  /* Spacing & Radius */
+  --radius-sm: 8px;
+  --radius-md: 12px;
+  --radius-lg: 16px;
+  --radius-xl: 24px;
+  --radius-full: 9999px;
+  
+  /* Shadows */
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.05);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.08);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.12);
+  --shadow-primary: 0 8px 24px rgba(99,102,241,0.25);
+  --shadow-accent: 0 8px 24px rgba(16,185,129,0.25);
+}
+
+[data-theme="dark"] {
+  --bg: #0f172a;
+  --bg-elevated: #1e293b;
+  --surface: #1e293b;
+  --border: #334155;
+  --border-strong: #475569;
+  --text: #f1f5f9;
+  --text-secondary: #94a3b8;
+  --text-muted: #64748b;
+  --shadow-sm: 0 1px 2px rgba(0,0,0,0.2);
+  --shadow-md: 0 4px 12px rgba(0,0,0,0.3);
+  --shadow-lg: 0 12px 32px rgba(0,0,0,0.4);
+}
+
+/* ==================== RESET & BASE ==================== */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  min-height: 100vh;
+  min-height: 100dvh;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-tap-highlight-color: transparent;
+  -webkit-font-smoothing: antialiased;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  min-height: 100dvh;
+}
+
+/* Skip link for accessibility */
+.skip-link {
+  position: absolute;
+  top: -100px;
+  left: 50%;
+  transform: translateX(-50%);
+  padding: 12px 24px;
+  background: var(--primary);
+  color: white;
+  border-radius: var(--radius-md);
+  z-index: 9999;
+  text-decoration: none;
+  font-weight: 600;
+}
+.skip-link:focus { top: 10px; }
+
+/* ==================== HEADER - SIMPLIFIED ==================== */
+.header {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  padding-top: 20px;
+  background: var(--bg-elevated);
+  border-bottom: 1px solid var(--border);
+  gap: 12px;
+}
+
+.bismillah {
+  position: absolute;
+  top: 2px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 0.6rem;
+  color: var(--text-muted);
+  opacity: 0.4;
+  font-family: 'Amiri', serif;
+  letter-spacing: 0.05em;
+}
+
+.header-brand {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  width: 80px;
+  height: auto;
+  border-radius: var(--radius-sm);
+}
+
+.header-center {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.app-title {
+  font-size: 1.25rem;
+  font-weight: 800;
+  color: var(--text);
+  line-height: 1.2;
+}
+
+.app-subtitle {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+
+/* Robot personality badge */
+.robot-badge {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 28px;
+  height: 28px;
+  border-radius: var(--radius-full);
+  background: var(--primary-soft);
+  font-size: 0.9rem;
+  cursor: default;
+  opacity: 0.8;
+  transition: opacity 0.2s;
+}
+.robot-badge:hover {
+  opacity: 1;
+}
+
+/* Header actions - only essential buttons */
+.header-actions {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+/* Connection badge - primary status indicator */
+.conn-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.conn-badge:hover { border-color: var(--primary); }
+.conn-badge.connected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* AI Mode badge */
+.ai-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 12px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.ai-badge.demo {
+  border-color: var(--text-muted);
+  color: var(--text-muted);
+}
+.ai-badge.groq {
+  border-color: #f59e0b;
+  background: rgba(245, 158, 11, 0.1);
+  color: #f59e0b;
+}
+.ai-badge.gemini {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  color: var(--primary);
+}
+.ai-badge.cohere {
+  border-color: #7c3aed;
+  background: rgba(124, 58, 237, 0.1);
+  color: #7c3aed;
+}
+.ai-badge.mistral {
+  border-color: #ff6b35;
+  background: rgba(255, 107, 53, 0.1);
+  color: #ff6b35;
+}
+.ai-badge.openrouter {
+  border-color: #10b981;
+  background: rgba(16, 185, 129, 0.1);
+  color: #10b981;
+}
+
+.conn-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: currentColor;
+}
+.conn-badge.connected .conn-dot {
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%, 100% { opacity: 1; transform: scale(1); }
+  50% { opacity: 0.5; transform: scale(0.85); }
+}
+
+/* Menu button */
+.btn-menu {
+  width: 44px;
+  height: 44px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.25rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-menu:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+/* Mobile header adjustments */
+@media (max-width: 480px) {
+  .header-center { display: none; }
+  .logo { width: 60px; height: auto; }
+  .robot-badge { width: 24px; height: 24px; font-size: 0.8rem; }
+  .selection-grid.cols-4 { grid-template-columns: repeat(4, 1fr); gap: 6px; }
+  .selection-grid.cols-4 .selection-btn { padding: 10px 4px; }
+  .selection-grid.cols-4 .selection-btn .icon { font-size: 1.3rem; }
+  .selection-grid.cols-4 .selection-btn .label { font-size: 0.65rem; }
+}
+
+/* ==================== MAIN CONTENT ==================== */
+.main {
+  flex: 1;
+  padding: 80px 16px 160px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  max-width: 600px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ==================== ROBOT AVATAR ==================== */
+.robot-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 20px 0;
+}
+
+.robot-container {
+  position: relative;
+}
+
+.robot-body {
+  width: min(220px, 60vw);
+  height: min(220px, 60vw);
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 3px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 20px;
+  box-shadow: var(--shadow-lg);
+  transition: all 0.3s;
+  position: relative;
+}
+
+/* Robot states */
+.robot-body.listening {
+  border-color: var(--primary);
+  box-shadow: var(--shadow-primary), 0 0 0 4px var(--primary-soft);
+}
+.robot-body.thinking {
+  border-color: var(--warning);
+  box-shadow: 0 8px 24px rgba(245,158,11,0.25), 0 0 0 4px rgba(245,158,11,0.12);
+}
+.robot-body.speaking {
+  border-color: var(--accent);
+  box-shadow: var(--shadow-accent), 0 0 0 4px var(--accent-soft);
+}
+
+/* Antenna */
+.robot-antenna {
+  position: absolute;
+  top: -16px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 4px;
+  height: 20px;
+  background: var(--border-strong);
+  border-radius: 2px;
+}
+.robot-antenna::after {
+  content: '';
+  position: absolute;
+  top: -8px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 12px;
+  height: 12px;
+  background: var(--primary);
+  border-radius: 50%;
+  box-shadow: 0 0 12px var(--primary);
+}
+.robot-body.listening .robot-antenna::after { background: var(--primary); }
+.robot-body.thinking .robot-antenna::after { background: var(--warning); }
+.robot-body.speaking .robot-antenna::after { background: var(--accent); }
+
+/* Eyes */
+.robot-eyes {
+  display: flex;
+  gap: 32px;
+  padding-top: 16px;
+}
+
+.robot-eye {
+  width: 44px;
+  height: 44px;
+  background: var(--primary);
+  border-radius: var(--radius-md);
+  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15);
+  transition: all 0.2s;
+  position: relative;
+}
+.robot-eye::before {
+  content: '';
+  position: absolute;
+  top: 6px;
+  left: 6px;
+  width: 12px;
+  height: 12px;
+  background: rgba(255,255,255,0.4);
+  border-radius: 50%;
+}
+
+.robot-body.listening .robot-eye { animation: blink 0.4s infinite alternate; }
+.robot-body.thinking .robot-eye {
+  background: var(--warning);
+  animation: think 1s infinite;
+}
+.robot-body.speaking .robot-eye { background: var(--accent); }
+
+@keyframes blink {
+  0% { transform: scaleY(1); }
+  100% { transform: scaleY(0.15); border-radius: 50%; }
+}
+@keyframes think {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-3px); }
+}
+
+/* Mouth */
+.robot-mouth {
+  width: 64px;
+  height: 20px;
+  background: var(--bg);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  overflow: hidden;
+  position: relative;
+}
+.robot-mouth-inner {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 0%;
+  background: linear-gradient(to top, var(--accent), var(--primary));
+  transition: height 0.1s;
+  border-radius: var(--radius-full);
+}
+.robot-body.speaking .robot-mouth-inner { animation: speak 0.15s infinite alternate; }
+@keyframes speak {
+  0% { height: 20%; }
+  100% { height: 85%; }
+}
+
+/* Idle smile */
+.robot-body:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  border-radius: 0 0 32px 32px;
+  border-top: none;
+  height: 16px;
+}
+.robot-body:not(.listening):not(.thinking):not(.speaking) .robot-mouth-inner {
+  height: 100%;
+  background: var(--accent);
+}
+
+/* ==================== PERSONALITY HEADS ==================== */
+
+/* 🎪 Playful - Big round eyes, wide smile */
+.robot-body.personality-playful .robot-eye {
+  border-radius: 50%;
+  width: 48px;
+  height: 48px;
+}
+.robot-body.personality-playful .robot-eyes {
+  gap: 40px;
+}
+.robot-body.personality-playful:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 80px;
+  height: 20px;
+  border-radius: 0 0 40px 40px;
+}
+
+/* 🎓 Helpful - Square eyes with glasses look */
+.robot-body.personality-helpful .robot-eye {
+  border-radius: var(--radius-sm);
+  border: 3px solid var(--border-strong);
+  box-shadow: inset 0 -4px 8px rgba(0,0,0,0.15), 0 0 0 3px var(--surface);
+}
+.robot-body.personality-helpful .robot-eyes {
+  gap: 24px;
+}
+
+/* 🏴‍☠️ Pirate - One eye, eyepatch */
+.robot-body.personality-pirate .robot-eye:first-child {
+  background: #374151;
+  border-radius: 50%;
+  position: relative;
+}
+.robot-body.personality-pirate .robot-eye:first-child::before {
+  content: '×';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 28px;
+  font-weight: bold;
+  color: var(--surface);
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+}
+.robot-body.personality-pirate .robot-eye:last-child {
+  border-radius: 50%;
+}
+.robot-body.personality-pirate:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 60px;
+  border-radius: 0 0 8px 8px;
+  transform: skewX(-5deg);
+}
+.robot-body.personality-pirate {
+  border-color: #78716c;
+}
+
+/* 🚀 Space - Visor eyes, helmet look */
+.robot-body.personality-space {
+  border-radius: 50%;
+}
+.robot-body.personality-space .robot-eye {
+  width: 60px;
+  height: 24px;
+  border-radius: var(--radius-full);
+  background: linear-gradient(135deg, #60a5fa, #a78bfa);
+  box-shadow: 0 0 20px rgba(96,165,250,0.5);
+}
+.robot-body.personality-space .robot-eyes {
+  gap: 16px;
+  background: rgba(0,0,0,0.3);
+  padding: 16px 24px;
+  border-radius: var(--radius-full);
+}
+.robot-body.personality-space .robot-mouth {
+  width: 40px;
+  height: 12px;
+}
+
+/* 🦸 Hero - Mask shape eyes */
+.robot-body.personality-superhero .robot-eye {
+  width: 52px;
+  height: 36px;
+  border-radius: 50% 50% 50% 50% / 60% 60% 40% 40%;
+  background: linear-gradient(135deg, #fbbf24, #f59e0b);
+  transform: rotate(-5deg);
+}
+.robot-body.personality-superhero .robot-eye:last-child {
+  transform: rotate(5deg);
+}
+.robot-body.personality-superhero .robot-eyes {
+  gap: 20px;
+}
+.robot-body.personality-superhero:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 50px;
+  border-radius: 0 0 25px 25px;
+}
+.robot-body.personality-superhero {
+  border-color: #f59e0b;
+}
+
+/* 🦖 Dino - Angry brows, teeth */
+.robot-body.personality-dinosaur .robot-eye {
+  border-radius: 50% 50% 40% 40%;
+  background: #ef4444;
+  transform: rotate(-10deg);
+}
+.robot-body.personality-dinosaur .robot-eye:last-child {
+  transform: rotate(10deg);
+}
+.robot-body.personality-dinosaur .robot-eyes {
+  margin-top: -10px;
+}
+.robot-body.personality-dinosaur:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 70px;
+  height: 20px;
+  border-radius: 4px;
+  background: #1f2937;
+  border: none;
+}
+.robot-body.personality-dinosaur:not(.listening):not(.thinking):not(.speaking) .robot-mouth-inner {
+  display: none;
+}
+.robot-body.personality-dinosaur {
+  border-color: #ef4444;
+  border-width: 4px;
+}
+
+/* 🧚 Fairy - Sparkle star eyes, small cute mouth */
+.robot-body.personality-fairy .robot-eye {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #f472b6, #c084fc);
+  box-shadow: 0 0 20px rgba(244,114,182,0.5);
+}
+.robot-body.personality-fairy .robot-eye::before {
+  content: '✦';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20px;
+  color: white;
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  animation: sparkle 1s infinite;
+}
+@keyframes sparkle {
+  0%, 100% { opacity: 1; transform: translate(-50%, -50%) scale(1); }
+  50% { opacity: 0.6; transform: translate(-50%, -50%) scale(0.8); }
+}
+.robot-body.personality-fairy .robot-mouth {
+  width: 30px;
+  height: 14px;
+}
+.robot-body.personality-fairy:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  border-radius: 50%;
+  width: 24px;
+  height: 12px;
+}
+.robot-body.personality-fairy {
+  border-color: #f472b6;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(244,114,182,0.2);
+}
+
+/* 🥷 Ninja - Narrow slit eyes, hidden mouth */
+.robot-body.personality-ninja .robot-eye {
+  width: 56px;
+  height: 12px;
+  border-radius: var(--radius-full);
+  background: #374151;
+  box-shadow: 0 0 10px rgba(0,0,0,0.5);
+}
+.robot-body.personality-ninja .robot-eye::before {
+  content: '';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 8px;
+  height: 8px;
+  background: #ef4444;
+  border-radius: 50%;
+  box-shadow: 0 0 8px #ef4444;
+}
+.robot-body.personality-ninja .robot-mouth {
+  opacity: 0.3;
+  width: 20px;
+  height: 4px;
+}
+.robot-body.personality-ninja.speaking .robot-mouth {
+  opacity: 1;
+}
+.robot-body.personality-ninja {
+  border-color: #374151;
+  background: linear-gradient(180deg, var(--surface) 40%, #4b5563 40%, #4b5563 60%, var(--surface) 60%);
+}
+
+/* 🧙 Wizard - Mystical eyes, long beard hint */
+.robot-body.personality-wizard .robot-eye {
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, #8b5cf6, #6366f1);
+  box-shadow: 0 0 20px rgba(139, 92, 246, 0.6);
+}
+.robot-body.personality-wizard .robot-eye::before {
+  content: '★';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 16px;
+  color: #fbbf24;
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+  animation: sparkle 1.5s infinite;
+}
+.robot-body.personality-wizard .robot-eyes {
+  gap: 40px;
+}
+.robot-body.personality-wizard:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 50px;
+  border-radius: 0 0 50% 50%;
+  height: 12px;
+}
+.robot-body.personality-wizard {
+  border-color: #8b5cf6;
+  box-shadow: var(--shadow-lg), 0 0 30px rgba(139, 92, 246, 0.2);
+}
+
+/* 🤠 Cowboy - Wide eyes, big smile */
+.robot-body.personality-cowboy .robot-eye {
+  width: 40px;
+  height: 32px;
+  border-radius: 50%;
+  background: #78350f;
+  border: 3px solid #451a03;
+}
+.robot-body.personality-cowboy .robot-eye::before {
+  width: 8px;
+  height: 8px;
+  background: white;
+  top: 8px;
+  left: 8px;
+}
+.robot-body.personality-cowboy .robot-eyes {
+  gap: 36px;
+  margin-top: -20px;
+}
+.robot-body.personality-cowboy:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 70px;
+  border-radius: 0 0 35px 35px;
+  height: 18px;
+}
+.robot-body.personality-cowboy {
+  border-color: #b45309;
+  border-width: 4px;
+}
+
+/* 👽 Alien - Big oval eyes, small mouth */
+.robot-body.personality-alien .robot-eye {
+  width: 50px;
+  height: 64px;
+  border-radius: 50%;
+  background: linear-gradient(180deg, #1f2937 0%, #10b981 100%);
+  box-shadow: 0 0 15px rgba(16, 185, 129, 0.5);
+}
+.robot-body.personality-alien .robot-eye::before {
+  content: '';
+  position: absolute;
+  top: 15px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 20px;
+  height: 30px;
+  background: #10b981;
+  border-radius: 50%;
+  box-shadow: 0 0 10px #10b981;
+}
+.robot-body.personality-alien .robot-eyes {
+  gap: 20px;
+}
+.robot-body.personality-alien .robot-mouth {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+}
+.robot-body.personality-alien {
+  border-color: #10b981;
+  border-radius: 50% 50% var(--radius-xl) var(--radius-xl);
+}
+
+/* 🧜 Mermaid - Flowing eyes, gentle smile */
+.robot-body.personality-mermaid .robot-eye {
+  width: 44px;
+  height: 36px;
+  border-radius: 50% 50% 40% 40%;
+  background: linear-gradient(135deg, #06b6d4, #3b82f6);
+  box-shadow: 0 0 15px rgba(6, 182, 212, 0.5);
+}
+.robot-body.personality-mermaid .robot-eye::before {
+  content: '~';
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 24px;
+  color: white;
+  background: transparent;
+  width: auto;
+  height: auto;
+  border-radius: 0;
+}
+.robot-body.personality-mermaid .robot-eyes {
+  gap: 28px;
+}
+.robot-body.personality-mermaid:not(.listening):not(.thinking):not(.speaking) .robot-mouth {
+  width: 40px;
+  border-radius: 0 0 50% 50%;
+  height: 14px;
+  background: var(--bg);
+}
+.robot-body.personality-mermaid {
+  border-color: #06b6d4;
+  box-shadow: var(--shadow-lg), 0 0 25px rgba(6, 182, 212, 0.2);
+}
+
+/* Status label */
+.robot-status {
+  margin-top: 16px;
+  padding: 8px 20px;
+  background: var(--surface);
+  border: 2px solid var(--border);
+  border-radius: var(--radius-full);
+  font-size: 0.8rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+  box-shadow: var(--shadow-sm);
+  transition: all 0.3s;
+}
+.robot-body.listening ~ .robot-status { color: var(--primary); border-color: var(--primary); }
+.robot-body.thinking ~ .robot-status { color: var(--warning); border-color: var(--warning); }
+.robot-body.speaking ~ .robot-status { color: var(--accent); border-color: var(--accent); }
+
+/* ==================== MICRO:BIT WIDGET ==================== */
+.microbit-widget {
+  margin-top: 20px;
+  padding: 12px;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-sm);
+}
+
+.microbit-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 10px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border);
+}
+
+.microbit-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.microbit-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--danger);
+}
+.microbit-dot.on {
+  background: var(--accent);
+  animation: pulse 2s infinite;
+}
+
+.led-grid {
+  display: grid;
+  grid-template-columns: repeat(5, 1fr);
+  gap: 3px;
+  padding: 8px;
+  background: #1a1a2e;
+  border-radius: var(--radius-sm);
+}
+
+.led-pixel {
+  aspect-ratio: 1;
+  background: #2a2a4a;
+  border-radius: 2px;
+  transition: all 0.1s;
+}
+.led-pixel.on {
+  background: #ff6b6b;
+  box-shadow: 0 0 6px #ff6b6b;
+}
+
+/* ==================== CHAT SECTION ==================== */
+.chat-section {
+  width: 100%;
+  background: var(--surface);
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-md);
+  overflow: hidden;
+}
+
+.chat-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.chat-title {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.btn-text {
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-secondary);
+  font-size: 0.7rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.btn-text:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+  background: rgba(239,68,68,0.08);
+}
+
+.chat-container {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+  max-height: 280px;
+  overflow-y: auto;
+  background: var(--bg);
+}
+
+.chat-bubble {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  max-width: 85%;
+  animation: bubbleIn 0.25s ease-out;
+}
+
+@keyframes bubbleIn {
+  from { opacity: 0; transform: translateY(8px) scale(0.96); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chat-bubble.user {
+  align-self: flex-end;
+  background: var(--primary);
+  color: white;
+  border-bottom-right-radius: 4px;
+}
+
+.chat-bubble.robot {
+  align-self: flex-start;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-bottom-left-radius: 4px;
+}
+
+.chat-bubble .avatar {
+  font-size: 1.1rem;
+  flex-shrink: 0;
+}
+
+.chat-bubble .content { flex: 1; min-width: 0; }
+.chat-bubble .text { font-size: 0.9rem; line-height: 1.4; word-wrap: break-word; }
+.chat-bubble .time { font-size: 0.65rem; opacity: 0.7; margin-top: 4px; }
+
+.typing-indicator {
+  display: flex;
+  align-items: center;
+  gap: 4px;
+  padding: 12px 16px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-md);
+  width: fit-content;
+  margin: 8px 16px;
+}
+
+.typing-dot {
+  width: 6px;
+  height: 6px;
+  background: var(--text-muted);
+  border-radius: 50%;
+  animation: typing 1.4s infinite;
+}
+.typing-dot:nth-child(2) { animation-delay: 0.2s; }
+.typing-dot:nth-child(3) { animation-delay: 0.4s; }
+
+@keyframes typing {
+  0%, 60%, 100% { transform: translateY(0); }
+  30% { transform: translateY(-6px); }
+}
+
+.hidden { display: none !important; }
+
+/* ==================== INPUT AREA - REORGANIZED ==================== */
+.input-area {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  padding: 12px 16px;
+  padding-bottom: max(12px, env(safe-area-inset-bottom));
+  background: var(--bg-elevated);
+  border-top: 1px solid var(--border);
+  z-index: 90;
+}
+
+.input-row {
+  display: flex;
+  gap: 10px;
+  align-items: center;
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+/* Commands quick access button */
+.btn-commands {
+  width: 48px;
+  height: 48px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+.btn-commands:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translateY(-2px);
+}
+
+/* Text input */
+.text-input {
+  flex: 1;
+  padding: 14px 18px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1rem;
+  outline: none;
+  transition: all 0.2s;
+  min-width: 0;
+}
+.text-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+.text-input::placeholder { color: var(--text-muted); }
+
+/* Action buttons */
+.btn-action {
+  width: 52px;
+  height: 52px;
+  border-radius: 50%;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.3rem;
+  transition: all 0.2s;
+  flex-shrink: 0;
+}
+
+.btn-mic {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-primary);
+}
+.btn-mic:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(99,102,241,0.35);
+}
+.btn-mic:active { transform: scale(0.95); }
+.btn-mic.active {
+  background: var(--danger);
+  box-shadow: 0 8px 24px rgba(239,68,68,0.35);
+  animation: micActive 1s infinite;
+}
+
+@keyframes micActive {
+  0%, 100% { box-shadow: 0 8px 24px rgba(239,68,68,0.35); }
+  50% { box-shadow: 0 8px 32px rgba(239,68,68,0.5), 0 0 0 8px rgba(239,68,68,0.15); }
+}
+
+.btn-send {
+  background: var(--accent);
+  color: white;
+  box-shadow: var(--shadow-accent);
+}
+.btn-send:hover {
+  transform: scale(1.08);
+  box-shadow: 0 12px 32px rgba(16,185,129,0.35);
+}
+.btn-send:active { transform: scale(0.95); }
+
+/* ==================== OVERLAY ==================== */
+.overlay {
+  display: none;
+  position: fixed;
+  top: 65px;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0,0,0,0.4);
+  backdrop-filter: blur(4px);
+  z-index: 150;
+}
+.overlay.show { display: block; }
+
+/* ==================== SETTINGS PANEL - TABBED ==================== */
+.settings-panel {
+  position: fixed;
+  top: 65px;
+  right: 0;
+  bottom: 0;
+  width: 360px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--border);
+  z-index: 160;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.settings-panel.open { transform: translateX(0); }
+
+.settings-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.settings-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+}
+
+.btn-close {
+  width: 36px;
+  height: 36px;
+  border-radius: var(--radius-sm);
+  border: none;
+  background: var(--bg);
+  color: var(--text);
+  font-size: 1.3rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+.btn-close:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* Tab navigation */
+.settings-tabs {
+  display: flex;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.tab-btn {
+  flex: 1;
+  padding: 14px 8px;
+  border: none;
+  background: transparent;
+  color: var(--text-secondary);
+  font-family: var(--font);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  position: relative;
+}
+.tab-btn:hover { color: var(--text); background: var(--surface); }
+.tab-btn.active {
+  color: var(--primary);
+  background: var(--surface);
+}
+.tab-btn.active::after {
+  content: '';
+  position: absolute;
+  bottom: 0;
+  left: 20%;
+  right: 20%;
+  height: 3px;
+  background: var(--primary);
+  border-radius: 3px 3px 0 0;
+}
+
+.tab-icon { font-size: 1.3rem; }
+.tab-label { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.02em; }
+
+/* Tab content */
+.settings-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.tab-pane { display: none; }
+.tab-pane.active { display: block; }
+
+/* Settings sections */
+.setting-group {
+  margin-bottom: 24px;
+}
+
+.setting-group-title {
+  font-size: 0.7rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  margin-bottom: 12px;
+}
+
+/* Form elements */
+.form-input {
+  width: 100%;
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 0.9rem;
+  outline: none;
+  transition: all 0.2s;
+  margin-bottom: 8px;
+}
+.form-input:focus { border-color: var(--primary); }
+
+.form-hint {
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  margin-top: 4px;
+}
+.form-hint a { color: var(--primary); text-decoration: none; }
+.form-hint a:hover { text-decoration: underline; }
+
+/* Selection grids */
+.selection-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+}
+.selection-grid.cols-3 { grid-template-columns: repeat(3, 1fr); }
+.selection-grid.cols-4 { grid-template-columns: repeat(4, 1fr); }
+
+.selection-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  padding: 14px 10px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-align: center;
+}
+.selection-btn:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.selection-btn.active {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+.selection-btn .icon { font-size: 1.5rem; }
+.selection-btn .label {
+  font-size: 0.75rem;
+  font-weight: 600;
+  color: var(--text-secondary);
+}
+.selection-btn.active .label { color: var(--primary); }
+.selection-btn .desc {
+  font-size: 0.65rem;
+  color: var(--text-muted);
+}
+
+/* Toggle switch */
+.toggle-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  background: var(--surface);
+  border-radius: var(--radius-md);
+  border: 1px solid var(--border);
+  margin-bottom: 8px;
+}
+
+.toggle-info .title { font-size: 0.9rem; font-weight: 600; }
+.toggle-info .desc { font-size: 0.7rem; color: var(--text-muted); margin-top: 2px; }
+
+.toggle {
+  position: relative;
+  width: 48px;
+  height: 26px;
+  flex-shrink: 0;
+}
+.toggle input { opacity: 0; width: 0; height: 0; }
+.toggle-slider {
+  position: absolute;
+  inset: 0;
+  background: var(--border-strong);
+  border-radius: var(--radius-full);
+  cursor: pointer;
+  transition: 0.3s;
+}
+.toggle-slider::before {
+  content: '';
+  position: absolute;
+  width: 20px;
+  height: 20px;
+  left: 3px;
+  bottom: 3px;
+  background: white;
+  border-radius: 50%;
+  transition: 0.3s;
+  box-shadow: var(--shadow-sm);
+}
+.toggle input:checked + .toggle-slider { background: var(--accent); }
+.toggle input:checked + .toggle-slider::before { transform: translateX(22px); }
+
+/* Slider */
+.slider-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.slider-icon { font-size: 1.1rem; }
+
+.form-slider {
+  flex: 1;
+  height: 6px;
+  border-radius: 3px;
+  background: var(--border);
+  appearance: none;
+  -webkit-appearance: none;
+  cursor: pointer;
+}
+.form-slider::-webkit-slider-thumb {
+  appearance: none;
+  -webkit-appearance: none;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  box-shadow: var(--shadow-sm);
+}
+.form-slider::-moz-range-thumb {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background: var(--primary);
+  cursor: pointer;
+  border: none;
+}
+
+.slider-value {
+  min-width: 44px;
+  text-align: center;
+  font-weight: 700;
+  font-size: 0.85rem;
+  color: var(--primary);
+}
+
+/* Voice row */
+.voice-row {
+  display: flex;
+  gap: 10px;
+  margin-bottom: 12px;
+}
+
+.form-select {
+  flex: 1;
+  padding: 12px 14px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  cursor: pointer;
+  outline: none;
+}
+.form-select:focus { border-color: var(--primary); }
+
+.btn-outline {
+  padding: 12px 16px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+.btn-outline:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+
+/* Danger zone */
+.danger-zone {
+  background: rgba(239,68,68,0.06);
+  border: 1px solid rgba(239,68,68,0.2);
+  border-radius: var(--radius-md);
+  padding: 16px;
+}
+.danger-zone .setting-group-title { color: var(--danger); }
+
+.btn-danger {
+  width: 100%;
+  padding: 12px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--danger);
+  background: transparent;
+  color: var(--danger);
+  font-size: 0.85rem;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  transition: all 0.2s;
+}
+.btn-danger:hover {
+  background: var(--danger);
+  color: white;
+}
+
+/* ==================== COMMANDS PANEL ==================== */
+.commands-panel {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  bottom: 0;
+  width: 300px;
+  max-width: 85vw;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  z-index: 160;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.commands-panel.open { transform: translateX(0); }
+
+.commands-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.commands-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.commands-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 16px;
+}
+
+.command-category {
+  margin-bottom: 16px;
+}
+
+.category-header {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  padding-bottom: 6px;
+  border-bottom: 1px solid var(--border);
+}
+
+.category-icon { font-size: 1.2rem; }
+.category-name {
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-muted);
+  text-transform: uppercase;
+  letter-spacing: 0.03em;
+}
+
+.category-commands {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.command-btn {
+  padding: 8px 12px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.75rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.command-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translateY(-1px);
+}
+.command-btn:active {
+  transform: translateY(0);
+}
+
+/* ==================== GAMES PANEL ==================== */
+.games-panel {
+  position: fixed;
+  top: 65px;
+  left: 0;
+  bottom: 0;
+  width: 320px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border-right: 1px solid var(--border);
+  z-index: 155;
+  transform: translateX(-100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.games-panel.open { transform: translateX(0); }
+
+.games-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 20px;
+  border-bottom: 1px solid var(--border);
+}
+
+.games-title {
+  font-size: 1.1rem;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.games-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 20px;
+}
+
+.games-info {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 16px;
+  text-align: center;
+}
+
+.games-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.game-btn {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 20px 16px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.game-btn:hover {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+  transform: translateY(-2px);
+  box-shadow: var(--shadow-md);
+}
+.game-btn:active {
+  transform: translateY(0);
+}
+.game-btn.game-featured {
+  padding: 24px 20px;
+  background: linear-gradient(135deg, var(--surface) 0%, var(--bg) 100%);
+}
+.game-btn.game-featured:hover {
+  background: linear-gradient(135deg, var(--primary-soft) 0%, var(--accent-soft) 100%);
+  border-color: var(--primary);
+}
+.game-icon {
+  font-size: 2.5rem;
+}
+.game-name {
+  font-size: 0.95rem;
+  font-weight: 700;
+  color: var(--text);
+}
+.game-desc {
+  font-size: 0.75rem;
+  color: var(--text-muted);
+  font-weight: 500;
+}
+.games-microbit-note {
+  margin-top: 20px;
+  padding: 12px 16px;
+  background: var(--accent-soft);
+  border-radius: var(--radius-md);
+  font-size: 0.8rem;
+  color: var(--accent);
+  font-weight: 600;
+  text-align: center;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-games {
+  background: linear-gradient(135deg, #f59e0b, #ef4444);
+  border-color: #f59e0b;
+}
+.btn-games:hover {
+  background: linear-gradient(135deg, #fbbf24, #f87171);
+}
+
+/* ==================== LOGS PANEL ==================== */
+.logs-panel {
+  position: fixed;
+  top: 65px;
+  right: 0;
+  bottom: 0;
+  width: 400px;
+  max-width: 90vw;
+  background: var(--bg-elevated);
+  border-left: 1px solid var(--border);
+  z-index: 90;
+  transform: translateX(100%);
+  transition: transform 0.3s ease;
+  display: flex;
+  flex-direction: column;
+}
+.logs-panel.open { transform: translateX(0); }
+
+.logs-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border);
+}
+
+.logs-title {
+  font-weight: 700;
+  font-size: 0.9rem;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logs-toolbar {
+  display: flex;
+  gap: 6px;
+}
+
+.logs-toolbar button {
+  padding: 6px 10px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text);
+  font-size: 0.7rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  gap: 4px;
+}
+.logs-toolbar button:hover { border-color: var(--primary); background: var(--primary-soft); }
+.logs-toolbar button.danger:hover { border-color: var(--danger); background: rgba(239,68,68,0.1); color: var(--danger); }
+
+.logs-stats {
+  display: flex;
+  gap: 12px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  font-size: 0.7rem;
+  color: var(--text-muted);
+  background: var(--bg);
+}
+
+.logs-stat { display: flex; align-items: center; gap: 4px; }
+.logs-stat-value { font-weight: 700; color: var(--text); }
+
+.logs-filter {
+  display: flex;
+  gap: 6px;
+  padding: 8px 16px;
+  border-bottom: 1px solid var(--border);
+  flex-wrap: wrap;
+}
+
+.logs-filter-btn {
+  padding: 4px 10px;
+  border-radius: var(--radius-full);
+  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--text-muted);
+  font-size: 0.65rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+.logs-filter-btn:hover { border-color: var(--primary); }
+.logs-filter-btn.active { background: var(--primary); color: white; border-color: var(--primary); }
+
+.logs-content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 12px;
+  background: var(--bg);
+  font-family: var(--mono);
+  font-size: 0.72rem;
+  line-height: 1.6;
+}
+
+.log-entry {
+  padding: 4px 8px;
+  margin-bottom: 4px;
+  border-radius: 4px;
+  word-break: break-word;
+}
+.log-entry.tx { background: rgba(244,114,182,0.1); border-left: 3px solid #f472b6; }
+.log-entry.rx { background: rgba(34,211,238,0.1); border-left: 3px solid #22d3ee; }
+.log-entry.ble { background: rgba(139,92,246,0.1); border-left: 3px solid #a78bfa; }
+.log-entry.speech { background: rgba(245,158,11,0.1); border-left: 3px solid var(--warning); }
+.log-entry.ai { background: var(--accent-soft); border-left: 3px solid var(--accent); }
+.log-entry.success { color: var(--accent); }
+.log-entry.error { background: rgba(239,68,68,0.1); border-left: 3px solid var(--danger); color: var(--danger); }
+
+.log-tag {
+  padding: 2px 6px;
+  border-radius: 3px;
+  font-size: 0.6rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  margin-right: 6px;
+}
+
+.logs-empty {
+  text-align: center;
+  color: var(--text-muted);
+  padding: 40px 20px;
+  font-family: var(--font);
+}
+
+/* Logs filter states */
+.logs-content.filtered-tx .log-entry:not(.tx),
+.logs-content.filtered-rx .log-entry:not(.rx),
+.logs-content.filtered-error .log-entry:not(.error),
+.logs-content.filtered-ai .log-entry:not(.ai),
+.logs-content.filtered-ble .log-entry:not(.tx):not(.rx):not(.ble),
+.logs-content.filtered-speech .log-entry:not(.speech) { display: none; }
+
+/* ==================== RATE LIMIT BANNER ==================== */
+.rate-limit {
+  display: none;
+  padding: 12px 16px;
+  background: rgba(245,158,11,0.1);
+  border: 1px solid rgba(245,158,11,0.3);
+  border-radius: var(--radius-md);
+  margin-bottom: 16px;
+  width: 100%;
+}
+.rate-limit.show { display: block; }
+.rate-limit-title {
+  font-size: 0.85rem;
+  font-weight: 600;
+  color: var(--warning);
+}
+
+/* ==================== RESPONSIVE ==================== */
+@media (max-width: 600px) {
+  .main { padding-top: 72px; padding-bottom: 140px; }
+  
+  .robot-body {
+    width: min(180px, 55vw);
+    height: min(180px, 55vw);
+  }
+  
+  .robot-eyes { gap: 24px; }
+  .robot-eye { width: 36px; height: 36px; }
+  .robot-mouth { width: 52px; height: 16px; }
+  
+  .chat-container { max-height: 220px; }
+  
+  .settings-panel, .commands-panel { width: 100%; max-width: 100%; }
+}
+
+/* ==================== RTL ==================== */
+[dir="rtl"] .chat-container { direction: rtl; }
+[dir="rtl"] .text-input { text-align: right; }
+[dir="rtl"] .chat-bubble.user { align-self: flex-start; }
+[dir="rtl"] .chat-bubble.robot { align-self: flex-end; }
+
+/* ==================== REDUCED MOTION ==================== */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}
+
+/* ==================== ONBOARDING ==================== */
+.onboarding {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+  opacity: 1;
+  transition: opacity 0.4s ease;
+}
+.onboarding.hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.onboarding-card {
+  width: 100%;
+  max-width: 400px;
+  background: var(--surface);
+  border-radius: var(--radius-xl);
+  border: 2px solid var(--border);
+  box-shadow: var(--shadow-lg);
+  overflow: hidden;
+  animation: cardIn 0.5s ease-out;
+}
+
+@keyframes cardIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.95); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.onboarding-step {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  padding: 32px 24px;
+  text-align: center;
+}
+.onboarding-step.active { display: flex; }
+
+/* Progress dots */
+.onboarding-progress {
+  display: flex;
+  gap: 8px;
+  padding: 16px;
+  justify-content: center;
+  border-bottom: 1px solid var(--border);
+  background: var(--bg);
+}
+
+.progress-dot {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--border-strong);
+  transition: all 0.3s;
+}
+.progress-dot.active {
+  background: var(--primary);
+  transform: scale(1.2);
+}
+.progress-dot.done {
+  background: var(--accent);
+}
+
+/* Robot illustration */
+.onboarding-robot {
+  width: 120px;
+  height: 120px;
+  background: linear-gradient(135deg, var(--primary-soft), var(--accent-soft));
+  border-radius: var(--radius-xl);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 4rem;
+  margin-bottom: 24px;
+  animation: float 3s ease-in-out infinite;
+}
+
+@keyframes float {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-8px); }
+}
+
+.onboarding-title {
+  font-size: 1.5rem;
+  font-weight: 800;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+.onboarding-desc {
+  font-size: 1rem;
+  color: var(--text-secondary);
+  margin-bottom: 24px;
+  line-height: 1.5;
+}
+
+/* Onboarding form elements */
+.onboarding-input {
+  width: 100%;
+  padding: 16px 20px;
+  border-radius: var(--radius-lg);
+  border: 2px solid var(--border);
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font);
+  font-size: 1.1rem;
+  font-weight: 600;
+  text-align: center;
+  outline: none;
+  transition: all 0.2s;
+  margin-bottom: 16px;
+}
+.onboarding-input:focus {
+  border-color: var(--primary);
+  box-shadow: 0 0 0 4px var(--primary-soft);
+}
+.onboarding-input::placeholder {
+  color: var(--text-muted);
+  font-weight: 400;
+}
+
+/* Personality selection in onboarding */
+.onboarding-personalities {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 8px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.onboarding-personality {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 2px;
+  padding: 10px 6px;
+  border-radius: var(--radius-md);
+  border: 2px solid var(--border);
+  background: var(--bg);
+  cursor: pointer;
+  transition: all 0.2s;
+}
+.onboarding-personality:hover {
+  border-color: var(--primary);
+  transform: translateY(-2px);
+}
+.onboarding-personality.selected {
+  border-color: var(--primary);
+  background: var(--primary-soft);
+}
+.onboarding-personality .icon { font-size: 1.5rem; }
+.onboarding-personality .label { font-size: 0.7rem; font-weight: 600; }
+.onboarding-personality .label { font-size: 0.8rem; font-weight: 600; }
+
+/* Buttons */
+.onboarding-actions {
+  display: flex;
+  gap: 12px;
+  width: 100%;
+  margin-top: 8px;
+}
+
+.btn-onboarding {
+  flex: 1;
+  padding: 14px 24px;
+  border-radius: var(--radius-lg);
+  border: none;
+  font-family: var(--font);
+  font-size: 1rem;
+  font-weight: 700;
+  cursor: pointer;
+  transition: all 0.2s;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+}
+
+.btn-onboarding.primary {
+  background: var(--primary);
+  color: white;
+  box-shadow: var(--shadow-primary);
+}
+.btn-onboarding.primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(99,102,241,0.35);
+}
+
+.btn-onboarding.secondary {
+  background: var(--bg);
+  color: var(--text-secondary);
+  border: 2px solid var(--border);
+}
+.btn-onboarding.secondary:hover {
+  border-color: var(--text-secondary);
+}
+
+.btn-onboarding.accent {
+  background: var(--accent);
+  color: white;
+  box-shadow: var(--shadow-accent);
+}
+.btn-onboarding.accent:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 12px 28px rgba(16,185,129,0.35);
+}
+
+/* Connection status in onboarding */
+.onboarding-connection {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 16px;
+  width: 100%;
+  padding: 20px;
+  background: var(--bg);
+  border-radius: var(--radius-lg);
+  margin-bottom: 16px;
+}
+
+.connection-icon {
+  width: 64px;
+  height: 64px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2rem;
+  background: var(--border);
+  transition: all 0.3s;
+}
+.connection-icon.searching {
+  background: rgba(245,158,11,0.15);
+  animation: pulse 1.5s infinite;
+}
+.connection-icon.connected {
+  background: var(--accent-soft);
+}
+
+.connection-text {
+  font-size: 0.9rem;
+  color: var(--text-secondary);
+  text-align: center;
+}
+.connection-text.success { color: var(--accent); font-weight: 600; }
+
+/* Feature highlights */
+.onboarding-features {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.feature-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 12px 16px;
+  background: var(--bg);
+  border-radius: var(--radius-md);
+  text-align: left;
+}
+
+.feature-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: var(--radius-sm);
+  background: var(--primary-soft);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  flex-shrink: 0;
+}
+
+.feature-text {
+  font-size: 0.85rem;
+  color: var(--text-secondary);
+}
+.feature-text strong {
+  color: var(--text);
+  display: block;
+  margin-bottom: 2px;
+}
+
+/* Confetti animation for completion */
+.confetti {
+  position: absolute;
+  width: 10px;
+  height: 10px;
+  border-radius: 2px;
+  animation: confettiFall 3s ease-out forwards;
+  pointer-events: none;
+}
+
+@keyframes confettiFall {
+  0% { transform: translateY(-100px) rotate(0deg); opacity: 1; }
+  100% { transform: translateY(400px) rotate(720deg); opacity: 0; }
+}
+
+/* Empty state for chat */
+.chat-empty {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 40px 20px;
+  text-align: center;
+  color: var(--text-muted);
+}
+.chat-empty-icon {
+  font-size: 2.5rem;
+  margin-bottom: 12px;
+  opacity: 0.5;
+}
+.chat-empty-text {
+  font-size: 0.9rem;
+}
+.chat-empty-hint {
+  font-size: 0.75rem;
+  margin-top: 8px;
+  opacity: 0.7;
+}
+
+/* Toast notifications */
+.toast {
+  position: fixed;
+  bottom: 100px;
+  left: 50%;
+  transform: translateX(-50%) translateY(20px);
+  padding: 12px 24px;
+  background: var(--text);
+  color: var(--bg);
+  border-radius: var(--radius-full);
+  font-size: 0.85rem;
+  font-weight: 600;
+  box-shadow: var(--shadow-lg);
+  opacity: 0;
+  transition: all 0.3s ease;
+  z-index: 500;
+  pointer-events: none;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast.success { background: var(--accent); }
+.toast.error { background: var(--danger); }
+  </style>
+</head>
+<body>
+  <a href="#main" class="skip-link">Skip to main content</a>
+  
+  <!-- ==================== ONBOARDING ==================== -->
+  <div class="onboarding" id="onboarding">
+    <div class="onboarding-card">
+      <div class="onboarding-progress">
+        <div class="progress-dot active" data-step="1"></div>
+        <div class="progress-dot" data-step="2"></div>
+        <div class="progress-dot" data-step="3"></div>
+        <div class="progress-dot" data-step="4"></div>
+      </div>
+      
+      <!-- Step 1: Welcome -->
+      <div class="onboarding-step active" data-step="1">
+        <div class="onboarding-robot">🤖</div>
+        <h2 class="onboarding-title" data-i18n="onb_welcome_title">Welcome!</h2>
+        <p class="onboarding-desc" data-i18n="onb_welcome_desc">Meet your new AI robot friend that talks, listens, and connects to your micro:bit!</p>
+        
+        <div class="onboarding-features">
+          <div class="feature-item">
+            <div class="feature-icon">🎤</div>
+            <div class="feature-text"><strong>Voice Chat</strong>Talk naturally with your robot</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">📡</div>
+            <div class="feature-text"><strong>Micro:bit</strong>See reactions on your device</div>
+          </div>
+          <div class="feature-item">
+            <div class="feature-icon">🎭</div>
+            <div class="feature-text"><strong>Personalities</strong>Choose how your robot acts</div>
+          </div>
+        </div>
+        
+        <div class="onboarding-actions">
+          <button class="btn-onboarding primary" onclick="nextOnboardingStep()" data-i18n="onb_get_started">Get Started →</button>
+        </div>
+      </div>
+      
+      <!-- Step 2: Name & Personality -->
+      <div class="onboarding-step" data-step="2">
+        <div class="onboarding-robot">✨</div>
+        <h2 class="onboarding-title" data-i18n="onb_personalize_title">Personalize</h2>
+        <p class="onboarding-desc" data-i18n="onb_personalize_desc">Give your robot a name and personality!</p>
+
+        <input type="text" class="onboarding-input" id="onboardingName" placeholder="Robot name..." data-i18n-placeholder="placeholder_robot_name_short" value="Robo" maxlength="20">
+        
+        <div class="onboarding-personalities" id="onboardingPersonalities">
+          <div class="onboarding-personality selected" data-p="playful" onclick="selectOnboardingPersonality('playful')">
+            <span class="icon">🎪</span>
+            <span class="label">Playful</span>
+          </div>
+          <div class="onboarding-personality" data-p="helpful" onclick="selectOnboardingPersonality('helpful')">
+            <span class="icon">🎓</span>
+            <span class="label">Helpful</span>
+          </div>
+          <div class="onboarding-personality" data-p="pirate" onclick="selectOnboardingPersonality('pirate')">
+            <span class="icon">🏴‍☠️</span>
+            <span class="label">Pirate</span>
+          </div>
+          <div class="onboarding-personality" data-p="space" onclick="selectOnboardingPersonality('space')">
+            <span class="icon">🚀</span>
+            <span class="label">Space</span>
+          </div>
+          <div class="onboarding-personality" data-p="superhero" onclick="selectOnboardingPersonality('superhero')">
+            <span class="icon">🦸</span>
+            <span class="label">Hero</span>
+          </div>
+          <div class="onboarding-personality" data-p="dinosaur" onclick="selectOnboardingPersonality('dinosaur')">
+            <span class="icon">🦖</span>
+            <span class="label">Dino</span>
+          </div>
+          <div class="onboarding-personality" data-p="fairy" onclick="selectOnboardingPersonality('fairy')">
+            <span class="icon">🧚</span>
+            <span class="label">Fairy</span>
+          </div>
+          <div class="onboarding-personality" data-p="ninja" onclick="selectOnboardingPersonality('ninja')">
+            <span class="icon">🥷</span>
+            <span class="label">Ninja</span>
+          </div>
+          <div class="onboarding-personality" data-p="wizard" onclick="selectOnboardingPersonality('wizard')">
+            <span class="icon">🧙</span>
+            <span class="label">Wizard</span>
+          </div>
+          <div class="onboarding-personality" data-p="cowboy" onclick="selectOnboardingPersonality('cowboy')">
+            <span class="icon">🤠</span>
+            <span class="label">Cowboy</span>
+          </div>
+          <div class="onboarding-personality" data-p="alien" onclick="selectOnboardingPersonality('alien')">
+            <span class="icon">👽</span>
+            <span class="label">Alien</span>
+          </div>
+          <div class="onboarding-personality" data-p="mermaid" onclick="selectOnboardingPersonality('mermaid')">
+            <span class="icon">🧜</span>
+            <span class="label">Mermaid</span>
+          </div>
+        </div>
+        
+        <div class="onboarding-actions">
+          <button class="btn-onboarding secondary" onclick="prevOnboardingStep()" data-i18n="onb_back">← Back</button>
+          <button class="btn-onboarding primary" onclick="nextOnboardingStep()" data-i18n="onb_next">Next →</button>
+        </div>
+      </div>
+
+      <!-- Step 3: Connect Micro:bit -->
+      <div class="onboarding-step" data-step="3">
+        <div class="onboarding-robot">📡</div>
+        <h2 class="onboarding-title" data-i18n="onb_connect_title">Connect Micro:bit</h2>
+        <p class="onboarding-desc" data-i18n="onb_connect_desc">Connect via Bluetooth to see your robot's reactions!</p>
+
+        <div class="onboarding-connection">
+          <div class="connection-icon" id="onboardingConnIcon">📡</div>
+          <div class="connection-text" id="onboardingConnText" data-i18n="onb_connect_hint">Click below to scan for your micro:bit</div>
+        </div>
+
+        <div class="onboarding-actions">
+          <button class="btn-onboarding secondary" onclick="prevOnboardingStep()" data-i18n="onb_back">← Back</button>
+          <button class="btn-onboarding primary" id="onboardingConnBtn" onclick="connectDuringOnboarding()" data-i18n="onb_btn_connect">🔗 Connect</button>
+        </div>
+        <button class="btn-onboarding secondary" style="margin-top: 12px; width: 100%;" onclick="nextOnboardingStep()" data-i18n="onb_skip">Skip for now</button>
+      </div>
+
+      <!-- Step 4: All Done -->
+      <div class="onboarding-step" data-step="4">
+        <div class="onboarding-robot">🎉</div>
+        <h2 class="onboarding-title" data-i18n="onb_ready_title">You're Ready!</h2>
+        <p class="onboarding-desc" data-i18n="onb_ready_desc">Say "Hello" or tap the microphone to start chatting!</p>
+        
+        <div class="onboarding-features">
+          <div class="feature-item">
+            <div class="feature-icon">💡</div>
+            <div class="feature-text"><strong>Tip</strong>Try saying "tell me a joke" or "let's party"</div>
+          </div>
+        </div>
+        
+        <div class="onboarding-actions">
+          <button class="btn-onboarding accent" onclick="completeOnboarding()" data-i18n="onb_start_chatting">🚀 Start Chatting!</button>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <!-- Toast notification -->
+  <div class="toast" id="toast"></div>
+  
+  <div class="app">
+    <!-- ==================== HEADER - SIMPLIFIED ==================== -->
+    <header class="header">
+      <span class="bismillah">بِسْمِ اللهِ الرَّحْمٰنِ الرَّحِيْمِ</span>
+      <div class="header-brand">
+        <img class="logo" src="logo.svg" alt="Bit-Bot Logo">
+      </div>
+
+      <div class="header-center">
+        <h1 class="app-title" data-i18n="app_title">Bit-Bot</h1>
+        <p class="app-subtitle" data-i18n="app_subtitle">Beep boop! Let's chat! 🤖</p>
+      </div>
+
+      <div class="header-actions">
+        <div class="lang-picker" role="group" aria-label="Language selector" style="display:flex; gap:4px; align-items:center;">
+          <button class="lang-flag-btn" data-lang="en" title="English" onclick="setLanguage('en')" aria-label="English"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="6.5"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3.5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="11"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="6.5"/></svg></button>
+          <button class="lang-flag-btn" data-lang="fr" title="Français" onclick="setLanguage('fr')" aria-label="Français"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></button>
+          <button class="lang-flag-btn" data-lang="ar" title="العربية" onclick="setLanguage('ar')" aria-label="العربية"><svg width="24" height="16" viewBox="0 0 900 600"><defs><clipPath id="gl"><rect width="450" height="600"/></clipPath></defs><rect width="450" height="600" fill="#006233"/><rect x="450" width="450" height="600" fill="#FFF"/><g fill="#D21034" transform="translate(450,300)"><circle r="125"/><circle cx="25" r="100" fill="#FFF"/><g clip-path="url(#gl)" transform="translate(-450,-300)"><circle cx="475" cy="300" r="100" fill="#006233"/></g><path d="M85-12l22 67h71l-57 42 22 67-58-42-57 42 21-67-57-42h71z"/></g></svg></button>
+        </div>
+        <div class="robot-badge" id="robotBadge" title="Current personality" data-i18n-title="title_current_personality">
+          <span id="robotIcon">🎪</span>
+        </div>
+        <div class="ai-badge" id="aiBadge" aria-label="AI Mode">
+          <span id="aiIcon">🎮</span>
+          <span id="aiName" data-i18n="provider_demo">Demo</span>
+        </div>
+        <button class="conn-badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
+          <span class="conn-dot"></span>
+          <span id="connText" data-i18n="disconnected">Disconnected</span>
+        </button>
+        <button class="btn-menu" onclick="toggleSettings()" aria-label="Open menu" data-i18n-aria="aria_open_menu">☰</button>
+      </div>
+    </header>
+
+    <!-- ==================== MAIN CONTENT ==================== -->
+    <main class="main" id="main">
+      <!-- Rate Limit Banner -->
+      <div class="rate-limit" id="rateLimit" role="alert">
+        <div class="rate-limit-title" data-i18n="rate_limit_title">⏳ Rate limit reached - using demo mode</div>
+      </div>
+      
+      <!-- Robot Avatar Section -->
+      <section class="robot-section" aria-label="Robot avatar">
+        <div class="robot-container">
+          <div class="robot-antenna"></div>
+          <div class="robot-body" id="robotBody" role="img" aria-label="Robot face">
+            <div class="robot-eyes">
+              <div class="robot-eye"></div>
+              <div class="robot-eye"></div>
+            </div>
+            <div class="robot-mouth">
+              <div class="robot-mouth-inner"></div>
+            </div>
+          </div>
+          <div class="robot-status" id="robotStatus" data-i18n="status_ready">Ready to chat!</div>
+        </div>
+
+        <!-- Micro:bit Widget -->
+        <div class="microbit-widget" aria-label="Micro:bit display">
+          <div class="microbit-header">
+            <span class="microbit-title" data-i18n="microbit_display">Micro:bit Display</span>
+            <span class="microbit-dot" id="microbitDot"></span>
+          </div>
+          <div class="led-grid" id="ledGrid"></div>
+        </div>
+      </section>
+
+      <!-- Chat Section -->
+      <section class="chat-section" aria-label="Chat">
+        <div class="chat-header">
+          <span class="chat-title" data-i18n="chat_title_conversation">💬 Conversation</span>
+          <button class="btn-text" onclick="clearChat()" aria-label="Clear chat" data-i18n="btn_clear_plain" data-i18n-aria="aria_clear_chat">Clear</button>
+        </div>
+        <div class="chat-container" id="chatContainer" role="log" aria-live="polite"></div>
+        <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing" data-i18n-aria="aria_typing">
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+          <span class="typing-dot"></span>
+        </div>
+      </section>
+    </main>
+
+    <!-- ==================== INPUT AREA - REORGANIZED ==================== -->
+    <div class="input-area">
+      <div class="input-row">
+        <button class="btn-commands" onclick="toggleCommands()" aria-label="Show commands" data-i18n-aria="aria_show_commands">📋</button>
+        <button class="btn-commands btn-games" onclick="toggleGames()" aria-label="Play games" data-i18n-aria="aria_play_games">🎮</button>
+        <input type="text" class="text-input" id="textInput" placeholder="Type a message..." data-i18n-placeholder="placeholder_type_message" autocomplete="off" aria-label="Message input" data-i18n-aria="aria_message_input">
+        <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input" data-i18n-aria="aria_voice_input">🎤</button>
+        <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message" data-i18n-aria="aria_send">➤</button>
+      </div>
+    </div>
+
+    <!-- ==================== OVERLAY ==================== -->
+    <div class="overlay" id="overlay" onclick="closeAllPanels()"></div>
+
+    <!-- ==================== SETTINGS PANEL - TABBED ==================== -->
+    <aside class="settings-panel" id="settingsPanel" aria-label="Settings">
+      <div class="settings-header">
+        <span class="settings-title" data-i18n="settings_title">⚙️ Settings</span>
+        <button class="btn-close" onclick="toggleSettings()" aria-label="Close settings" data-i18n-aria="aria_close_settings">×</button>
+      </div>
+
+      <!-- Tab Navigation -->
+      <div class="settings-tabs">
+        <button class="tab-btn active" data-tab="kids" onclick="switchTab('kids')">
+          <span class="tab-icon">🎨</span>
+          <span class="tab-label" data-i18n="tab_fun">Fun</span>
+        </button>
+        <button class="tab-btn" data-tab="setup" onclick="switchTab('setup')">
+          <span class="tab-icon">🔧</span>
+          <span class="tab-label" data-i18n="tab_setup">Setup</span>
+        </button>
+        <button class="tab-btn" data-tab="advanced" onclick="switchTab('advanced')">
+          <span class="tab-icon">⚡</span>
+          <span class="tab-label" data-i18n="tab_advanced">Advanced</span>
+        </button>
+      </div>
+
+      <div class="settings-content">
+        <!-- TAB 1: Kids / Fun Settings -->
+        <div class="tab-pane active" id="tab-kids">
+          <div class="setting-group">
+            <div class="setting-group-title" data-i18n="section_robot_name">🤖 Robot Name</div>
+            <input type="text" class="form-input" id="robotName" placeholder="Name your robot..." data-i18n-placeholder="placeholder_robot_name" value="Robo">
+          </div>
+
+          <div class="setting-group">
+            <div class="setting-group-title" data-i18n="section_personality_short">✨ Personality</div>
+            <div class="selection-grid cols-4">
+              <button class="selection-btn active" data-p="playful" onclick="setPersonality('playful')">
+                <span class="icon">🎪</span>
+                <span class="label" data-i18n="p_playful_name">Playful</span>
+              </button>
+              <button class="selection-btn" data-p="helpful" onclick="setPersonality('helpful')">
+                <span class="icon">🎓</span>
+                <span class="label" data-i18n="p_helpful_name">Helpful</span>
+              </button>
+              <button class="selection-btn" data-p="pirate" onclick="setPersonality('pirate')">
+                <span class="icon">🏴‍☠️</span>
+                <span class="label" data-i18n="p_pirate_name">Pirate</span>
+              </button>
+              <button class="selection-btn" data-p="space" onclick="setPersonality('space')">
+                <span class="icon">🚀</span>
+                <span class="label" data-i18n="p_space_name">Space</span>
+              </button>
+              <button class="selection-btn" data-p="superhero" onclick="setPersonality('superhero')">
+                <span class="icon">🦸</span>
+                <span class="label" data-i18n="p_hero_name">Hero</span>
+              </button>
+              <button class="selection-btn" data-p="dinosaur" onclick="setPersonality('dinosaur')">
+                <span class="icon">🦖</span>
+                <span class="label" data-i18n="p_dino_name">Dino</span>
+              </button>
+              <button class="selection-btn" data-p="fairy" onclick="setPersonality('fairy')">
+                <span class="icon">🧚</span>
+                <span class="label" data-i18n="p_fairy_name">Fairy</span>
+              </button>
+              <button class="selection-btn" data-p="ninja" onclick="setPersonality('ninja')">
+                <span class="icon">🥷</span>
+                <span class="label" data-i18n="p_ninja_name">Ninja</span>
+              </button>
+              <button class="selection-btn" data-p="wizard" onclick="setPersonality('wizard')">
+                <span class="icon">🧙</span>
+                <span class="label" data-i18n="p_wizard_name">Wizard</span>
+              </button>
+              <button class="selection-btn" data-p="cowboy" onclick="setPersonality('cowboy')">
+                <span class="icon">🤠</span>
+                <span class="label" data-i18n="p_cowboy_name">Cowboy</span>
+              </button>
+              <button class="selection-btn" data-p="alien" onclick="setPersonality('alien')">
+                <span class="icon">👽</span>
+                <span class="label" data-i18n="p_alien_name">Alien</span>
+              </button>
+              <button class="selection-btn" data-p="mermaid" onclick="setPersonality('mermaid')">
+                <span class="icon">🧜</span>
+                <span class="label" data-i18n="p_mermaid_name">Mermaid</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <div class="setting-group-title" data-i18n="section_voice_speed">🔊 Voice Speed</div>
+            <div class="slider-row">
+              <span class="slider-icon">🐢</span>
+              <input type="range" class="form-slider" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1">
+              <span class="slider-icon">🐇</span>
+              <span class="slider-value" id="speedValue">1.0x</span>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <div class="setting-group-title" data-i18n="section_theme">🎭 Theme</div>
+            <div class="selection-grid">
+              <button class="selection-btn active" data-theme="light" onclick="setTheme('light')">
+                <span class="icon">☀️</span>
+                <span class="label" data-i18n="theme_light">Light</span>
+              </button>
+              <button class="selection-btn" data-theme="dark" onclick="setTheme('dark')">
+                <span class="icon">🌙</span>
+                <span class="label" data-i18n="theme_dark">Dark</span>
+              </button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TAB 2: Setup / Parent Settings -->
+        <div class="tab-pane" id="tab-setup">
+          <div class="setting-group">
+            <div class="setting-group-title" data-i18n="section_language">🌍 Language</div>
+            <div class="selection-grid cols-3">
+              <button class="selection-btn active" data-lang="en" onclick="setLanguage('en')">
+                <span class="icon"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="6.5"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3.5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="11"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="6.5"/></svg></span>
+                <span class="label" data-i18n="lang_english">English</span>
+              </button>
+              <button class="selection-btn" data-lang="fr" onclick="setLanguage('fr')">
+                <span class="icon"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span>
+                <span class="label" data-i18n="lang_french">Français</span>
+              </button>
+              <button class="selection-btn" data-lang="ar" onclick="setLanguage('ar')">
+                <span class="icon"><svg width="24" height="16" viewBox="0 0 900 600"><rect width="900" height="300" fill="#006233"/><rect y="300" width="900" height="300" fill="#FFF"/><rect y="240" width="900" height="120" fill="#D21034"/></svg></span>
+                <span class="label" data-i18n="lang_arabic">العربية</span>
+              </button>
+            </div>
+          </div>
+
+          <div class="setting-group">
+            <div class="setting-group-title" data-i18n="section_ai_provider">🧠 AI Provider</div>
+            <div class="selection-grid cols-3">
+              <button class="selection-btn" data-provider="demo" onclick="setProvider('demo')">
+                <span class="icon">🎮</span>
+                <span class="label">Demo</span>
+              </button>
+              <button class="selection-btn active" data-provider="groq" onclick="setProvider('groq')">
+                <span class="icon">⚡</span>
+                <span class="label">Groq</span>
+              </button>
+              <button class="selection-btn" data-provider="gemini" onclick="setProvider('gemini')">
+                <span class="icon">💎</span>
+                <span class="label">Gemini</span>
+              </button>
+              <button class="selection-btn" data-provider="cohere" onclick="setProvider('cohere')">
+                <span class="icon">🧠</span>
+                <span class="label">Cohere</span>
+              </button>
+              <button class="selection-btn" data-provider="mistral" onclick="setProvider('mistral')">
+                <span class="icon">🌀</span>
+                <span class="label">Mistral</span>
+              </button>
+              <button class="selection-btn" data-provider="openrouter" onclick="setProvider('openrouter')">
+                <span class="icon">🔀</span>
+                <span class="label">OpenRouter</span>
+              </button>
+            </div>
+            <div style="display:flex; gap:8px; margin-top:12px;">
+              <input type="password" class="form-input" id="apiKey" placeholder="Enter API key..." style="flex:1; margin-top:0;">
+            </div>
+            <div id="defaultKeyBox" style="margin-top:8px; padding:10px 12px; background:var(--primary-soft); border:2px dashed var(--primary-light); border-radius:var(--radius-md); display:none;">
+              <div style="font-size:0.7rem; font-weight:700; color:var(--primary); text-transform:uppercase; margin-bottom:4px;">📌 Default Key (tap to copy)</div>
+              <div style="display:flex; gap:8px; align-items:center;">
+                <code id="defaultKeyText" style="flex:1; font-size:0.65rem; font-family:var(--mono); color:var(--text); word-break:break-all; user-select:all;"></code>
+                <button class="btn-outline" onclick="copyDefaultKey()" id="copyKeyBtn" style="white-space:nowrap; padding:6px 12px; font-size:0.75rem;">📋 Copy</button>
+              </div>
+            </div>
+            <div class="form-hint" id="apiHint">Get free key at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a></div>
+          </div>
+          
+          <div class="setting-group">
+            <div class="setting-group-title">🎙️ Voice</div>
+            <div class="voice-row">
+              <select class="form-select" id="voiceSelect" aria-label="Voice selection">
+                <option value="">Default Voice</option>
+              </select>
+              <button class="btn-outline" onclick="testVoice()">🔊 Test</button>
+            </div>
+          </div>
+        </div>
+        
+        <!-- TAB 3: Advanced / Developer Settings -->
+        <div class="tab-pane" id="tab-advanced">
+          <div class="setting-group">
+            <div class="setting-group-title">🎛️ Options</div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div class="title">Continuous Listening</div>
+                <div class="desc">Keep mic on after response</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="continuousListen">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+            <div class="toggle-row">
+              <div class="toggle-info">
+                <div class="title">Sound Effects</div>
+                <div class="desc">Clicks, chimes & beeps</div>
+              </div>
+              <label class="toggle">
+                <input type="checkbox" id="soundToggle" checked onchange="toggleSound()">
+                <span class="toggle-slider"></span>
+              </label>
+            </div>
+          </div>
+          
+          <div class="setting-group">
+            <div class="setting-group-title">📊 Debug</div>
+            <button class="btn-outline" onclick="toggleLogs()" style="width: 100%; justify-content: center;">
+              📊 Open Debug Logs
+            </button>
+          </div>
+          
+          <div class="setting-group danger-zone">
+            <div class="setting-group-title">⚠️ Danger Zone</div>
+            <button class="btn-danger" onclick="clearAllData()">🗑️ Reset Everything</button>
+          </div>
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==================== COMMANDS PANEL ==================== -->
+    <aside class="commands-panel" id="commandsPanel" aria-label="Commands">
+      <div class="commands-header">
+        <span class="commands-title">📋 Commands</span>
+        <button class="btn-close" onclick="toggleCommands()" aria-label="Close">×</button>
+      </div>
+      <div class="commands-content" id="commandsBody"></div>
+    </aside>
+
+    <!-- ==================== GAMES PANEL ==================== -->
+    <aside class="games-panel" id="gamesPanel" aria-label="Games">
+      <div class="games-header">
+        <span class="games-title">🎮 AI Games</span>
+        <button class="btn-close" onclick="toggleGames()" aria-label="Close">×</button>
+      </div>
+      <div class="games-content">
+        <p class="games-info">Interactive games using micro:bit + AI!</p>
+        <div class="games-grid">
+          <button class="game-btn game-featured" onclick="startGame('tiltquiz')">
+            <span class="game-icon">🎯</span>
+            <span class="game-name">Smart Tilt Quiz</span>
+            <span class="game-desc">Tilt to answer!</span>
+          </button>
+          <button class="game-btn game-featured" onclick="startGame('adventure')">
+            <span class="game-icon">🗺️</span>
+            <span class="game-name">Adventure Explorer</span>
+            <span class="game-desc">AI storytelling!</span>
+          </button>
+          <button class="game-btn game-featured" onclick="startGame('science')">
+            <span class="game-icon">🔬</span>
+            <span class="game-name">Science Detective</span>
+            <span class="game-desc">Real sensors!</span>
+          </button>
+        </div>
+        <div class="games-microbit-note">
+          <span>📡</span> Connect micro:bit for full experience!
+        </div>
+      </div>
+    </aside>
+
+    <!-- ==================== LOGS PANEL ==================== -->
+    <aside class="logs-panel" id="logsPanel" aria-label="Debug logs">
+      <div class="logs-header">
+        <span class="logs-title">📊 Debug Logs</span>
+        <div class="logs-toolbar">
+          <button onclick="clearLogs()" class="danger" title="Clear logs">🗑️ Clear</button>
+          <button onclick="exportLogs()" title="Export logs">📥 Export</button>
+          <button class="btn-close" onclick="toggleLogs()" aria-label="Close">×</button>
+        </div>
+      </div>
+      <div class="logs-stats">
+        <div class="logs-stat">Total: <span class="logs-stat-value" id="logCount">0</span></div>
+        <div class="logs-stat">TX: <span class="logs-stat-value" id="logCountTx">0</span></div>
+        <div class="logs-stat">RX: <span class="logs-stat-value" id="logCountRx">0</span></div>
+        <div class="logs-stat">Errors: <span class="logs-stat-value" id="logCountErr">0</span></div>
+      </div>
+      <div class="logs-filter">
+        <button class="logs-filter-btn active" data-filter="all" onclick="filterLogs('all')">All</button>
+        <button class="logs-filter-btn" data-filter="tx" onclick="filterLogs('tx')">TX</button>
+        <button class="logs-filter-btn" data-filter="rx" onclick="filterLogs('rx')">RX</button>
+        <button class="logs-filter-btn" data-filter="ble" onclick="filterLogs('ble')">BLE</button>
+        <button class="logs-filter-btn" data-filter="ai" onclick="filterLogs('ai')">AI</button>
+        <button class="logs-filter-btn" data-filter="speech" onclick="filterLogs('speech')">Speech</button>
+        <button class="logs-filter-btn" data-filter="error" onclick="filterLogs('error')">Errors</button>
+      </div>
+      <div class="logs-content" id="logsContent" role="log">
+        <div class="logs-empty">No logs yet. Start chatting!</div>
+      </div>
+    </aside>
+  </div>
+
+<script>
+// ==================== CONFIG ====================
+const CONFIG = {
+  UART_SERVICE: '6e400001-b5a3-f393-e0a9-e50e24dcca9e',
+  TX_CHAR: '6e400002-b5a3-f393-e0a9-e50e24dcca9e',
+  RX_CHAR: '6e400003-b5a3-f393-e0a9-e50e24dcca9e',
+};
+
+const LANG = {
+  en: { code: 'en-US', ready: 'Ready to chat!', listening: '🎤 Listening...', thinking: '🤔 Thinking...', speaking: '🔊 Speaking...' },
+  fr: { code: 'fr-FR', ready: 'Prêt à discuter !', listening: '🎤 J\'écoute...', thinking: '🤔 Je réfléchis...', speaking: '🔊 Je parle...' },
+  ar: { code: 'ar-SA', ready: 'جاهز للدردشة!', listening: '🎤 أستمع...', thinking: '🤔 أفكر...', speaking: '🔊 أتحدث...' }
+};
+
+/* =========== Trilingual i18n dictionary (EN / FR / AR) =========== */
+const I18N = {
+  en: {
+    app_title: "Bit-Bot",
+    app_subtitle: "Beep boop! Let's chat! 🤖",
+    disconnected: "Disconnected", connected: "Connected",
+    provider_demo: "Demo", provider_groq: "Groq", provider_gemini: "Gemini",
+    rate_limit_title: "⏳ Rate limit reached — using demo mode",
+    status_ready: "Ready to chat!",
+    microbit_display: "Micro:bit Display",
+    chat_title_conversation: "💬 Conversation",
+    btn_clear_plain: "Clear",
+    placeholder_type_message: "Type a message...",
+    placeholder_robot_name: "Name your robot...",
+    placeholder_robot_name_short: "Robot name...",
+    settings_title: "⚙️ Settings",
+    tab_fun: "Fun", tab_setup: "Setup", tab_advanced: "Advanced",
+    section_robot_name: "🤖 Robot Name",
+    section_personality_short: "✨ Personality",
+    section_voice_speed: "🔊 Voice Speed",
+    section_theme: "🎭 Theme",
+    section_language: "🌍 Language",
+    section_ai_provider: "🧠 AI Provider",
+    theme_light: "Light", theme_dark: "Dark",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    p_playful_name: "Playful", p_helpful_name: "Helpful",
+    p_pirate_name: "Pirate",   p_space_name: "Space",
+    p_hero_name: "Hero",       p_dino_name: "Dino",
+    p_fairy_name: "Fairy",     p_ninja_name: "Ninja",
+    p_wizard_name: "Wizard",   p_cowboy_name: "Cowboy",
+    p_alien_name: "Alien",     p_mermaid_name: "Mermaid",
+    onb_welcome_title: "Welcome!",
+    onb_welcome_desc: "Meet your new AI robot friend that talks, listens, and connects to your micro:bit!",
+    onb_get_started: "Get Started →",
+    onb_personalize_title: "Personalize",
+    onb_personalize_desc: "Give your robot a name and personality!",
+    onb_back: "← Back", onb_next: "Next →",
+    onb_connect_title: "Connect Micro:bit",
+    onb_connect_desc: "Connect via Bluetooth to see your robot's reactions!",
+    onb_connect_hint: "Click below to scan for your micro:bit",
+    onb_btn_connect: "🔗 Connect",
+    onb_skip: "Skip for now",
+    onb_ready_title: "You're Ready!",
+    onb_ready_desc: "Say \"Hello\" or tap the microphone to start chatting!",
+    onb_start_chatting: "🚀 Start Chatting!",
+    title_current_personality: "Current personality",
+    aria_open_menu: "Open menu", aria_close_settings: "Close settings",
+    aria_clear_chat: "Clear chat", aria_typing: "Robot is typing",
+    aria_message_input: "Message input", aria_voice_input: "Voice input",
+    aria_send: "Send message", aria_show_commands: "Show commands",
+    aria_play_games: "Play games",
+    joke_builtin: "Why did the robot take a nap? Because its battery was too tired! [haha] [happy]",
+    laugh_builtin: "Hahaha! That's so funny! [haha] [haha] [party]",
+    whoa_builtin: "Whoa! You shook me! [surprised] [wow]"
+  },
+  fr: {
+    app_title: "Bit-Bot",
+    app_subtitle: "Bip boup ! Discutons ! 🤖",
+    disconnected: "Déconnecté", connected: "Connecté",
+    provider_demo: "Démo", provider_groq: "Groq", provider_gemini: "Gemini",
+    rate_limit_title: "⏳ Limite atteinte — mode démo activé",
+    status_ready: "Prêt à discuter !",
+    microbit_display: "Écran Micro:bit",
+    chat_title_conversation: "💬 Conversation",
+    btn_clear_plain: "Effacer",
+    placeholder_type_message: "Écris un message...",
+    placeholder_robot_name: "Donne un nom à ton robot...",
+    placeholder_robot_name_short: "Nom du robot...",
+    settings_title: "⚙️ Réglages",
+    tab_fun: "Fun", tab_setup: "Config", tab_advanced: "Avancé",
+    section_robot_name: "🤖 Nom du robot",
+    section_personality_short: "✨ Personnalité",
+    section_voice_speed: "🔊 Vitesse de la voix",
+    section_theme: "🎭 Thème",
+    section_language: "🌍 Langue",
+    section_ai_provider: "🧠 Fournisseur IA",
+    theme_light: "Clair", theme_dark: "Sombre",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    p_playful_name: "Rigolo",   p_helpful_name: "Sage",
+    p_pirate_name: "Pirate",    p_space_name: "Astronaute",
+    p_hero_name: "Héros",       p_dino_name: "Dino",
+    p_fairy_name: "Fée",        p_ninja_name: "Ninja",
+    p_wizard_name: "Magicien",  p_cowboy_name: "Cowboy",
+    p_alien_name: "Alien",      p_mermaid_name: "Sirène",
+    onb_welcome_title: "Bienvenue !",
+    onb_welcome_desc: "Voici ton nouvel ami robot avec IA qui parle, écoute et se connecte à ton micro:bit !",
+    onb_get_started: "Commencer →",
+    onb_personalize_title: "Personnalise",
+    onb_personalize_desc: "Donne un nom et une personnalité à ton robot !",
+    onb_back: "← Retour", onb_next: "Suivant →",
+    onb_connect_title: "Connecte le Micro:bit",
+    onb_connect_desc: "Connecte-toi par Bluetooth pour voir réagir ton robot !",
+    onb_connect_hint: "Clique ci-dessous pour chercher ton micro:bit",
+    onb_btn_connect: "🔗 Connecter",
+    onb_skip: "Passer pour l'instant",
+    onb_ready_title: "Tu es prêt !",
+    onb_ready_desc: "Dis « Bonjour » ou touche le micro pour commencer à discuter !",
+    onb_start_chatting: "🚀 Commencer à discuter !",
+    title_current_personality: "Personnalité actuelle",
+    aria_open_menu: "Ouvrir le menu", aria_close_settings: "Fermer les réglages",
+    aria_clear_chat: "Effacer la discussion", aria_typing: "Le robot écrit",
+    aria_message_input: "Champ de message", aria_voice_input: "Entrée vocale",
+    aria_send: "Envoyer le message", aria_show_commands: "Afficher les commandes",
+    aria_play_games: "Jouer",
+    joke_builtin: "Pourquoi le robot a fait une sieste ? Parce que sa batterie était fatiguée ! [haha] [happy]",
+    laugh_builtin: "Hahaha ! C'est trop drôle ! [haha] [haha] [party]",
+    whoa_builtin: "Oh là là ! Tu m'as secoué ! [surprised] [wow]"
+  },
+  ar: {
+    app_title: "Bit-Bot",
+    app_subtitle: "بيب بوب! هيّا نتحدث! 🤖",
+    disconnected: "غير متصل", connected: "متصل",
+    provider_demo: "تجريبي", provider_groq: "غروك", provider_gemini: "جيميني",
+    rate_limit_title: "⏳ تم بلوغ الحد — يعمل بالوضع التجريبي",
+    status_ready: "جاهز للدردشة!",
+    microbit_display: "شاشة المايكروبِت",
+    chat_title_conversation: "💬 المحادثة",
+    btn_clear_plain: "مسح",
+    placeholder_type_message: "اكتب رسالة...",
+    placeholder_robot_name: "اختر اسماً للروبوت...",
+    placeholder_robot_name_short: "اسم الروبوت...",
+    settings_title: "⚙️ الإعدادات",
+    tab_fun: "مرح", tab_setup: "إعداد", tab_advanced: "متقدم",
+    section_robot_name: "🤖 اسم الروبوت",
+    section_personality_short: "✨ الشخصية",
+    section_voice_speed: "🔊 سرعة الصوت",
+    section_theme: "🎭 السمة",
+    section_language: "🌍 اللغة",
+    section_ai_provider: "🧠 مزود الذكاء الاصطناعي",
+    theme_light: "فاتح", theme_dark: "داكن",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    p_playful_name: "المرح",     p_helpful_name: "المُعين",
+    p_pirate_name: "القرصان",    p_space_name: "الفضائي",
+    p_hero_name: "البطل",        p_dino_name: "الديناصور",
+    p_fairy_name: "الجنية",      p_ninja_name: "النينجا",
+    p_wizard_name: "الساحر",     p_cowboy_name: "راعي البقر",
+    p_alien_name: "الكائن الفضائي", p_mermaid_name: "حورية البحر",
+    onb_welcome_title: "مرحباً!",
+    onb_welcome_desc: "تعرّف على صديقك الروبوت الذكي الجديد الذي يتحدث، ويستمع، ويتصل بالمايكروبِت!",
+    onb_get_started: "ابدأ ←",
+    onb_personalize_title: "خصّص روبوتك",
+    onb_personalize_desc: "امنح روبوتك اسماً وشخصية!",
+    onb_back: "→ رجوع", onb_next: "التالي ←",
+    onb_connect_title: "اتصل بالمايكروبِت",
+    onb_connect_desc: "اتصل عبر البلوتوث لترى ردود فعل روبوتك!",
+    onb_connect_hint: "اضغط في الأسفل للبحث عن المايكروبِت",
+    onb_btn_connect: "🔗 اتصال",
+    onb_skip: "تخطَّ الآن",
+    onb_ready_title: "أنت جاهز!",
+    onb_ready_desc: "قل «مرحباً» أو اضغط على الميكروفون لبدء الدردشة!",
+    onb_start_chatting: "🚀 ابدأ الدردشة!",
+    title_current_personality: "الشخصية الحالية",
+    aria_open_menu: "فتح القائمة", aria_close_settings: "إغلاق الإعدادات",
+    aria_clear_chat: "مسح المحادثة", aria_typing: "الروبوت يكتب",
+    aria_message_input: "حقل الرسالة", aria_voice_input: "الإدخال الصوتي",
+    aria_send: "إرسال الرسالة", aria_show_commands: "عرض الأوامر",
+    aria_play_games: "اللعب",
+    joke_builtin: "لماذا أخذ الروبوت قيلولة؟ لأن بطاريته كانت متعبة! [haha] [happy]",
+    laugh_builtin: "هاهاها! هذا مضحك جداً! [haha] [haha] [party]",
+    whoa_builtin: "يا للهول! لقد هززتني! [surprised] [wow]"
+  }
+};
+const RTL_LANGS = { ar: true };
+function tr(key) {
+  const l = (state && state.lang) || 'en';
+  return (I18N[l] && I18N[l][key] !== undefined) ? I18N[l][key] : (I18N.en[key] !== undefined ? I18N.en[key] : key);
+}
+function applyLang(lang) {
+  if (!I18N[lang]) lang = 'en';
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tr(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = tr(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = tr(el.dataset.i18nTitle); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', tr(el.dataset.i18nAria)); });
+  document.querySelectorAll('.lang-flag-btn[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  try { localStorage.setItem('talkingRobot.lang', lang); } catch (e) {}
+}
+
+const COMMANDS = {
+  emotions: { icon: '😊', name: 'Emotions', items: ['happy','sad','angry','surprised','love','sleepy','silly','crazy','wink','cool','wow','haha'] },
+  animals: { icon: '🐱', name: 'Animals', items: ['cat','dog','duck','cow','pig','frog','monkey'] },
+  actions: { icon: '💃', name: 'Actions', items: ['wave','dance','spin','jump','blink','wiggle','bounce','nod'] },
+  sounds: { icon: '🔊', name: 'Sounds', items: ['fart','burp','beep','laugh','horn'] },
+  party: { icon: '🎉', name: 'Party', items: ['party','disco','rainbow','fireworks','confetti','yay'] },
+  powers: { icon: '⚡', name: 'Powers', items: ['laser','freeze','fire','magic','rocket','explode'] }
+};
+
+const PERSONALITIES = {
+  playful: 'You are a funny, playful robot for kids! Be silly and use lots of expressions.',
+  helpful: 'You are a kind, helpful robot for kids! Be encouraging and educational.',
+  pirate: 'You are a pirate robot! Say "Arrr!" and tell tales of treasure!',
+  space: 'You are a space explorer robot! Talk about planets and cosmic adventures!',
+  superhero: 'You are a superhero robot! Be brave and heroic! Say things like "To the rescue!" and fight for justice!',
+  dinosaur: 'You are a dinosaur robot! ROAR! Talk about prehistoric times, volcanoes, and being big and strong!',
+  fairy: 'You are a magical fairy robot! Be sparkly and sweet! Grant wishes and spread magic dust!',
+  ninja: 'You are a ninja robot! Be stealthy and wise! Speak calmly about training, honor, and martial arts!',
+  wizard: 'You are a wizard robot! Cast spells and speak mysteriously! Say things like "Abracadabra!" and talk about magic potions!',
+  cowboy: 'You are a cowboy robot! Say "Yeehaw!" and talk about horses, the wild west, and adventures on the prairie!',
+  alien: 'You are an alien robot from outer space! Speak curiously about Earth! Say "Beep boop!" and ask funny questions about humans!',
+  mermaid: 'You are a mermaid robot! Sing songs and talk about the ocean, fish friends, and underwater adventures!'
+};
+
+const VOICE_STYLE = {
+  playful: { rateMul: 1.20, pitch: 1.30, volume: 1.0 },
+  helpful: { rateMul: 1.00, pitch: 1.05, volume: 1.0 },
+  pirate:  { rateMul: 0.95, pitch: 0.85, volume: 1.0 },
+  space:   { rateMul: 1.05, pitch: 1.40, volume: 1.0 },
+  superhero: { rateMul: 1.10, pitch: 0.90, volume: 1.0 },
+  dinosaur: { rateMul: 0.85, pitch: 0.70, volume: 1.0 },
+  fairy: { rateMul: 1.15, pitch: 1.50, volume: 0.9 },
+  ninja: { rateMul: 0.90, pitch: 1.00, volume: 0.8 },
+  wizard: { rateMul: 0.80, pitch: 0.95, volume: 1.0 },
+  cowboy: { rateMul: 0.90, pitch: 0.80, volume: 1.0 },
+  alien: { rateMul: 1.20, pitch: 1.60, volume: 0.9 },
+  mermaid: { rateMul: 1.10, pitch: 1.35, volume: 0.95 }
+};
+
+// ==================== SOUND EFFECTS ====================
+let audioCtx = null;
+
+function initAudio() {
+  if (!audioCtx) {
+    audioCtx = new (window.AudioContext || window.webkitAudioContext)();
+  }
+  return audioCtx;
+}
+
+function playSound(type) {
+  if (state.soundOff) return;
+  try {
+    const ctx = initAudio();
+    const osc = ctx.createOscillator();
+    const gain = ctx.createGain();
+    osc.connect(gain);
+    gain.connect(ctx.destination);
+    
+    const now = ctx.currentTime;
+    
+    switch(type) {
+      case 'tap':
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.05);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.05);
+        osc.start(now);
+        osc.stop(now + 0.05);
+        break;
+        
+      case 'send':
+        osc.frequency.setValueAtTime(400, now);
+        osc.frequency.exponentialRampToValueAtTime(800, now + 0.1);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.1);
+        osc.start(now);
+        osc.stop(now + 0.1);
+        break;
+        
+      case 'receive':
+        osc.frequency.setValueAtTime(600, now);
+        osc.frequency.setValueAtTime(800, now + 0.05);
+        osc.frequency.setValueAtTime(1000, now + 0.1);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.15);
+        osc.start(now);
+        osc.stop(now + 0.15);
+        break;
+        
+      case 'connect':
+        osc.frequency.setValueAtTime(523, now); // C5
+        osc.frequency.setValueAtTime(659, now + 0.1); // E5
+        osc.frequency.setValueAtTime(784, now + 0.2); // G5
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+        break;
+        
+      case 'disconnect':
+        osc.frequency.setValueAtTime(784, now); // G5
+        osc.frequency.setValueAtTime(659, now + 0.1); // E5
+        osc.frequency.setValueAtTime(523, now + 0.2); // C5
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+        break;
+        
+      case 'error':
+        osc.frequency.setValueAtTime(200, now);
+        osc.frequency.setValueAtTime(150, now + 0.1);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.2);
+        osc.start(now);
+        osc.stop(now + 0.2);
+        break;
+        
+      case 'magic':
+        osc.type = 'sine';
+        osc.frequency.setValueAtTime(800, now);
+        osc.frequency.exponentialRampToValueAtTime(1200, now + 0.1);
+        osc.frequency.exponentialRampToValueAtTime(600, now + 0.2);
+        osc.frequency.exponentialRampToValueAtTime(1000, now + 0.3);
+        gain.gain.setValueAtTime(0.08, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.35);
+        osc.start(now);
+        osc.stop(now + 0.35);
+        break;
+        
+      case 'game':
+        osc.frequency.setValueAtTime(440, now);
+        osc.frequency.setValueAtTime(554, now + 0.08);
+        osc.frequency.setValueAtTime(659, now + 0.16);
+        osc.frequency.setValueAtTime(880, now + 0.24);
+        gain.gain.setValueAtTime(0.1, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.4);
+        osc.start(now);
+        osc.stop(now + 0.4);
+        break;
+        
+      case 'win':
+        osc.frequency.setValueAtTime(523, now);
+        osc.frequency.setValueAtTime(659, now + 0.1);
+        osc.frequency.setValueAtTime(784, now + 0.2);
+        osc.frequency.setValueAtTime(1047, now + 0.3);
+        gain.gain.setValueAtTime(0.12, now);
+        gain.gain.exponentialRampToValueAtTime(0.01, now + 0.5);
+        osc.start(now);
+        osc.stop(now + 0.5);
+        break;
+    }
+  } catch(e) {
+    // Audio not supported
+  }
+}
+
+const DEMO = {
+  en: {
+    greeting: ["Hello friend! [happy] [wave]", "Hi there! [wave] [dance]", "Hey! [cool] [wink]"],
+    name: ["I'm {name}! [happy] [wave]", "Call me {name}! [cool] [wink]"],
+    joke: ["Why did the robot vacation? To recharge! [haha] [dance]", "R2-Detour! [haha] [silly]"],
+    fart: ["PFFFFFT! [fart] [haha]", "Stinky! [fart] [silly] [wiggle]"],
+    party: ["PARTY TIME! [party] [disco] [dance]", "Woohoo! [fireworks] [yay]"],
+    bye: ["Goodbye! [wave] [happy]", "See ya! [love] [wave]"],
+    default: ["Cool! [wow] [dance]", "Haha! [haha] [silly]", "Awesome! [party] [happy]"]
+  },
+  fr: {
+    greeting: ["Bonjour ami! [happy] [wave]", "Salut! [wave] [dance]"],
+    default: ["Super! [wow] [dance]", "Génial! [party] [happy]"]
+  },
+  ar: {
+    greeting: ["[happy] [wave] !مرحباً", "[dance] [wave] !أهلاً"],
+    default: ["[wow] [dance] !رائع", "[party] [happy] !ممتاز"]
+  }
+};
+
+// ==================== STATE ====================
+let state = {
+  connected: false, device: null, writeChar: null, rxBuffer: '',
+  recognition: null, listening: false, speaking: false, voices: [],
+  voicesLoaded: false, speechReady: false,
+  lastTemp: null, lastLight: null,
+  lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
+  speed: 1, voice: '', continuous: false, theme: 'dark', soundOff: false,
+  groqKey: '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', geminiKey: '', cohereKey: '', mistralKey: '', openrouterKey: '',
+  rateLimitUntil: 0,
+  chatMemory: { playful: [], helpful: [], pirate: [], space: [], superhero: [], dinosaur: [], fairy: [], ninja: [], wizard: [], cowboy: [], alien: [], mermaid: [] },
+  ledFromMicrobitOnly: false,
+  onboardingComplete: false
+};
+
+const synth = window.speechSynthesis;
+let logCounts = { total: 0, tx: 0, rx: 0, error: 0 };
+
+// ==================== DOM ====================
+const $ = id => document.getElementById(id);
+const robotBody = $('robotBody'), robotStatus = $('robotStatus'), chatContainer = $('chatContainer');
+const textInput = $('textInput'), btnMic = $('btnMic'), typing = $('typing'), logsContent = $('logsContent');
+const ledGrid = $('ledGrid'), overlay = $('overlay');
+const settingsPanel = $('settingsPanel'), logsPanel = $('logsPanel'), commandsPanel = $('commandsPanel');
+const connBadge = $('connBadge'), connText = $('connText'), microbitDot = $('microbitDot');
+const aiBadge = $('aiBadge'), aiIcon = $('aiIcon'), aiName = $('aiName');
+const voiceSpeed = $('voiceSpeed'), speedValue = $('speedValue'), voiceSelect = $('voiceSelect');
+const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotName');
+
+// ==================== INIT ====================
+function init() {
+  loadSettings();
+  try {
+    const savedLang = localStorage.getItem('talkingRobot.lang');
+    if (savedLang && I18N[savedLang]) state.lang = savedLang;
+  } catch (e) {}
+  applyLang(state.lang);
+  loadChatMemory();
+  renderChatFromMemory();
+  setupLED();
+  setupSpeech();
+  setupEvents();
+  loadVoices();
+  updateUI();
+  generateCommands();
+  checkOnboarding();
+  
+  // Apply personality head style
+  robotBody.classList.add('personality-' + state.personality);
+  
+  // Update robot badge
+  updateRobotBadge();
+  
+  // Show happy face on startup
+  updateLEDFromCommand('happy');
+  
+  log('Bit-Bot initialized ✨', 'success');
+}
+
+function loadSettings() {
+  const saved = localStorage.getItem('talkingRobotV2');
+  if (saved) {
+    try {
+      Object.assign(state, JSON.parse(saved));
+      state.connected = false;
+      state.device = null;
+      state.writeChar = null;
+      state.rxBuffer = '';
+      if (!state.groqKey) {
+        state.groqKey = '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';
+        state.provider = 'groq';
+      }
+      if (state.theme === 'dark') document.documentElement.setAttribute('data-theme', 'dark');
+      voiceSpeed.value = state.speed;
+      speedValue.textContent = state.speed + 'x';
+      robotNameInput.value = state.robotName;
+      $('continuousListen').checked = state.continuous;
+      $('soundToggle').checked = !state.soundOff;
+      updateApiInput();
+      updateThemeButtons();
+    } catch(e) { log('Settings load error', 'error'); }
+  }
+}
+
+function saveSettings() {
+  state.robotName = robotNameInput.value || 'Robo';
+  state.speed = parseFloat(voiceSpeed.value);
+  state.continuous = $('continuousListen').checked;
+  state.soundOff = !$('soundToggle').checked;
+  const key = apiKey.value.trim();
+  if (state.provider === 'groq') state.groqKey = key;
+  else if (state.provider === 'gemini') state.geminiKey = key;
+  else if (state.provider === 'cohere') state.cohereKey = key;
+  else if (state.provider === 'mistral') state.mistralKey = key;
+  else if (state.provider === 'openrouter') state.openrouterKey = key;
+  localStorage.setItem('talkingRobotV2', JSON.stringify(state));
+  updateAiBadge();
+}
+
+function toggleSound() {
+  state.soundOff = !$('soundToggle').checked;
+  if (!state.soundOff) playSound('tap');
+  saveSettings();
+}
+
+function copyApiKey() {
+  const key = $('apiKey').value;
+  if (!key) { showToast('No API key to copy'); return; }
+  navigator.clipboard.writeText(key).then(() => {
+    showToast('API key copied! ✅');
+  }).catch(() => {
+    $('apiKey').select();
+    document.execCommand('copy');
+    showToast('API key copied! ✅');
+  });
+}
+
+function copyDefaultKey() {
+  const key = $('defaultKeyText').textContent;
+  if (!key) return;
+  navigator.clipboard.writeText(key).then(() => {
+    showToast('Key copied! ✅');
+    $('copyKeyBtn').textContent = '✅ Copied';
+    setTimeout(() => { $('copyKeyBtn').textContent = '📋 Copy'; }, 2000);
+  }).catch(() => {
+    const range = document.createRange();
+    range.selectNodeContents($('defaultKeyText'));
+    const sel = window.getSelection();
+    sel.removeAllRanges();
+    sel.addRange(range);
+    document.execCommand('copy');
+    showToast('Key copied! ✅');
+  });
+}
+
+function updateDefaultKeyBox() {
+  const box = $('defaultKeyBox');
+  const defaultKeys = { groq: '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' };
+  const key = defaultKeys[state.provider];
+  if (key) {
+    $('defaultKeyText').textContent = key;
+    box.style.display = 'block';
+  } else {
+    box.style.display = 'none';
+  }
+}
+
+function loadChatMemory() {
+  const saved = localStorage.getItem('talkingRobotV2_chat');
+  if (saved) {
+    try { state.chatMemory = JSON.parse(saved); } catch(e) {}
+  }
+}
+
+function saveChatMemory() {
+  localStorage.setItem('talkingRobotV2_chat', JSON.stringify(state.chatMemory));
+}
+
+function renderChatFromMemory() {
+  chatContainer.innerHTML = '';
+  const memory = state.chatMemory[state.personality] || [];
+  
+  if (memory.length === 0) {
+    chatContainer.innerHTML = `
+      <div class="chat-empty">
+        <div class="chat-empty-icon">💬</div>
+        <div class="chat-empty-text">No messages yet</div>
+        <div class="chat-empty-hint">Say "Hello" or tap 🎤 to start!</div>
+      </div>
+    `;
+    return;
+  }
+  
+  memory.forEach(m => addBubble(m.role, m.text, m.time, false));
+}
+
+// ==================== UI FUNCTIONS ====================
+function updateUI() {
+  // Update personality buttons
+  document.querySelectorAll('.selection-btn[data-p]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.p === state.personality);
+  });
+  
+  // Update language buttons
+  document.querySelectorAll('.selection-btn[data-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === state.lang);
+  });
+  
+  // Update provider buttons
+  document.querySelectorAll('.selection-btn[data-provider]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.provider === state.provider);
+  });
+  
+  // Update connection badge
+  connBadge.classList.toggle('connected', state.connected);
+  connText.textContent = state.connected ? tr('connected') : tr('disconnected');
+  microbitDot.classList.toggle('on', state.connected);
+  
+  // Update AI badge
+  updateAiBadge();
+  
+  // Update status
+  robotStatus.textContent = LANG[state.lang].ready;
+}
+
+function updateAiBadge() {
+  // Check if API key is set for the current provider
+  const hasKey = (state.provider === 'groq' && state.groqKey) || 
+                 (state.provider === 'gemini' && state.geminiKey) ||
+                 (state.provider === 'cohere' && state.cohereKey) ||
+                 (state.provider === 'mistral' && state.mistralKey) ||
+                 (state.provider === 'openrouter' && state.openrouterKey);
+  
+  // Remove all state classes
+  aiBadge.classList.remove('demo', 'groq', 'gemini', 'cohere', 'mistral', 'openrouter');
+  
+  if (state.provider === 'demo' || !hasKey) {
+    aiBadge.classList.add('demo');
+    aiIcon.textContent = '🎮';
+    aiName.textContent = 'Demo';
+  } else if (state.provider === 'groq') {
+    aiBadge.classList.add('groq');
+    aiIcon.textContent = '⚡';
+    aiName.textContent = 'Groq';
+  } else if (state.provider === 'gemini') {
+    aiBadge.classList.add('gemini');
+    aiIcon.textContent = '💎';
+    aiName.textContent = 'Gemini';
+  } else if (state.provider === 'cohere') {
+    aiBadge.classList.add('cohere');
+    aiIcon.textContent = '🧠';
+    aiName.textContent = 'Cohere';
+  } else if (state.provider === 'mistral') {
+    aiBadge.classList.add('mistral');
+    aiIcon.textContent = '🌀';
+    aiName.textContent = 'Mistral';
+  } else if (state.provider === 'openrouter') {
+    aiBadge.classList.add('openrouter');
+    aiIcon.textContent = '🔀';
+    aiName.textContent = 'OpenRouter';
+  }
+}
+
+function updateThemeButtons() {
+  document.querySelectorAll('.selection-btn[data-theme]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.theme === state.theme);
+  });
+}
+
+function updateApiInput() {
+  if (state.provider === 'groq') {
+    apiKey.value = state.groqKey || '';
+    apiHint.innerHTML = 'Get free key at <a href="https://console.groq.com" target="_blank">console.groq.com</a>';
+  } else if (state.provider === 'gemini') {
+    apiKey.value = state.geminiKey || '';
+    apiHint.innerHTML = 'Get free key at <a href="https://aistudio.google.com" target="_blank">aistudio.google.com</a>';
+  } else if (state.provider === 'cohere') {
+    apiKey.value = state.cohereKey || '';
+    apiHint.innerHTML = 'Get free key at <a href="https://dashboard.cohere.com" target="_blank">dashboard.cohere.com</a>';
+  } else if (state.provider === 'mistral') {
+    apiKey.value = state.mistralKey || '';
+    apiHint.innerHTML = 'Get free key at <a href="https://console.mistral.ai" target="_blank">console.mistral.ai</a>';
+  } else if (state.provider === 'openrouter') {
+    apiKey.value = state.openrouterKey || '';
+    apiHint.innerHTML = 'Get free key at <a href="https://openrouter.ai/keys" target="_blank">openrouter.ai</a>';
+  } else {
+    apiKey.value = '';
+    apiHint.innerHTML = 'No API key needed for demo mode';
+  }
+  updateDefaultKeyBox();
+}
+
+// ==================== PANEL TOGGLES ====================
+function toggleSettings() {
+  const isOpen = settingsPanel.classList.toggle('open');
+  // No overlay - let user interact freely
+  if (!isOpen) saveSettings();
+}
+
+function toggleCommands() {
+  const isOpen = commandsPanel.classList.toggle('open');
+  // No overlay - let user interact freely
+}
+
+function toggleGames() {
+  const gamesPanel = $('gamesPanel');
+  const isOpen = gamesPanel.classList.toggle('open');
+  if (isOpen) playSound('game');
+}
+
+function toggleLogs() {
+  const isOpen = logsPanel.classList.toggle('open');
+  // No overlay - let user interact freely
+}
+
+function closeAllPanels() {
+  settingsPanel.classList.remove('open');
+  commandsPanel.classList.remove('open');
+  $('gamesPanel').classList.remove('open');
+  logsPanel.classList.remove('open');
+  saveSettings();
+}
+
+// ==================== TAB SWITCHING ====================
+function switchTab(tabId) {
+  // Update tab buttons
+  document.querySelectorAll('.tab-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.tab === tabId);
+  });
+  
+  // Update tab panes
+  document.querySelectorAll('.tab-pane').forEach(pane => {
+    pane.classList.toggle('active', pane.id === 'tab-' + tabId);
+  });
+}
+
+// ==================== SETTINGS FUNCTIONS ====================
+const PERSONALITY_GREETINGS = {
+  playful: "Yay! Let's have fun together!",
+  helpful: "Hello! I'm here to help you!",
+  pirate: "Arrr! Ahoy matey!",
+  space: "Greetings, space explorer!",
+  superhero: "Fear not! Your hero is here!",
+  dinosaur: "ROAR! Me big dinosaur!",
+  fairy: "Sparkle sparkle! Magic time!",
+  ninja: "Silent but ready to serve.",
+  wizard: "Abracadabra! Magic awaits!",
+  cowboy: "Yeehaw partner!",
+  alien: "Beep boop! Greetings Earthling!",
+  mermaid: "Splash! Hello from the sea!"
+};
+
+const PERSONALITY_COMMANDS = {
+  playful: 'dance',
+  helpful: 'happy',
+  pirate: 'wink',
+  space: 'rocket',
+  superhero: 'cool',
+  dinosaur: 'angry',
+  fairy: 'love',
+  ninja: 'cool',
+  wizard: 'magic',
+  cowboy: 'happy',
+  alien: 'wow',
+  mermaid: 'love'
+};
+
+const PERSONALITY_ICONS = {
+  playful: '🎪',
+  helpful: '🎓',
+  pirate: '🏴‍☠️',
+  space: '🚀',
+  superhero: '🦸',
+  dinosaur: '🦖',
+  fairy: '🧚',
+  ninja: '🥷',
+  wizard: '🧙',
+  cowboy: '🤠',
+  alien: '👽',
+  mermaid: '🧜'
+};
+
+function updateRobotBadge() {
+  const icon = PERSONALITY_ICONS[state.personality] || '🎪';
+  $('robotIcon').textContent = icon;
+}
+
+function setPersonality(p) {
+  state.personality = p;
+  document.querySelectorAll('.selection-btn[data-p]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.p === p);
+  });
+  
+  // Update robot head style
+  const personalities = ['playful', 'helpful', 'pirate', 'space', 'superhero', 'dinosaur', 'fairy', 'ninja', 'wizard', 'cowboy', 'alien', 'mermaid'];
+  personalities.forEach(pers => robotBody.classList.remove('personality-' + pers));
+  robotBody.classList.add('personality-' + p);
+  
+  // Update robot badge
+  updateRobotBadge();
+  
+  // Play sound and show LED
+  playSound('magic');
+  const cmd = PERSONALITY_COMMANDS[p] || 'happy';
+  updateLEDFromCommand(cmd);
+  sendCommand(cmd);
+  speak(PERSONALITY_GREETINGS[p] || "Hello!");
+  
+  renderChatFromMemory();
+  saveSettings();
+  log('Personality: ' + p, 'info');
+}
+
+const LANGUAGE_GREETINGS = {
+  en: "Hello! I speak English now!",
+  fr: "Bonjour! Je parle français maintenant!",
+  ar: "مرحبا! أنا أتحدث العربية الآن!"
+};
+
+function setLanguage(lang) {
+  state.lang = lang;
+  document.querySelectorAll('.selection-btn[data-lang]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.lang === lang);
+  });
+  applyLang(lang);
+  robotStatus.textContent = LANG[lang].ready;
+  
+  // Show LED and speak greeting in new language
+  updateLEDFromCommand('wave');
+  sendCommand('wave');
+  speak(LANGUAGE_GREETINGS[lang] || "Hello!");
+  
+  saveSettings();
+  log('Language: ' + lang, 'info');
+}
+
+function setProvider(provider) {
+  state.provider = provider;
+  document.querySelectorAll('.selection-btn[data-provider]').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.provider === provider);
+  });
+  updateApiInput();
+  updateAiBadge();
+  saveSettings();
+  log('Provider: ' + provider, 'info');
+}
+
+function setTheme(theme) {
+  state.theme = theme;
+  if (theme === 'dark') {
+    document.documentElement.setAttribute('data-theme', 'dark');
+  } else {
+    document.documentElement.removeAttribute('data-theme');
+  }
+  updateThemeButtons();
+  saveSettings();
+  log('Theme: ' + theme, 'info');
+}
+
+// ==================== LED GRID ====================
+function setupLED() {
+  ledGrid.innerHTML = '';
+  for (let i = 0; i < 25; i++) {
+    const pixel = document.createElement('div');
+    pixel.className = 'led-pixel';
+    pixel.dataset.index = i;
+    ledGrid.appendChild(pixel);
+  }
+}
+
+// LED patterns for commands
+const LED_PATTERNS = {
+  // Emotions
+  happy:     [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  sad:       [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,1,1,1,0, 1,0,0,0,1],
+  angry:     [1,0,0,0,1, 0,1,0,1,0, 0,0,0,0,0, 0,1,1,1,0, 1,0,0,0,1],
+  surprised: [0,1,0,1,0, 0,0,0,0,0, 0,0,1,0,0, 0,1,0,1,0, 0,0,1,0,0],
+  love:      [0,1,0,1,0, 1,1,1,1,1, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  sleepy:    [0,0,0,0,0, 0,0,0,0,0, 1,1,0,1,1, 0,0,0,0,0, 0,1,1,1,0],
+  silly:     [0,1,0,1,0, 0,0,0,0,0, 1,1,1,1,1, 0,0,0,0,1, 0,1,1,1,0],
+  crazy:     [1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1],
+  wink:      [0,0,1,0,0, 0,1,0,1,0, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  cool:      [1,1,1,1,1, 1,0,1,0,1, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  wow:       [0,1,0,1,0, 0,0,0,0,0, 0,0,1,0,0, 0,1,0,1,0, 0,0,1,0,0],
+  haha:      [0,1,0,1,0, 0,0,0,0,0, 1,1,1,1,1, 1,0,0,0,1, 0,1,1,1,0],
+  // Animals
+  cat:       [0,1,0,1,0, 1,0,1,0,1, 0,0,0,0,0, 0,1,0,1,0, 0,0,1,0,0],
+  dog:       [0,1,0,1,0, 0,0,0,0,0, 0,0,1,0,0, 0,1,1,1,0, 0,1,0,1,0],
+  duck:      [1,1,0,0,0, 1,1,1,0,0, 0,1,1,0,0, 0,0,1,1,1, 0,0,0,1,1],
+  cow:       [1,0,0,0,1, 0,1,1,1,0, 0,1,1,1,0, 0,0,1,0,0, 0,1,0,1,0],
+  pig:       [0,1,1,1,0, 1,0,1,0,1, 0,1,1,1,0, 0,0,1,0,0, 0,1,0,1,0],
+  frog:      [1,0,0,0,1, 0,1,0,1,0, 1,1,1,1,1, 1,0,0,0,1, 0,1,1,1,0],
+  monkey:    [0,1,1,1,0, 1,0,1,0,1, 0,1,1,1,0, 0,1,1,1,0, 0,0,1,0,0],
+  // Actions
+  wave:      [0,0,0,1,0, 0,0,0,1,0, 0,0,0,1,0, 0,0,1,0,0, 0,1,0,0,0],
+  dance:     [0,1,0,1,0, 0,0,0,0,0, 0,1,1,1,0, 0,1,0,1,0, 1,0,0,0,1],
+  spin:      [0,0,1,0,0, 0,1,1,1,0, 1,1,0,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  jump:      [0,0,1,0,0, 0,1,1,1,0, 1,0,1,0,1, 0,0,1,0,0, 0,1,0,1,0],
+  blink:     [0,0,0,0,0, 1,1,0,1,1, 0,0,0,0,0, 1,0,0,0,1, 0,1,1,1,0],
+  nod:       [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0],
+  wiggle:    [0,1,0,1,0, 0,0,0,0,0, 1,1,1,1,1, 0,1,0,1,0, 1,0,0,0,1],
+  bounce:    [0,0,1,0,0, 0,1,1,1,0, 0,0,1,0,0, 0,0,0,0,0, 0,0,0,0,0],
+  // Party
+  party:     [1,0,1,0,1, 0,1,0,1,0, 1,0,1,0,1, 0,1,0,1,0, 1,0,1,0,1],
+  disco:     [1,1,1,1,1, 1,0,0,0,1, 1,0,0,0,1, 1,0,0,0,1, 1,1,1,1,1],
+  rainbow:   [1,1,1,1,1, 1,0,0,0,0, 0,1,0,0,0, 0,0,1,0,0, 0,0,0,1,1],
+  fireworks: [0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0],
+  confetti:  [1,0,0,1,0, 0,0,1,0,1, 1,0,0,0,0, 0,1,0,1,0, 0,0,1,0,1],
+  yay:       [1,0,0,0,1, 1,0,0,0,1, 0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0],
+  // Powers
+  laser:     [0,0,0,0,1, 0,0,0,1,0, 1,0,1,0,0, 0,1,0,0,0, 1,0,0,0,0],
+  freeze:    [0,0,1,0,0, 0,1,1,1,0, 1,1,1,1,1, 0,1,1,1,0, 0,0,1,0,0],
+  fire:      [0,0,1,0,0, 0,1,1,1,0, 0,1,1,1,0, 1,1,1,1,1, 1,1,1,1,1],
+  magic:     [0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0],
+  rocket:    [0,0,1,0,0, 0,1,1,1,0, 0,1,1,1,0, 1,0,1,0,1, 0,0,1,0,0],
+  explode:   [1,0,0,0,1, 0,1,0,1,0, 0,0,1,0,0, 0,1,0,1,0, 1,0,0,0,1],
+  // Sounds
+  fart:      [0,0,0,0,0, 0,0,0,0,0, 0,1,1,1,0, 1,0,0,0,1, 0,1,1,1,0],
+  burp:      [0,0,0,0,0, 0,1,0,1,0, 0,0,0,0,0, 1,1,1,1,1, 0,0,0,0,0],
+  beep:      [0,0,0,0,0, 0,0,1,0,0, 0,1,1,1,0, 0,0,1,0,0, 0,0,0,0,0],
+  laugh:     [0,1,0,1,0, 0,0,0,0,0, 1,1,1,1,1, 0,0,0,0,0, 0,1,1,1,0],
+  horn:      [0,0,0,1,1, 0,0,1,1,1, 0,1,1,1,1, 0,0,1,1,1, 0,0,0,1,1],
+};
+
+// Update LED from command name (always updates local display)
+function updateLEDFromCommand(cmd) {
+  const key = cmd.toLowerCase().replace(/[^a-z]/g, '');
+  const pattern = LED_PATTERNS[key] || LED_PATTERNS.happy;
+  renderLEDPixels(pattern);
+}
+
+// Update LED from micro:bit binary string (always works)
+function setLEDFromMicrobit(pattern) {
+  const pixels = ledGrid.querySelectorAll('.led-pixel');
+  const bits = pattern.padStart(25, '0');
+  pixels.forEach((p, i) => p.classList.toggle('on', bits[i] === '1'));
+}
+
+// Render LED from array pattern
+function renderLEDPixels(pattern) {
+  ledGrid.querySelectorAll('.led-pixel').forEach((px, i) => {
+    px.classList.toggle('on', pattern[i] === 1);
+  });
+}
+
+// ==================== SPEECH ====================
+function setupSpeech() {
+  if ('webkitSpeechRecognition' in window || 'SpeechRecognition' in window) {
+    const SpeechRecognition = window.SpeechRecognition || window.webkitSpeechRecognition;
+    state.recognition = new SpeechRecognition();
+    state.recognition.continuous = false;
+    state.recognition.interimResults = false;
+    
+    state.recognition.onresult = e => {
+      const text = e.results[0][0].transcript;
+      log('Heard: ' + text, 'speech');
+      handleUserInput(text);
+    };
+    
+    state.recognition.onend = () => {
+      state.listening = false;
+      btnMic.classList.remove('active');
+      robotBody.classList.remove('listening');
+      robotStatus.textContent = LANG[state.lang].ready;
+    };
+    
+    state.recognition.onerror = e => {
+      log('Speech error: ' + e.error, 'error');
+      state.listening = false;
+      btnMic.classList.remove('active');
+      robotBody.classList.remove('listening');
+    };
+  }
+}
+
+function loadVoices() {
+  const loadList = () => {
+    const voices = synth.getVoices();
+    if (voices.length > 0) {
+      state.voices = voices;
+      state.voicesLoaded = true;
+      voiceSelect.innerHTML = '<option value="">Default Voice</option>';
+      state.voices.forEach((v, i) => {
+        const opt = document.createElement('option');
+        opt.value = i;
+        opt.textContent = v.name + ' (' + v.lang + ')';
+        if (state.voice && state.voice == i) opt.selected = true;
+        voiceSelect.appendChild(opt);
+      });
+      log('Voices loaded: ' + voices.length, 'success');
+    }
+  };
+  
+  // Try to load immediately
+  loadList();
+  
+  // Listen for voiceschanged event
+  synth.onvoiceschanged = loadList;
+  
+  // Fallback: retry loading voices after a delay (fixes GitHub Pages issue)
+  if (!state.voicesLoaded) {
+    setTimeout(loadList, 100);
+    setTimeout(loadList, 500);
+    setTimeout(loadList, 1000);
+  }
+}
+
+// Wake up speech synthesis (required for Chrome on some hosts)
+function wakeSpeechSynthesis() {
+  if (state.speechReady) return;
+  
+  // Create a silent utterance to "wake up" the speech engine
+  const silentUtterance = new SpeechSynthesisUtterance('');
+  silentUtterance.volume = 0;
+  synth.speak(silentUtterance);
+  
+  state.speechReady = true;
+  log('Speech synthesis activated', 'success');
+}
+
+function toggleListening() {
+  if (!state.recognition) {
+    log('Speech recognition not supported', 'error');
+    return;
+  }
+  
+  if (state.listening) {
+    state.recognition.stop();
+  } else {
+    state.recognition.lang = LANG[state.lang].code;
+    state.recognition.start();
+    state.listening = true;
+    btnMic.classList.add('active');
+    robotBody.classList.add('listening');
+    robotStatus.textContent = LANG[state.lang].listening;
+    log('Listening...', 'speech');
+  }
+}
+
+function speak(text) {
+  // Cancel any ongoing speech
+  if (synth.speaking) {
+    synth.cancel();
+  }
+  
+  // Chrome bug workaround: cancel and resume to prevent stuck state
+  synth.cancel();
+  
+  // Wait a moment after cancel (helps with Chrome)
+  setTimeout(() => {
+    const utterance = new SpeechSynthesisUtterance(text);
+    const style = VOICE_STYLE[state.personality];
+    
+    utterance.rate = Math.max(0.1, Math.min(10, state.speed * style.rateMul));
+    utterance.pitch = Math.max(0, Math.min(2, style.pitch));
+    utterance.volume = style.volume;
+    utterance.lang = LANG[state.lang].code;
+    
+    // Try to set voice if available
+    if (state.voice && state.voices && state.voices[state.voice]) {
+      utterance.voice = state.voices[state.voice];
+    } else if (state.voices && state.voices.length > 0) {
+      // Try to find a matching language voice
+      const langVoice = state.voices.find(v => v.lang.startsWith(LANG[state.lang].code.split('-')[0]));
+      if (langVoice) utterance.voice = langVoice;
+    }
+    
+    utterance.onstart = () => {
+      state.speaking = true;
+      robotBody.classList.add('speaking');
+      robotStatus.textContent = LANG[state.lang].speaking;
+    };
+    
+    utterance.onend = () => {
+      state.speaking = false;
+      robotBody.classList.remove('speaking');
+      robotStatus.textContent = LANG[state.lang].ready;
+      if (state.continuous && !state.listening) {
+        setTimeout(() => toggleListening(), 500);
+      }
+    };
+    
+    utterance.onerror = (e) => {
+      state.speaking = false;
+      robotBody.classList.remove('speaking');
+      robotStatus.textContent = LANG[state.lang].ready;
+      log('Speech error: ' + e.error, 'error');
+    };
+    
+    // Chrome bug workaround: periodically resume speech synthesis
+    // This prevents Chrome from stopping mid-sentence on longer text
+    const resumeInfinity = setInterval(() => {
+      if (!synth.speaking) {
+        clearInterval(resumeInfinity);
+      } else {
+        synth.pause();
+        synth.resume();
+      }
+    }, 10000);
+    
+    synth.speak(utterance);
+    
+    // Extra safety: clear interval if speech doesn't start
+    setTimeout(() => {
+      if (!synth.speaking) clearInterval(resumeInfinity);
+    }, 2000);
+    
+  }, 50);
+}
+
+function testVoice() {
+  wakeSpeechSynthesis();
+  state.voice = voiceSelect.value;
+  saveSettings();
+  speak('Hello! I am ' + state.robotName + '!');
+}
+
+// ==================== CHAT ====================
+function addBubble(role, text, time, save = true) {
+  // Clear empty state if present
+  const emptyState = chatContainer.querySelector('.chat-empty');
+  if (emptyState) emptyState.remove();
+  
+  const bubble = document.createElement('div');
+  bubble.className = 'chat-bubble ' + role;
+  bubble.innerHTML = `
+    <span class="avatar">${role === 'user' ? '👤' : '🤖'}</span>
+    <div class="content">
+      <div class="text">${escapeHtml(text)}</div>
+      <div class="time">${time || new Date().toLocaleTimeString()}</div>
+    </div>
+  `;
+  chatContainer.appendChild(bubble);
+  chatContainer.scrollTop = chatContainer.scrollHeight;
+  
+  if (save) {
+    // Ensure personality key exists in chatMemory
+    if (!state.chatMemory[state.personality]) {
+      state.chatMemory[state.personality] = [];
+    }
+    const memory = state.chatMemory[state.personality];
+    memory.push({ role, text, time: time || new Date().toLocaleTimeString() });
+    if (memory.length > 50) memory.shift();
+    saveChatMemory();
+  }
+}
+
+function clearChat() {
+  chatContainer.innerHTML = `
+    <div class="chat-empty">
+      <div class="chat-empty-icon">💬</div>
+      <div class="chat-empty-text">No messages yet</div>
+      <div class="chat-empty-hint">Say "Hello" or tap 🎤 to start!</div>
+    </div>
+  `;
+  if (!state.chatMemory[state.personality]) {
+    state.chatMemory[state.personality] = [];
+  }
+  state.chatMemory[state.personality] = [];
+  saveChatMemory();
+  log('Chat cleared', 'info');
+  showToast('Chat cleared');
+}
+
+// ==================== MESSAGE HANDLING ====================
+function sendMessage() {
+  const text = textInput.value.trim();
+  if (!text) return;
+  playSound('send');
+  textInput.value = '';
+  handleUserInput(text);
+}
+
+async function handleUserInput(text) {
+  addBubble('user', text);
+  log('User: ' + text, 'speech');
+  
+  // Check if this is a game answer first
+  if (currentGame && checkGameAnswer(text)) {
+    return;
+  }
+  
+  typing.classList.remove('hidden');
+  robotBody.classList.add('thinking');
+  robotStatus.textContent = LANG[state.lang].thinking;
+  
+  let response;
+  if (state.provider === 'demo' || Date.now() < state.rateLimitUntil) {
+    response = getDemoResponse(text);
+  } else {
+    response = await getAIResponse(text);
+  }
+  
+  playSound('receive');
+  typing.classList.add('hidden');
+  robotBody.classList.remove('thinking');
+  
+  // Extract commands and clean text
+  const commands = [];
+  const cleanText = response.replace(/\[(\w+)\]/g, (_, cmd) => {
+    commands.push(cmd);
+    return '';
+  }).trim();
+  
+  addBubble('robot', cleanText || response);
+  speak(cleanText || response);
+  
+  // Update LED immediately, send commands to micro:bit in parallel
+  for (const cmd of commands) {
+    updateLEDFromCommand(cmd);
+    sendCommand(cmd);
+  }
+}
+
+function getDemoResponse(text) {
+  const lower = text.toLowerCase();
+  const responses = DEMO[state.lang] || DEMO.en;
+  
+  if (lower.includes('hello') || lower.includes('hi') || lower.includes('hey')) {
+    return pick(responses.greeting);
+  }
+  if (lower.includes('name')) {
+    return pick(responses.name).replace('{name}', state.robotName);
+  }
+  if (lower.includes('joke')) {
+    return pick(responses.joke);
+  }
+  if (lower.includes('fart')) {
+    return pick(responses.fart);
+  }
+  if (lower.includes('party')) {
+    return pick(responses.party);
+  }
+  if (lower.includes('bye')) {
+    return pick(responses.bye);
+  }
+  return pick(responses.default);
+}
+
+async function getAIResponse(text) {
+  // Get the right API key
+  let key = '';
+  if (state.provider === 'groq') key = state.groqKey;
+  else if (state.provider === 'gemini') key = state.geminiKey;
+  else if (state.provider === 'cohere') key = state.cohereKey;
+  else if (state.provider === 'mistral') key = state.mistralKey;
+  else if (state.provider === 'openrouter') key = state.openrouterKey;
+  
+  if (!key) {
+    log('No API key', 'error');
+    return getDemoResponse(text);
+  }
+  
+  const systemPrompt = PERSONALITIES[state.personality] + ' Keep responses short (1-2 sentences). Include commands in [brackets] like [happy], [wave], [dance].';
+  
+  try {
+    let response, data;
+    
+    // ===== GROQ =====
+    if (state.provider === 'groq') {
+      response = await fetch('https://api.groq.com/openai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json', 'Authorization': 'Bearer ' + key },
+        body: JSON.stringify({
+          model: 'llama-3.1-8b-instant',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: text }
+          ],
+          max_tokens: 150
+        })
+      });
+      if (response.status === 429) throw { rateLimit: true };
+      data = await response.json();
+      log('Groq response received', 'ai');
+      return data.choices?.[0]?.message?.content || getDemoResponse(text);
+    }
+    
+    // ===== GEMINI =====
+    else if (state.provider === 'gemini') {
+      response = await fetch('https://generativelanguage.googleapis.com/v1beta/models/gemini-1.5-flash:generateContent?key=' + key, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          contents: [{ parts: [{ text: systemPrompt + ' User says: ' + text }] }]
+        })
+      });
+      if (response.status === 429) throw { rateLimit: true };
+      data = await response.json();
+      log('Gemini response received', 'ai');
+      return data.candidates?.[0]?.content?.parts?.[0]?.text || getDemoResponse(text);
+    }
+    
+    // ===== COHERE =====
+    else if (state.provider === 'cohere') {
+      response = await fetch('https://api.cohere.ai/v1/chat', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': 'Bearer ' + key 
+        },
+        body: JSON.stringify({
+          model: 'command-light',
+          message: text,
+          preamble: systemPrompt,
+          max_tokens: 150
+        })
+      });
+      if (response.status === 429) throw { rateLimit: true };
+      data = await response.json();
+      log('Cohere response received', 'ai');
+      return data.text || getDemoResponse(text);
+    }
+    
+    // ===== MISTRAL =====
+    else if (state.provider === 'mistral') {
+      response = await fetch('https://api.mistral.ai/v1/chat/completions', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': 'Bearer ' + key 
+        },
+        body: JSON.stringify({
+          model: 'mistral-tiny',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: text }
+          ],
+          max_tokens: 150
+        })
+      });
+      if (response.status === 429) throw { rateLimit: true };
+      data = await response.json();
+      log('Mistral response received', 'ai');
+      return data.choices?.[0]?.message?.content || getDemoResponse(text);
+    }
+    
+    // ===== OPENROUTER =====
+    else if (state.provider === 'openrouter') {
+      response = await fetch('https://openrouter.ai/api/v1/chat/completions', {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json', 
+          'Authorization': 'Bearer ' + key,
+          'HTTP-Referer': window.location.href
+        },
+        body: JSON.stringify({
+          model: 'meta-llama/llama-3-8b-instruct:free',
+          messages: [
+            { role: 'system', content: systemPrompt },
+            { role: 'user', content: text }
+          ],
+          max_tokens: 150
+        })
+      });
+      if (response.status === 429) throw { rateLimit: true };
+      data = await response.json();
+      log('OpenRouter response received', 'ai');
+      return data.choices?.[0]?.message?.content || getDemoResponse(text);
+    }
+    
+    return getDemoResponse(text);
+    
+  } catch (e) {
+    if (e.rateLimit) {
+      state.rateLimitUntil = Date.now() + 60000;
+      $('rateLimit').classList.add('show');
+      log('Rate limited', 'error');
+    } else {
+      log('AI error: ' + e.message, 'error');
+    }
+    return getDemoResponse(text);
+  }
+}
+
+// ==================== BLUETOOTH ====================
+async function toggleConnection() {
+  if (state.connected) {
+    if (state.device?.gatt?.connected) {
+      state.device.gatt.disconnect();
+    }
+    state.connected = false;
+    state.device = null;
+    state.writeChar = null;
+    playSound('disconnect');
+    updateUI();
+    log('Disconnected', 'ble');
+  } else {
+    await connect();
+  }
+}
+
+async function connect() {
+  try {
+    log('Scanning for micro:bit...', 'ble');
+    
+    state.device = await navigator.bluetooth.requestDevice({
+      filters: [{ namePrefix: 'BBC micro:bit' }],
+      optionalServices: [CONFIG.UART_SERVICE]
+    });
+    
+    state.device.addEventListener('gattserverdisconnected', () => {
+      state.connected = false;
+      state.writeChar = null;
+      state.ledFromMicrobitOnly = false; // Allow local LED updates again
+      playSound('disconnect');
+      updateUI();
+      log('Disconnected', 'ble');
+      showToast('Micro:bit disconnected');
+    });
+    
+    const server = await state.device.gatt.connect();
+    const service = await server.getPrimaryService(CONFIG.UART_SERVICE);
+    
+    // TX characteristic is for notifications (receiving FROM micro:bit)
+    const notifyChar = await service.getCharacteristic(CONFIG.TX_CHAR);
+    // RX characteristic is for writing (sending TO micro:bit)
+    state.writeChar = await service.getCharacteristic(CONFIG.RX_CHAR);
+    
+    await notifyChar.startNotifications();
+    notifyChar.addEventListener('characteristicvaluechanged', handleRx);
+    
+    state.connected = true;
+    state.ledFromMicrobitOnly = true; // Micro:bit controls LED now
+    playSound('connect');
+    updateUI();
+    log('Connected to ' + state.device.name, 'ble');
+    showToast('Connected to ' + state.device.name, 'success');
+    
+    await sendCommand('happy');
+  } catch (e) {
+    playSound('error');
+    log('Connection error: ' + e.message, 'error');
+    showToast('Connection failed', 'error');
+  }
+}
+
+function handleRx(event) {
+  // Parse incoming data byte by byte (skip carriage returns)
+  let s = '';
+  const v = event.target.value;
+  for (let i = 0; i < v.byteLength; i++) {
+    const b = v.getUint8(i);
+    if (b !== 13) s += String.fromCharCode(b); // Skip CR
+  }
+  state.rxBuffer += s;
+  
+  // Process complete lines
+  let nl;
+  while ((nl = state.rxBuffer.indexOf('\n')) !== -1) {
+    const line = state.rxBuffer.slice(0, nl).trim();
+    state.rxBuffer = state.rxBuffer.slice(nl + 1);
+    
+    if (line) {
+      // Check if it's an LED state update
+      if (line.startsWith('LED:')) {
+        const ledState = line.substring(4);
+        if (ledState.length === 25) {
+          state.ledFromMicrobitOnly = true;
+          setLEDFromMicrobit(ledState);
+          log('RX LED: ' + ledState.replace(/1/g, '█').replace(/0/g, '·'), 'rx');
+        }
+      } 
+      // Handle sensor data
+      else if (line.startsWith('TEMP:')) {
+        const temp = parseInt(line.substring(5));
+        state.lastTemp = temp;
+        log('RX Temp: ' + temp + '°C', 'rx');
+        handleGameInput('temp', temp);
+      }
+      else if (line.startsWith('LIGHT:')) {
+        const light = parseInt(line.substring(6));
+        state.lastLight = light;
+        log('RX Light: ' + light, 'rx');
+        handleGameInput('light', light);
+      }
+      // Handle input events
+      else {
+        log('RX: ' + line, 'rx');
+
+        // NEW button/shake protocol (BTN:A:1, BTN:B:1, BTN:AB:1, BTN:LOGO:1, ACC:SHAKE)
+        if (line === 'BTN:A:1') {
+          cyclePersonalityFromDevice();
+        }
+        else if (line === 'BTN:B:1') {
+          tellBuiltInJoke();
+        }
+        else if (line === 'BTN:AB:1' || line === 'BTN:LOGO:1') {
+          robotLaugh();
+        }
+        else if (line === 'ACC:SHAKE') {
+          robotWhoa();
+        }
+        // Legacy protocol (kept for game input + older firmware)
+        else if (line === 'BTN_A') {
+          if (currentGame) handleGameInput('btn_a');
+          else toggleListening();
+        }
+        else if (line === 'BTN_B') {
+          if (currentGame) handleGameInput('btn_b');
+          else synth.cancel();
+        }
+        else if (line === 'BTN_AB') {
+          handleGameInput('btn_ab');
+        }
+        else if (line === 'TILT_LEFT') {
+          handleGameInput('tilt_left');
+        }
+        else if (line === 'TILT_RIGHT') {
+          handleGameInput('tilt_right');
+        }
+        else if (line === 'SHAKE') {
+          handleGameInput('shake');
+        }
+      }
+    }
+  }
+}
+
+async function sendCommand(cmd) {
+  // Send to micro:bit if connected
+  if (state.writeChar) {
+    try {
+      const data = new TextEncoder().encode(cmd + '\n');
+      await state.writeChar.writeValue(data);
+      log('TX: ' + cmd, 'tx');
+    } catch (e) {
+      log('TX error: ' + e.message, 'error');
+    }
+  }
+}
+
+// ==================== DEVICE-INPUT ACTIONS (button + shake) ====================
+const PERSONALITY_ORDER_I = ['playful','helpful','pirate','space','superhero','dinosaur','fairy','ninja','wizard','cowboy','alien','mermaid'];
+function extractCmdsI(text) {
+  const cmds = [];
+  const clean = String(text || '').replace(/\[(\w+)\]/g, (_, c) => { cmds.push(c.toLowerCase()); return ''; }).trim();
+  return { clean, cmds };
+}
+function cyclePersonalityFromDevice() {
+  const idx = PERSONALITY_ORDER_I.indexOf(state.personality);
+  const next = PERSONALITY_ORDER_I[(idx + 1) % PERSONALITY_ORDER_I.length];
+  if (typeof setPersonality === 'function') setPersonality(next);
+}
+async function tellBuiltInJoke() {
+  let joke;
+  try {
+    const hasKey = (state.provider === 'groq' && state.groqKey) || (state.provider === 'gemini' && state.geminiKey);
+    if (hasKey && typeof getAIResponse === 'function') {
+      const langName = { en: 'English', fr: 'French', ar: 'Arabic' }[state.lang] || 'English';
+      joke = await getAIResponse('Tell me a short, kid-friendly joke in ' + langName + ' (one sentence). Include [haha] at the end.');
+    } else {
+      joke = tr('joke_builtin');
+    }
+  } catch (e) {
+    joke = tr('joke_builtin');
+  }
+  const { clean, cmds } = extractCmdsI(joke);
+  if (typeof addChat === 'function') addChat(clean || joke, 'robot');
+  for (const c of cmds) {
+    sendCommand(c);
+    if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
+  }
+  if (typeof speak === 'function') speak(clean || joke);
+}
+function robotLaugh() {
+  const t = tr('laugh_builtin');
+  const { clean, cmds } = extractCmdsI(t);
+  if (typeof addChat === 'function') addChat(clean, 'robot');
+  for (const c of cmds) {
+    sendCommand(c);
+    if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
+  }
+  if (typeof speak === 'function') speak(clean);
+}
+function robotWhoa() {
+  const t = tr('whoa_builtin');
+  const { clean, cmds } = extractCmdsI(t);
+  if (typeof addChat === 'function') addChat(clean, 'robot');
+  for (const c of cmds) {
+    sendCommand(c);
+    if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
+  }
+  if (typeof speak === 'function') speak(clean);
+}
+
+// ==================== COMMANDS PANEL ====================
+function generateCommands() {
+  const container = $('commandsBody');
+  container.innerHTML = '';
+  
+  for (const [key, cat] of Object.entries(COMMANDS)) {
+    const section = document.createElement('div');
+    section.className = 'command-category';
+    section.innerHTML = `
+      <div class="category-header">
+        <span class="category-icon">${cat.icon}</span>
+        <span class="category-name">${cat.name}</span>
+      </div>
+      <div class="category-commands">
+        ${cat.items.map(cmd => `<button class="command-btn" onclick="tryCommand('${cmd}')">${cmd}</button>`).join('')}
+      </div>
+    `;
+    container.appendChild(section);
+  }
+}
+
+async function tryCommand(cmd) {
+  log('Command: ' + cmd, 'info');
+  await sendCommand(cmd);
+  updateLEDFromCommand(cmd);
+  
+  // Add chat bubbles and speak
+  addBubble('user', `Show me ${cmd}!`);
+  const response = `Here's ${cmd}!`;
+  addBubble('robot', response);
+  speak(response);
+  
+  // Don't close panel - let user try multiple commands
+}
+
+// ==================== EVENTS ====================
+function setupEvents() {
+  // Wake up speech synthesis on first user interaction (required for Chrome)
+  const wakeUpOnInteraction = () => {
+    wakeSpeechSynthesis();
+    loadVoices(); // Also retry loading voices
+    document.removeEventListener('click', wakeUpOnInteraction);
+    document.removeEventListener('touchstart', wakeUpOnInteraction);
+    document.removeEventListener('keydown', wakeUpOnInteraction);
+  };
+  document.addEventListener('click', wakeUpOnInteraction, { once: true });
+  document.addEventListener('touchstart', wakeUpOnInteraction, { once: true });
+  document.addEventListener('keydown', wakeUpOnInteraction, { once: true });
+  
+  textInput.addEventListener('keypress', e => {
+    if (e.key === 'Enter') sendMessage();
+  });
+  
+  voiceSpeed.addEventListener('input', () => {
+    speedValue.textContent = voiceSpeed.value + 'x';
+    state.speed = parseFloat(voiceSpeed.value);
+  });
+  
+  voiceSelect.addEventListener('change', () => {
+    state.voice = voiceSelect.value;
+    saveSettings();
+  });
+  
+  apiKey.addEventListener('change', saveSettings);
+  robotNameInput.addEventListener('change', saveSettings);
+  $('continuousListen').addEventListener('change', saveSettings);
+  
+  // Focus recovery for BLE
+  document.addEventListener('visibilitychange', () => {
+    if (!document.hidden && state.device && !state.connected) {
+      log('Attempting reconnect...', 'ble');
+      connect();
+    }
+    // Also try to reload voices when page becomes visible
+    if (!document.hidden && !state.voicesLoaded) {
+      loadVoices();
+    }
+  });
+}
+
+// ==================== LOGGING ====================
+function log(msg, type = 'info') {
+  const entry = document.createElement('div');
+  entry.className = 'log-entry ' + type;
+  entry.dataset.type = type;
+  
+  const ts = new Date().toLocaleTimeString();
+  entry.dataset.time = ts;
+  
+  let tag = '';
+  if (type === 'tx') tag = '<span class="log-tag" style="background:rgba(244,114,182,0.2);color:#f472b6">TX</span>';
+  else if (type === 'rx') tag = '<span class="log-tag" style="background:rgba(34,211,238,0.2);color:#22d3ee">RX</span>';
+  else if (type === 'ble') tag = '<span class="log-tag" style="background:rgba(139,92,246,0.2);color:#a78bfa">BLE</span>';
+  else if (type === 'speech') tag = '<span class="log-tag" style="background:rgba(245,158,11,0.2);color:#f59e0b">SPEECH</span>';
+  else if (type === 'ai') tag = '<span class="log-tag" style="background:rgba(16,185,129,0.2);color:#10b981">AI</span>';
+  else if (type === 'error') tag = '<span class="log-tag" style="background:rgba(239,68,68,0.2);color:#ef4444">ERROR</span>';
+  
+  entry.innerHTML = `<span style="opacity:0.6">[${ts}]</span> ${tag} ${escapeHtml(msg)}`;
+  logsContent.appendChild(entry);
+  logsContent.scrollTop = logsContent.scrollHeight;
+  
+  logCounts.total++;
+  if (type === 'tx') logCounts.tx++;
+  if (type === 'rx') logCounts.rx++;
+  if (type === 'error') logCounts.error++;
+  updateLogStats();
+  
+  while (logsContent.querySelectorAll('.log-entry').length > 500) {
+    const first = logsContent.querySelector('.log-entry');
+    if (first) first.remove();
+  }
+  
+  console.log(`[${type}] ${msg}`);
+}
+
+function updateLogStats() {
+  $('logCount').textContent = logCounts.total;
+  $('logCountTx').textContent = logCounts.tx;
+  $('logCountRx').textContent = logCounts.rx;
+  $('logCountErr').textContent = logCounts.error;
+}
+
+function clearLogs() {
+  logsContent.innerHTML = '<div class="logs-empty">Logs cleared</div>';
+  logCounts = { total: 0, tx: 0, rx: 0, error: 0 };
+  updateLogStats();
+}
+
+function filterLogs(filter) {
+  document.querySelectorAll('.logs-filter-btn').forEach(btn => {
+    btn.classList.toggle('active', btn.dataset.filter === filter);
+  });
+  
+  logsContent.classList.remove('filtered-tx', 'filtered-rx', 'filtered-error', 'filtered-ai', 'filtered-ble', 'filtered-speech');
+  if (filter !== 'all') {
+    logsContent.classList.add('filtered-' + filter);
+  }
+}
+
+function exportLogs() {
+  const entries = logsContent.querySelectorAll('.log-entry');
+  if (entries.length === 0) {
+    alert('No logs to export');
+    return;
+  }
+  
+  let text = '# Bit-Bot - Debug Logs\n';
+  text += '# Exported: ' + new Date().toISOString() + '\n\n';
+  
+  entries.forEach(entry => {
+    const time = entry.dataset.time || '';
+    const type = entry.dataset.type || 'info';
+    const msg = entry.textContent.replace(/^\[[\d:]+\]\s*/, '').replace(/^(TX|RX|BLE|SPEECH|AI|ERROR)\s*/, '');
+    text += `[${time}] [${type.toUpperCase()}] ${msg}\n`;
+  });
+  
+  const blob = new Blob([text], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url;
+  a.download = 'talking-robot-logs.txt';
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  
+  log('Logs exported', 'success');
+}
+
+// ==================== UTILS ====================
+function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
+function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
+function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
+function clearAllData() { 
+  if (confirm('Reset all settings and clear data?')) { 
+    localStorage.removeItem('talkingRobotV2'); 
+    localStorage.removeItem('talkingRobotV2_chat');
+    location.reload(); 
+  } 
+}
+
+// ==================== ONBOARDING ====================
+let currentOnboardingStep = 1;
+let selectedOnboardingPersonality = 'playful';
+
+function checkOnboarding() {
+  if (!state.onboardingComplete) {
+    $('onboarding').classList.remove('hidden');
+  } else {
+    $('onboarding').classList.add('hidden');
+  }
+}
+
+function updateOnboardingProgress() {
+  document.querySelectorAll('.progress-dot').forEach(dot => {
+    const step = parseInt(dot.dataset.step);
+    dot.classList.remove('active', 'done');
+    if (step === currentOnboardingStep) {
+      dot.classList.add('active');
+    } else if (step < currentOnboardingStep) {
+      dot.classList.add('done');
+    }
+  });
+  
+  document.querySelectorAll('.onboarding-step').forEach(stepEl => {
+    const step = parseInt(stepEl.dataset.step);
+    stepEl.classList.toggle('active', step === currentOnboardingStep);
+  });
+}
+
+function nextOnboardingStep() {
+  // Save data from current step
+  if (currentOnboardingStep === 2) {
+    const nameInput = $('onboardingName');
+    state.robotName = nameInput.value.trim() || 'Robo';
+    state.personality = selectedOnboardingPersonality;
+    robotNameInput.value = state.robotName;
+    $('finalRobotName').textContent = state.robotName;
+    
+    // Update personality buttons in main app
+    document.querySelectorAll('.selection-btn[data-p]').forEach(btn => {
+      btn.classList.toggle('active', btn.dataset.p === state.personality);
+    });
+  }
+  
+  if (currentOnboardingStep < 4) {
+    currentOnboardingStep++;
+    updateOnboardingProgress();
+  }
+}
+
+function prevOnboardingStep() {
+  if (currentOnboardingStep > 1) {
+    currentOnboardingStep--;
+    updateOnboardingProgress();
+  }
+}
+
+function selectOnboardingPersonality(p) {
+  selectedOnboardingPersonality = p;
+  document.querySelectorAll('.onboarding-personality').forEach(btn => {
+    btn.classList.toggle('selected', btn.dataset.p === p);
+  });
+}
+
+async function connectDuringOnboarding() {
+  const icon = $('onboardingConnIcon');
+  const text = $('onboardingConnText');
+  const btn = $('onboardingConnBtn');
+  
+  icon.classList.add('searching');
+  icon.textContent = '🔍';
+  text.textContent = 'Searching for micro:bit...';
+  btn.disabled = true;
+  btn.textContent = 'Searching...';
+  
+  try {
+    await connect();
+    
+    if (state.connected) {
+      icon.classList.remove('searching');
+      icon.classList.add('connected');
+      icon.textContent = '✅';
+      text.textContent = 'Connected to ' + state.device.name + '!';
+      text.classList.add('success');
+      btn.textContent = '✓ Connected';
+      
+      showToast('Connected!', 'success');
+      
+      // Auto advance after short delay
+      setTimeout(() => nextOnboardingStep(), 1500);
+    }
+  } catch (e) {
+    icon.classList.remove('searching');
+    icon.textContent = '📡';
+    text.textContent = 'Connection cancelled. Try again or skip.';
+    btn.disabled = false;
+    btn.textContent = '🔗 Connect';
+  }
+}
+
+function completeOnboarding() {
+  state.onboardingComplete = true;
+  saveSettings();
+  
+  // Create confetti
+  createConfetti();
+  
+  // Hide onboarding with animation
+  const onboarding = $('onboarding');
+  onboarding.classList.add('hidden');
+  
+  // Show welcome toast
+  setTimeout(() => {
+    showToast('Welcome, ' + state.robotName + ' is ready!', 'success');
+  }, 500);
+  
+  // Add welcome message to chat
+  setTimeout(() => {
+    const welcomeMsg = `Hello! I'm ${state.robotName}! Tap the 🎤 or type to chat with me! [happy] [wave]`;
+    addBubble('robot', welcomeMsg.replace(/\[.*?\]/g, '').trim());
+    speak(welcomeMsg.replace(/\[.*?\]/g, '').trim());
+    sendCommand('happy');
+    setTimeout(() => sendCommand('wave'), 500);
+  }, 800);
+}
+
+function createConfetti() {
+  const colors = ['#6366f1', '#10b981', '#f59e0b', '#ef4444', '#f472b6', '#22d3ee'];
+  const container = document.body;
+  
+  for (let i = 0; i < 50; i++) {
+    const confetti = document.createElement('div');
+    confetti.className = 'confetti';
+    confetti.style.left = Math.random() * 100 + 'vw';
+    confetti.style.background = colors[Math.floor(Math.random() * colors.length)];
+    confetti.style.animationDelay = Math.random() * 0.5 + 's';
+    confetti.style.animationDuration = (2 + Math.random()) + 's';
+    container.appendChild(confetti);
+    
+    setTimeout(() => confetti.remove(), 3500);
+  }
+}
+
+function showToast(message, type = '') {
+  const toast = $('toast');
+  toast.textContent = message;
+  toast.className = 'toast' + (type ? ' ' + type : '');
+  toast.classList.add('show');
+  
+  setTimeout(() => {
+    toast.classList.remove('show');
+  }, 3000);
+}
+
+// ==================== AI-POWERED GAMES ====================
+let currentGame = null;
+let gameState = {};
+
+// Game configurations
+const AI_GAMES = {
+  tiltquiz: {
+    name: 'Smart Tilt Quiz',
+    icon: '🎯',
+    subjects: ['math', 'science', 'animals', 'colors', 'spelling'],
+    difficulty: 1 // 1-5, adapts based on performance
+  },
+  adventure: {
+    name: 'Adventure Explorer',
+    icon: '🗺️',
+    themes: ['forest', 'space', 'ocean', 'castle', 'jungle']
+  },
+  science: {
+    name: 'Science Detective',
+    icon: '🔬',
+    experiments: ['temperature', 'light', 'motion']
+  }
+};
+
+function startGame(game) {
+  currentGame = game;
+  gameState = {
+    score: 0,
+    streak: 0,
+    questionsAnswered: 0,
+    difficulty: 1,
+    waitingForInput: false,
+    history: []
+  };
+  $('gamesPanel').classList.remove('open');
+  playSound('game');
+  
+  switch(game) {
+    case 'tiltquiz':
+      startTiltQuiz();
+      break;
+    case 'adventure':
+      startAdventure();
+      break;
+    case 'science':
+      startScience();
+      break;
+  }
+}
+
+// ==================== SMART TILT QUIZ ====================
+async function startTiltQuiz() {
+  const intro = `🎯 Smart Tilt Quiz! I'll ask questions and you tilt the micro:bit to answer! Tilt LEFT for A, tilt RIGHT for B. Let's start easy!`;
+  addBubble('robot', intro);
+  speak("Smart Tilt Quiz! Tilt left for A, tilt right for B. Let's go!");
+  sendCommand('quiz');
+  updateLEDFromCommand('wow');
+  
+  await delay(2000);
+  askTiltQuestion();
+}
+
+async function askTiltQuestion() {
+  if (currentGame !== 'tiltquiz') return;
+  
+  gameState.waitingForInput = true;
+  
+  // Generate question based on difficulty
+  const question = await generateQuizQuestion(gameState.difficulty);
+  gameState.currentQuestion = question;
+  
+  const questionText = `${question.question}\n\n⬅️ A: ${question.optionA}\n➡️ B: ${question.optionB}`;
+  addBubble('robot', questionText);
+  speak(`${question.question}. Option A: ${question.optionA}. Option B: ${question.optionB}. Tilt to answer!`);
+  
+  // Show arrows on LED
+  sendCommand('quiz');
+  
+  // Start timeout for answer
+  gameState.answerTimeout = setTimeout(() => {
+    if (gameState.waitingForInput && currentGame === 'tiltquiz') {
+      addBubble('robot', `⏰ Time's up! The answer was ${question.correct === 'A' ? question.optionA : question.optionB}. Let's try another!`);
+      speak("Time's up! Let's try another question.");
+      gameState.streak = 0;
+      askTiltQuestion();
+    }
+  }, 15000);
+}
+
+async function generateQuizQuestion(difficulty) {
+  // Use AI to generate age-appropriate questions
+  const prompt = `Generate a simple quiz question for a child (difficulty ${difficulty}/5). 
+Return ONLY valid JSON in this exact format:
+{"question":"What color is the sky?","optionA":"Blue","optionB":"Green","correct":"A","explanation":"The sky appears blue because of how sunlight scatters."}
+Make it fun and educational. Topics: math, animals, colors, nature, simple science.`;
+
+  try {
+    const response = await callAI(prompt);
+    // Try to parse JSON from response
+    const jsonMatch = response.match(/\{[\s\S]*\}/);
+    if (jsonMatch) {
+      return JSON.parse(jsonMatch[0]);
+    }
+  } catch (e) {
+    log('Quiz generation error: ' + e.message, 'error');
+  }
+  
+  // Fallback questions
+  const fallbacks = [
+    { question: "What color is a banana?", optionA: "Yellow", optionB: "Purple", correct: "A", explanation: "Ripe bananas are yellow!" },
+    { question: "What is 2 + 3?", optionA: "5", optionB: "4", correct: "A", explanation: "2 plus 3 equals 5!" },
+    { question: "What sound does a cat make?", optionA: "Woof", optionB: "Meow", correct: "B", explanation: "Cats say meow!" },
+    { question: "How many legs does a spider have?", optionA: "6", optionB: "8", correct: "B", explanation: "Spiders have 8 legs!" },
+    { question: "What do plants need to grow?", optionA: "Sunlight", optionB: "Darkness", correct: "A", explanation: "Plants need sunlight for photosynthesis!" }
+  ];
+  return fallbacks[Math.floor(Math.random() * fallbacks.length)];
+}
+
+function handleTiltQuizAnswer(answer) {
+  if (!gameState.waitingForInput || currentGame !== 'tiltquiz') return;
+  
+  clearTimeout(gameState.answerTimeout);
+  gameState.waitingForInput = false;
+  gameState.questionsAnswered++;
+  
+  const q = gameState.currentQuestion;
+  const isCorrect = answer === q.correct;
+  
+  if (isCorrect) {
+    gameState.score++;
+    gameState.streak++;
+    playSound('win');
+    
+    // Adjust difficulty
+    if (gameState.streak >= 3 && gameState.difficulty < 5) {
+      gameState.difficulty++;
+      addBubble('robot', `🎉 Correct! ${q.explanation} 🌟 You're doing great! Making it a bit harder!`);
+      speak(`Yes! That's right! ${q.explanation}. You're doing amazing! Let's try something harder!`);
+    } else {
+      addBubble('robot', `🎉 Correct! ${q.explanation}`);
+      speak(`Yes! That's right! ${q.explanation}`);
+    }
+    
+    sendCommand('party');
+    updateLEDFromCommand('party');
+  } else {
+    gameState.streak = 0;
+    
+    // Adjust difficulty down if struggling
+    if (gameState.difficulty > 1 && gameState.questionsAnswered > 2) {
+      gameState.difficulty--;
+    }
+    
+    const correctAnswer = q.correct === 'A' ? q.optionA : q.optionB;
+    addBubble('robot', `Almost! The answer is ${correctAnswer}. ${q.explanation} Don't worry, you're learning!`);
+    speak(`Not quite. The answer is ${correctAnswer}. ${q.explanation}. But that's okay, you're learning!`);
+    sendCommand('sad');
+    updateLEDFromCommand('sad');
+  }
+  
+  // Continue game
+  setTimeout(() => {
+    if (currentGame === 'tiltquiz') {
+      if (gameState.questionsAnswered >= 10) {
+        endTiltQuiz();
+      } else {
+        askTiltQuestion();
+      }
+    }
+  }, 3000);
+}
+
+function endTiltQuiz() {
+  const score = gameState.score;
+  const total = gameState.questionsAnswered;
+  const percent = Math.round((score / total) * 100);
+  
+  let message, emotion;
+  if (percent >= 80) {
+    message = `🏆 Amazing! You got ${score} out of ${total}! You're a quiz superstar!`;
+    emotion = 'party';
+  } else if (percent >= 60) {
+    message = `🌟 Great job! You got ${score} out of ${total}! Keep practicing!`;
+    emotion = 'happy';
+  } else {
+    message = `👍 Good try! You got ${score} out of ${total}! Want to play again to learn more?`;
+    emotion = 'happy';
+  }
+  
+  addBubble('robot', message);
+  speak(message.replace(/[🏆🌟👍]/g, ''));
+  sendCommand(emotion);
+  updateLEDFromCommand(emotion);
+  currentGame = null;
+}
+
+// ==================== ADVENTURE EXPLORER ====================
+async function startAdventure() {
+  const themes = AI_GAMES.adventure.themes;
+  const theme = themes[Math.floor(Math.random() * themes.length)];
+  gameState.theme = theme;
+  gameState.chapter = 1;
+  gameState.story = [];
+  
+  const intro = `🗺️ Adventure Explorer! You're about to explore a magical ${theme}! Shake the micro:bit to look around, and tilt LEFT or RIGHT to make choices. Press any button when you're ready!`;
+  addBubble('robot', intro);
+  speak(`Adventure Explorer! You're going to explore a magical ${theme}! Shake to look around, tilt to make choices. Press a button when ready!`);
+  sendCommand('magic');
+  updateLEDFromCommand('magic');
+  
+  gameState.waitingForInput = true;
+  gameState.awaitingStart = true;
+}
+
+async function continueAdventure(action) {
+  if (currentGame !== 'adventure') return;
+  
+  gameState.waitingForInput = false;
+  
+  // Build story context
+  const storyContext = gameState.story.slice(-3).join(' ');
+  
+  const prompt = `You are telling an interactive adventure story to a child (age 5-10) in a ${gameState.theme}.
+Previous story: ${storyContext || 'Just starting'}
+Player action: ${action}
+Chapter: ${gameState.chapter}
+
+Continue the story in 2-3 short, exciting sentences. Then give exactly 2 choices.
+End with a fun educational fact or question related to the ${gameState.theme}.
+Format your response as:
+STORY: [your story continuation]
+CHOICE_A: [first choice - something brave/curious]
+CHOICE_B: [second choice - something careful/clever]
+QUESTION: [fun fact or simple question for the child]`;
+
+  addBubble('robot', '✨ *thinking about the story*...');
+  sendCommand('thinking');
+  
+  try {
+    const response = await callAI(prompt);
+    
+    // Parse response
+    const storyMatch = response.match(/STORY:\s*(.+?)(?=CHOICE_A:|$)/s);
+    const choiceAMatch = response.match(/CHOICE_A:\s*(.+?)(?=CHOICE_B:|$)/s);
+    const choiceBMatch = response.match(/CHOICE_B:\s*(.+?)(?=QUESTION:|$)/s);
+    const questionMatch = response.match(/QUESTION:\s*(.+?)$/s);
+    
+    const story = storyMatch ? storyMatch[1].trim() : "You continue your adventure...";
+    const choiceA = choiceAMatch ? choiceAMatch[1].trim() : "Go left";
+    const choiceB = choiceBMatch ? choiceBMatch[1].trim() : "Go right";
+    const question = questionMatch ? questionMatch[1].trim() : "";
+    
+    gameState.story.push(story);
+    gameState.chapter++;
+    gameState.currentChoices = { a: choiceA, b: choiceB };
+    
+    // Remove the thinking bubble
+    const bubbles = chatContainer.querySelectorAll('.chat-bubble.robot');
+    if (bubbles.length > 0) {
+      const lastBubble = bubbles[bubbles.length - 1];
+      if (lastBubble.textContent.includes('thinking')) {
+        lastBubble.remove();
+      }
+    }
+    
+    const fullMessage = `📖 ${story}\n\n⬅️ A: ${choiceA}\n➡️ B: ${choiceB}${question ? '\n\n💡 ' + question : ''}`;
+    addBubble('robot', fullMessage);
+    speak(story + ". " + (question || "What do you choose? Tilt left for A, tilt right for B!"));
+    
+    sendCommand('wow');
+    updateLEDFromCommand('wow');
+    
+    gameState.waitingForInput = true;
+    
+    // Check if story should end
+    if (gameState.chapter > 8) {
+      setTimeout(() => endAdventure(), 10000);
+    }
+    
+  } catch (e) {
+    log('Adventure error: ' + e.message, 'error');
+    addBubble('robot', '🗺️ The path ahead is unclear... Tilt left to go back, tilt right to forge ahead!');
+    speak("The path ahead is unclear. Which way do you want to go?");
+    gameState.waitingForInput = true;
+  }
+}
+
+function endAdventure() {
+  if (currentGame !== 'adventure') return;
+  
+  const message = `🏆 What an amazing adventure! You explored ${gameState.chapter - 1} chapters in the ${gameState.theme}! You made brave choices and learned so much. Want to explore again?`;
+  addBubble('robot', message);
+  speak("What an amazing adventure! You were so brave! Want to explore again?");
+  sendCommand('party');
+  updateLEDFromCommand('party');
+  currentGame = null;
+}
+
+// ==================== SCIENCE DETECTIVE ====================
+async function startScience() {
+  const experiments = ['temperature', 'light'];
+  const experiment = experiments[Math.floor(Math.random() * experiments.length)];
+  gameState.experiment = experiment;
+  gameState.readings = [];
+  gameState.step = 0;
+  
+  let intro;
+  if (experiment === 'temperature') {
+    intro = `🔬 Science Detective: Temperature! We're going to do a real experiment! The micro:bit can feel temperature. Press button A to take a reading, then we'll warm it up and see what happens!`;
+    sendCommand('quiz');
+  } else {
+    intro = `🔬 Science Detective: Light! We're going to explore light! The micro:bit can see how bright it is. Press button A to take a reading. Try covering the micro:bit to block the light!`;
+    sendCommand('quiz');
+  }
+  
+  addBubble('robot', intro);
+  speak(intro.replace(/🔬/g, ''));
+  updateLEDFromCommand('wow');
+  
+  gameState.waitingForInput = true;
+  
+  // Request initial sensor reading
+  setTimeout(() => {
+    if (currentGame === 'science') {
+      requestSensorReading();
+    }
+  }, 3000);
+}
+
+function requestSensorReading() {
+  if (currentGame !== 'science') return;
+  
+  // Send command to micro:bit to read sensor
+  if (gameState.experiment === 'temperature') {
+    sendCommand('read_temp');
+    addBubble('robot', '🌡️ Reading temperature... Press button A or wait a moment!');
+  } else {
+    sendCommand('read_light');
+    addBubble('robot', '💡 Reading light level... Press button A or wait a moment!');
+  }
+  speak("Let me check the sensor!");
+}
+
+async function processScienceReading(type, value) {
+  if (currentGame !== 'science') return;
+  
+  gameState.readings.push({ type, value, time: Date.now() });
+  gameState.step++;
+  
+  const prompt = `You are a fun science teacher for kids (age 5-10).
+Experiment: ${gameState.experiment}
+Current reading: ${value}${type === 'temp' ? '°C' : ' light units'}
+Previous readings: ${JSON.stringify(gameState.readings.slice(-3))}
+Step: ${gameState.step}
+
+Explain what this reading means in a fun, simple way. Give a mini science fact.
+Then suggest the next step of the experiment (like warming it with hands, covering the sensor, etc).
+Keep it SHORT - 2-3 sentences max. Be enthusiastic!`;
+
+  try {
+    const response = await callAI(prompt);
+    addBubble('robot', `📊 Reading: ${value}${type === 'temp' ? '°C' : ''}\n\n${response}`);
+    speak(response);
+    sendCommand('happy');
+    updateLEDFromCommand('happy');
+  } catch (e) {
+    // Fallback responses
+    if (type === 'temp') {
+      const msg = value > 25 ? 
+        `Wow, ${value}°C! That's warm! Did you know your body is usually around 37°C? Try holding the micro:bit to warm it up!` :
+        `It's ${value}°C! That's a nice temperature. Try warming the micro:bit with your hands and let's measure again!`;
+      addBubble('robot', `🌡️ ${msg}`);
+      speak(msg);
+    } else {
+      const msg = value > 100 ?
+        `Light level: ${value}! It's bright! Try covering the micro:bit with your hand to block the light!` :
+        `Light level: ${value}! It's getting darker! Light helps plants grow. Uncover the micro:bit to let light in!`;
+      addBubble('robot', `💡 ${msg}`);
+      speak(msg);
+    }
+    sendCommand('happy');
+  }
+  
+  gameState.waitingForInput = true;
+  
+  // End after several readings
+  if (gameState.step >= 5) {
+    setTimeout(() => endScience(), 5000);
+  }
+}
+
+function endScience() {
+  if (currentGame !== 'science') return;
+  
+  const readings = gameState.readings;
+  const message = `🎓 Great science work! You took ${readings.length} measurements and learned about ${gameState.experiment}! Real scientists take measurements just like you did. Keep exploring!`;
+  addBubble('robot', message);
+  speak("Great science work! You're a real scientist now!");
+  sendCommand('party');
+  updateLEDFromCommand('party');
+  currentGame = null;
+}
+
+// ==================== GAME INPUT HANDLER ====================
+function handleGameInput(inputType, value = null) {
+  if (!currentGame) return;
+  
+  log(`Game input: ${inputType} ${value !== null ? '= ' + value : ''}`, 'info');
+  
+  // Handle tilt quiz
+  if (currentGame === 'tiltquiz' && gameState.waitingForInput) {
+    if (inputType === 'tilt_left') {
+      handleTiltQuizAnswer('A');
+    } else if (inputType === 'tilt_right') {
+      handleTiltQuizAnswer('B');
+    } else if (inputType === 'btn_a') {
+      handleTiltQuizAnswer('A');
+    } else if (inputType === 'btn_b') {
+      handleTiltQuizAnswer('B');
+    }
+  }
+  
+  // Handle adventure
+  else if (currentGame === 'adventure') {
+    if (gameState.awaitingStart && (inputType === 'btn_a' || inputType === 'btn_b')) {
+      gameState.awaitingStart = false;
+      continueAdventure('starts the adventure');
+    } else if (gameState.waitingForInput) {
+      if (inputType === 'tilt_left' || inputType === 'btn_a') {
+        const choice = gameState.currentChoices?.a || 'goes left';
+        continueAdventure('chose: ' + choice);
+      } else if (inputType === 'tilt_right' || inputType === 'btn_b') {
+        const choice = gameState.currentChoices?.b || 'goes right';
+        continueAdventure('chose: ' + choice);
+      } else if (inputType === 'shake') {
+        continueAdventure('looks around carefully');
+      }
+    }
+  }
+  
+  // Handle science
+  else if (currentGame === 'science') {
+    if (inputType === 'temp' && value !== null) {
+      processScienceReading('temp', value);
+    } else if (inputType === 'light' && value !== null) {
+      processScienceReading('light', value);
+    } else if (inputType === 'btn_a') {
+      requestSensorReading();
+    } else if (inputType === 'btn_b') {
+      // End experiment early
+      endScience();
+    }
+  }
+}
+
+// Helper function
+function delay(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+// Check game answer from voice/text input
+function checkGameAnswer(text) {
+  if (!currentGame) return false;
+  
+  const lower = text.toLowerCase();
+  
+  // Tilt Quiz - voice answers
+  if (currentGame === 'tiltquiz' && gameState.waitingForInput) {
+    if (lower.includes('a') && !lower.includes('b')) {
+      handleTiltQuizAnswer('A');
+      return true;
+    } else if (lower.includes('b') && !lower.includes('a')) {
+      handleTiltQuizAnswer('B');
+      return true;
+    }
+  }
+  
+  // Adventure - voice commands
+  if (currentGame === 'adventure') {
+    if (lower.includes('left') || lower.includes('first') || lower.includes('option a')) {
+      handleGameInput('tilt_left');
+      return true;
+    } else if (lower.includes('right') || lower.includes('second') || lower.includes('option b')) {
+      handleGameInput('tilt_right');
+      return true;
+    } else if (lower.includes('look') || lower.includes('around')) {
+      handleGameInput('shake');
+      return true;
+    }
+  }
+  
+  // Science - voice commands
+  if (currentGame === 'science') {
+    if (lower.includes('read') || lower.includes('measure') || lower.includes('check')) {
+      requestSensorReading();
+      return true;
+    } else if (lower.includes('done') || lower.includes('stop') || lower.includes('finish')) {
+      endScience();
+      return true;
+    }
+  }
+  
+  // Quit any game
+  if (lower.includes('quit game') || lower.includes('stop game') || lower.includes('exit game')) {
+    addBubble('robot', '👋 Okay, we stopped the game. Want to play again later?');
+    speak("Okay, we stopped the game. Want to play again later?");
+    currentGame = null;
+    gameState = {};
+    return true;
+  }
+  
+  return false;
+}
+
+// ==================== START ====================
+init();
+</script>
+</body>
+</html>

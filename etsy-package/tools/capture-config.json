@@ -1,0 +1,11 @@
+{ "productName": "bit-bot", "appContainer": "body", "toastContainer": ".toast-container",
+  "onboarding": { "localStorageKey": "_ob", "closeSelectors": [] },
+  "theme": { "storageKey": "talkbot_theme", "default": "light", "attr": "data-theme", "attrTarget": "html" },
+  "tabs": [
+    { "slug": "robot", "selector": ".robot-section",   "noClick": true, "settle": 800, "scrollTo": ".robot-section" },
+    { "slug": "chat",  "selector": ".chat-section",    "noClick": true, "settle": 800, "scrollTo": ".chat-section" },
+    { "slug": "settings", "selector": "#settingsPanel", "noClick": true, "settle": 800, "scrollTo": "#settingsPanel" }
+  ],
+  "synthetic": { "connect": {}, "activityFeed": {}, "pills": [] },
+  "variants": { "themes": { "values": [] }, "models": { "selector": null, "values": [] } },
+  "pairs": [], "annotations": [], "heroTabs": ["robot", "chat"] }

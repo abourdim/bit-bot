@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#6366f1">
-  <title>Talking Robot V2</title>
+  <title data-i18n="app_title_full">bit-bot V2</title>
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Fredoka:wght@400;500;600;700&family=JetBrains+Mono:wght@400&display=swap" rel="stylesheet">
   <style>
@@ -535,11 +535,17 @@ body {
   .robot-eyes { gap: 30px; }
   .robot-eye { width: 42px; height: 42px; }
 }
+/* RTL tweaks */
+[dir="rtl"] .chat-bubble.user { align-self: flex-start; border-bottom-right-radius: var(--radius); border-bottom-left-radius: 4px; }
+[dir="rtl"] .chat-bubble.robot { align-self: flex-end; border-bottom-left-radius: var(--radius); border-bottom-right-radius: 4px; }
+[dir="rtl"] .chat-container { direction: rtl; }
+[dir="rtl"] .text-input { text-align: right; }
+
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; } }
   </style>
 </head>
 <body>
-  <a href="#main" class="skip-link">Skip to main content</a>
+  <a href="#main" class="skip-link" data-i18n="skip_to_main">Skip to main content</a>
   <div class="app">
     <!-- Header -->
     <header class="header">
@@ -547,23 +553,29 @@ body {
         <img class="logo" src="logo.svg" alt="WDI Logo" aria-hidden="true">
       </div>
       <div class="header-center">
-        <h1 class="app-title">Talking Robot</h1>
-        <p class="app-subtitle">Your AI Robot Friend!</p>
+        <h1 class="app-title" data-i18n="app_title">bit-bot</h1>
+        <p class="app-subtitle" data-i18n="app_subtitle">Your AI Robot Friend!</p>
         <span class="app-version">V1.0</span>
       </div>
       <div class="header-right">
+        <!-- Trilingual language picker (EN / FR / AR) -->
+        <div class="lang-picker" role="group" aria-label="Language selector" style="display:flex; gap:4px; align-items:center;">
+          <button class="lang-flag-btn" data-lang="en" title="English" onclick="setLanguage('en')" aria-label="English"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="6.5"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3.5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="11"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="6.5"/></svg></button>
+          <button class="lang-flag-btn" data-lang="fr" title="Français" onclick="setLanguage('fr')" aria-label="Français"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></button>
+          <button class="lang-flag-btn" data-lang="ar" title="العربية" onclick="setLanguage('ar')" aria-label="العربية"><svg width="24" height="16" viewBox="0 0 900 600"><defs><clipPath id="gl"><rect width="450" height="600"/></clipPath></defs><rect width="450" height="600" fill="#006233"/><rect x="450" width="450" height="600" fill="#FFF"/><g fill="#D21034" transform="translate(450,300)"><circle r="125"/><circle cx="25" r="100" fill="#FFF"/><g clip-path="url(#gl)" transform="translate(-450,-300)"><circle cx="475" cy="300" r="100" fill="#006233"/></g><path d="M85-12l22 67h71l-57 42 22 67-58-42-57 42 21-67-57-42h71z"/></g></svg></button>
+        </div>
         <div class="badge" id="aiBadge" aria-label="AI Mode">
           <span id="aiIcon">🎮</span>
-          <span id="aiName">Demo</span>
+          <span id="aiName" data-i18n="provider_demo">Demo</span>
         </div>
         <button class="badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
           <span class="status-dot"></span>
-          <span id="connText">Disconnected</span>
+          <span id="connText" data-i18n="disconnected">Disconnected</span>
         </button>
-        <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme">🌙</button>
-        <button class="btn-icon" id="commandsBtn" onclick="toggleCommands()" aria-label="Commands">📋</button>
-        <button class="btn-icon" id="logsBtn" onclick="toggleLogs()" aria-label="Logs">📊</button>
-        <button class="btn-icon" onclick="toggleSidebar()" aria-label="Settings">⚙️</button>
+        <button class="btn-icon" id="themeBtn" onclick="toggleTheme()" aria-label="Toggle theme" data-i18n-aria="aria_toggle_theme">🌙</button>
+        <button class="btn-icon" id="commandsBtn" onclick="toggleCommands()" aria-label="Commands" data-i18n-aria="aria_commands">📋</button>
+        <button class="btn-icon" id="logsBtn" onclick="toggleLogs()" aria-label="Logs" data-i18n-aria="aria_logs">📊</button>
+        <button class="btn-icon" onclick="toggleSidebar()" aria-label="Settings" data-i18n-aria="aria_settings">⚙️</button>
       </div>
     </header>
 
@@ -571,7 +583,7 @@ body {
     <main class="main" id="main">
       <div class="rate-limit" id="rateLimit" role="alert">
         <div class="rate-limit-info">
-          <div class="rate-limit-title">⏳ Rate limit reached - using demo mode</div>
+          <div class="rate-limit-title" data-i18n="rate_limit_title">⏳ Rate limit reached - using demo mode</div>
         </div>
       </div>
       
@@ -587,12 +599,12 @@ body {
               <div class="robot-mouth-inner"></div>
             </div>
           </div>
-          <div class="robot-status" id="robotStatus">Ready to chat!</div>
+          <div class="robot-status" id="robotStatus" data-i18n="status_ready">Ready to chat!</div>
         </div>
-        
+
         <div class="microbit-widget" aria-label="Micro:bit display">
           <div class="microbit-header">
-            <span class="microbit-title">Micro:bit Display</span>
+            <span class="microbit-title" data-i18n="microbit_display">Micro:bit Display</span>
             <span class="microbit-dot" id="microbitDot"></span>
           </div>
           <div class="led-grid" id="ledGrid"></div>
@@ -601,13 +613,13 @@ body {
 
       <section class="chat-section" aria-label="Chat">
         <div class="chat-header">
-          <span class="chat-header-title">💬 Chat</span>
+          <span class="chat-header-title"><span data-i18n="chat_title">💬 Chat</span></span>
           <div class="chat-actions">
-            <button class="btn-clear" onclick="clearChat()" aria-label="Clear chat">🗑️ Clear</button>
+            <button class="btn-clear" onclick="clearChat()" aria-label="Clear chat" data-i18n-aria="aria_clear_chat"><span data-i18n="btn_clear">🗑️ Clear</span></button>
           </div>
         </div>
         <div class="chat-container" id="chatContainer" role="log" aria-live="polite"></div>
-        <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing">
+        <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing" data-i18n-aria="aria_typing">
           <span class="typing-dot"></span>
           <span class="typing-dot"></span>
           <span class="typing-dot"></span>
@@ -618,9 +630,9 @@ body {
     <!-- Input -->
     <div class="input-area">
       <div class="input-row">
-        <input type="text" class="text-input" id="textInput" placeholder="Type a message..." autocomplete="off" aria-label="Message input">
-        <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input">🎤</button>
-        <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message">➤</button>
+        <input type="text" class="text-input" id="textInput" placeholder="Type a message..." data-i18n-placeholder="placeholder_type_message" autocomplete="off" aria-label="Message input" data-i18n-aria="aria_message_input">
+        <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input" data-i18n-aria="aria_voice_input">🎤</button>
+        <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message" data-i18n-aria="aria_send">➤</button>
       </div>
     </div>
 
@@ -631,94 +643,94 @@ body {
     <aside class="sidebar" id="sidebar" aria-label="Settings panel">
       <div class="sidebar-resize-handle" id="sidebarResizeHandle"></div>
       <div class="sidebar-header">
-        <span>⚙️ Settings</span>
-        <button class="btn-close" onclick="toggleSidebar()" aria-label="Close settings">×</button>
+        <span data-i18n="settings_title">⚙️ Settings</span>
+        <button class="btn-close" onclick="toggleSidebar()" aria-label="Close settings" data-i18n-aria="aria_close_settings">×</button>
       </div>
       <div class="sidebar-content">
         <div class="settings-section">
-          <div class="section-title">🤖 Robot Personality</div>
-          <label class="input-label" for="robotName">Robot Name</label>
-          <input type="text" class="name-input" id="robotName" placeholder="Name your robot..." value="Robo" aria-label="Robot name">
+          <div class="section-title" data-i18n="section_personality">🤖 Robot Personality</div>
+          <label class="input-label" for="robotName" data-i18n="label_robot_name">Robot Name</label>
+          <input type="text" class="name-input" id="robotName" placeholder="Name your robot..." data-i18n-placeholder="placeholder_robot_name" value="Robo" aria-label="Robot name" data-i18n-aria="aria_robot_name">
           <div class="personality-grid">
             <button class="personality-btn active" data-p="playful" onclick="setPersonality('playful')">
               <span class="p-icon">🎪</span>
-              <div><div class="p-name">Playful</div><div class="p-desc">Silly & fun</div></div>
+              <div><div class="p-name" data-i18n="p_playful_name">Playful</div><div class="p-desc" data-i18n="p_playful_desc">Silly & fun</div></div>
             </button>
             <button class="personality-btn" data-p="helpful" onclick="setPersonality('helpful')">
               <span class="p-icon">🎓</span>
-              <div><div class="p-name">Helpful</div><div class="p-desc">Smart & kind</div></div>
+              <div><div class="p-name" data-i18n="p_helpful_name">Helpful</div><div class="p-desc" data-i18n="p_helpful_desc">Smart & kind</div></div>
             </button>
             <button class="personality-btn" data-p="pirate" onclick="setPersonality('pirate')">
               <span class="p-icon">🏴‍☠️</span>
-              <div><div class="p-name">Pirate</div><div class="p-desc">Arrr!</div></div>
+              <div><div class="p-name" data-i18n="p_pirate_name">Pirate</div><div class="p-desc" data-i18n="p_pirate_desc">Arrr!</div></div>
             </button>
             <button class="personality-btn" data-p="space" onclick="setPersonality('space')">
               <span class="p-icon">🚀</span>
-              <div><div class="p-name">Space</div><div class="p-desc">Explorer</div></div>
+              <div><div class="p-name" data-i18n="p_space_name">Space</div><div class="p-desc" data-i18n="p_space_desc">Explorer</div></div>
             </button>
           </div>
         </div>
-        
+
         <div class="settings-section">
-          <div class="section-title">🌍 Language</div>
+          <div class="section-title" data-i18n="section_language">🌍 Language</div>
           <div class="lang-grid">
             <button class="lang-btn active" data-lang="en" onclick="setLanguage('en')">
-              <span class="flag">🇬🇧</span>
-              <span class="name">English</span>
+              <span class="flag"><svg width="28" height="20" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="6.5"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3.5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="11"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="6.5"/></svg></span>
+              <span class="name" data-i18n="lang_english">English</span>
             </button>
             <button class="lang-btn" data-lang="fr" onclick="setLanguage('fr')">
-              <span class="flag">🇫🇷</span>
-              <span class="name">Français</span>
+              <span class="flag"><svg width="28" height="20" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span>
+              <span class="name" data-i18n="lang_french">Français</span>
             </button>
             <button class="lang-btn" data-lang="ar" onclick="setLanguage('ar')">
-              <span class="flag">🇸🇦</span>
-              <span class="name">العربية</span>
+              <span class="flag"><svg width="28" height="20" viewBox="0 0 900 600"><rect width="900" height="300" fill="#006233"/><rect y="300" width="900" height="300" fill="#FFF"/><rect y="240" width="900" height="120" fill="#D21034"/></svg></span>
+              <span class="name" data-i18n="lang_arabic">العربية</span>
             </button>
           </div>
         </div>
-        
+
         <div class="settings-section">
-          <div class="section-title">🧠 AI Brain</div>
+          <div class="section-title" data-i18n="section_ai_brain">🧠 AI Brain</div>
           <div class="provider-grid">
             <button class="provider-btn" data-provider="demo" onclick="setProvider('demo')">
               <span class="icon">🎮</span>
-              <span class="name">Demo</span>
+              <span class="name" data-i18n="provider_demo">Demo</span>
             </button>
             <button class="provider-btn active" data-provider="groq" onclick="setProvider('groq')">
               <span class="icon">⚡</span>
-              <span class="name">Groq</span>
+              <span class="name" data-i18n="provider_groq">Groq</span>
             </button>
             <button class="provider-btn" data-provider="gemini" onclick="setProvider('gemini')">
               <span class="icon">💎</span>
-              <span class="name">Gemini</span>
+              <span class="name" data-i18n="provider_gemini">Gemini</span>
             </button>
           </div>
-          <input type="password" class="api-input" id="apiKey" placeholder="Enter API key..." style="margin-top:12px" aria-label="API Key">
+          <input type="password" class="api-input" id="apiKey" placeholder="Enter API key..." data-i18n-placeholder="placeholder_api_key" style="margin-top:12px" aria-label="API Key" data-i18n-aria="aria_api_key">
           <div class="api-hint" id="apiHint">Get free key at <a href="https://console.groq.com" target="_blank" rel="noopener">console.groq.com</a></div>
         </div>
-        
+
         <div class="settings-section">
-          <div class="section-title">🔊 Voice</div>
+          <div class="section-title" data-i18n="section_voice">🔊 Voice</div>
           <div class="voice-row">
-            <select class="voice-select" id="voiceSelect" aria-label="Voice selection">
-              <option value="">Default Voice</option>
+            <select class="voice-select" id="voiceSelect" aria-label="Voice selection" data-i18n-aria="aria_voice_select">
+              <option value="" data-i18n="voice_default">Default Voice</option>
             </select>
-            <button class="btn-test" onclick="testVoice()">🔊 Test</button>
+            <button class="btn-test" onclick="testVoice()" data-i18n="btn_test_voice">🔊 Test</button>
           </div>
           <div class="speed-row">
             <span>🐢</span>
-            <input type="range" class="speed-slider" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1" aria-label="Voice speed">
+            <input type="range" class="speed-slider" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1" aria-label="Voice speed" data-i18n-aria="aria_voice_speed">
             <span>🐇</span>
             <span class="speed-value" id="speedValue">1.0x</span>
           </div>
         </div>
-        
+
         <div class="settings-section">
-          <div class="section-title">🎛️ Options</div>
+          <div class="section-title" data-i18n="section_options">🎛️ Options</div>
           <div class="toggle-row">
             <div class="toggle-info">
-              <div class="title">Continuous Listening</div>
-              <div class="desc">Keep mic on after response</div>
+              <div class="title" data-i18n="opt_continuous_title">Continuous Listening</div>
+              <div class="desc" data-i18n="opt_continuous_desc">Keep mic on after response</div>
             </div>
             <label class="toggle">
               <input type="checkbox" id="continuousListen">
@@ -726,10 +738,10 @@ body {
             </label>
           </div>
         </div>
-        
+
         <div class="settings-section danger-zone">
-          <div class="section-title">⚠️ Danger Zone</div>
-          <button class="btn-danger" onclick="clearAllData()">🗑️ Reset Everything</button>
+          <div class="section-title" data-i18n="section_danger">⚠️ Danger Zone</div>
+          <button class="btn-danger" onclick="clearAllData()" data-i18n="btn_reset_all">🗑️ Reset Everything</button>
         </div>
       </div>
     </aside>
@@ -738,38 +750,38 @@ body {
     <aside class="logs-panel" id="logsPanel" aria-label="Debug logs">
       <div class="logs-resize-handle" id="logsResizeHandle"></div>
       <div class="logs-header">
-        <span class="logs-title">📊 Debug Logs</span>
+        <span class="logs-title" data-i18n="logs_title">📊 Debug Logs</span>
         <div class="logs-toolbar">
-          <button onclick="clearLogs()" class="danger" title="Clear all logs">🗑️ Clear</button>
-          <button onclick="exportLogs()" title="Export logs to file">📥 Export</button>
-          <button class="btn-close" onclick="toggleLogs()" aria-label="Close logs">×</button>
+          <button onclick="clearLogs()" class="danger" title="Clear all logs" data-i18n-title="title_clear_logs" data-i18n="btn_clear">🗑️ Clear</button>
+          <button onclick="exportLogs()" title="Export logs to file" data-i18n-title="title_export_logs" data-i18n="btn_export">📥 Export</button>
+          <button class="btn-close" onclick="toggleLogs()" aria-label="Close logs" data-i18n-aria="aria_close_logs">×</button>
         </div>
       </div>
       <div class="logs-stats">
-        <div class="logs-stat">Total: <span class="logs-stat-value" id="logCount">0</span></div>
-        <div class="logs-stat">TX: <span class="logs-stat-value" id="logCountTx">0</span></div>
-        <div class="logs-stat">RX: <span class="logs-stat-value" id="logCountRx">0</span></div>
-        <div class="logs-stat">Errors: <span class="logs-stat-value" id="logCountErr">0</span></div>
+        <div class="logs-stat"><span data-i18n="stat_total">Total</span>: <span class="logs-stat-value" id="logCount">0</span></div>
+        <div class="logs-stat"><span data-i18n="stat_tx">TX</span>: <span class="logs-stat-value" id="logCountTx">0</span></div>
+        <div class="logs-stat"><span data-i18n="stat_rx">RX</span>: <span class="logs-stat-value" id="logCountRx">0</span></div>
+        <div class="logs-stat"><span data-i18n="stat_errors">Errors</span>: <span class="logs-stat-value" id="logCountErr">0</span></div>
       </div>
       <div class="logs-filter">
-        <button class="logs-filter-btn active" data-filter="all" onclick="filterLogs('all')">All</button>
-        <button class="logs-filter-btn" data-filter="tx" onclick="filterLogs('tx')">TX</button>
-        <button class="logs-filter-btn" data-filter="rx" onclick="filterLogs('rx')">RX</button>
-        <button class="logs-filter-btn" data-filter="ble" onclick="filterLogs('ble')">BLE</button>
-        <button class="logs-filter-btn" data-filter="ai" onclick="filterLogs('ai')">AI</button>
-        <button class="logs-filter-btn" data-filter="speech" onclick="filterLogs('speech')">Speech</button>
-        <button class="logs-filter-btn" data-filter="error" onclick="filterLogs('error')">Errors</button>
+        <button class="logs-filter-btn active" data-filter="all" onclick="filterLogs('all')" data-i18n="filter_all">All</button>
+        <button class="logs-filter-btn" data-filter="tx" onclick="filterLogs('tx')" data-i18n="filter_tx">TX</button>
+        <button class="logs-filter-btn" data-filter="rx" onclick="filterLogs('rx')" data-i18n="filter_rx">RX</button>
+        <button class="logs-filter-btn" data-filter="ble" onclick="filterLogs('ble')" data-i18n="filter_ble">BLE</button>
+        <button class="logs-filter-btn" data-filter="ai" onclick="filterLogs('ai')" data-i18n="filter_ai">AI</button>
+        <button class="logs-filter-btn" data-filter="speech" onclick="filterLogs('speech')" data-i18n="filter_speech">Speech</button>
+        <button class="logs-filter-btn" data-filter="error" onclick="filterLogs('error')" data-i18n="filter_errors">Errors</button>
       </div>
       <div class="logs-content" id="logsContent" role="log">
-        <div class="logs-empty">No logs yet. Start chatting!</div>
+        <div class="logs-empty" data-i18n="logs_empty">No logs yet. Start chatting!</div>
       </div>
     </aside>
 
     <!-- Commands Panel -->
     <aside class="commands-panel" id="commandsPanel" aria-label="Commands panel">
       <div class="commands-panel-header">
-        <span>📋 Commands</span>
-        <button class="btn-close" onclick="toggleCommands()" aria-label="Close commands">×</button>
+        <span data-i18n="commands_title">📋 Commands</span>
+        <button class="btn-close" onclick="toggleCommands()" aria-label="Close commands" data-i18n-aria="aria_close_commands">×</button>
       </div>
       <div class="commands-panel-content" id="commandsBody"></div>
     </aside>
@@ -785,9 +797,198 @@ const CONFIG = {
 
 const LANG = {
   en: { code: 'en-US', ready: 'Ready to chat!', listening: '🎤 Listening...', thinking: '🤔 Thinking...', speaking: '🔊 Speaking...' },
-  fr: { code: 'fr-FR', ready: 'Prêt à discuter!', listening: '🎤 J\'écoute...', thinking: '🤔 Je réfléchis...', speaking: '🔊 Je parle...' },
-  ar: { code: 'ar-SA', ready: '!جاهز للدردشة', listening: '...🎤 أستمع', thinking: '...🤔 أفكر', speaking: '...🔊 أتحدث' }
+  fr: { code: 'fr-FR', ready: 'Prêt à discuter !', listening: '🎤 J\'écoute...', thinking: '🤔 Je réfléchis...', speaking: '🔊 Je parle...' },
+  ar: { code: 'ar-SA', ready: 'جاهز للدردشة!', listening: '🎤 أستمع...', thinking: '🤔 أفكر...', speaking: '🔊 أتحدث...' }
 };
+
+/* ============ Trilingual UI dictionary (i18n) ============ */
+const I18N = {
+  en: {
+    app_title_full: "bit-bot",
+    app_title: "bit-bot",
+    app_subtitle: "Your AI Robot Friend!",
+    skip_to_main: "Skip to main content",
+    rate_limit_title: "⏳ Rate limit reached — using demo mode",
+    status_ready: "Ready to chat!",
+    microbit_display: "Micro:bit Display",
+    chat_title: "💬 Chat",
+    btn_clear: "🗑️ Clear",
+    btn_export: "📥 Export",
+    btn_test_voice: "🔊 Test",
+    btn_reset_all: "🗑️ Reset Everything",
+    placeholder_type_message: "Type a message...",
+    placeholder_robot_name: "Name your robot...",
+    placeholder_api_key: "Enter API key...",
+    settings_title: "⚙️ Settings",
+    section_personality: "🤖 Robot Personality",
+    label_robot_name: "Robot Name",
+    p_playful_name: "Playful", p_playful_desc: "Silly & fun",
+    p_helpful_name: "Helpful", p_helpful_desc: "Smart & kind",
+    p_pirate_name: "Pirate",  p_pirate_desc: "Arrr!",
+    p_space_name: "Space",    p_space_desc: "Explorer",
+    section_language: "🌍 Language",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    section_ai_brain: "🧠 AI Brain",
+    provider_demo: "Demo", provider_groq: "Groq", provider_gemini: "Gemini",
+    section_voice: "🔊 Voice",
+    voice_default: "Default Voice",
+    section_options: "🎛️ Options",
+    opt_continuous_title: "Continuous Listening",
+    opt_continuous_desc: "Keep mic on after response",
+    section_danger: "⚠️ Danger Zone",
+    logs_title: "📊 Debug Logs",
+    logs_empty: "No logs yet. Start chatting!",
+    stat_total: "Total", stat_tx: "TX", stat_rx: "RX", stat_errors: "Errors",
+    filter_all: "All", filter_tx: "TX", filter_rx: "RX",
+    filter_ble: "BLE", filter_ai: "AI", filter_speech: "Speech", filter_errors: "Errors",
+    commands_title: "📋 Commands",
+    commands_hint: "Tap any command to try it!",
+    disconnected: "Disconnected", connected: "Connected",
+    title_clear_logs: "Clear all logs", title_export_logs: "Export logs to file",
+    aria_toggle_theme: "Toggle theme", aria_commands: "Commands", aria_logs: "Logs",
+    aria_settings: "Settings", aria_close_settings: "Close settings",
+    aria_close_logs: "Close logs", aria_close_commands: "Close commands",
+    aria_clear_chat: "Clear chat", aria_typing: "Robot is typing",
+    aria_message_input: "Message input", aria_voice_input: "Voice input",
+    aria_send: "Send message", aria_robot_name: "Robot name",
+    aria_api_key: "API Key", aria_voice_select: "Voice selection",
+    aria_voice_speed: "Voice speed",
+    confirm_reset: "Reset all settings and clear data?",
+    toast_error_generic: "Oops! Something went wrong.",
+    joke_builtin: "Why did the robot take a nap? Because its battery was too tired! [haha] [happy]",
+    laugh_builtin: "Hahaha! That's so funny! [haha] [haha] [party]",
+    whoa_builtin: "Whoa! You shook me! [surprised] [wow]"
+  },
+  fr: {
+    app_title_full: "Robot Parlant",
+    app_title: "Robot Parlant",
+    app_subtitle: "Ton ami robot avec IA !",
+    skip_to_main: "Aller au contenu principal",
+    rate_limit_title: "⏳ Limite atteinte — mode démo activé",
+    status_ready: "Prêt à discuter !",
+    microbit_display: "Écran Micro:bit",
+    chat_title: "💬 Discussion",
+    btn_clear: "🗑️ Effacer",
+    btn_export: "📥 Exporter",
+    btn_test_voice: "🔊 Tester",
+    btn_reset_all: "🗑️ Tout réinitialiser",
+    placeholder_type_message: "Écris un message...",
+    placeholder_robot_name: "Donne un nom à ton robot...",
+    placeholder_api_key: "Entre ta clé API...",
+    settings_title: "⚙️ Réglages",
+    section_personality: "🤖 Personnalité du robot",
+    label_robot_name: "Nom du robot",
+    p_playful_name: "Rigolo",   p_playful_desc: "Drôle et fou",
+    p_helpful_name: "Sage",     p_helpful_desc: "Gentil et malin",
+    p_pirate_name: "Pirate",    p_pirate_desc: "Arrr !",
+    p_space_name: "Astronaute", p_space_desc: "Explorateur",
+    section_language: "🌍 Langue",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    section_ai_brain: "🧠 Cerveau IA",
+    provider_demo: "Démo", provider_groq: "Groq", provider_gemini: "Gemini",
+    section_voice: "🔊 Voix",
+    voice_default: "Voix par défaut",
+    section_options: "🎛️ Options",
+    opt_continuous_title: "Écoute continue",
+    opt_continuous_desc: "Garde le micro allumé après la réponse",
+    section_danger: "⚠️ Zone dangereuse",
+    logs_title: "📊 Journaux",
+    logs_empty: "Aucun journal. Commence à discuter !",
+    stat_total: "Total", stat_tx: "TX", stat_rx: "RX", stat_errors: "Erreurs",
+    filter_all: "Tout", filter_tx: "TX", filter_rx: "RX",
+    filter_ble: "BLE", filter_ai: "IA", filter_speech: "Parole", filter_errors: "Erreurs",
+    commands_title: "📋 Commandes",
+    commands_hint: "Touche une commande pour l'essayer !",
+    disconnected: "Déconnecté", connected: "Connecté",
+    title_clear_logs: "Effacer tous les journaux", title_export_logs: "Exporter les journaux",
+    aria_toggle_theme: "Changer de thème", aria_commands: "Commandes", aria_logs: "Journaux",
+    aria_settings: "Réglages", aria_close_settings: "Fermer les réglages",
+    aria_close_logs: "Fermer les journaux", aria_close_commands: "Fermer les commandes",
+    aria_clear_chat: "Effacer la discussion", aria_typing: "Le robot écrit",
+    aria_message_input: "Champ de message", aria_voice_input: "Entrée vocale",
+    aria_send: "Envoyer le message", aria_robot_name: "Nom du robot",
+    aria_api_key: "Clé API", aria_voice_select: "Choix de la voix",
+    aria_voice_speed: "Vitesse de la voix",
+    confirm_reset: "Réinitialiser tous les réglages et effacer les données ?",
+    toast_error_generic: "Oups ! Quelque chose a mal tourné.",
+    joke_builtin: "Pourquoi le robot a fait une sieste ? Parce que sa batterie était fatiguée ! [haha] [happy]",
+    laugh_builtin: "Hahaha ! C'est trop drôle ! [haha] [haha] [party]",
+    whoa_builtin: "Oh là là ! Tu m'as secoué ! [surprised] [wow]"
+  },
+  ar: {
+    app_title_full: "الروبوت المتكلم",
+    app_title: "الروبوت المتكلم",
+    app_subtitle: "صديقك الروبوت الذكي!",
+    skip_to_main: "انتقل إلى المحتوى الرئيسي",
+    rate_limit_title: "⏳ تم بلوغ الحد — يعمل بالوضع التجريبي",
+    status_ready: "جاهز للدردشة!",
+    microbit_display: "شاشة المايكروبِت",
+    chat_title: "💬 الدردشة",
+    btn_clear: "🗑️ مسح",
+    btn_export: "📥 تصدير",
+    btn_test_voice: "🔊 تجربة",
+    btn_reset_all: "🗑️ إعادة ضبط الكل",
+    placeholder_type_message: "اكتب رسالة...",
+    placeholder_robot_name: "اختر اسماً للروبوت...",
+    placeholder_api_key: "أدخل مفتاح واجهة البرمجة...",
+    settings_title: "⚙️ الإعدادات",
+    section_personality: "🤖 شخصية الروبوت",
+    label_robot_name: "اسم الروبوت",
+    p_playful_name: "المرح",    p_playful_desc: "مضحك وطريف",
+    p_helpful_name: "المُعين",   p_helpful_desc: "ذكي ولطيف",
+    p_pirate_name: "القرصان",   p_pirate_desc: "آرر!",
+    p_space_name: "الفضائي",    p_space_desc: "مستكشف",
+    section_language: "🌍 اللغة",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    section_ai_brain: "🧠 الدماغ الذكي",
+    provider_demo: "تجريبي", provider_groq: "غروك", provider_gemini: "جيميني",
+    section_voice: "🔊 الصوت",
+    voice_default: "الصوت الافتراضي",
+    section_options: "🎛️ خيارات",
+    opt_continuous_title: "الاستماع المستمر",
+    opt_continuous_desc: "أبقِ المايكروفون يعمل بعد الرد",
+    section_danger: "⚠️ منطقة الخطر",
+    logs_title: "📊 سجلات التصحيح",
+    logs_empty: "لا توجد سجلات بعد. ابدأ الدردشة!",
+    stat_total: "الإجمالي", stat_tx: "إرسال", stat_rx: "استقبال", stat_errors: "الأخطاء",
+    filter_all: "الكل", filter_tx: "إرسال", filter_rx: "استقبال",
+    filter_ble: "بلوتوث", filter_ai: "ذكاء", filter_speech: "كلام", filter_errors: "أخطاء",
+    commands_title: "📋 الأوامر",
+    commands_hint: "اضغط على أي أمر لتجربته!",
+    disconnected: "غير متصل", connected: "متصل",
+    title_clear_logs: "مسح جميع السجلات", title_export_logs: "تصدير السجلات",
+    aria_toggle_theme: "تبديل السمة", aria_commands: "الأوامر", aria_logs: "السجلات",
+    aria_settings: "الإعدادات", aria_close_settings: "إغلاق الإعدادات",
+    aria_close_logs: "إغلاق السجلات", aria_close_commands: "إغلاق الأوامر",
+    aria_clear_chat: "مسح الدردشة", aria_typing: "الروبوت يكتب",
+    aria_message_input: "حقل الرسالة", aria_voice_input: "الإدخال الصوتي",
+    aria_send: "إرسال الرسالة", aria_robot_name: "اسم الروبوت",
+    aria_api_key: "مفتاح واجهة البرمجة", aria_voice_select: "اختيار الصوت",
+    aria_voice_speed: "سرعة الصوت",
+    confirm_reset: "هل تريد إعادة ضبط جميع الإعدادات ومحو البيانات؟",
+    toast_error_generic: "عذراً، حدث خطأ ما.",
+    joke_builtin: "لماذا أخذ الروبوت قيلولة؟ لأن بطاريته كانت متعبة! [haha] [happy]",
+    laugh_builtin: "هاهاها! هذا مضحك جداً! [haha] [haha] [party]",
+    whoa_builtin: "يا للهول! لقد هززتني! [surprised] [wow]"
+  }
+};
+const RTL_LANGS = { ar: true };
+function tr(key) {
+  const l = (state && state.lang) || 'en';
+  return (I18N[l] && I18N[l][key] !== undefined) ? I18N[l][key] : (I18N.en[key] !== undefined ? I18N.en[key] : key);
+}
+function applyLang(lang) {
+  if (!I18N[lang]) lang = 'en';
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tr(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = tr(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = tr(el.dataset.i18nTitle); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', tr(el.dataset.i18nAria)); });
+  document.querySelectorAll('.lang-btn[data-lang], .lang-flag-btn[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  try { localStorage.setItem('talkingRobot.lang', lang); } catch (e) {}
+}
 
 const COMMANDS = {
   emotions: { icon: '😊', name: 'Emotions', items: ['happy','sad','angry','surprised','love','sleepy','silly','crazy','wink','cool','wow','haha'] },
@@ -841,7 +1042,7 @@ let state = {
   connected: false, device: null, writeChar: null, rxBuffer: '',
   recognition: null, listening: false, speaking: false, voices: [],
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
-  speed: 1, voice: '', continuous: false, theme: 'light',
+  speed: 1, voice: '', continuous: false, theme: 'dark',
   groqKey: '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', geminiKey: '', rateLimitUntil: 0,
   chatMemory: { playful: [], helpful: [], pirate: [], space: [] },
   ledFromMicrobitOnly: false
@@ -863,6 +1064,12 @@ const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotNam
 // ==================== INIT ====================
 function init() {
   loadSettings();
+  // Restore saved UI language (independent of conversation lang fallback)
+  try {
+    const savedLang = localStorage.getItem('talkingRobot.lang');
+    if (savedLang && I18N[savedLang]) state.lang = savedLang;
+  } catch (e) {}
+  applyLang(state.lang);
   loadChatMemory();
   renderChatFromMemory();
   setupLED();
@@ -871,7 +1078,7 @@ function init() {
   loadVoices();
   updateUI();
   generateCommands();
-  log('Talking Robot V2 initialized ✨', 'success');
+  log('bit-bot V2 initialized ✨', 'success');
 }
 
 function loadSettings() {
@@ -998,7 +1205,7 @@ function updateBadge() {
 
 function updateConnection() {
   connBadge.classList.toggle('connected', state.connected);
-  connText.textContent = state.connected ? 'Connected' : 'Disconnected';
+  connText.textContent = state.connected ? tr('connected') : tr('disconnected');
   microbitDot.classList.toggle('on', state.connected);
 
   // 🔒 When connected: micro:bit is authoritative for LED display
@@ -1019,7 +1226,13 @@ function toggleTheme() {
 
 // ==================== SETTINGS ====================
 function setLanguage(lang) {
-  state.lang = lang; updateUI(); populateVoices(); saveSettings();
+  state.lang = lang;
+  applyLang(lang);
+  // Re-populate dynamic UI so translated strings stick
+  generateCommands();
+  updateUI(); populateVoices(); saveSettings();
+  // Refresh robot status text in current language
+  setRobotState('idle');
   log('Language: ' + lang, 'info');
 }
 
@@ -1202,7 +1415,7 @@ async function processInput(text) {
     log('AI: ' + response.substring(0, 80), 'ai');
   } catch(e) {
     typing.classList.add('hidden'); setRobotState('idle');
-    addChat("Oops! Something went wrong. [sad]", 'robot');
+    addChat(tr('toast_error_generic') + " [sad]", 'robot');
     log('Error: ' + e.message, 'error');
   }
 }
@@ -1353,9 +1566,20 @@ function onNotify(e) {
           log('← LED: ' + visual.match(/.{5}/g).join(' '), 'rx');
         }
       } else {
-        log('← ' + line, 'rx'); 
-        if (line === 'BTN_A') toggleListening(); 
-        else if (line === 'BTN_B') synth.cancel(); 
+        log('← ' + line, 'rx');
+        // NEW trilingual button / shake input protocol (BTN:A:1, BTN:B:1, BTN:AB:1, BTN:LOGO:1, ACC:SHAKE)
+        if (line === 'BTN:A:1') {
+          cyclePersonalityFromDevice();
+        } else if (line === 'BTN:B:1') {
+          tellBuiltInJoke();
+        } else if (line === 'BTN:AB:1' || line === 'BTN:LOGO:1') {
+          robotLaugh();
+        } else if (line === 'ACC:SHAKE' || line === 'SHAKE') {
+          robotWhoa();
+        }
+        // Legacy fallbacks (older firmware)
+        else if (line === 'BTN_A') { /* newer firmware also emits BTN:A:1; ignore here */ }
+        else if (line === 'BTN_B') { /* newer firmware also emits BTN:B:1; ignore here */ }
       }
     }
   }
@@ -1372,6 +1596,51 @@ function syncLEDFromMicrobit(ledState) {
 function sendToMicrobit(msg) {
   if (!state.connected || !state.writeChar) return;
   try { state.writeChar.writeValue(new TextEncoder().encode(msg + '\n')); log('→ ' + msg, 'tx'); } catch(e) {}
+}
+
+// ==================== DEVICE-INPUT ACTIONS (button + shake) ====================
+const PERSONALITY_ORDER = ['playful', 'helpful', 'pirate', 'space'];
+function cyclePersonalityFromDevice() {
+  const idx = PERSONALITY_ORDER.indexOf(state.personality);
+  const next = PERSONALITY_ORDER[(idx + 1) % PERSONALITY_ORDER.length];
+  setPersonality(next);
+}
+async function tellBuiltInJoke() {
+  try {
+    let joke;
+    const hasKey = (state.provider === 'groq' && state.groqKey) || (state.provider === 'gemini' && state.geminiKey);
+    if (hasKey) {
+      const langName = { en: 'English', fr: 'French', ar: 'Arabic' }[state.lang];
+      const msg = 'Tell me a short, kid-friendly joke in ' + langName + ' (one sentence).';
+      joke = state.provider === 'groq' ? await callGroq(msg) : await callGemini(msg);
+    } else {
+      joke = tr('joke_builtin');
+    }
+    const { clean, cmds } = extractCmds(joke);
+    addChat(clean || joke, 'robot');
+    for (const c of cmds) { sendToMicrobit(c); if (!state.ledFromMicrobitOnly) updateLED(c); await sleep(300); }
+    speak(clean || joke);
+  } catch (e) {
+    const j = tr('joke_builtin');
+    const { clean, cmds } = extractCmds(j);
+    addChat(clean, 'robot');
+    for (const c of cmds) { sendToMicrobit(c); if (!state.ledFromMicrobitOnly) updateLED(c); }
+    speak(clean);
+  }
+}
+function robotLaugh() {
+  const t = tr('laugh_builtin');
+  const { clean, cmds } = extractCmds(t);
+  addChat(clean, 'robot');
+  for (const c of cmds) { sendToMicrobit(c); if (!state.ledFromMicrobitOnly) updateLED(c); }
+  speak(clean);
+}
+function robotWhoa() {
+  const t = tr('whoa_builtin');
+  const { clean, cmds } = extractCmds(t);
+  addChat(clean, 'robot');
+  for (const c of cmds) { sendToMicrobit(c); if (!state.ledFromMicrobitOnly) updateLED(c); }
+  speak(clean);
 }
 
 // ==================== LED ====================
@@ -1520,7 +1789,7 @@ function closeAllPanels() {
 
 function generateCommands() {
   const body = $('commandsBody');
-  body.innerHTML = '<p style="color:var(--muted);margin-bottom:12px;font-size:0.8rem">Tap any command to try it!</p>';
+  body.innerHTML = '<p style="color:var(--muted);margin-bottom:12px;font-size:0.8rem">' + tr('commands_hint') + '</p>';
   for (const [key, cat] of Object.entries(COMMANDS)) {
     const div = document.createElement('div');
     div.className = 'command-category';
@@ -1614,7 +1883,7 @@ function exportLogs() {
     return;
   }
   
-  let text = '# Talking Robot V2 - Debug Logs\n';
+  let text = '# bit-bot V2 - Debug Logs\n';
   text += '# Exported: ' + new Date().toISOString() + '\n';
   text += '# Total entries: ' + entries.length + '\n\n';
   
@@ -1696,7 +1965,7 @@ function setupLogsResize() {
 function escapeHtml(t) { const d = document.createElement('div'); d.textContent = t; return d.innerHTML; }
 function pick(arr) { return arr[Math.floor(Math.random() * arr.length)]; }
 function sleep(ms) { return new Promise(r => setTimeout(r, ms)); }
-function clearAllData() { if (confirm('Reset all settings and clear data?')) { localStorage.removeItem('talkingRobotV2'); location.reload(); } }
+function clearAllData() { if (confirm(tr('confirm_reset'))) { localStorage.removeItem('talkingRobotV2'); localStorage.removeItem('talkingRobot.lang'); location.reload(); } }
 
 // Sidebar resize functionality
 function setupSidebarResize() {

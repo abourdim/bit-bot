@@ -1,9 +1,9 @@
 /**
- * Talking Robot - Micro:bit MakeCode JavaScript
+ * bit-bot - Micro:bit MakeCode JavaScript
  * VERSION: BLE-SAFE (No Sounds - Better Bluetooth Stability)
  * 
  * Flash this to your Micro:bit using MakeCode
- * Works with the Talking Robot web app via BLE UART
+ * Works with the bit-bot web app via BLE UART
  * 
  * Instructions:
  * 1. Go to https://makecode.microbit.org

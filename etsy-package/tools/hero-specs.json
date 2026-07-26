@@ -1,0 +1,126 @@
+{
+  "_comment": "A/B hero image specs for bit-bot (bit-bot). 1500×1500 Etsy thumbnails. Features: AI chatbot companion for kids with 12 personalities, voice in/out, parental controls, optional micro:bit V2 face mirror.",
+
+  "heroes": [
+    {
+      "name": "hero-teacher",
+      "theme": "arctic",
+      "accentColor": "#0077cc",
+      "screenshots": ["screenshot-robot.png", "screenshot-chat.png"],
+      "title": "AI Chat Companion\nfor Your Classroom",
+      "subtitle": "12 personalities · voice in/out · parental controls · demo mode is free forever",
+      "badge": "Chrome / Edge",
+      "footerLeft": "Lifetime updates · Site license available",
+      "footerRight": "Optional micro:bit V2"
+    },
+    {
+      "name": "hero-kid",
+      "theme": "neon",
+      "accentColor": "#00ff88",
+      "screenshots": ["screenshot-robot.png", "screenshot-chat.png"],
+      "title": "Talk to a Robot.\nPick from 12.",
+      "subtitle": "Playful, Pirate, Space, Ninja, Wizard, Alien… each with a voice and animated face.",
+      "badge": "Kid-safe",
+      "footerLeft": "PIN lock · Demo-only mode · Daily timer",
+      "footerRight": "No account, no cloud"
+    },
+    {
+      "name": "hero-maker",
+      "theme": "blaze",
+      "accentColor": "#ff6b35",
+      "screenshots": ["screenshot-robot.png", "screenshot-settings.png"],
+      "title": "Bring Your Own\nAI Key.",
+      "subtitle": "6 providers: Groq · Gemini · Cohere · Mistral · OpenRouter · Demo (offline)",
+      "badge": "Open source friendly",
+      "footerLeft": "PWA · local-first · no telemetry",
+      "footerRight": "Hack it"
+    },
+    {
+      "name": "hero-laptop",
+      "theme": "stealth",
+      "accentColor": "#00ff88",
+      "frame": "laptop",
+      "screenshots": ["screenshot-robot.png"],
+      "title": "One tab. One robot.\nTwelve personalities.",
+      "subtitle": "Open in Chrome. No install. No account. No sign-in.",
+      "badge": "Chrome / Edge",
+      "footerLeft": "Free Demo mode · Your AI key, opt-in",
+      "footerRight": "talking-robot"
+    },
+    {
+      "name": "hero-fr-teacher",
+      "theme": "arctic",
+      "accentColor": "#e63946",
+      "lang": "fr",
+      "screenshots": ["screenshot-robot.png", "screenshot-chat.png"],
+      "title": "Compagnon IA\npour la classe",
+      "subtitle": "12 personnalités · voix in/out · contrôles parentaux · mode Démo gratuit à vie",
+      "badge": "Chrome / Edge",
+      "footerLeft": "Mises à jour à vie · Licence école disponible",
+      "footerRight": "micro:bit V2 optionnel"
+    },
+    {
+      "name": "hero-fr-kid",
+      "theme": "neon",
+      "accentColor": "#00ff88",
+      "lang": "fr",
+      "screenshots": ["screenshot-robot.png", "screenshot-chat.png"],
+      "title": "Parle à un robot.\nChoisis parmi 12.",
+      "subtitle": "Pirate, Espace, Ninja, Sorcier, Alien… chacun avec sa voix et son visage animé.",
+      "badge": "Sans danger",
+      "footerLeft": "Code PIN · Mode Démo uniquement · Minuterie",
+      "footerRight": "Sans compte, sans cloud"
+    },
+    {
+      "name": "hero-fr-maker",
+      "theme": "blaze",
+      "accentColor": "#ff6b35",
+      "lang": "fr",
+      "screenshots": ["screenshot-robot.png", "screenshot-settings.png"],
+      "title": "Apporte ta propre\nclé IA.",
+      "subtitle": "6 fournisseurs : Groq · Gemini · Cohere · Mistral · OpenRouter · Démo (hors ligne)",
+      "badge": "Compatible open source",
+      "footerLeft": "PWA · local-first · sans télémétrie",
+      "footerRight": "À hacker"
+    },
+    {
+      "name": "hero-ar-teacher",
+      "theme": "arctic",
+      "accentColor": "#0077cc",
+      "lang": "ar",
+      "dir": "rtl",
+      "screenshots": ["screenshot-robot.png", "screenshot-chat.png"],
+      "title": "رفيق ذكاء اصطناعي\nللفصل الدراسي",
+      "subtitle": "12 شخصية · صوت وتفاعل · ضوابط أبوية · وضع تجريبي مجاني دائماً",
+      "badge": "Chrome / Edge",
+      "footerLeft": "تحديثات مدى الحياة · ترخيص مدرسي متاح",
+      "footerRight": "micro:bit V2 اختياري"
+    },
+    {
+      "name": "hero-ar-kid",
+      "theme": "neon",
+      "accentColor": "#00ff88",
+      "lang": "ar",
+      "dir": "rtl",
+      "screenshots": ["screenshot-robot.png", "screenshot-chat.png"],
+      "title": "تحدّث مع روبوت.\nاختر من 12.",
+      "subtitle": "قرصان، فضاء، نينجا، ساحر، فضائي… كل واحد بصوته ووجهه المتحرك.",
+      "badge": "آمن للأطفال",
+      "footerLeft": "قفل PIN · وضع تجريبي فقط · مؤقت يومي",
+      "footerRight": "بدون حساب، بدون سحاب"
+    },
+    {
+      "name": "hero-ar-maker",
+      "theme": "blaze",
+      "accentColor": "#ff6b35",
+      "lang": "ar",
+      "dir": "rtl",
+      "screenshots": ["screenshot-robot.png", "screenshot-settings.png"],
+      "title": "أحضر مفتاح الـ AI\nالخاص بك",
+      "subtitle": "6 مزوّدين: Groq · Gemini · Cohere · Mistral · OpenRouter · Demo (دون اتصال)",
+      "badge": "متوافق مع المصدر المفتوح",
+      "footerLeft": "PWA · محلي أولاً · بدون تتبع",
+      "footerRight": "للاختراق"
+    }
+  ]
+}

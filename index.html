@@ -1,11 +1,12 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="en" data-theme="dark">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
   <meta name="theme-color" content="#6366f1">
   <meta name="description" content="Bit-Bot - Your AI Robot Friend. Chat with a fun robot using micro:bit!">
   <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="mobile-web-app-capable" content="yes">
   <meta name="apple-mobile-web-app-status-bar-style" content="default">
   <meta name="apple-mobile-web-app-title" content="Bit-Bot">
   <link rel="manifest" href="manifest.json">
@@ -1848,6 +1849,12 @@ body {
   .settings-panel, .commands-panel { width: 100%; max-width: 100%; }
 }
 
+/* ==================== RTL ==================== */
+[dir="rtl"] .chat-container { direction: rtl; }
+[dir="rtl"] .text-input { text-align: right; }
+[dir="rtl"] .chat-bubble.user { align-self: flex-start; }
+[dir="rtl"] .chat-bubble.robot { align-self: flex-end; }
+
 /* ==================== REDUCED MOTION ==================== */
 @media (prefers-reduced-motion: reduce) {
   *, *::before, *::after {
@@ -2231,8 +2238,8 @@ body {
       <!-- Step 1: Welcome -->
       <div class="onboarding-step active" data-step="1">
         <div class="onboarding-robot">🤖</div>
-        <h2 class="onboarding-title">Welcome!</h2>
-        <p class="onboarding-desc">Meet your new AI robot friend that talks, listens, and connects to your micro:bit!</p>
+        <h2 class="onboarding-title" data-i18n="onb_welcome_title">Welcome!</h2>
+        <p class="onboarding-desc" data-i18n="onb_welcome_desc">Meet your new AI robot friend that talks, listens, and connects to your micro:bit!</p>
         
         <div class="onboarding-features">
           <div class="feature-item">
@@ -2250,17 +2257,17 @@ body {
         </div>
         
         <div class="onboarding-actions">
-          <button class="btn-onboarding primary" onclick="nextOnboardingStep()">Get Started →</button>
+          <button class="btn-onboarding primary" onclick="nextOnboardingStep()" data-i18n="onb_get_started">Get Started →</button>
         </div>
       </div>
       
       <!-- Step 2: Name & Personality -->
       <div class="onboarding-step" data-step="2">
         <div class="onboarding-robot">✨</div>
-        <h2 class="onboarding-title">Personalize</h2>
-        <p class="onboarding-desc">Give your robot a name and personality!</p>
-        
-        <input type="text" class="onboarding-input" id="onboardingName" placeholder="Robot name..." value="Robo" maxlength="20">
+        <h2 class="onboarding-title" data-i18n="onb_personalize_title">Personalize</h2>
+        <p class="onboarding-desc" data-i18n="onb_personalize_desc">Give your robot a name and personality!</p>
+
+        <input type="text" class="onboarding-input" id="onboardingName" placeholder="Robot name..." data-i18n-placeholder="placeholder_robot_name_short" value="Robo" maxlength="20">
         
         <div class="onboarding-personalities" id="onboardingPersonalities">
           <div class="onboarding-personality selected" data-p="playful" onclick="selectOnboardingPersonality('playful')">
@@ -2314,35 +2321,38 @@ body {
         </div>
         
         <div class="onboarding-actions">
-          <button class="btn-onboarding secondary" onclick="prevOnboardingStep()">← Back</button>
-          <button class="btn-onboarding primary" onclick="nextOnboardingStep()">Next →</button>
+          <button class="btn-onboarding secondary" onclick="prevOnboardingStep()" data-i18n="onb_back">← Back</button>
+          <button class="btn-onboarding primary" onclick="nextOnboardingStep()" data-i18n="onb_next">Next →</button>
         </div>
       </div>
-      
+
       <!-- Step 3: Connect Micro:bit -->
       <div class="onboarding-step" data-step="3">
         <div class="onboarding-robot">📡</div>
-        <h2 class="onboarding-title">Connect Micro:bit</h2>
-        <p class="onboarding-desc">Connect via Bluetooth to see your robot's reactions!</p>
-        
+        <h2 class="onboarding-title" data-i18n="onb_connect_title">Connect Micro:bit</h2>
+        <p class="onboarding-desc" data-i18n="onb_connect_desc">Connect via Bluetooth to see your robot's reactions!</p>
+
         <div class="onboarding-connection">
           <div class="connection-icon" id="onboardingConnIcon">📡</div>
-          <div class="connection-text" id="onboardingConnText">Click below to scan for your micro:bit</div>
+          <div class="connection-text" id="onboardingConnText" data-i18n="onb_connect_hint">Click below to scan for your micro:bit</div>
         </div>
-        
+
         <div class="onboarding-actions">
-          <button class="btn-onboarding secondary" onclick="prevOnboardingStep()">← Back</button>
-          <button class="btn-onboarding primary" id="onboardingConnBtn" onclick="connectDuringOnboarding()">🔗 Connect</button>
+          <button class="btn-onboarding secondary" onclick="prevOnboardingStep()" data-i18n="onb_back">← Back</button>
+          <button class="btn-onboarding primary" id="onboardingConnBtn" onclick="connectDuringOnboarding()" data-i18n="onb_btn_connect">🔗 Connect</button>
         </div>
-        <button class="btn-onboarding secondary" style="margin-top: 12px; width: 100%;" onclick="nextOnboardingStep()">Skip for now</button>
+        <button class="btn-onboarding secondary" style="margin-top: 12px; width: 100%;" onclick="nextOnboardingStep()" data-i18n="onb_skip">Skip for now</button>
       </div>
-      
+
       <!-- Step 4: All Done -->
       <div class="onboarding-step" data-step="4">
         <div class="onboarding-robot">🎉</div>
-        <h2 class="onboarding-title">You're Ready!</h2>
-        <p class="onboarding-desc">Say "Hello" or tap the microphone to start chatting with <strong id="finalRobotName">Robo</strong>!</p>
-        
+        <h2 class="onboarding-title" data-i18n="onb_ready_title">You're Ready!</h2>
+        <p class="onboarding-desc" data-i18n="onb_ready_desc">Say "Hello" or tap the microphone to start chatting!</p>
+
+        <!-- No data-i18n here: applyLang() overwrites textContent and would wipe this node -->
+        <p class="onboarding-desc"><strong id="finalRobotName">Robo</strong></p>
+
         <div class="onboarding-features">
           <div class="feature-item">
             <div class="feature-icon">💡</div>
@@ -2351,7 +2361,7 @@ body {
         </div>
         
         <div class="onboarding-actions">
-          <button class="btn-onboarding accent" onclick="completeOnboarding()">🚀 Start Chatting!</button>
+          <button class="btn-onboarding accent" onclick="completeOnboarding()" data-i18n="onb_start_chatting">🚀 Start Chatting!</button>
         </div>
       </div>
     </div>
@@ -2367,25 +2377,30 @@ body {
       <div class="header-brand">
         <img class="logo" src="logo.svg" alt="Bit-Bot Logo">
       </div>
-      
+
       <div class="header-center">
-        <h1 class="app-title">Bit-Bot</h1>
-        <p class="app-subtitle">Beep boop! Let's chat! 🤖</p>
+        <h1 class="app-title" data-i18n="app_title">Bit-Bot</h1>
+        <p class="app-subtitle" data-i18n="app_subtitle">Beep boop! Let's chat! 🤖</p>
       </div>
-      
+
       <div class="header-actions">
-        <div class="robot-badge" id="robotBadge" title="Current personality">
+        <div class="lang-picker" role="group" aria-label="Language selector" style="display:flex; gap:4px; align-items:center;">
+          <button class="lang-flag-btn" data-lang="en" title="English" onclick="setLanguage('en')" aria-label="English"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="6.5"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3.5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="11"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="6.5"/></svg></button>
+          <button class="lang-flag-btn" data-lang="fr" title="Français" onclick="setLanguage('fr')" aria-label="Français"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></button>
+          <button class="lang-flag-btn" data-lang="ar" title="العربية" onclick="setLanguage('ar')" aria-label="العربية"><svg width="24" height="16" viewBox="0 0 900 600"><defs><clipPath id="gl"><rect width="450" height="600"/></clipPath></defs><rect width="450" height="600" fill="#006233"/><rect x="450" width="450" height="600" fill="#FFF"/><g fill="#D21034" transform="translate(450,300)"><circle r="125"/><circle cx="25" r="100" fill="#FFF"/><g clip-path="url(#gl)" transform="translate(-450,-300)"><circle cx="475" cy="300" r="100" fill="#006233"/></g><path d="M85-12l22 67h71l-57 42 22 67-58-42-57 42 21-67-57-42h71z"/></g></svg></button>
+        </div>
+        <div class="robot-badge" id="robotBadge" title="Current personality" data-i18n-title="title_current_personality">
           <span id="robotIcon">🎪</span>
         </div>
         <div class="ai-badge" id="aiBadge" aria-label="AI Mode">
           <span id="aiIcon">🎮</span>
-          <span id="aiName">Demo</span>
+          <span id="aiName" data-i18n="provider_demo">Demo</span>
         </div>
         <button class="conn-badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
           <span class="conn-dot"></span>
-          <span id="connText">Disconnected</span>
+          <span id="connText" data-i18n="disconnected">Disconnected</span>
         </button>
-        <button class="btn-menu" onclick="toggleSettings()" aria-label="Open menu">☰</button>
+        <button class="btn-menu" onclick="toggleSettings()" aria-label="Open menu" data-i18n-aria="aria_open_menu">☰</button>
       </div>
     </header>
 
@@ -2393,7 +2408,7 @@ body {
     <main class="main" id="main">
       <!-- Rate Limit Banner -->
       <div class="rate-limit" id="rateLimit" role="alert">
-        <div class="rate-limit-title">⏳ Rate limit reached - using demo mode</div>
+        <div class="rate-limit-title" data-i18n="rate_limit_title">⏳ Rate limit reached - using demo mode</div>
       </div>
       
       <!-- Robot Avatar Section -->
@@ -2409,13 +2424,13 @@ body {
               <div class="robot-mouth-inner"></div>
             </div>
           </div>
-          <div class="robot-status" id="robotStatus">Ready to chat!</div>
+          <div class="robot-status" id="robotStatus" data-i18n="status_ready">Ready to chat!</div>
         </div>
-        
+
         <!-- Micro:bit Widget -->
         <div class="microbit-widget" aria-label="Micro:bit display">
           <div class="microbit-header">
-            <span class="microbit-title">Micro:bit Display</span>
+            <span class="microbit-title" data-i18n="microbit_display">Micro:bit Display</span>
             <span class="microbit-dot" id="microbitDot"></span>
           </div>
           <div class="led-grid" id="ledGrid"></div>
@@ -2425,11 +2440,11 @@ body {
       <!-- Chat Section -->
       <section class="chat-section" aria-label="Chat">
         <div class="chat-header">
-          <span class="chat-title">💬 Conversation</span>
-          <button class="btn-text" onclick="clearChat()" aria-label="Clear chat">Clear</button>
+          <span class="chat-title" data-i18n="chat_title_conversation">💬 Conversation</span>
+          <button class="btn-text" onclick="clearChat()" aria-label="Clear chat" data-i18n="btn_clear_plain" data-i18n-aria="aria_clear_chat">Clear</button>
         </div>
         <div class="chat-container" id="chatContainer" role="log" aria-live="polite"></div>
-        <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing">
+        <div class="typing-indicator hidden" id="typing" aria-label="Robot is typing" data-i18n-aria="aria_typing">
           <span class="typing-dot"></span>
           <span class="typing-dot"></span>
           <span class="typing-dot"></span>
@@ -2440,11 +2455,11 @@ body {
     <!-- ==================== INPUT AREA - REORGANIZED ==================== -->
     <div class="input-area">
       <div class="input-row">
-        <button class="btn-commands" onclick="toggleCommands()" aria-label="Show commands">📋</button>
-        <button class="btn-commands btn-games" onclick="toggleGames()" aria-label="Play games">🎮</button>
-        <input type="text" class="text-input" id="textInput" placeholder="Type a message..." autocomplete="off" aria-label="Message input">
-        <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input">🎤</button>
-        <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message">➤</button>
+        <button class="btn-commands" onclick="toggleCommands()" aria-label="Show commands" data-i18n-aria="aria_show_commands">📋</button>
+        <button class="btn-commands btn-games" onclick="toggleGames()" aria-label="Play games" data-i18n-aria="aria_play_games">🎮</button>
+        <input type="text" class="text-input" id="textInput" placeholder="Type a message..." data-i18n-placeholder="placeholder_type_message" autocomplete="off" aria-label="Message input" data-i18n-aria="aria_message_input">
+        <button class="btn-action btn-mic" id="btnMic" onclick="toggleListening()" aria-label="Voice input" data-i18n-aria="aria_voice_input">🎤</button>
+        <button class="btn-action btn-send" onclick="sendMessage()" aria-label="Send message" data-i18n-aria="aria_send">➤</button>
       </div>
     </div>
 
@@ -2454,90 +2469,90 @@ body {
     <!-- ==================== SETTINGS PANEL - TABBED ==================== -->
     <aside class="settings-panel" id="settingsPanel" aria-label="Settings">
       <div class="settings-header">
-        <span class="settings-title">⚙️ Settings</span>
-        <button class="btn-close" onclick="toggleSettings()" aria-label="Close settings">×</button>
+        <span class="settings-title" data-i18n="settings_title">⚙️ Settings</span>
+        <button class="btn-close" onclick="toggleSettings()" aria-label="Close settings" data-i18n-aria="aria_close_settings">×</button>
       </div>
-      
+
       <!-- Tab Navigation -->
       <div class="settings-tabs">
         <button class="tab-btn active" data-tab="kids" onclick="switchTab('kids')">
           <span class="tab-icon">🎨</span>
-          <span class="tab-label">Fun</span>
+          <span class="tab-label" data-i18n="tab_fun">Fun</span>
         </button>
         <button class="tab-btn" data-tab="setup" onclick="switchTab('setup')">
           <span class="tab-icon">🔧</span>
-          <span class="tab-label">Setup</span>
+          <span class="tab-label" data-i18n="tab_setup">Setup</span>
         </button>
         <button class="tab-btn" data-tab="advanced" onclick="switchTab('advanced')">
           <span class="tab-icon">⚡</span>
-          <span class="tab-label">Advanced</span>
+          <span class="tab-label" data-i18n="tab_advanced">Advanced</span>
         </button>
       </div>
-      
+
       <div class="settings-content">
         <!-- TAB 1: Kids / Fun Settings -->
         <div class="tab-pane active" id="tab-kids">
           <div class="setting-group">
-            <div class="setting-group-title">🤖 Robot Name</div>
-            <input type="text" class="form-input" id="robotName" placeholder="Name your robot..." value="Robo">
+            <div class="setting-group-title" data-i18n="section_robot_name">🤖 Robot Name</div>
+            <input type="text" class="form-input" id="robotName" placeholder="Name your robot..." data-i18n-placeholder="placeholder_robot_name" value="Robo">
           </div>
-          
+
           <div class="setting-group">
-            <div class="setting-group-title">✨ Personality</div>
+            <div class="setting-group-title" data-i18n="section_personality_short">✨ Personality</div>
             <div class="selection-grid cols-4">
               <button class="selection-btn active" data-p="playful" onclick="setPersonality('playful')">
                 <span class="icon">🎪</span>
-                <span class="label">Playful</span>
+                <span class="label" data-i18n="p_playful_name">Playful</span>
               </button>
               <button class="selection-btn" data-p="helpful" onclick="setPersonality('helpful')">
                 <span class="icon">🎓</span>
-                <span class="label">Helpful</span>
+                <span class="label" data-i18n="p_helpful_name">Helpful</span>
               </button>
               <button class="selection-btn" data-p="pirate" onclick="setPersonality('pirate')">
                 <span class="icon">🏴‍☠️</span>
-                <span class="label">Pirate</span>
+                <span class="label" data-i18n="p_pirate_name">Pirate</span>
               </button>
               <button class="selection-btn" data-p="space" onclick="setPersonality('space')">
                 <span class="icon">🚀</span>
-                <span class="label">Space</span>
+                <span class="label" data-i18n="p_space_name">Space</span>
               </button>
               <button class="selection-btn" data-p="superhero" onclick="setPersonality('superhero')">
                 <span class="icon">🦸</span>
-                <span class="label">Hero</span>
+                <span class="label" data-i18n="p_hero_name">Hero</span>
               </button>
               <button class="selection-btn" data-p="dinosaur" onclick="setPersonality('dinosaur')">
                 <span class="icon">🦖</span>
-                <span class="label">Dino</span>
+                <span class="label" data-i18n="p_dino_name">Dino</span>
               </button>
               <button class="selection-btn" data-p="fairy" onclick="setPersonality('fairy')">
                 <span class="icon">🧚</span>
-                <span class="label">Fairy</span>
+                <span class="label" data-i18n="p_fairy_name">Fairy</span>
               </button>
               <button class="selection-btn" data-p="ninja" onclick="setPersonality('ninja')">
                 <span class="icon">🥷</span>
-                <span class="label">Ninja</span>
+                <span class="label" data-i18n="p_ninja_name">Ninja</span>
               </button>
               <button class="selection-btn" data-p="wizard" onclick="setPersonality('wizard')">
                 <span class="icon">🧙</span>
-                <span class="label">Wizard</span>
+                <span class="label" data-i18n="p_wizard_name">Wizard</span>
               </button>
               <button class="selection-btn" data-p="cowboy" onclick="setPersonality('cowboy')">
                 <span class="icon">🤠</span>
-                <span class="label">Cowboy</span>
+                <span class="label" data-i18n="p_cowboy_name">Cowboy</span>
               </button>
               <button class="selection-btn" data-p="alien" onclick="setPersonality('alien')">
                 <span class="icon">👽</span>
-                <span class="label">Alien</span>
+                <span class="label" data-i18n="p_alien_name">Alien</span>
               </button>
               <button class="selection-btn" data-p="mermaid" onclick="setPersonality('mermaid')">
                 <span class="icon">🧜</span>
-                <span class="label">Mermaid</span>
+                <span class="label" data-i18n="p_mermaid_name">Mermaid</span>
               </button>
             </div>
           </div>
-          
+
           <div class="setting-group">
-            <div class="setting-group-title">🔊 Voice Speed</div>
+            <div class="setting-group-title" data-i18n="section_voice_speed">🔊 Voice Speed</div>
             <div class="slider-row">
               <span class="slider-icon">🐢</span>
               <input type="range" class="form-slider" id="voiceSpeed" min="0.5" max="2" step="0.1" value="1">
@@ -2545,44 +2560,44 @@ body {
               <span class="slider-value" id="speedValue">1.0x</span>
             </div>
           </div>
-          
+
           <div class="setting-group">
-            <div class="setting-group-title">🎭 Theme</div>
+            <div class="setting-group-title" data-i18n="section_theme">🎭 Theme</div>
             <div class="selection-grid">
               <button class="selection-btn active" data-theme="light" onclick="setTheme('light')">
                 <span class="icon">☀️</span>
-                <span class="label">Light</span>
+                <span class="label" data-i18n="theme_light">Light</span>
               </button>
               <button class="selection-btn" data-theme="dark" onclick="setTheme('dark')">
                 <span class="icon">🌙</span>
-                <span class="label">Dark</span>
+                <span class="label" data-i18n="theme_dark">Dark</span>
               </button>
             </div>
           </div>
         </div>
-        
+
         <!-- TAB 2: Setup / Parent Settings -->
         <div class="tab-pane" id="tab-setup">
           <div class="setting-group">
-            <div class="setting-group-title">🌍 Language</div>
+            <div class="setting-group-title" data-i18n="section_language">🌍 Language</div>
             <div class="selection-grid cols-3">
               <button class="selection-btn active" data-lang="en" onclick="setLanguage('en')">
-                <span class="icon">🇬🇧</span>
-                <span class="label">English</span>
+                <span class="icon"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="60" height="40" fill="#012169"/><path d="M0 0L60 40M60 0L0 40" stroke="#fff" stroke-width="6.5"/><path d="M0 0L60 40M60 0L0 40" stroke="#C8102E" stroke-width="3.5"/><path d="M30 0V40M0 20H60" stroke="#fff" stroke-width="11"/><path d="M30 0V40M0 20H60" stroke="#C8102E" stroke-width="6.5"/></svg></span>
+                <span class="label" data-i18n="lang_english">English</span>
               </button>
               <button class="selection-btn" data-lang="fr" onclick="setLanguage('fr')">
-                <span class="icon">🇫🇷</span>
-                <span class="label">Français</span>
+                <span class="icon"><svg width="24" height="16" viewBox="0 0 60 40"><rect width="20" height="40" fill="#002395"/><rect x="20" width="20" height="40" fill="#fff"/><rect x="40" width="20" height="40" fill="#ED2939"/></svg></span>
+                <span class="label" data-i18n="lang_french">Français</span>
               </button>
               <button class="selection-btn" data-lang="ar" onclick="setLanguage('ar')">
-                <span class="icon">🇸🇦</span>
-                <span class="label">العربية</span>
+                <span class="icon"><svg width="24" height="16" viewBox="0 0 900 600"><rect width="900" height="300" fill="#006233"/><rect y="300" width="900" height="300" fill="#FFF"/><rect y="240" width="900" height="120" fill="#D21034"/></svg></span>
+                <span class="label" data-i18n="lang_arabic">العربية</span>
               </button>
             </div>
           </div>
-          
+
           <div class="setting-group">
-            <div class="setting-group-title">🧠 AI Provider</div>
+            <div class="setting-group-title" data-i18n="section_ai_provider">🧠 AI Provider</div>
             <div class="selection-grid cols-3">
               <button class="selection-btn" data-provider="demo" onclick="setProvider('demo')">
                 <span class="icon">🎮</span>
@@ -2755,9 +2770,189 @@ const CONFIG = {
 
 const LANG = {
   en: { code: 'en-US', ready: 'Ready to chat!', listening: '🎤 Listening...', thinking: '🤔 Thinking...', speaking: '🔊 Speaking...' },
-  fr: { code: 'fr-FR', ready: 'Prêt à discuter!', listening: '🎤 J\'écoute...', thinking: '🤔 Je réfléchis...', speaking: '🔊 Je parle...' },
-  ar: { code: 'ar-SA', ready: '!جاهز للدردشة', listening: '...🎤 أستمع', thinking: '...🤔 أفكر', speaking: '...🔊 أتحدث' }
+  fr: { code: 'fr-FR', ready: 'Prêt à discuter !', listening: '🎤 J\'écoute...', thinking: '🤔 Je réfléchis...', speaking: '🔊 Je parle...' },
+  ar: { code: 'ar-SA', ready: 'جاهز للدردشة!', listening: '🎤 أستمع...', thinking: '🤔 أفكر...', speaking: '🔊 أتحدث...' }
 };
+
+/* =========== Trilingual i18n dictionary (EN / FR / AR) =========== */
+const I18N = {
+  en: {
+    app_title: "Bit-Bot",
+    app_subtitle: "Beep boop! Let's chat! 🤖",
+    disconnected: "Disconnected", connected: "Connected",
+    provider_demo: "Demo", provider_groq: "Groq", provider_gemini: "Gemini",
+    rate_limit_title: "⏳ Rate limit reached — using demo mode",
+    status_ready: "Ready to chat!",
+    microbit_display: "Micro:bit Display",
+    chat_title_conversation: "💬 Conversation",
+    btn_clear_plain: "Clear",
+    placeholder_type_message: "Type a message...",
+    placeholder_robot_name: "Name your robot...",
+    placeholder_robot_name_short: "Robot name...",
+    settings_title: "⚙️ Settings",
+    tab_fun: "Fun", tab_setup: "Setup", tab_advanced: "Advanced",
+    section_robot_name: "🤖 Robot Name",
+    section_personality_short: "✨ Personality",
+    section_voice_speed: "🔊 Voice Speed",
+    section_theme: "🎭 Theme",
+    section_language: "🌍 Language",
+    section_ai_provider: "🧠 AI Provider",
+    theme_light: "Light", theme_dark: "Dark",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    p_playful_name: "Playful", p_helpful_name: "Helpful",
+    p_pirate_name: "Pirate",   p_space_name: "Space",
+    p_hero_name: "Hero",       p_dino_name: "Dino",
+    p_fairy_name: "Fairy",     p_ninja_name: "Ninja",
+    p_wizard_name: "Wizard",   p_cowboy_name: "Cowboy",
+    p_alien_name: "Alien",     p_mermaid_name: "Mermaid",
+    onb_welcome_title: "Welcome!",
+    onb_welcome_desc: "Meet your new AI robot friend that talks, listens, and connects to your micro:bit!",
+    onb_get_started: "Get Started →",
+    onb_personalize_title: "Personalize",
+    onb_personalize_desc: "Give your robot a name and personality!",
+    onb_back: "← Back", onb_next: "Next →",
+    onb_connect_title: "Connect Micro:bit",
+    onb_connect_desc: "Connect via Bluetooth to see your robot's reactions!",
+    onb_connect_hint: "Click below to scan for your micro:bit",
+    onb_btn_connect: "🔗 Connect",
+    onb_skip: "Skip for now",
+    onb_ready_title: "You're Ready!",
+    onb_ready_desc: "Say \"Hello\" or tap the microphone to start chatting!",
+    onb_start_chatting: "🚀 Start Chatting!",
+    title_current_personality: "Current personality",
+    aria_open_menu: "Open menu", aria_close_settings: "Close settings",
+    aria_clear_chat: "Clear chat", aria_typing: "Robot is typing",
+    aria_message_input: "Message input", aria_voice_input: "Voice input",
+    aria_send: "Send message", aria_show_commands: "Show commands",
+    aria_play_games: "Play games",
+    joke_builtin: "Why did the robot take a nap? Because its battery was too tired! [haha] [happy]",
+    laugh_builtin: "Hahaha! That's so funny! [haha] [haha] [party]",
+    whoa_builtin: "Whoa! You shook me! [surprised] [wow]"
+  },
+  fr: {
+    app_title: "Bit-Bot",
+    app_subtitle: "Bip boup ! Discutons ! 🤖",
+    disconnected: "Déconnecté", connected: "Connecté",
+    provider_demo: "Démo", provider_groq: "Groq", provider_gemini: "Gemini",
+    rate_limit_title: "⏳ Limite atteinte — mode démo activé",
+    status_ready: "Prêt à discuter !",
+    microbit_display: "Écran Micro:bit",
+    chat_title_conversation: "💬 Conversation",
+    btn_clear_plain: "Effacer",
+    placeholder_type_message: "Écris un message...",
+    placeholder_robot_name: "Donne un nom à ton robot...",
+    placeholder_robot_name_short: "Nom du robot...",
+    settings_title: "⚙️ Réglages",
+    tab_fun: "Fun", tab_setup: "Config", tab_advanced: "Avancé",
+    section_robot_name: "🤖 Nom du robot",
+    section_personality_short: "✨ Personnalité",
+    section_voice_speed: "🔊 Vitesse de la voix",
+    section_theme: "🎭 Thème",
+    section_language: "🌍 Langue",
+    section_ai_provider: "🧠 Fournisseur IA",
+    theme_light: "Clair", theme_dark: "Sombre",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    p_playful_name: "Rigolo",   p_helpful_name: "Sage",
+    p_pirate_name: "Pirate",    p_space_name: "Astronaute",
+    p_hero_name: "Héros",       p_dino_name: "Dino",
+    p_fairy_name: "Fée",        p_ninja_name: "Ninja",
+    p_wizard_name: "Magicien",  p_cowboy_name: "Cowboy",
+    p_alien_name: "Alien",      p_mermaid_name: "Sirène",
+    onb_welcome_title: "Bienvenue !",
+    onb_welcome_desc: "Voici ton nouvel ami robot avec IA qui parle, écoute et se connecte à ton micro:bit !",
+    onb_get_started: "Commencer →",
+    onb_personalize_title: "Personnalise",
+    onb_personalize_desc: "Donne un nom et une personnalité à ton robot !",
+    onb_back: "← Retour", onb_next: "Suivant →",
+    onb_connect_title: "Connecte le Micro:bit",
+    onb_connect_desc: "Connecte-toi par Bluetooth pour voir réagir ton robot !",
+    onb_connect_hint: "Clique ci-dessous pour chercher ton micro:bit",
+    onb_btn_connect: "🔗 Connecter",
+    onb_skip: "Passer pour l'instant",
+    onb_ready_title: "Tu es prêt !",
+    onb_ready_desc: "Dis « Bonjour » ou touche le micro pour commencer à discuter !",
+    onb_start_chatting: "🚀 Commencer à discuter !",
+    title_current_personality: "Personnalité actuelle",
+    aria_open_menu: "Ouvrir le menu", aria_close_settings: "Fermer les réglages",
+    aria_clear_chat: "Effacer la discussion", aria_typing: "Le robot écrit",
+    aria_message_input: "Champ de message", aria_voice_input: "Entrée vocale",
+    aria_send: "Envoyer le message", aria_show_commands: "Afficher les commandes",
+    aria_play_games: "Jouer",
+    joke_builtin: "Pourquoi le robot a fait une sieste ? Parce que sa batterie était fatiguée ! [haha] [happy]",
+    laugh_builtin: "Hahaha ! C'est trop drôle ! [haha] [haha] [party]",
+    whoa_builtin: "Oh là là ! Tu m'as secoué ! [surprised] [wow]"
+  },
+  ar: {
+    app_title: "Bit-Bot",
+    app_subtitle: "بيب بوب! هيّا نتحدث! 🤖",
+    disconnected: "غير متصل", connected: "متصل",
+    provider_demo: "تجريبي", provider_groq: "غروك", provider_gemini: "جيميني",
+    rate_limit_title: "⏳ تم بلوغ الحد — يعمل بالوضع التجريبي",
+    status_ready: "جاهز للدردشة!",
+    microbit_display: "شاشة المايكروبِت",
+    chat_title_conversation: "💬 المحادثة",
+    btn_clear_plain: "مسح",
+    placeholder_type_message: "اكتب رسالة...",
+    placeholder_robot_name: "اختر اسماً للروبوت...",
+    placeholder_robot_name_short: "اسم الروبوت...",
+    settings_title: "⚙️ الإعدادات",
+    tab_fun: "مرح", tab_setup: "إعداد", tab_advanced: "متقدم",
+    section_robot_name: "🤖 اسم الروبوت",
+    section_personality_short: "✨ الشخصية",
+    section_voice_speed: "🔊 سرعة الصوت",
+    section_theme: "🎭 السمة",
+    section_language: "🌍 اللغة",
+    section_ai_provider: "🧠 مزود الذكاء الاصطناعي",
+    theme_light: "فاتح", theme_dark: "داكن",
+    lang_english: "English", lang_french: "Français", lang_arabic: "العربية",
+    p_playful_name: "المرح",     p_helpful_name: "المُعين",
+    p_pirate_name: "القرصان",    p_space_name: "الفضائي",
+    p_hero_name: "البطل",        p_dino_name: "الديناصور",
+    p_fairy_name: "الجنية",      p_ninja_name: "النينجا",
+    p_wizard_name: "الساحر",     p_cowboy_name: "راعي البقر",
+    p_alien_name: "الكائن الفضائي", p_mermaid_name: "حورية البحر",
+    onb_welcome_title: "مرحباً!",
+    onb_welcome_desc: "تعرّف على صديقك الروبوت الذكي الجديد الذي يتحدث، ويستمع، ويتصل بالمايكروبِت!",
+    onb_get_started: "ابدأ ←",
+    onb_personalize_title: "خصّص روبوتك",
+    onb_personalize_desc: "امنح روبوتك اسماً وشخصية!",
+    onb_back: "→ رجوع", onb_next: "التالي ←",
+    onb_connect_title: "اتصل بالمايكروبِت",
+    onb_connect_desc: "اتصل عبر البلوتوث لترى ردود فعل روبوتك!",
+    onb_connect_hint: "اضغط في الأسفل للبحث عن المايكروبِت",
+    onb_btn_connect: "🔗 اتصال",
+    onb_skip: "تخطَّ الآن",
+    onb_ready_title: "أنت جاهز!",
+    onb_ready_desc: "قل «مرحباً» أو اضغط على الميكروفون لبدء الدردشة!",
+    onb_start_chatting: "🚀 ابدأ الدردشة!",
+    title_current_personality: "الشخصية الحالية",
+    aria_open_menu: "فتح القائمة", aria_close_settings: "إغلاق الإعدادات",
+    aria_clear_chat: "مسح المحادثة", aria_typing: "الروبوت يكتب",
+    aria_message_input: "حقل الرسالة", aria_voice_input: "الإدخال الصوتي",
+    aria_send: "إرسال الرسالة", aria_show_commands: "عرض الأوامر",
+    aria_play_games: "اللعب",
+    joke_builtin: "لماذا أخذ الروبوت قيلولة؟ لأن بطاريته كانت متعبة! [haha] [happy]",
+    laugh_builtin: "هاهاها! هذا مضحك جداً! [haha] [haha] [party]",
+    whoa_builtin: "يا للهول! لقد هززتني! [surprised] [wow]"
+  }
+};
+const RTL_LANGS = { ar: true };
+function tr(key) {
+  const l = (state && state.lang) || 'en';
+  return (I18N[l] && I18N[l][key] !== undefined) ? I18N[l][key] : (I18N.en[key] !== undefined ? I18N.en[key] : key);
+}
+function applyLang(lang) {
+  if (!I18N[lang]) lang = 'en';
+  const html = document.documentElement;
+  html.lang = lang;
+  html.dir = RTL_LANGS[lang] ? 'rtl' : 'ltr';
+  document.querySelectorAll('[data-i18n]').forEach(el => { el.textContent = tr(el.dataset.i18n); });
+  document.querySelectorAll('[data-i18n-placeholder]').forEach(el => { el.placeholder = tr(el.dataset.i18nPlaceholder); });
+  document.querySelectorAll('[data-i18n-title]').forEach(el => { el.title = tr(el.dataset.i18nTitle); });
+  document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', tr(el.dataset.i18nAria)); });
+  document.querySelectorAll('.lang-flag-btn[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
+  try { localStorage.setItem('talkingRobot.lang', lang); } catch (e) {}
+}
 
 const COMMANDS = {
   emotions: { icon: '😊', name: 'Emotions', items: ['happy','sad','angry','surprised','love','sleepy','silly','crazy','wink','cool','wow','haha'] },
@@ -2943,7 +3138,7 @@ let state = {
   voicesLoaded: false, speechReady: false,
   lastTemp: null, lastLight: null,
   lang: 'en', provider: 'groq', personality: 'playful', robotName: 'Robo',
-  speed: 1, voice: '', continuous: false, theme: 'light', soundOff: false,
+  speed: 1, voice: '', continuous: false, theme: 'dark', soundOff: false,
   groqKey: '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', geminiKey: '', cohereKey: '', mistralKey: '', openrouterKey: '',
   rateLimitUntil: 0,
   chatMemory: { playful: [], helpful: [], pirate: [], space: [], superhero: [], dinosaur: [], fairy: [], ninja: [], wizard: [], cowboy: [], alien: [], mermaid: [] },
@@ -2968,6 +3163,11 @@ const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotNam
 // ==================== INIT ====================
 function init() {
   loadSettings();
+  try {
+    const savedLang = localStorage.getItem('talkingRobot.lang');
+    if (savedLang && I18N[savedLang]) state.lang = savedLang;
+  } catch (e) {}
+  applyLang(state.lang);
   loadChatMemory();
   renderChatFromMemory();
   setupLED();
@@ -3126,7 +3326,7 @@ function updateUI() {
   
   // Update connection badge
   connBadge.classList.toggle('connected', state.connected);
-  connText.textContent = state.connected ? 'Connected' : 'Disconnected';
+  connText.textContent = state.connected ? tr('connected') : tr('disconnected');
   microbitDot.classList.toggle('on', state.connected);
   
   // Update AI badge
@@ -3335,8 +3535,7 @@ function setLanguage(lang) {
   document.querySelectorAll('.selection-btn[data-lang]').forEach(btn => {
     btn.classList.toggle('active', btn.dataset.lang === lang);
   });
-  document.documentElement.lang = lang;
-  document.documentElement.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  applyLang(lang);
   robotStatus.textContent = LANG[lang].ready;
   
   // Show LED and speak greeting in new language
@@ -3991,9 +4190,22 @@ function handleRx(event) {
       // Handle input events
       else {
         log('RX: ' + line, 'rx');
-        
-        // Button and motion handlers
-        if (line === 'BTN_A') {
+
+        // NEW button/shake protocol (BTN:A:1, BTN:B:1, BTN:AB:1, BTN:LOGO:1, ACC:SHAKE)
+        if (line === 'BTN:A:1') {
+          cyclePersonalityFromDevice();
+        }
+        else if (line === 'BTN:B:1') {
+          tellBuiltInJoke();
+        }
+        else if (line === 'BTN:AB:1' || line === 'BTN:LOGO:1') {
+          robotLaugh();
+        }
+        else if (line === 'ACC:SHAKE') {
+          robotWhoa();
+        }
+        // Legacy protocol (kept for game input + older firmware)
+        else if (line === 'BTN_A') {
           if (currentGame) handleGameInput('btn_a');
           else toggleListening();
         }
@@ -4029,6 +4241,60 @@ async function sendCommand(cmd) {
       log('TX error: ' + e.message, 'error');
     }
   }
+}
+
+// ==================== DEVICE-INPUT ACTIONS (button + shake) ====================
+const PERSONALITY_ORDER_I = ['playful','helpful','pirate','space','superhero','dinosaur','fairy','ninja','wizard','cowboy','alien','mermaid'];
+function extractCmdsI(text) {
+  const cmds = [];
+  const clean = String(text || '').replace(/\[(\w+)\]/g, (_, c) => { cmds.push(c.toLowerCase()); return ''; }).trim();
+  return { clean, cmds };
+}
+function cyclePersonalityFromDevice() {
+  const idx = PERSONALITY_ORDER_I.indexOf(state.personality);
+  const next = PERSONALITY_ORDER_I[(idx + 1) % PERSONALITY_ORDER_I.length];
+  if (typeof setPersonality === 'function') setPersonality(next);
+}
+async function tellBuiltInJoke() {
+  let joke;
+  try {
+    const hasKey = (state.provider === 'groq' && state.groqKey) || (state.provider === 'gemini' && state.geminiKey);
+    if (hasKey && typeof getAIResponse === 'function') {
+      const langName = { en: 'English', fr: 'French', ar: 'Arabic' }[state.lang] || 'English';
+      joke = await getAIResponse('Tell me a short, kid-friendly joke in ' + langName + ' (one sentence). Include [haha] at the end.');
+    } else {
+      joke = tr('joke_builtin');
+    }
+  } catch (e) {
+    joke = tr('joke_builtin');
+  }
+  const { clean, cmds } = extractCmdsI(joke);
+  if (typeof addChat === 'function') addChat(clean || joke, 'robot');
+  for (const c of cmds) {
+    sendCommand(c);
+    if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
+  }
+  if (typeof speak === 'function') speak(clean || joke);
+}
+function robotLaugh() {
+  const t = tr('laugh_builtin');
+  const { clean, cmds } = extractCmdsI(t);
+  if (typeof addChat === 'function') addChat(clean, 'robot');
+  for (const c of cmds) {
+    sendCommand(c);
+    if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
+  }
+  if (typeof speak === 'function') speak(clean);
+}
+function robotWhoa() {
+  const t = tr('whoa_builtin');
+  const { clean, cmds } = extractCmdsI(t);
+  if (typeof addChat === 'function') addChat(clean, 'robot');
+  for (const c of cmds) {
+    sendCommand(c);
+    if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
+  }
+  if (typeof speak === 'function') speak(clean);
 }
 
 // ==================== COMMANDS PANEL ====================
@@ -4247,16 +4513,16 @@ function nextOnboardingStep() {
     const nameInput = $('onboardingName');
     state.robotName = nameInput.value.trim() || 'Robo';
     state.personality = selectedOnboardingPersonality;
-    if (robotNameInput) robotNameInput.value = state.robotName;
-    const finalRobotName = $('finalRobotName');
-    if (finalRobotName) finalRobotName.textContent = state.robotName;
-
+    robotNameInput.value = state.robotName;
+    const finalName = $('finalRobotName');
+    if (finalName) finalName.textContent = state.robotName;
+    
     // Update personality buttons in main app
     document.querySelectorAll('.selection-btn[data-p]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.p === state.personality);
     });
   }
-
+  
   if (currentOnboardingStep < 4) {
     currentOnboardingStep++;
     updateOnboardingProgress();

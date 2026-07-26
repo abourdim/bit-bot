@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl"><head><meta charset="UTF-8"><style>
+  @import url('https://fonts.googleapis.com/css2?family=Righteous&family=Orbitron:wght@500;700&family=Inter:wght@400;600;800;900&family=Tajawal:wght@400;700;900&display=swap');
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+  @page { size: A3 portrait; margin: 0; }
+  html, body { width: 297mm; height: 420mm; }
+  body {
+    font-family: 'Tajawal', 'Inter', sans-serif;
+    background: #020617;
+    color: #e8ffe8;
+    overflow: hidden;
+    -webkit-print-color-adjust: exact; print-color-adjust: exact;
+  }
+  .page { width: 297mm; height: 420mm; padding: 16mm 18mm 60mm; position: relative; overflow: hidden; }
+  .page::before {
+    content: ''; position: absolute; inset: 0; pointer-events: none;
+    background:
+      radial-gradient(circle at 18% 12%, rgba(34,197,94,.18) 0%, transparent 45%),
+      radial-gradient(circle at 85% 88%, rgba(34,211,238,.12) 0%, transparent 55%);
+  }
+  .page::after {
+    content: ''; position: absolute; inset: 10mm;
+    border: 1.5px solid rgba(34,197,94,.2); border-radius: 8mm;
+    pointer-events: none;
+  }
+
+  .kicker {
+    font-family: 'Orbitron', monospace; font-size: 11pt;
+    color: #22d3ee; letter-spacing: 0.25em;
+    margin-bottom: 4mm;
+    font-family: Inter, monospace;
+  }
+  .title {
+    font-family: 'Tajawal', sans-serif;
+    font-size: 62pt;
+    font-weight: 900;
+    color: #22c55e;
+    line-height: 1.05;
+    letter-spacing: normal;
+    text-shadow: 0 0 40px rgba(34,197,94,.3);
+    white-space: pre-line;
+    max-width: 240mm;
+  }
+  .subtitle {
+    font-size: 18pt;
+    font-weight: 600;
+    color: #cbd5e1;
+    margin-top: 6mm;
+    line-height: 1.35;
+    max-width: 240mm;
+  }
+
+  .hero-shot {
+    margin: 8mm auto 0;
+    width: 100%; max-width: 235mm; height: 180mm;
+    border-radius: 4mm; overflow: hidden;
+    box-shadow: 0 8mm 20mm rgba(0,0,0,.55), 0 0 0 1.5px rgba(34,197,94,.25);
+    background: #000;
+  }
+  .hero-shot img { width: 100%; height: 100%; object-fit: cover; object-position: center top; display: block; }
+
+  .features {
+    display: flex; gap: 5mm; margin-top: 6mm;
+    margin-bottom: 55mm;
+  }
+  .feat {
+    flex: 1;
+    background: rgba(15,23,42,.75);
+    border: 1px solid rgba(34,197,94,.18);
+    border-radius: 4mm;
+    padding: 5mm 4mm;
+  }
+  .feat .icon { font-size: 22pt; display: block; margin-bottom: 2mm; }
+  .feat h3 { color: #22c55e; font-size: 14pt; font-weight: 800; margin-bottom: 2mm; }
+  .feat p { color: #94a3b8; font-size: 10pt; line-height: 1.4; }
+
+  .qr-block {
+    position: absolute; bottom: 14mm; left: 18mm;
+    display: flex; align-items: center; gap: 5mm;
+    background: rgba(10,14,18,.92); color: #e8ffe8;
+    padding: 5mm 6mm; border-radius: 3mm;
+    border: 1px solid rgba(34,197,94,.3);
+  }
+  .qr-block img { width: 32mm; height: 32mm; background: #fff; padding: 1mm; border-radius: 1mm; display: block; }
+  .qr-block .qr-caption { font-weight: 700; font-size: 11pt; color: #22c55e; line-height: 1.2; margin-bottom: 1.5mm; }
+  .qr-block .qr-url { font-family: 'Orbitron', monospace; font-size: 8pt; color: #94a3b8; letter-spacing: 0.05em; }
+
+  .footer {
+    position: absolute; bottom: 14mm; right: 18mm;
+    max-width: 120mm;
+  }
+  .footer .left { font-size: 9pt; color: #64748b; }
+  .footer .brand { font-family: 'Orbitron', monospace; font-size: 11pt; color: #22c55e; letter-spacing: 0.12em; margin-top: 2mm; }
+</style></head>
+<body><div class="page">
+  <div class="kicker">BYOK · 6 مزوّدي ذكاء · رقابة أبوية</div>
+  <div class="title">رفيق ذكاءٍ اصطناعي للقاعة.
+في علامة تبويب.</div>
+  <div class="subtitle">تحدّث إلى 12 شخصية. صوت للدخول والخروج. بلا تتبّع.</div>
+
+  <div class="hero-shot"><img src="file://D:/work/dev/16_workshop/102_etsy/bit-bot/etsy-package/output/ar/screenshots/screenshot-chat.png"></div>
+
+  <div class="features">
+    
+    <div class="feat">
+      <span class="icon">🎭</span>
+      <h3>12 شخصية</h3>
+      <p>قرصان، أستاذ، محقق، طاهٍ، عالِم، شاعر — لكلٍّ برومبت وصوت وأسلوب.</p>
+    </div>
+    <div class="feat">
+      <span class="icon">🔑</span>
+      <h3>مفتاحك الخاص</h3>
+      <p>Groq, Gemini, Cohere, Mistral, OpenRouter — أو وضع Demo (بدون إنترنت) لأول 5 دقائق.</p>
+    </div>
+    <div class="feat">
+      <span class="icon">🛡️</span>
+      <h3>رقابة أبوية</h3>
+      <p>قفل الإعدادات برقم PIN، قصر الاستخدام على Demo، مؤقت مع خروج تلقائي. المفاتيح تبقى في المتصفح.</p>
+    </div>
+  </div>
+
+  <div class="qr-block">
+    <img src="data:image/png;base64,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">
+    <div>
+      <div class="qr-caption">امسح لتجربة العرض المباشر</div>
+      <div class="qr-url">abourdim.github.io/bit-bot</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    <div class="left">Chrome / Edge · بدون حساب · بلا تتبّع<br>قابل للتثبيت كـ PWA · متوافق مع المصدر المفتوح</div>
+    <div class="brand">bit-bot</div>
+  </div>
+</div></body></html>

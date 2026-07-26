@@ -1,0 +1,40 @@
+{
+  "_comment": "Social kit for bit-bot (AI chat companion). 12 personalities · 6 AI providers · voice in/out.",
+
+  "formats": [
+    { "name": "ig-post",    "w": 1080, "h": 1080, "label": "Instagram feed",   "layout": "square" },
+    { "name": "ig-story",   "w": 1080, "h": 1920, "label": "Instagram story",  "layout": "portrait" },
+    { "name": "twitter",    "w": 1200, "h": 675,  "label": "Twitter / X",      "layout": "landscape" },
+    { "name": "linkedin",   "w": 1200, "h": 627,  "label": "LinkedIn",         "layout": "landscape" }
+  ],
+
+  "screenshot": "screenshot-chat.png",
+
+  "en": {
+    "brand": "bit-bot",
+    "kicker": "BYOK · 6 AI PROVIDERS · PARENTAL CONTROLS",
+    "title": "12 personalities.\nVoice in. Voice out.",
+    "subtitle": "Chrome / Edge · Groq · Gemini · Cohere · Mistral · OpenRouter · Demo (offline)",
+    "cta": "Try the demo →",
+    "url": "abourdim.github.io/bit-bot",
+    "hashtags": "#AI  #EdTech  #BYOK  #STEM  #ClassroomAI"
+  },
+  "fr": {
+    "brand": "bit-bot",
+    "kicker": "BYOK · 6 IA · CONTRÔLE PARENTAL",
+    "title": "12 personnalités.\nVoix à l'entrée, voix à la sortie.",
+    "subtitle": "Chrome / Edge · Groq · Gemini · Cohere · Mistral · OpenRouter · Demo (hors ligne)",
+    "cta": "Essayer la démo →",
+    "url": "abourdim.github.io/bit-bot",
+    "hashtags": "#IA  #EdTech  #BYOK  #STEM  #IAscolaire"
+  },
+  "ar": {
+    "brand": "bit-bot",
+    "kicker": "BYOK · 6 مزوّدي ذكاء · رقابة أبوية",
+    "title": "12 شخصية.\nصوت للدخول والخروج.",
+    "subtitle": "Chrome / Edge · Groq · Gemini · Cohere · Mistral · OpenRouter · Demo",
+    "cta": "← جرّب العرض التوضيحي",
+    "url": "abourdim.github.io/bit-bot",
+    "hashtags": "#ذكاء_اصطناعي  #EdTech  #BYOK  #STEM"
+  }
+}
