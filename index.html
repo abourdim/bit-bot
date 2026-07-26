@@ -4247,15 +4247,16 @@ function nextOnboardingStep() {
     const nameInput = $('onboardingName');
     state.robotName = nameInput.value.trim() || 'Robo';
     state.personality = selectedOnboardingPersonality;
-    robotNameInput.value = state.robotName;
-    $('finalRobotName').textContent = state.robotName;
-    
+    if (robotNameInput) robotNameInput.value = state.robotName;
+    const finalRobotName = $('finalRobotName');
+    if (finalRobotName) finalRobotName.textContent = state.robotName;
+
     // Update personality buttons in main app
     document.querySelectorAll('.selection-btn[data-p]').forEach(btn => {
       btn.classList.toggle('active', btn.dataset.p === state.personality);
     });
   }
-  
+
   if (currentOnboardingStep < 4) {
     currentOnboardingStep++;
     updateOnboardingProgress();
