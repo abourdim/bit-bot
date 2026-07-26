@@ -37,7 +37,7 @@
 body {
   margin: 0; min-height: 100vh; min-height: 100dvh;
   font-family: var(--font); background: var(--bg); color: var(--text);
-  padding: 20px;
+  padding: 20px; padding-bottom: 100px;
 }
 .wrap { max-width: 720px; margin: 0 auto; }
 .back-link {
@@ -68,6 +68,12 @@ h1 { font-size: 1.6rem; margin: 0 0 4px; }
 }
 .steps a { color: var(--primary); font-weight: 700; text-decoration: none; }
 .steps a:hover { text-decoration: underline; }
+.copy-btn-bar {
+  position: fixed; left: 0; right: 0; bottom: 0; z-index: 50;
+  padding: 14px 20px calc(14px + env(safe-area-inset-bottom));
+  background: linear-gradient(to top, var(--bg) 65%, transparent);
+}
+.copy-btn-bar .inner { max-width: 720px; margin: 0 auto; }
 .copy-btn {
   width: 100%; border: none; border-radius: var(--radius-md);
   background: var(--primary); color: white; font-family: var(--font);
@@ -105,7 +111,6 @@ code {
 
     <div class="card">
       <div class="card-title">📋 Step 1 — Copy the code</div>
-      <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copy Code</button>
       <div class="status" id="status">Loading code…</div>
       <div class="code-wrap"><pre><code id="codeBlock">Loading…</code></pre></div>
     </div>
@@ -121,6 +126,12 @@ code {
         <li>Download the file and flash it to your micro:bit (drag &amp; drop)</li>
       </ol>
       <a class="open-makecode" href="https://makecode.microbit.org" target="_blank" rel="noopener">🔗 Open MakeCode Editor</a>
+    </div>
+  </div>
+
+  <div class="copy-btn-bar">
+    <div class="inner">
+      <button class="copy-btn" id="copyBtn" onclick="copyCode()">📋 Copy Code</button>
     </div>
   </div>
 
