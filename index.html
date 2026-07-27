@@ -2865,6 +2865,7 @@ const I18N = {
     onb_searching_btn: "Searching...",
     onb_connected_btn: "✓ Connected",
     onb_connected_toast: "Connected!",
+    toast_name_saved: "Name saved! ✅",
     onb_connected_text: "Connected to {name}!",
     onb_cancelled_text: "Connection cancelled. Try again or skip.",
     confirm_reset_data: "Reset all settings and clear data?",
@@ -2985,6 +2986,7 @@ const I18N = {
     onb_searching_btn: "Recherche...",
     onb_connected_btn: "✓ Connecté",
     onb_connected_toast: "Connecté !",
+    toast_name_saved: "Nom enregistré ! ✅",
     onb_connected_text: "Connecté à {name} !",
     onb_cancelled_text: "Connexion annulée. Réessaie ou passe cette étape.",
     confirm_reset_data: "Réinitialiser tous les réglages et effacer les données ?",
@@ -3105,6 +3107,7 @@ const I18N = {
     onb_searching_btn: "جارٍ البحث...",
     onb_connected_btn: "✓ متصل",
     onb_connected_toast: "متصل!",
+    toast_name_saved: "تم حفظ الاسم! ✅",
     onb_connected_text: "متصل بـ {name}!",
     onb_cancelled_text: "أُلغي الاتصال. أعد المحاولة أو تخطَّ.",
     confirm_reset_data: "إعادة ضبط جميع الإعدادات ومسح البيانات؟",
@@ -4587,7 +4590,8 @@ function setupEvents() {
   });
   
   apiKey.addEventListener('change', saveSettings);
-  robotNameInput.addEventListener('change', saveSettings);
+  robotNameInput.addEventListener('input', saveSettings);
+  robotNameInput.addEventListener('change', () => showToast(tr('toast_name_saved')));
   $('continuousListen').addEventListener('change', saveSettings);
   
   // Focus recovery for BLE
