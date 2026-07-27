@@ -2843,6 +2843,8 @@ const I18N = {
     onb_feat_microbit_t: "Micro:bit", onb_feat_microbit_d: "See reactions on your device",
     onb_feat_personality_t: "Personalities", onb_feat_personality_d: "Choose how your robot acts",
     onb_feat_tip_t: "Tip", onb_feat_tip_d: "Try saying \"tell me a joke\" or \"let's party\"",
+    onb_welcome_toast: "Welcome, {name} is ready!",
+    onb_welcome_chat_msg: "Hello! I'm {name}! Tap the 🎤 or type to chat with me!",
     title_current_personality: "Current personality",
     aria_open_menu: "Open menu", aria_close_settings: "Close settings",
     aria_clear_chat: "Clear chat", aria_typing: "Robot is typing",
@@ -2900,6 +2902,8 @@ const I18N = {
     onb_feat_microbit_t: "Micro:bit", onb_feat_microbit_d: "Vois les réactions sur ton appareil",
     onb_feat_personality_t: "Personnalités", onb_feat_personality_d: "Choisis comment ton robot se comporte",
     onb_feat_tip_t: "Astuce", onb_feat_tip_d: "Essaie de dire « raconte-moi une blague » ou « faisons la fête »",
+    onb_welcome_toast: "Bienvenue, {name} est prêt !",
+    onb_welcome_chat_msg: "Salut ! Je suis {name} ! Appuie sur 🎤 ou écris pour discuter avec moi !",
     title_current_personality: "Personnalité actuelle",
     aria_open_menu: "Ouvrir le menu", aria_close_settings: "Fermer les réglages",
     aria_clear_chat: "Effacer la discussion", aria_typing: "Le robot écrit",
@@ -2957,6 +2961,8 @@ const I18N = {
     onb_feat_microbit_t: "المايكروبِت", onb_feat_microbit_d: "شاهد ردود الفعل على جهازك",
     onb_feat_personality_t: "الشخصيات", onb_feat_personality_d: "اختر كيف يتصرف روبوتك",
     onb_feat_tip_t: "نصيحة", onb_feat_tip_d: "جرّب أن تقول «احكِ لي نكتة» أو «هيا نحتفل»",
+    onb_welcome_toast: "مرحباً، {name} جاهز!",
+    onb_welcome_chat_msg: "مرحباً! أنا {name}! اضغط على 🎤 أو اكتب للدردشة معي!",
     title_current_personality: "الشخصية الحالية",
     aria_open_menu: "فتح القائمة", aria_close_settings: "إغلاق الإعدادات",
     aria_clear_chat: "مسح المحادثة", aria_typing: "الروبوت يكتب",
@@ -4624,12 +4630,12 @@ function completeOnboarding() {
   
   // Show welcome toast
   setTimeout(() => {
-    showToast('Welcome, ' + state.robotName + ' is ready!', 'success');
+    showToast(tr('onb_welcome_toast').replace('{name}', state.robotName), 'success');
   }, 500);
-  
+
   // Add welcome message to chat
   setTimeout(() => {
-    const welcomeMsg = `Hello! I'm ${state.robotName}! Tap the 🎤 or type to chat with me! [happy] [wave]`;
+    const welcomeMsg = tr('onb_welcome_chat_msg').replace('{name}', state.robotName) + ' [happy] [wave]';
     addBubble('robot', welcomeMsg.replace(/\[.*?\]/g, '').trim());
     speak(welcomeMsg.replace(/\[.*?\]/g, '').trim());
     sendCommand('happy');
