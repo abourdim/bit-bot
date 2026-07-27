@@ -2253,15 +2253,15 @@ body {
         <div class="onboarding-features">
           <div class="feature-item">
             <div class="feature-icon">🎤</div>
-            <div class="feature-text"><strong>Voice Chat</strong>Talk naturally with your robot</div>
+            <div class="feature-text"><strong data-i18n="onb_feat_voice_t">Voice Chat</strong><span data-i18n="onb_feat_voice_d">Talk naturally with your robot</span></div>
           </div>
           <div class="feature-item">
             <div class="feature-icon">📡</div>
-            <div class="feature-text"><strong>Micro:bit</strong>See reactions on your device</div>
+            <div class="feature-text"><strong data-i18n="onb_feat_microbit_t">Micro:bit</strong><span data-i18n="onb_feat_microbit_d">See reactions on your device</span></div>
           </div>
           <div class="feature-item">
             <div class="feature-icon">🎭</div>
-            <div class="feature-text"><strong>Personalities</strong>Choose how your robot acts</div>
+            <div class="feature-text"><strong data-i18n="onb_feat_personality_t">Personalities</strong><span data-i18n="onb_feat_personality_d">Choose how your robot acts</span></div>
           </div>
         </div>
         
@@ -2281,51 +2281,51 @@ body {
         <div class="onboarding-personalities" id="onboardingPersonalities">
           <div class="onboarding-personality selected" data-p="playful" onclick="selectOnboardingPersonality('playful')">
             <span class="icon">🎪</span>
-            <span class="label">Playful</span>
+            <span class="label" data-i18n="p_playful_name">Playful</span>
           </div>
           <div class="onboarding-personality" data-p="helpful" onclick="selectOnboardingPersonality('helpful')">
             <span class="icon">🎓</span>
-            <span class="label">Helpful</span>
+            <span class="label" data-i18n="p_helpful_name">Helpful</span>
           </div>
           <div class="onboarding-personality" data-p="pirate" onclick="selectOnboardingPersonality('pirate')">
             <span class="icon">🏴‍☠️</span>
-            <span class="label">Pirate</span>
+            <span class="label" data-i18n="p_pirate_name">Pirate</span>
           </div>
           <div class="onboarding-personality" data-p="space" onclick="selectOnboardingPersonality('space')">
             <span class="icon">🚀</span>
-            <span class="label">Space</span>
+            <span class="label" data-i18n="p_space_name">Space</span>
           </div>
           <div class="onboarding-personality" data-p="superhero" onclick="selectOnboardingPersonality('superhero')">
             <span class="icon">🦸</span>
-            <span class="label">Hero</span>
+            <span class="label" data-i18n="p_hero_name">Hero</span>
           </div>
           <div class="onboarding-personality" data-p="dinosaur" onclick="selectOnboardingPersonality('dinosaur')">
             <span class="icon">🦖</span>
-            <span class="label">Dino</span>
+            <span class="label" data-i18n="p_dino_name">Dino</span>
           </div>
           <div class="onboarding-personality" data-p="fairy" onclick="selectOnboardingPersonality('fairy')">
             <span class="icon">🧚</span>
-            <span class="label">Fairy</span>
+            <span class="label" data-i18n="p_fairy_name">Fairy</span>
           </div>
           <div class="onboarding-personality" data-p="ninja" onclick="selectOnboardingPersonality('ninja')">
             <span class="icon">🥷</span>
-            <span class="label">Ninja</span>
+            <span class="label" data-i18n="p_ninja_name">Ninja</span>
           </div>
           <div class="onboarding-personality" data-p="wizard" onclick="selectOnboardingPersonality('wizard')">
             <span class="icon">🧙</span>
-            <span class="label">Wizard</span>
+            <span class="label" data-i18n="p_wizard_name">Wizard</span>
           </div>
           <div class="onboarding-personality" data-p="cowboy" onclick="selectOnboardingPersonality('cowboy')">
             <span class="icon">🤠</span>
-            <span class="label">Cowboy</span>
+            <span class="label" data-i18n="p_cowboy_name">Cowboy</span>
           </div>
           <div class="onboarding-personality" data-p="alien" onclick="selectOnboardingPersonality('alien')">
             <span class="icon">👽</span>
-            <span class="label">Alien</span>
+            <span class="label" data-i18n="p_alien_name">Alien</span>
           </div>
           <div class="onboarding-personality" data-p="mermaid" onclick="selectOnboardingPersonality('mermaid')">
             <span class="icon">🧜</span>
-            <span class="label">Mermaid</span>
+            <span class="label" data-i18n="p_mermaid_name">Mermaid</span>
           </div>
         </div>
         
@@ -2365,7 +2365,7 @@ body {
         <div class="onboarding-features">
           <div class="feature-item">
             <div class="feature-icon">💡</div>
-            <div class="feature-text"><strong>Tip</strong>Try saying "tell me a joke" or "let's party"</div>
+            <div class="feature-text"><strong data-i18n="onb_feat_tip_t">Tip</strong><span data-i18n="onb_feat_tip_d">Try saying "tell me a joke" or "let's party"</span></div>
           </div>
         </div>
         
@@ -2839,6 +2839,10 @@ const I18N = {
     onb_ready_title: "You're Ready!",
     onb_ready_desc: "Say \"Hello\" or tap the microphone to start chatting!",
     onb_start_chatting: "🚀 Start Chatting!",
+    onb_feat_voice_t: "Voice Chat", onb_feat_voice_d: "Talk naturally with your robot",
+    onb_feat_microbit_t: "Micro:bit", onb_feat_microbit_d: "See reactions on your device",
+    onb_feat_personality_t: "Personalities", onb_feat_personality_d: "Choose how your robot acts",
+    onb_feat_tip_t: "Tip", onb_feat_tip_d: "Try saying \"tell me a joke\" or \"let's party\"",
     title_current_personality: "Current personality",
     aria_open_menu: "Open menu", aria_close_settings: "Close settings",
     aria_clear_chat: "Clear chat", aria_typing: "Robot is typing",
@@ -2892,6 +2896,10 @@ const I18N = {
     onb_ready_title: "Tu es prêt !",
     onb_ready_desc: "Dis « Bonjour » ou touche le micro pour commencer à discuter !",
     onb_start_chatting: "🚀 Commencer à discuter !",
+    onb_feat_voice_t: "Chat vocal", onb_feat_voice_d: "Parle naturellement avec ton robot",
+    onb_feat_microbit_t: "Micro:bit", onb_feat_microbit_d: "Vois les réactions sur ton appareil",
+    onb_feat_personality_t: "Personnalités", onb_feat_personality_d: "Choisis comment ton robot se comporte",
+    onb_feat_tip_t: "Astuce", onb_feat_tip_d: "Essaie de dire « raconte-moi une blague » ou « faisons la fête »",
     title_current_personality: "Personnalité actuelle",
     aria_open_menu: "Ouvrir le menu", aria_close_settings: "Fermer les réglages",
     aria_clear_chat: "Effacer la discussion", aria_typing: "Le robot écrit",
@@ -2945,6 +2953,10 @@ const I18N = {
     onb_ready_title: "أنت جاهز!",
     onb_ready_desc: "قل «مرحباً» أو اضغط على الميكروفون لبدء الدردشة!",
     onb_start_chatting: "🚀 ابدأ الدردشة!",
+    onb_feat_voice_t: "الدردشة الصوتية", onb_feat_voice_d: "تحدّث بشكل طبيعي مع روبوتك",
+    onb_feat_microbit_t: "المايكروبِت", onb_feat_microbit_d: "شاهد ردود الفعل على جهازك",
+    onb_feat_personality_t: "الشخصيات", onb_feat_personality_d: "اختر كيف يتصرف روبوتك",
+    onb_feat_tip_t: "نصيحة", onb_feat_tip_d: "جرّب أن تقول «احكِ لي نكتة» أو «هيا نحتفل»",
     title_current_personality: "الشخصية الحالية",
     aria_open_menu: "فتح القائمة", aria_close_settings: "إغلاق الإعدادات",
     aria_clear_chat: "مسح المحادثة", aria_typing: "الروبوت يكتب",
