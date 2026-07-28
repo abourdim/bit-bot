@@ -219,6 +219,26 @@ body {
   color: var(--accent);
 }
 
+/* Firmware badge (beside Connect) */
+.firmware-badge {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+  text-decoration: none;
+}
+.firmware-badge:hover { border-color: var(--primary); color: var(--primary); }
+
 /* AI Mode badge */
 .ai-badge {
   display: flex;
@@ -2414,6 +2434,10 @@ body {
           <span class="conn-dot"></span>
           <span id="connText" data-i18n="disconnected">Disconnected</span>
         </button>
+        <a class="firmware-badge" href="flash.html" aria-label="Get micro:bit firmware">
+          <span>🤖</span>
+          <span data-i18n="firmware_btn">Firmware</span>
+        </a>
         <button class="btn-menu" onclick="toggleSettings()" aria-label="Open menu" data-i18n-aria="aria_open_menu">☰</button>
       </div>
     </header>
@@ -2611,12 +2635,6 @@ body {
           </div>
 
           <div class="setting-group">
-            <div class="setting-group-title">🤖 Micro:bit Code</div>
-            <a class="btn-outline" href="flash.html" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; text-decoration:none;">📋 Copy micro:bit Code</a>
-            <div class="form-hint">Flash this once so your micro:bit can talk to Bit-Bot</div>
-          </div>
-
-          <div class="setting-group">
             <div class="setting-group-title" data-i18n="section_ai_provider">🧠 AI Provider</div>
             <div class="selection-grid cols-3">
               <button class="selection-btn" data-provider="demo" onclick="setProvider('demo')">
@@ -2800,6 +2818,7 @@ const I18N = {
     app_title: "Bit-Bot",
     app_subtitle: "Beep boop! Let's chat! 🤖",
     disconnected: "Disconnected", connected: "Connected",
+    firmware_btn: "Firmware",
     provider_demo: "Demo", provider_groq: "Groq", provider_gemini: "Gemini",
     rate_limit_title: "⏳ Rate limit reached — using demo mode",
     status_ready: "Ready to chat!",
@@ -2936,6 +2955,7 @@ const I18N = {
     app_title: "Bit-Bot",
     app_subtitle: "Bip boup ! Discutons ! 🤖",
     disconnected: "Déconnecté", connected: "Connecté",
+    firmware_btn: "Micrologiciel",
     provider_demo: "Démo", provider_groq: "Groq", provider_gemini: "Gemini",
     rate_limit_title: "⏳ Limite atteinte — mode démo activé",
     status_ready: "Prêt à discuter !",
@@ -3072,6 +3092,7 @@ const I18N = {
     app_title: "Bit-Bot",
     app_subtitle: "بيب بوب! هيّا نتحدث! 🤖",
     disconnected: "غير متصل", connected: "متصل",
+    firmware_btn: "البرنامج",
     provider_demo: "تجريبي", provider_groq: "غروك", provider_gemini: "جيميني",
     rate_limit_title: "⏳ تم بلوغ الحد — يعمل بالوضع التجريبي",
     status_ready: "جاهز للدردشة!",
