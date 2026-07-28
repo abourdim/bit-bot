@@ -218,6 +218,14 @@ body {
   background: var(--accent-soft);
   color: var(--accent);
 }
+.conn-disconnect-icon {
+  display: none;
+  font-size: 0.7rem;
+  margin-inline-start: 2px;
+}
+.conn-badge.connected .conn-disconnect-icon {
+  display: inline;
+}
 
 /* Firmware badge (beside Connect) */
 .firmware-badge {
@@ -2433,6 +2441,7 @@ body {
         <button class="conn-badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
           <span class="conn-dot"></span>
           <span id="connText" data-i18n="disconnected">Disconnected</span>
+          <span class="conn-disconnect-icon" aria-hidden="true">✕</span>
         </button>
         <a class="firmware-badge" href="flash.html" aria-label="Get micro:bit firmware">
           <span>🤖</span>
@@ -2888,6 +2897,7 @@ const I18N = {
     onb_connected_text: "Connected to {name}!",
     onb_cancelled_text: "Connection cancelled. Try again or skip.",
     confirm_reset_data: "Reset all settings and clear data?",
+    confirm_disconnect: "Disconnect from your micro:bit?",
     alert_no_logs: "No logs to export",
     games_title: "🎮 AI Games",
     games_info: "Interactive games using micro:bit + AI!",
@@ -3025,6 +3035,7 @@ const I18N = {
     onb_connected_text: "Connecté à {name} !",
     onb_cancelled_text: "Connexion annulée. Réessaie ou passe cette étape.",
     confirm_reset_data: "Réinitialiser tous les réglages et effacer les données ?",
+    confirm_disconnect: "Se déconnecter de ton micro:bit ?",
     alert_no_logs: "Aucun journal à exporter",
     games_title: "🎮 Jeux IA",
     games_info: "Jeux interactifs avec micro:bit + IA !",
@@ -3162,6 +3173,7 @@ const I18N = {
     onb_connected_text: "متصل بـ {name}!",
     onb_cancelled_text: "أُلغي الاتصال. أعد المحاولة أو تخطَّ.",
     confirm_reset_data: "إعادة ضبط جميع الإعدادات ومسح البيانات؟",
+    confirm_disconnect: "هل تريد فصل الاتصال بجهاز المايكروبِت؟",
     alert_no_logs: "لا توجد سجلات لتصديرها",
     games_title: "🎮 ألعاب الذكاء الاصطناعي",
     games_info: "ألعاب تفاعلية باستخدام المايكروبِت والذكاء الاصطناعي!",
@@ -4386,6 +4398,7 @@ async function getAIResponse(text) {
 // ==================== BLUETOOTH ====================
 async function toggleConnection() {
   if (state.connected) {
+    if (!confirm(tr('confirm_disconnect'))) return;
     if (state.device?.gatt?.connected) {
       state.device.gatt.disconnect();
     }
