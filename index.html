@@ -196,7 +196,7 @@ body {
 }
 
 /* Connection badge - primary status indicator */
-.conn-badge {
+.conn-status {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -207,24 +207,39 @@ body {
   font-size: 0.75rem;
   font-weight: 700;
   color: var(--text-secondary);
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.conn-status.connected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Connect / Disconnect action button */
+.conn-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 800;
   cursor: pointer;
   transition: all 0.2s;
   text-transform: uppercase;
   letter-spacing: 0.02em;
 }
-.conn-badge:hover { border-color: var(--primary); }
-.conn-badge.connected {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
-.conn-disconnect-icon {
-  display: none;
-  font-size: 0.7rem;
-  margin-inline-start: 2px;
-}
-.conn-badge.connected .conn-disconnect-icon {
-  display: inline;
+.conn-action-btn:hover { opacity: 0.9; }
+.conn-action-btn.connected {
+  border-color: #ef4444;
+  background: transparent;
+  color: #ef4444;
 }
 
 /* Firmware badge (beside Connect) */
@@ -2438,10 +2453,13 @@ body {
           <span id="aiIcon">🎮</span>
           <span id="aiName" data-i18n="provider_demo">Demo</span>
         </div>
-        <button class="conn-badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
+        <div class="conn-status" id="connStatus" aria-label="Connection status">
           <span class="conn-dot"></span>
           <span id="connText" data-i18n="disconnected">Disconnected</span>
-          <span class="conn-disconnect-icon" aria-hidden="true">✕</span>
+        </div>
+        <button class="conn-action-btn" id="connActionBtn" onclick="toggleConnection()">
+          <span id="connActionIcon">🔗</span>
+          <span id="connActionText" data-i18n="onb_btn_connect">Connect</span>
         </button>
         <a class="firmware-badge" href="flash.html" aria-label="Get micro:bit firmware">
           <span>🤖</span>
@@ -2828,6 +2846,7 @@ const I18N = {
     app_subtitle: "Beep boop! Let's chat! 🤖",
     disconnected: "Disconnected", connected: "Connected",
     firmware_btn: "Firmware",
+    action_disconnect: "Disconnect",
     provider_demo: "Demo", provider_groq: "Groq", provider_gemini: "Gemini",
     rate_limit_title: "⏳ Rate limit reached — using demo mode",
     status_ready: "Ready to chat!",
@@ -2966,6 +2985,7 @@ const I18N = {
     app_subtitle: "Bip boup ! Discutons ! 🤖",
     disconnected: "Déconnecté", connected: "Connecté",
     firmware_btn: "Micrologiciel",
+    action_disconnect: "Déconnecter",
     provider_demo: "Démo", provider_groq: "Groq", provider_gemini: "Gemini",
     rate_limit_title: "⏳ Limite atteinte — mode démo activé",
     status_ready: "Prêt à discuter !",
@@ -3104,6 +3124,7 @@ const I18N = {
     app_subtitle: "بيب بوب! هيّا نتحدث! 🤖",
     disconnected: "غير متصل", connected: "متصل",
     firmware_btn: "البرنامج",
+    action_disconnect: "قطع الاتصال",
     provider_demo: "تجريبي", provider_groq: "غروك", provider_gemini: "جيميني",
     rate_limit_title: "⏳ تم بلوغ الحد — يعمل بالوضع التجريبي",
     status_ready: "جاهز للدردشة!",
@@ -3463,7 +3484,8 @@ const robotBody = $('robotBody'), robotStatus = $('robotStatus'), chatContainer 
 const textInput = $('textInput'), btnMic = $('btnMic'), typing = $('typing'), logsContent = $('logsContent');
 const ledGrid = $('ledGrid'), overlay = $('overlay');
 const settingsPanel = $('settingsPanel'), logsPanel = $('logsPanel'), commandsPanel = $('commandsPanel');
-const connBadge = $('connBadge'), connText = $('connText'), microbitDot = $('microbitDot');
+const connStatus = $('connStatus'), connText = $('connText'), microbitDot = $('microbitDot');
+const connActionBtn = $('connActionBtn'), connActionIcon = $('connActionIcon'), connActionText = $('connActionText');
 const aiBadge = $('aiBadge'), aiIcon = $('aiIcon'), aiName = $('aiName');
 const voiceSpeed = $('voiceSpeed'), speedValue = $('speedValue'), voiceSelect = $('voiceSelect');
 const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotName');
@@ -3632,9 +3654,12 @@ function updateUI() {
     btn.classList.toggle('active', btn.dataset.provider === state.provider);
   });
   
-  // Update connection badge
-  connBadge.classList.toggle('connected', state.connected);
+  // Update connection status + action button
+  connStatus.classList.toggle('connected', state.connected);
   connText.textContent = state.connected ? tr('connected') : tr('disconnected');
+  connActionBtn.classList.toggle('connected', state.connected);
+  connActionIcon.textContent = state.connected ? '🔌' : '🔗';
+  connActionText.textContent = state.connected ? tr('action_disconnect') : tr('onb_btn_connect');
   microbitDot.classList.toggle('on', state.connected);
   
   // Update AI badge
