@@ -4147,10 +4147,11 @@ async function handleUserInput(text) {
   addBubble('robot', cleanText || response);
   speak(cleanText || response);
   
-  // Update LED immediately, send commands to micro:bit in parallel
+  // Update LED immediately, send commands to micro:bit one at a time
+  // (Web Bluetooth throws "GATT operation already in progress" if writes overlap)
   for (const cmd of commands) {
     updateLEDFromCommand(cmd);
-    sendCommand(cmd);
+    await sendCommand(cmd);
   }
 }
 
@@ -4459,16 +4460,25 @@ function handleRx(event) {
   }
 }
 
+// Serializes all BLE writes app-wide so overlapping callers (chat replies,
+// button events, etc.) queue instead of racing and hitting
+// "GATT operation already in progress".
+let bleWriteQueue = Promise.resolve();
+
 async function sendCommand(cmd) {
   // Send to micro:bit if connected
   if (state.writeChar) {
-    try {
-      const data = new TextEncoder().encode(cmd + '\n');
-      await state.writeChar.writeValue(data);
-      log('TX: ' + cmd, 'tx');
-    } catch (e) {
-      log('TX error: ' + e.message, 'error');
-    }
+    const run = async () => {
+      try {
+        const data = new TextEncoder().encode(cmd + '\n');
+        await state.writeChar.writeValue(data);
+        log('TX: ' + cmd, 'tx');
+      } catch (e) {
+        log('TX error: ' + e.message, 'error');
+      }
+    };
+    bleWriteQueue = bleWriteQueue.then(run, run);
+    await bleWriteQueue;
   }
 }
 
@@ -4500,27 +4510,27 @@ async function tellBuiltInJoke() {
   const { clean, cmds } = extractCmdsI(joke);
   if (typeof addChat === 'function') addChat(clean || joke, 'robot');
   for (const c of cmds) {
-    sendCommand(c);
+    await sendCommand(c);
     if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
   }
   if (typeof speak === 'function') speak(clean || joke);
 }
-function robotLaugh() {
+async function robotLaugh() {
   const t = tr('laugh_builtin');
   const { clean, cmds } = extractCmdsI(t);
   if (typeof addChat === 'function') addChat(clean, 'robot');
   for (const c of cmds) {
-    sendCommand(c);
+    await sendCommand(c);
     if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
   }
   if (typeof speak === 'function') speak(clean);
 }
-function robotWhoa() {
+async function robotWhoa() {
   const t = tr('whoa_builtin');
   const { clean, cmds } = extractCmdsI(t);
   if (typeof addChat === 'function') addChat(clean, 'robot');
   for (const c of cmds) {
-    sendCommand(c);
+    await sendCommand(c);
     if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
   }
   if (typeof speak === 'function') speak(clean);

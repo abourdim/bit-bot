@@ -23,7 +23,7 @@
  */
 
 // ==================== CONFIGURATION ====================
-const TILT_THRESHOLD = 300  // Tilt sensitivity (lower = more sensitive)
+const TILT_THRESHOLD = 700  // Tilt sensitivity (lower = more sensitive)
 const SHAKE_THRESHOLD = 1500  // Shake detection threshold
 let lastTiltTime = 0
 let lastShakeTime = 0
