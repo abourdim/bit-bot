@@ -299,6 +299,30 @@ body {
   background: var(--primary-soft);
 }
 
+.help-overlay {
+  display: none; position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.6);
+  align-items: flex-start; justify-content: center;
+  padding: 24px 16px; overflow-y: auto;
+}
+.help-overlay.open { display: flex; }
+.help-card {
+  width: 100%; max-width: 480px; background: var(--surface);
+  border: 1px solid var(--border); border-radius: var(--radius-lg);
+  box-shadow: var(--shadow-lg); padding: 20px;
+}
+.help-card-header { display: flex; align-items: center; justify-content: space-between; margin-bottom: 12px; }
+.help-card-header h2 { font-size: 1.1rem; margin: 0; color: var(--text); }
+.help-close-btn {
+  width: 28px; height: 28px; border-radius: var(--radius-sm);
+  border: 1px solid var(--border); background: transparent;
+  color: var(--text); cursor: pointer; font-size: 1rem;
+}
+.help-close-btn:hover { background: var(--primary-soft); border-color: var(--primary); }
+.help-section { margin-bottom: 14px; }
+.help-section-title { font-weight: 700; color: var(--primary); margin-bottom: 4px; display: flex; align-items: center; gap: 6px; }
+.help-section-body { font-size: 0.9rem; color: var(--text-secondary); line-height: 1.5; }
+
 /* Mobile header adjustments */
 @media (max-width: 480px) {
   .header-center { display: none; }
@@ -2414,9 +2438,45 @@ body {
           <span class="conn-dot"></span>
           <span id="connText" data-i18n="disconnected">Disconnected</span>
         </button>
+        <button class="btn-menu" onclick="toggleHelp(true)" aria-label="Help" title="Help">❓</button>
         <button class="btn-menu" onclick="toggleSettings()" aria-label="Open menu" data-i18n-aria="aria_open_menu">☰</button>
       </div>
     </header>
+
+    <!-- ==================== HELP MODAL ==================== -->
+    <div class="help-overlay" id="helpOverlay" onclick="if(event.target===this) toggleHelp(false)">
+      <div class="help-card">
+        <div class="help-card-header">
+          <h2 data-i18n="help_title">❓ How to use Bit-Bot</h2>
+          <button class="help-close-btn" onclick="toggleHelp(false)" aria-label="Close">✕</button>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">🎤 <span data-i18n="help_chat_title">Talk to your robot</span></div>
+          <div class="help-section-body" data-i18n="help_chat_body">Tap the microphone or type a message, then hit send.</div>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">🎭 <span data-i18n="help_personality_title">Name & personality</span></div>
+          <div class="help-section-body" data-i18n="help_personality_body">Open Settings (☰) → Fun to give your robot a name and pick a personality.</div>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">📡 <span data-i18n="help_ble_title">Connect a micro:bit</span></div>
+          <div class="help-section-body" data-i18n="help_ble_body">Tap the connection badge in the header to pair over Bluetooth. Need the code first? Settings → Setup → "Copy micro:bit Code".</div>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">🎮 <span data-i18n="help_games_title">Commands & games</span></div>
+          <div class="help-section-body" data-i18n="help_games_body">Use the 📋 and 🎮 buttons above the message box for quick commands and AI-powered mini-games.</div>
+        </div>
+
+        <div class="help-section">
+          <div class="help-section-title">💡 <span data-i18n="help_tips_title">Tips</span></div>
+          <div class="help-section-body" data-i18n="help_tips_body">Use Chrome or Edge. Voice and Bluetooth need https:// or localhost (not file:///).</div>
+        </div>
+      </div>
+    </div>
 
     <!-- ==================== MAIN CONTENT ==================== -->
     <main class="main" id="main">
@@ -2915,7 +2975,18 @@ const I18N = {
     game_sci_end_speak: "Great science work! You're a real scientist now!",
     ai_lang_directive: "Respond in English.",
     game_quit_msg: "👋 Okay, we stopped the game. Want to play again later?",
-    game_quit_speak: "Okay, we stopped the game. Want to play again later?"
+    game_quit_speak: "Okay, we stopped the game. Want to play again later?",
+    help_title: "❓ How to use Bit-Bot",
+    help_chat_title: "Talk to your robot",
+    help_chat_body: "Tap the microphone or type a message, then hit send.",
+    help_personality_title: "Name & personality",
+    help_personality_body: 'Open Settings (☰) → Fun to give your robot a name and pick a personality.',
+    help_ble_title: "Connect a micro:bit",
+    help_ble_body: 'Tap the connection badge in the header to pair over Bluetooth. Need the code first? Settings → Setup → "Copy micro:bit Code".',
+    help_games_title: "Commands & games",
+    help_games_body: "Use the 📋 and 🎮 buttons above the message box for quick commands and AI-powered mini-games.",
+    help_tips_title: "Tips",
+    help_tips_body: "Use Chrome or Edge. Voice and Bluetooth need https:// or localhost (not file:///)."
   },
   fr: {
     app_title: "Bit-Bot",
@@ -3036,7 +3107,18 @@ const I18N = {
     game_sci_end_speak: "Excellent travail scientifique ! Tu es un vrai scientifique maintenant !",
     ai_lang_directive: "Réponds en français.",
     game_quit_msg: "👋 D'accord, on a arrêté le jeu. Tu veux rejouer plus tard ?",
-    game_quit_speak: "D'accord, on a arrêté le jeu. Tu veux rejouer plus tard ?"
+    game_quit_speak: "D'accord, on a arrêté le jeu. Tu veux rejouer plus tard ?",
+    help_title: "❓ Comment utiliser Bit-Bot",
+    help_chat_title: "Parle à ton robot",
+    help_chat_body: "Appuie sur le micro ou écris un message, puis envoie.",
+    help_personality_title: "Nom & personnalité",
+    help_personality_body: "Ouvre les Réglages (☰) → Fun pour donner un nom à ton robot et choisir une personnalité.",
+    help_ble_title: "Connecter un micro:bit",
+    help_ble_body: "Appuie sur le badge de connexion dans l'en-tête pour l'appairer en Bluetooth. Besoin du code d'abord ? Réglages → Config → « Copier le code micro:bit ».",
+    help_games_title: "Commandes & jeux",
+    help_games_body: "Utilise les boutons 📋 et 🎮 au-dessus de la zone de message pour des commandes rapides et des mini-jeux IA.",
+    help_tips_title: "Astuces",
+    help_tips_body: "Utilise Chrome ou Edge. La voix et le Bluetooth nécessitent https:// ou localhost (pas file:///)."
   },
   ar: {
     app_title: "Bit-Bot",
@@ -3157,7 +3239,18 @@ const I18N = {
     game_sci_end_speak: "عمل علمي رائع! أنت عالم حقيقي الآن!",
     ai_lang_directive: "أجب باللغة العربية.",
     game_quit_msg: "👋 حسناً، أوقفنا اللعبة. تريد اللعب مرة أخرى لاحقاً؟",
-    game_quit_speak: "حسناً، أوقفنا اللعبة. تريد اللعب مرة أخرى لاحقاً؟"
+    game_quit_speak: "حسناً، أوقفنا اللعبة. تريد اللعب مرة أخرى لاحقاً؟",
+    help_title: "❓ كيفية استخدام Bit-Bot",
+    help_chat_title: "تحدث مع روبوتك",
+    help_chat_body: "اضغط على الميكروفون أو اكتب رسالة، ثم أرسل.",
+    help_personality_title: "الاسم والشخصية",
+    help_personality_body: "افتح الإعدادات (☰) ← مرح لتمنح روبوتك اسماً وتختار شخصية.",
+    help_ble_title: "توصيل المايكروبِت",
+    help_ble_body: "اضغط شارة الاتصال في الأعلى للاقتران عبر البلوتوث. تحتاج الكود أولاً؟ الإعدادات ← إعداد ← «نسخ كود المايكروبِت».",
+    help_games_title: "الأوامر والألعاب",
+    help_games_body: "استخدم زري 📋 و🎮 فوق مربع الرسالة للأوامر السريعة والألعاب المدعومة بالذكاء الاصطناعي.",
+    help_tips_title: "نصائح",
+    help_tips_body: "استخدم Chrome أو Edge. يحتاج الصوت والبلوتوث إلى https:// أو localhost (وليس file:///)."
   }
 };
 const RTL_LANGS = { ar: true };
@@ -3638,6 +3731,13 @@ function toggleSettings() {
   // No overlay - let user interact freely
   if (!isOpen) saveSettings();
 }
+
+function toggleHelp(open) {
+  $('helpOverlay').classList.toggle('open', open);
+}
+document.addEventListener('keydown', (e) => {
+  if (e.key === 'Escape' && $('helpOverlay').classList.contains('open')) toggleHelp(false);
+});
 
 function toggleCommands() {
   const isOpen = commandsPanel.classList.toggle('open');
