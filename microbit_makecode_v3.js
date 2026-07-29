@@ -1,7 +1,11 @@
 /**
+ * App: Bit-Bot
+ * Last modified: 2026-07-28 08:46 CEST
+ * Credits: Workshop-DIY (https://workshop-diy.org)
+ *
  * bit-bot V3 - Micro:bit MakeCode JavaScript
- * VERSION: 3.0 with AI Games Support
- * 
+ * VERSION: 3.1 with AI Games Support
+ *
  * NEW FEATURES:
  * - Tilt detection (LEFT/RIGHT) for quiz answers
  * - Shake detection for adventure exploration
@@ -23,7 +27,7 @@
  */
 
 // ==================== CONFIGURATION ====================
-const TILT_THRESHOLD = 300  // Tilt sensitivity (lower = more sensitive)
+const TILT_THRESHOLD = 700  // Tilt sensitivity (lower = more sensitive)
 const SHAKE_THRESHOLD = 1500  // Shake detection threshold
 let lastTiltTime = 0
 let lastShakeTime = 0

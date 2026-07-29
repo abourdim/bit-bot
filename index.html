@@ -192,11 +192,60 @@ body {
 .header-actions {
   display: flex;
   align-items: center;
+  flex-wrap: wrap;
+  justify-content: flex-end;
   gap: 8px;
 }
 
 /* Connection badge - primary status indicator */
-.conn-badge {
+.conn-status {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--border);
+  background: var(--surface);
+  font-size: 0.75rem;
+  font-weight: 700;
+  color: var(--text-secondary);
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.conn-status.connected {
+  border-color: var(--accent);
+  background: var(--accent-soft);
+  color: var(--accent);
+}
+
+/* Connect / Disconnect action button */
+.conn-action-btn {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  padding: 8px 14px;
+  border-radius: var(--radius-full);
+  border: 2px solid var(--primary);
+  background: var(--primary);
+  color: #fff;
+  font-family: var(--font);
+  font-size: 0.75rem;
+  font-weight: 800;
+  cursor: pointer;
+  transition: all 0.2s;
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.conn-action-btn:hover { opacity: 0.9; }
+.conn-action-btn.connected {
+  border-color: #ef4444;
+  background: transparent;
+  color: #ef4444;
+}
+
+/* Firmware badge (beside Connect) */
+.firmware-badge {
   display: flex;
   align-items: center;
   gap: 6px;
@@ -211,13 +260,9 @@ body {
   transition: all 0.2s;
   text-transform: uppercase;
   letter-spacing: 0.02em;
+  text-decoration: none;
 }
-.conn-badge:hover { border-color: var(--primary); }
-.conn-badge.connected {
-  border-color: var(--accent);
-  background: var(--accent-soft);
-  color: var(--accent);
-}
+.firmware-badge:hover { border-color: var(--primary); color: var(--primary); }
 
 /* AI Mode badge */
 .ai-badge {
@@ -2434,10 +2479,18 @@ body {
           <span id="aiIcon">🎮</span>
           <span id="aiName" data-i18n="provider_demo">Demo</span>
         </div>
-        <button class="conn-badge" id="connBadge" onclick="toggleConnection()" aria-label="Connection status">
+        <button class="conn-action-btn" id="connActionBtn" onclick="toggleConnection()">
+          <span id="connActionIcon">🔗</span>
+          <span id="connActionText" data-i18n="onb_btn_connect">Connect</span>
+        </button>
+        <div class="conn-status" id="connStatus" aria-label="Connection status">
           <span class="conn-dot"></span>
           <span id="connText" data-i18n="disconnected">Disconnected</span>
-        </button>
+        </div>
+        <a class="firmware-badge" href="flash.html" aria-label="Get micro:bit firmware">
+          <span>🤖</span>
+          <span data-i18n="firmware_btn">Firmware</span>
+        </a>
         <button class="btn-menu" onclick="toggleHelp(true)" aria-label="Help" title="Help">❓</button>
         <button class="btn-menu" onclick="toggleSettings()" aria-label="Open menu" data-i18n-aria="aria_open_menu">☰</button>
       </div>
@@ -2671,12 +2724,6 @@ body {
           </div>
 
           <div class="setting-group">
-            <div class="setting-group-title">🤖 Micro:bit Code</div>
-            <a class="btn-outline" href="flash.html" style="display:flex; align-items:center; justify-content:center; gap:8px; width:100%; text-decoration:none;">📋 Copy micro:bit Code</a>
-            <div class="form-hint">Flash this once so your micro:bit can talk to Bit-Bot</div>
-          </div>
-
-          <div class="setting-group">
             <div class="setting-group-title" data-i18n="section_ai_provider">🧠 AI Provider</div>
             <div class="selection-grid cols-3">
               <button class="selection-btn" data-provider="demo" onclick="setProvider('demo')">
@@ -2860,6 +2907,8 @@ const I18N = {
     app_title: "Bit-Bot",
     app_subtitle: "Beep boop! Let's chat! 🤖",
     disconnected: "Disconnected", connected: "Connected",
+    firmware_btn: "Firmware",
+    action_disconnect: "Disconnect",
     provider_demo: "Demo", provider_groq: "Groq", provider_gemini: "Gemini",
     rate_limit_title: "⏳ Rate limit reached — using demo mode",
     status_ready: "Ready to chat!",
@@ -2929,6 +2978,7 @@ const I18N = {
     onb_connected_text: "Connected to {name}!",
     onb_cancelled_text: "Connection cancelled. Try again or skip.",
     confirm_reset_data: "Reset all settings and clear data?",
+    confirm_disconnect: "Disconnect from your micro:bit?",
     alert_no_logs: "No logs to export",
     games_title: "🎮 AI Games",
     games_info: "Interactive games using micro:bit + AI!",
@@ -2982,16 +3032,33 @@ const I18N = {
     help_personality_title: "Name & personality",
     help_personality_body: 'Open Settings (☰) → Fun to give your robot a name and pick a personality.',
     help_ble_title: "Connect a micro:bit",
-    help_ble_body: 'Tap the connection badge in the header to pair over Bluetooth. Need the code first? Settings → Setup → "Copy micro:bit Code".',
+    help_ble_body: 'Tap the connection badge in the header to pair over Bluetooth. Need the code first? Tap the Firmware button in the header.',
     help_games_title: "Commands & games",
     help_games_body: "Use the 📋 and 🎮 buttons above the message box for quick commands and AI-powered mini-games.",
     help_tips_title: "Tips",
-    help_tips_body: "Use Chrome or Edge. Voice and Bluetooth need https:// or localhost (not file:///)."
+    help_tips_body: "Use Chrome or Edge. Voice and Bluetooth need https:// or localhost (not file:///).",
+    cat_emotions: "Emotions", cat_animals: "Animals", cat_actions: "Actions",
+    cat_sounds: "Sounds", cat_party: "Party", cat_powers: "Powers",
+    cmd_happy: "happy", cmd_sad: "sad", cmd_angry: "angry", cmd_surprised: "surprised",
+    cmd_love: "love", cmd_sleepy: "sleepy", cmd_silly: "silly", cmd_crazy: "crazy",
+    cmd_wink: "wink", cmd_cool: "cool", cmd_wow: "wow", cmd_haha: "haha",
+    cmd_cat: "cat", cmd_dog: "dog", cmd_duck: "duck", cmd_cow: "cow",
+    cmd_pig: "pig", cmd_frog: "frog", cmd_monkey: "monkey",
+    cmd_wave: "wave", cmd_dance: "dance", cmd_spin: "spin", cmd_jump: "jump",
+    cmd_blink: "blink", cmd_wiggle: "wiggle", cmd_bounce: "bounce", cmd_nod: "nod",
+    cmd_fart: "fart", cmd_burp: "burp", cmd_beep: "beep", cmd_laugh: "laugh", cmd_horn: "horn",
+    cmd_party: "party", cmd_disco: "disco", cmd_rainbow: "rainbow", cmd_fireworks: "fireworks",
+    cmd_confetti: "confetti", cmd_yay: "yay",
+    cmd_laser: "laser", cmd_freeze: "freeze", cmd_fire: "fire", cmd_magic: "magic",
+    cmd_rocket: "rocket", cmd_explode: "explode",
+    cmd_show_me: "Show me {cmd}!", cmd_here_is: "Here's {cmd}!"
   },
   fr: {
     app_title: "Bit-Bot",
     app_subtitle: "Bip boup ! Discutons ! 🤖",
     disconnected: "Déconnecté", connected: "Connecté",
+    firmware_btn: "Micrologiciel",
+    action_disconnect: "Déconnecter",
     provider_demo: "Démo", provider_groq: "Groq", provider_gemini: "Gemini",
     rate_limit_title: "⏳ Limite atteinte — mode démo activé",
     status_ready: "Prêt à discuter !",
@@ -3061,6 +3128,7 @@ const I18N = {
     onb_connected_text: "Connecté à {name} !",
     onb_cancelled_text: "Connexion annulée. Réessaie ou passe cette étape.",
     confirm_reset_data: "Réinitialiser tous les réglages et effacer les données ?",
+    confirm_disconnect: "Se déconnecter de ton micro:bit ?",
     alert_no_logs: "Aucun journal à exporter",
     games_title: "🎮 Jeux IA",
     games_info: "Jeux interactifs avec micro:bit + IA !",
@@ -3114,16 +3182,33 @@ const I18N = {
     help_personality_title: "Nom & personnalité",
     help_personality_body: "Ouvre les Réglages (☰) → Fun pour donner un nom à ton robot et choisir une personnalité.",
     help_ble_title: "Connecter un micro:bit",
-    help_ble_body: "Appuie sur le badge de connexion dans l'en-tête pour l'appairer en Bluetooth. Besoin du code d'abord ? Réglages → Config → « Copier le code micro:bit ».",
+    help_ble_body: "Appuie sur le badge de connexion dans l'en-tête pour l'appairer en Bluetooth. Besoin du code d'abord ? Appuie sur le bouton Micrologiciel dans l'en-tête.",
     help_games_title: "Commandes & jeux",
     help_games_body: "Utilise les boutons 📋 et 🎮 au-dessus de la zone de message pour des commandes rapides et des mini-jeux IA.",
     help_tips_title: "Astuces",
-    help_tips_body: "Utilise Chrome ou Edge. La voix et le Bluetooth nécessitent https:// ou localhost (pas file:///)."
+    help_tips_body: "Utilise Chrome ou Edge. La voix et le Bluetooth nécessitent https:// ou localhost (pas file:///).",
+    cat_emotions: "Émotions", cat_animals: "Animaux", cat_actions: "Actions",
+    cat_sounds: "Sons", cat_party: "Fête", cat_powers: "Pouvoirs",
+    cmd_happy: "content", cmd_sad: "triste", cmd_angry: "fâché", cmd_surprised: "surpris",
+    cmd_love: "amour", cmd_sleepy: "somnolent", cmd_silly: "rigolo", cmd_crazy: "fou",
+    cmd_wink: "clin d'œil", cmd_cool: "cool", cmd_wow: "waouh", cmd_haha: "haha",
+    cmd_cat: "chat", cmd_dog: "chien", cmd_duck: "canard", cmd_cow: "vache",
+    cmd_pig: "cochon", cmd_frog: "grenouille", cmd_monkey: "singe",
+    cmd_wave: "salue", cmd_dance: "danse", cmd_spin: "tourne", cmd_jump: "saute",
+    cmd_blink: "clignote", cmd_wiggle: "trémousse", cmd_bounce: "rebondis", cmd_nod: "hoche",
+    cmd_fart: "pet", cmd_burp: "rot", cmd_beep: "bip", cmd_laugh: "rire", cmd_horn: "klaxon",
+    cmd_party: "fête", cmd_disco: "disco", cmd_rainbow: "arc-en-ciel", cmd_fireworks: "feux d'artifice",
+    cmd_confetti: "confettis", cmd_yay: "youpi",
+    cmd_laser: "laser", cmd_freeze: "gèle", cmd_fire: "feu", cmd_magic: "magie",
+    cmd_rocket: "fusée", cmd_explode: "explose",
+    cmd_show_me: "Montre-moi {cmd} !", cmd_here_is: "Voici {cmd} !"
   },
   ar: {
     app_title: "Bit-Bot",
     app_subtitle: "بيب بوب! هيّا نتحدث! 🤖",
     disconnected: "غير متصل", connected: "متصل",
+    firmware_btn: "البرنامج",
+    action_disconnect: "قطع الاتصال",
     provider_demo: "تجريبي", provider_groq: "غروك", provider_gemini: "جيميني",
     rate_limit_title: "⏳ تم بلوغ الحد — يعمل بالوضع التجريبي",
     status_ready: "جاهز للدردشة!",
@@ -3193,6 +3278,7 @@ const I18N = {
     onb_connected_text: "متصل بـ {name}!",
     onb_cancelled_text: "أُلغي الاتصال. أعد المحاولة أو تخطَّ.",
     confirm_reset_data: "إعادة ضبط جميع الإعدادات ومسح البيانات؟",
+    confirm_disconnect: "هل تريد فصل الاتصال بجهاز المايكروبِت؟",
     alert_no_logs: "لا توجد سجلات لتصديرها",
     games_title: "🎮 ألعاب الذكاء الاصطناعي",
     games_info: "ألعاب تفاعلية باستخدام المايكروبِت والذكاء الاصطناعي!",
@@ -3246,11 +3332,26 @@ const I18N = {
     help_personality_title: "الاسم والشخصية",
     help_personality_body: "افتح الإعدادات (☰) ← مرح لتمنح روبوتك اسماً وتختار شخصية.",
     help_ble_title: "توصيل المايكروبِت",
-    help_ble_body: "اضغط شارة الاتصال في الأعلى للاقتران عبر البلوتوث. تحتاج الكود أولاً؟ الإعدادات ← إعداد ← «نسخ كود المايكروبِت».",
+    help_ble_body: "اضغط شارة الاتصال في الأعلى للاقتران عبر البلوتوث. تحتاج الكود أولاً؟ اضغط زر البرمجيات الثابتة في الأعلى.",
     help_games_title: "الأوامر والألعاب",
     help_games_body: "استخدم زري 📋 و🎮 فوق مربع الرسالة للأوامر السريعة والألعاب المدعومة بالذكاء الاصطناعي.",
     help_tips_title: "نصائح",
-    help_tips_body: "استخدم Chrome أو Edge. يحتاج الصوت والبلوتوث إلى https:// أو localhost (وليس file:///)."
+    help_tips_body: "استخدم Chrome أو Edge. يحتاج الصوت والبلوتوث إلى https:// أو localhost (وليس file:///).",
+    cat_emotions: "المشاعر", cat_animals: "الحيوانات", cat_actions: "الحركات",
+    cat_sounds: "الأصوات", cat_party: "حفلة", cat_powers: "قوى",
+    cmd_happy: "سعيد", cmd_sad: "حزين", cmd_angry: "غاضب", cmd_surprised: "متفاجئ",
+    cmd_love: "حب", cmd_sleepy: "نعسان", cmd_silly: "مضحك", cmd_crazy: "مجنون",
+    cmd_wink: "غمزة", cmd_cool: "رائع", cmd_wow: "واو", cmd_haha: "هاها",
+    cmd_cat: "قطة", cmd_dog: "كلب", cmd_duck: "بطة", cmd_cow: "بقرة",
+    cmd_pig: "خنزير", cmd_frog: "ضفدع", cmd_monkey: "قرد",
+    cmd_wave: "لوّح", cmd_dance: "ارقص", cmd_spin: "دُر", cmd_jump: "اقفز",
+    cmd_blink: "ارمش", cmd_wiggle: "تمايل", cmd_bounce: "ارتد", cmd_nod: "أومئ",
+    cmd_fart: "فسوة", cmd_burp: "تجشؤ", cmd_beep: "بيب", cmd_laugh: "اضحك", cmd_horn: "بوق",
+    cmd_party: "حفلة", cmd_disco: "ديسكو", cmd_rainbow: "قوس قزح", cmd_fireworks: "ألعاب نارية",
+    cmd_confetti: "قصاصات", cmd_yay: "ياي",
+    cmd_laser: "ليزر", cmd_freeze: "تجمد", cmd_fire: "نار", cmd_magic: "سحر",
+    cmd_rocket: "صاروخ", cmd_explode: "انفجر",
+    cmd_show_me: "أرني {cmd}!", cmd_here_is: "ها هو {cmd}!"
   }
 };
 const RTL_LANGS = { ar: true };
@@ -3274,15 +3375,16 @@ function applyLang(lang) {
   document.querySelectorAll('[data-i18n-aria]').forEach(el => { el.setAttribute('aria-label', tr(el.dataset.i18nAria)); });
   document.querySelectorAll('.lang-flag-btn[data-lang]').forEach(b => b.classList.toggle('active', b.dataset.lang === lang));
   try { localStorage.setItem('talkingRobot.lang', lang); } catch (e) {}
+  if (typeof generateCommands === 'function') generateCommands();
 }
 
 const COMMANDS = {
-  emotions: { icon: '😊', name: 'Emotions', items: ['happy','sad','angry','surprised','love','sleepy','silly','crazy','wink','cool','wow','haha'] },
-  animals: { icon: '🐱', name: 'Animals', items: ['cat','dog','duck','cow','pig','frog','monkey'] },
-  actions: { icon: '💃', name: 'Actions', items: ['wave','dance','spin','jump','blink','wiggle','bounce','nod'] },
-  sounds: { icon: '🔊', name: 'Sounds', items: ['fart','burp','beep','laugh','horn'] },
-  party: { icon: '🎉', name: 'Party', items: ['party','disco','rainbow','fireworks','confetti','yay'] },
-  powers: { icon: '⚡', name: 'Powers', items: ['laser','freeze','fire','magic','rocket','explode'] }
+  emotions: { icon: '😊', nameKey: 'cat_emotions', items: ['happy','sad','angry','surprised','love','sleepy','silly','crazy','wink','cool','wow','haha'] },
+  animals: { icon: '🐱', nameKey: 'cat_animals', items: ['cat','dog','duck','cow','pig','frog','monkey'] },
+  actions: { icon: '💃', nameKey: 'cat_actions', items: ['wave','dance','spin','jump','blink','wiggle','bounce','nod'] },
+  sounds: { icon: '🔊', nameKey: 'cat_sounds', items: ['fart','burp','beep','laugh','horn'] },
+  party: { icon: '🎉', nameKey: 'cat_party', items: ['party','disco','rainbow','fireworks','confetti','yay'] },
+  powers: { icon: '⚡', nameKey: 'cat_powers', items: ['laser','freeze','fire','magic','rocket','explode'] }
 };
 
 const PERSONALITIES = {
@@ -3477,7 +3579,8 @@ const robotBody = $('robotBody'), robotStatus = $('robotStatus'), chatContainer 
 const textInput = $('textInput'), btnMic = $('btnMic'), typing = $('typing'), logsContent = $('logsContent');
 const ledGrid = $('ledGrid'), overlay = $('overlay');
 const settingsPanel = $('settingsPanel'), logsPanel = $('logsPanel'), commandsPanel = $('commandsPanel');
-const connBadge = $('connBadge'), connText = $('connText'), microbitDot = $('microbitDot');
+const connStatus = $('connStatus'), connText = $('connText'), microbitDot = $('microbitDot');
+const connActionBtn = $('connActionBtn'), connActionIcon = $('connActionIcon'), connActionText = $('connActionText');
 const aiBadge = $('aiBadge'), aiIcon = $('aiIcon'), aiName = $('aiName');
 const voiceSpeed = $('voiceSpeed'), speedValue = $('speedValue'), voiceSelect = $('voiceSelect');
 const apiKey = $('apiKey'), apiHint = $('apiHint'), robotNameInput = $('robotName');
@@ -3646,9 +3749,12 @@ function updateUI() {
     btn.classList.toggle('active', btn.dataset.provider === state.provider);
   });
   
-  // Update connection badge
-  connBadge.classList.toggle('connected', state.connected);
+  // Update connection status + action button
+  connStatus.classList.toggle('connected', state.connected);
   connText.textContent = state.connected ? tr('connected') : tr('disconnected');
+  connActionBtn.classList.toggle('connected', state.connected);
+  connActionIcon.textContent = state.connected ? '🔌' : '🔗';
+  connActionText.textContent = state.connected ? tr('action_disconnect') : tr('onb_btn_connect');
   microbitDot.classList.toggle('on', state.connected);
   
   // Update AI badge
@@ -4247,10 +4353,11 @@ async function handleUserInput(text) {
   addBubble('robot', cleanText || response);
   speak(cleanText || response);
   
-  // Update LED immediately, send commands to micro:bit in parallel
+  // Update LED immediately, send commands to micro:bit one at a time
+  // (Web Bluetooth throws "GATT operation already in progress" if writes overlap)
   for (const cmd of commands) {
     updateLEDFromCommand(cmd);
-    sendCommand(cmd);
+    await sendCommand(cmd);
   }
 }
 
@@ -4418,6 +4525,7 @@ async function getAIResponse(text) {
 // ==================== BLUETOOTH ====================
 async function toggleConnection() {
   if (state.connected) {
+    if (!confirm(tr('confirm_disconnect'))) return;
     if (state.device?.gatt?.connected) {
       state.device.gatt.disconnect();
     }
@@ -4559,16 +4667,25 @@ function handleRx(event) {
   }
 }
 
+// Serializes all BLE writes app-wide so overlapping callers (chat replies,
+// button events, etc.) queue instead of racing and hitting
+// "GATT operation already in progress".
+let bleWriteQueue = Promise.resolve();
+
 async function sendCommand(cmd) {
   // Send to micro:bit if connected
   if (state.writeChar) {
-    try {
-      const data = new TextEncoder().encode(cmd + '\n');
-      await state.writeChar.writeValue(data);
-      log('TX: ' + cmd, 'tx');
-    } catch (e) {
-      log('TX error: ' + e.message, 'error');
-    }
+    const run = async () => {
+      try {
+        const data = new TextEncoder().encode(cmd + '\n');
+        await state.writeChar.writeValue(data);
+        log('TX: ' + cmd, 'tx');
+      } catch (e) {
+        log('TX error: ' + e.message, 'error');
+      }
+    };
+    bleWriteQueue = bleWriteQueue.then(run, run);
+    await bleWriteQueue;
   }
 }
 
@@ -4600,27 +4717,27 @@ async function tellBuiltInJoke() {
   const { clean, cmds } = extractCmdsI(joke);
   if (typeof addChat === 'function') addChat(clean || joke, 'robot');
   for (const c of cmds) {
-    sendCommand(c);
+    await sendCommand(c);
     if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
   }
   if (typeof speak === 'function') speak(clean || joke);
 }
-function robotLaugh() {
+async function robotLaugh() {
   const t = tr('laugh_builtin');
   const { clean, cmds } = extractCmdsI(t);
   if (typeof addChat === 'function') addChat(clean, 'robot');
   for (const c of cmds) {
-    sendCommand(c);
+    await sendCommand(c);
     if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
   }
   if (typeof speak === 'function') speak(clean);
 }
-function robotWhoa() {
+async function robotWhoa() {
   const t = tr('whoa_builtin');
   const { clean, cmds } = extractCmdsI(t);
   if (typeof addChat === 'function') addChat(clean, 'robot');
   for (const c of cmds) {
-    sendCommand(c);
+    await sendCommand(c);
     if (typeof updateLEDFromCommand === 'function' && !state.ledFromMicrobitOnly) updateLEDFromCommand(c);
   }
   if (typeof speak === 'function') speak(clean);
@@ -4637,10 +4754,10 @@ function generateCommands() {
     section.innerHTML = `
       <div class="category-header">
         <span class="category-icon">${cat.icon}</span>
-        <span class="category-name">${cat.name}</span>
+        <span class="category-name">${tr(cat.nameKey)}</span>
       </div>
       <div class="category-commands">
-        ${cat.items.map(cmd => `<button class="command-btn" onclick="tryCommand('${cmd}')">${cmd}</button>`).join('')}
+        ${cat.items.map(cmd => `<button class="command-btn" onclick="tryCommand('${cmd}')">${tr('cmd_' + cmd)}</button>`).join('')}
       </div>
     `;
     container.appendChild(section);
@@ -4651,13 +4768,14 @@ async function tryCommand(cmd) {
   log('Command: ' + cmd, 'info');
   await sendCommand(cmd);
   updateLEDFromCommand(cmd);
-  
-  // Add chat bubbles and speak
-  addBubble('user', `Show me ${cmd}!`);
-  const response = `Here's ${cmd}!`;
+
+  // Add chat bubbles and speak (translated to the current language)
+  const label = tr('cmd_' + cmd);
+  addBubble('user', trg('cmd_show_me', { cmd: label }));
+  const response = trg('cmd_here_is', { cmd: label });
   addBubble('robot', response);
   speak(response);
-  
+
   // Don't close panel - let user try multiple commands
 }
 
